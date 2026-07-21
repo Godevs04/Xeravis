@@ -1,0 +1,97 @@
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+
+import { CTABand } from '@/blocks/CTABand'
+import { Container } from '@/components/layout/Container'
+import { PageHero } from '@/components/layout/PageHero'
+import { Section } from '@/components/layout/Section'
+import { getPublishedBySlug, listPublished } from '@/lib/cms'
+import { FALLBACK_CASE_STUDIES } from '@/lib/fallback-data'
+import { buildMetadata } from '@/lib/seo'
+
+export const revalidate = 60
+
+type CaseStudyDoc = {
+  id: string
+  title: string
+  slug: string
+  client: string
+  challenge: string
+  outcome: string
+  metrics?: { label: string; value: string }[]
+  meta?: { title?: string; description?: string; image?: unknown }
+}
+
+type Props = { params: Promise<{ slug: string }> }
+
+export async function generateStaticParams() {
+  const studies = await listPublished<CaseStudyDoc>('case-studies')
+  const slugs = studies.length ? studies : FALLBACK_CASE_STUDIES
+  return slugs.map((s) => ({ slug: s.slug }))
+}
+
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params
+  const study = await getPublishedBySlug<CaseStudyDoc>('case-studies', slug)
+  const fallback = FALLBACK_CASE_STUDIES.find((s) => s.slug === slug)
+
+  return buildMetadata({
+    title: study?.meta?.title || study?.title || fallback?.title,
+    description: study?.meta?.description || study?.outcome || fallback?.outcome,
+    image: study?.meta?.image,
+    path: `/case-studies/${slug}`,
+  })
+}
+
+export default async function CaseStudyDetailPage({ params }: Props) {
+  const { slug } = await params
+  const study = await getPublishedBySlug<CaseStudyDoc>('case-studies', slug)
+  const fallback = FALLBACK_CASE_STUDIES.find((s) => s.slug === slug)
+
+  if (!study && !fallback) notFound()
+
+  const doc = study || {
+    ...fallback!,
+    challenge: fallback!.challenge,
+    metrics: [],
+  }
+
+  return (
+    <>
+      <PageHero eyebrow={doc.client} title={doc.title} subtitle={doc.outcome} size="compact" />
+      <Section>
+        <Container className="max-w-3xl space-y-10">
+          <div>
+            <h2 className="text-2xl font-bold">Challenge</h2>
+            <p className="mt-4 text-secondary leading-relaxed">{doc.challenge}</p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">Outcome</h2>
+            <p className="mt-4 text-secondary leading-relaxed">{doc.outcome}</p>
+          </div>
+          {doc.metrics && doc.metrics.length > 0 && (
+            <div className="grid gap-6 sm:grid-cols-3">
+              {doc.metrics.map((metric) => (
+                <div key={metric.label} className="border-l-2 border-accent pl-4">
+                  <p className="text-2xl font-bold">{metric.value}</p>
+                  <p className="text-sm text-muted">{metric.label}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </Container>
+      </Section>
+      <CTABand
+        heading="Discuss a similar initiative"
+        subheading="Our teams can share relevant patterns and delivery models."
+        ctaLabel="Talk to us"
+        ctaHref="/contact"
+      />
+      <div className="container-x pb-12">
+        <Link href="/case-studies" className="text-sm font-semibold text-accent hover:underline">
+          ← All case studies
+        </Link>
+      </div>
+    </>
+  )
+}
