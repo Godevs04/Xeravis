@@ -4,12 +4,13 @@ Enterprise corporate website for **Xelarvis Technologies** — Engineering Digit
 
 **Stack:** Next.js 15 · React 19 · TypeScript · Tailwind CSS · shadcn/ui · Framer Motion · Payload CMS 3 · MongoDB Atlas · Vercel · Cloudinary (production media)
 
-## Architecture (UX & Design)
+## Architecture (UX, Design & Software)
 
-- Phase 2 IA & UX blueprint (approved): [docs/PHASE-2-UX-BLUEPRINT.md](docs/PHASE-2-UX-BLUEPRINT.md)
+- Phase 2 IA & UX (approved): [docs/PHASE-2-UX-BLUEPRINT.md](docs/PHASE-2-UX-BLUEPRINT.md)
 - Phase 3 Design System (awaiting approval): [docs/PHASE-3-DESIGN-SYSTEM.md](docs/PHASE-3-DESIGN-SYSTEM.md)
+- Phase 4 Software Architecture (awaiting approval): [docs/PHASE-4-SOFTWARE-ARCHITECTURE.md](docs/PHASE-4-SOFTWARE-ARCHITECTURE.md)
 
-Do not implement UI that contradicts these documents. Component/page builds start only after Phase 3 approval.
+Do not implement against unapproved phases. After approval: production-ready code only — no placeholders.
 
 ## Quick start
 
