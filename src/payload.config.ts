@@ -11,19 +11,25 @@ import { Careers } from './collections/Careers'
 import { CaseStudies } from './collections/CaseStudies'
 import { Categories } from './collections/Categories'
 import { Clients } from './collections/Clients'
+import { ContactMessages } from './collections/ContactMessages'
+import { Departments } from './collections/Departments'
 import { Faqs } from './collections/Faqs'
 import { FormSubmissions } from './collections/FormSubmissions'
 import { Industries } from './collections/Industries'
 import { JobApplications } from './collections/JobApplications'
 import { Media } from './collections/Media'
+import { NewsletterSubscribers } from './collections/NewsletterSubscribers'
 import { Pages } from './collections/Pages'
 import { Services } from './collections/Services'
 import { Solutions } from './collections/Solutions'
+import { Tags } from './collections/Tags'
 import { TeamMembers } from './collections/TeamMembers'
+import { Technologies } from './collections/Technologies'
 import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
 import { ContactDetails } from './globals/ContactDetails'
 import { Footer } from './globals/Footer'
+import { Analytics, AnnouncementBar, CookieBanner, SocialMedia } from './globals/MarketingGlobals'
 import { Navigation } from './globals/Navigation'
 import { OfficeLocations } from './globals/OfficeLocations'
 import { SeoDefaults } from './globals/SeoDefaults'
@@ -40,7 +46,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     meta: {
-      titleSuffix: ' · Xelarvis CMS',
+      titleSuffix: ' · GoDevs Enterprise CMS',
     },
     livePreview: {
       breakpoints: [
@@ -60,16 +66,32 @@ export default buildConfig({
     CaseStudies,
     Blogs,
     Categories,
+    Tags,
     Authors,
     Careers,
+    Departments,
     Testimonials,
     TeamMembers,
     Clients,
     Faqs,
+    Technologies,
     FormSubmissions,
+    ContactMessages,
+    NewsletterSubscribers,
     JobApplications,
   ],
-  globals: [SiteSettings, Navigation, Footer, ContactDetails, OfficeLocations, SeoDefaults],
+  globals: [
+    SiteSettings,
+    Navigation,
+    Footer,
+    ContactDetails,
+    OfficeLocations,
+    SeoDefaults,
+    SocialMedia,
+    Analytics,
+    AnnouncementBar,
+    CookieBanner,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -19,7 +19,7 @@ export function StatsRow({ heading, stats }: StatsRowProps) {
         <AnimateIn>
           <h2 className="sr-only">{heading}</h2>
         </AnimateIn>
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {items.map((stat, index) => (
             <AnimateIn key={stat.label} delay={index * 0.05}>
               <div>

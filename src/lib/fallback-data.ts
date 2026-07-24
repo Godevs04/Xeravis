@@ -12,15 +12,15 @@ export const UNSPLASH = {
 
 export const DEFAULT_NAV = {
   primaryLinks: [
-    { label: 'Services', href: '/services' },
-    { label: 'Industries', href: '/industries' },
-    { label: 'Solutions', href: '/solutions' },
-    { label: 'Insights', href: '/insights' },
-    { label: 'Careers', href: '/careers' },
-    { label: 'About', href: '/about' },
+    { label: 'Solutions', href: '/solutions', mega: 'solutions' },
+    { label: 'Services', href: '/services', mega: 'services' },
+    { label: 'Industries', href: '/industries', mega: 'industries' },
+    { label: 'Insights', href: '/insights', mega: 'none' },
+    { label: 'Careers', href: '/careers', mega: 'none' },
+    { label: 'About', href: '/about', mega: 'none' },
   ],
-  ctaLabel: 'Talk to us',
-  ctaHref: '/contact',
+  ctaLabel: "Let's Talk",
+  ctaHref: '/contact?intent=project',
 }
 
 export const DEFAULT_FOOTER = {
@@ -208,8 +208,10 @@ export const FALLBACK_CONTACT = {
 }
 
 export const FALLBACK_STATS = [
-  { label: 'Enterprise clients', value: '40+' },
+  { label: 'Years of experience', value: '10+' },
   { label: 'Projects delivered', value: '120+' },
-  { label: 'Engineers & consultants', value: '85+' },
   { label: 'Countries served', value: '12' },
+  { label: 'Happy clients', value: '40+' },
+  { label: 'Support', value: '24/7' },
+  { label: 'Technology partners', value: '25+' },
 ]

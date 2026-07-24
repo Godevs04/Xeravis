@@ -11,6 +11,8 @@ const contactSchema = z.object({
   company: z.string().optional(),
   phone: z.string().optional(),
   message: z.string().min(10, 'Please provide a brief message'),
+  intent: z.string().optional(),
+  website: z.string().optional(), // honeypot
 })
 
 export type ContactFormState = {
@@ -26,6 +28,8 @@ export async function submitContact(_prev: ContactFormState, formData: FormData)
     company: formData.get('company') || undefined,
     phone: formData.get('phone') || undefined,
     message: formData.get('message'),
+    intent: formData.get('intent') || undefined,
+    website: formData.get('website') || undefined,
   })
 
   if (!parsed.success) {
@@ -36,24 +40,33 @@ export async function submitContact(_prev: ContactFormState, formData: FormData)
     }
   }
 
+  if (parsed.data.website) {
+    return { ok: true, message: 'Thank you. Our team will respond within one business day.' }
+  }
+
   try {
     const payload = await getPayload()
     await payload.create({
-      collection: 'form-submissions',
+      collection: 'contact-messages',
       overrideAccess: true,
       data: {
-        type: 'contact',
+        name: parsed.data.name,
+        email: parsed.data.email,
+        company: parsed.data.company,
+        phone: parsed.data.phone,
+        message: parsed.data.message,
+        intent: parsed.data.intent === 'project' ? 'project' : 'general',
+        subject: parsed.data.intent || 'Website enquiry',
         status: 'new',
-        data: parsed.data,
       },
     })
 
     const resendKey = process.env.RESEND_API_KEY
-    const notifyEmail = process.env.CONTACT_NOTIFY_EMAIL
+    const notifyEmail = process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO
     if (resendKey && notifyEmail) {
       const resend = new Resend(resendKey)
       await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || 'Xelarvis <onboarding@resend.dev>',
+        from: process.env.RESEND_FROM_EMAIL || process.env.EMAIL_FROM || 'Xelarvis <onboarding@resend.dev>',
         to: notifyEmail,
         subject: `New contact enquiry from ${parsed.data.name}`,
         text: [
@@ -61,6 +74,7 @@ export async function submitContact(_prev: ContactFormState, formData: FormData)
           `Email: ${parsed.data.email}`,
           parsed.data.company ? `Company: ${parsed.data.company}` : '',
           parsed.data.phone ? `Phone: ${parsed.data.phone}` : '',
+          parsed.data.intent ? `Intent: ${parsed.data.intent}` : '',
           '',
           parsed.data.message,
         ]

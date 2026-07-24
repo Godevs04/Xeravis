@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import { submitContact, type ContactFormState } from '@/actions/contact'
 import { Button } from '@/components/ui/button'
@@ -12,9 +13,14 @@ const initialState: ContactFormState = { ok: false, message: '' }
 
 export function ContactForm() {
   const [state, action, pending] = useActionState(submitContact, initialState)
+  const searchParams = useSearchParams()
+  const intent = searchParams.get('intent') || ''
 
   return (
     <form action={action} className="space-y-6" noValidate>
+      <input type="hidden" name="intent" value={intent} />
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
+
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Full name</Label>
@@ -23,7 +29,14 @@ export function ContactForm() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Work email</Label>
-          <Input id="email" name="email" type="email" autoComplete="email" required aria-invalid={Boolean(state.fieldErrors?.email)} />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            aria-invalid={Boolean(state.fieldErrors?.email)}
+          />
           {state.fieldErrors?.email && <p className="text-sm text-danger">{state.fieldErrors.email[0]}</p>}
         </div>
         <div className="space-y-2">
@@ -37,7 +50,13 @@ export function ContactForm() {
       </div>
       <div className="space-y-2">
         <Label htmlFor="message">How can we help?</Label>
-        <Textarea id="message" name="message" rows={6} required aria-invalid={Boolean(state.fieldErrors?.message)} />
+        <Textarea
+          id="message"
+          name="message"
+          rows={6}
+          required
+          aria-invalid={Boolean(state.fieldErrors?.message)}
+        />
         {state.fieldErrors?.message && <p className="text-sm text-danger">{state.fieldErrors.message[0]}</p>}
       </div>
       {state.message && (
@@ -45,8 +64,8 @@ export function ContactForm() {
           {state.message}
         </p>
       )}
-      <Button type="submit" variant="accent" disabled={pending}>
-        {pending ? 'Sending…' : 'Send message'}
+      <Button type="submit" variant="primary" disabled={pending} loading={pending}>
+        Send message
       </Button>
     </form>
   )

@@ -32,13 +32,19 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
           autoComplete="email"
           required
           className={cn(dark && 'border-white/20 bg-white/5 text-white placeholder:text-white/40')}
-          aria-invalid={Boolean(state.fieldErrors?.email)}
         />
-        <Button type="submit" variant={dark ? 'outline' : 'accent'} disabled={pending} className={cn(dark && 'border-white/30 text-white hover:bg-white/10')}>
-          {pending ? '…' : 'Subscribe'}
+        {/* Honeypot */}
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
+        <Button
+          type="submit"
+          variant={dark ? 'outline' : 'primary'}
+          disabled={pending}
+          loading={pending}
+          className={cn(dark && 'border-white/30 text-white hover:bg-white/10')}
+        >
+          Subscribe
         </Button>
       </div>
-      {state.fieldErrors?.email && <p className="text-sm text-danger">{state.fieldErrors.email[0]}</p>}
       {state.message && (
         <p className={cn('text-sm', state.ok ? (dark ? 'text-green-300' : 'text-success') : 'text-danger')} role="status">
           {state.message}

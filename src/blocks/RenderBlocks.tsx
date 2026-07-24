@@ -1,3 +1,5 @@
+import { AboutPreview } from '@/blocks/AboutPreview'
+import { CareerBanner, NewsletterBlock } from '@/blocks/CareerBanner'
 import { CaseStudyFeature } from '@/blocks/CaseStudyFeature'
 import { ClientLogos } from '@/blocks/ClientLogos'
 import { CTABand } from '@/blocks/CTABand'
@@ -5,12 +7,15 @@ import { FAQAccordion } from '@/blocks/FAQAccordion'
 import { FeatureSplit } from '@/blocks/FeatureSplit'
 import { HeroBanner } from '@/blocks/HeroBanner'
 import { IndustriesStrip } from '@/blocks/IndustriesStrip'
+import { LatestBlogs } from '@/blocks/LatestBlogs'
 import { ProcessSteps } from '@/blocks/ProcessSteps'
 import { RichTextBlock } from '@/blocks/RichTextBlock'
 import { ServicesGrid } from '@/blocks/ServicesGrid'
 import { StatsRow } from '@/blocks/StatsRow'
 import { TeamGrid } from '@/blocks/TeamGrid'
+import { TechnologyGrid } from '@/blocks/TechnologyGrid'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock'
+import { WhyChooseUs } from '@/blocks/WhyChooseUs'
 
 export type PageBlock = {
   blockType: string
@@ -40,7 +45,27 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
                 subheading={block.subheading as string | undefined}
                 ctaLabel={block.ctaLabel as string | undefined}
                 ctaHref={block.ctaHref as string | undefined}
+                secondaryCtaLabel={block.secondaryCtaLabel as string | undefined}
+                secondaryCtaHref={block.secondaryCtaHref as string | undefined}
                 image={block.image}
+              />
+            )
+          case 'statistics':
+          case 'statsRow':
+            return (
+              <StatsRow
+                key={key}
+                heading={(block.heading as string) || 'Trust indicators'}
+                stats={block.stats as { label: string; value: string }[] | undefined}
+              />
+            )
+          case 'aboutPreview':
+            return (
+              <AboutPreview
+                key={key}
+                heading={block.heading as string}
+                body={block.body as string}
+                cta={block.cta as { label?: string; href?: string } | undefined}
               />
             )
           case 'richText':
@@ -61,30 +86,64 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
                 subheading={block.subheading as string | undefined}
               />
             )
+          case 'whyChooseUs':
+            return (
+              <WhyChooseUs
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+                items={block.items as { title: string; description: string }[] | undefined}
+              />
+            )
           case 'caseStudyFeature':
             return <CaseStudyFeature key={key} heading={block.heading as string} />
+          case 'technologyGrid':
+            return (
+              <TechnologyGrid
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+              />
+            )
           case 'testimonials':
             return <TestimonialsBlock key={key} heading={block.heading as string} />
+          case 'latestBlogs':
+            return (
+              <LatestBlogs
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+              />
+            )
+          case 'careerBanner':
+            return (
+              <CareerBanner
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+                cta={block.cta as { label?: string; href?: string } | undefined}
+              />
+            )
+          case 'newsletter':
+            return (
+              <NewsletterBlock
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+              />
+            )
           case 'teamGrid':
             return <TeamGrid key={key} heading={block.heading as string} />
           case 'clientLogos':
             return <ClientLogos key={key} heading={block.heading as string} />
-          case 'statsRow':
-            return (
-              <StatsRow
-                key={key}
-                heading={block.heading as string}
-                stats={block.stats as { label: string; value: string }[] | undefined}
-              />
-            )
           case 'ctaBand':
             return (
               <CTABand
                 key={key}
                 heading={block.heading as string}
                 subheading={block.subheading as string | undefined}
-                ctaLabel={block.ctaLabel as string}
-                ctaHref={block.ctaHref as string}
+                ctaLabel={(block.ctaLabel as string) || 'Schedule a Consultation'}
+                ctaHref={(block.ctaHref as string) || '/contact?intent=project'}
               />
             )
           case 'faqAccordion':

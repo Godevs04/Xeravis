@@ -8,9 +8,6 @@ type SectionProps = React.HTMLAttributes<HTMLElement> & {
 
 export function Section({ className, surface = false, ...props }: SectionProps) {
   return (
-    <section
-      className={cn('py-20 lg:py-28', surface && 'bg-surface', className)}
-      {...props}
-    />
+    <section className={cn('section-y', surface && 'bg-surface', className)} {...props} />
   )
 }

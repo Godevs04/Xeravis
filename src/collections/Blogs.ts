@@ -1,19 +1,18 @@
 import type { CollectionConfig } from 'payload'
 
 import { authenticatedOrPublished, canManageContent, isAdminOrEditor } from '@/access'
-import { slugField } from '@/fields/slug'
+import { featuredField, publishedAtField, slugField } from '@/fields'
 
 export const Blogs: CollectionConfig = {
   slug: 'blogs',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'publishedAt', '_status', 'updatedAt'],
+    group: 'Content',
   },
   versions: {
     drafts: {
-      autosave: {
-        interval: 400,
-      },
+      autosave: { interval: 400 },
     },
   },
   access: {
@@ -27,12 +26,14 @@ export const Blogs: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      maxLength: 140,
     },
     slugField(),
     {
       name: 'excerpt',
       type: 'textarea',
       required: true,
+      maxLength: 300,
     },
     {
       name: 'content',
@@ -56,14 +57,31 @@ export const Blogs: CollectionConfig = {
       hasMany: true,
     },
     {
-      name: 'publishedAt',
-      type: 'date',
+      name: 'tags',
+      type: 'relationship',
+      relationTo: 'tags',
+      hasMany: true,
+    },
+    {
+      name: 'readingTime',
+      type: 'number',
       admin: {
         position: 'sidebar',
-        date: {
-          pickerAppearance: 'dayAndTime',
-        },
+        description: 'Minutes. Auto-estimated on save if empty.',
+        readOnly: false,
+      },
+      hooks: {
+        beforeChange: [
+          ({ value, data }) => {
+            if (typeof value === 'number' && value > 0) return value
+            const text = JSON.stringify(data?.content || '')
+            const words = text.split(/\s+/).length
+            return Math.max(1, Math.round(words / 200))
+          },
+        ],
       },
     },
+    featuredField(),
+    publishedAtField(),
   ],
 }

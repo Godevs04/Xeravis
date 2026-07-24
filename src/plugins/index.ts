@@ -5,7 +5,8 @@ import type { Plugin } from 'payload'
 
 import { createCloudinaryAdapter, isCloudinaryEnabled } from './cloudinaryAdapter'
 
-const generateTitle = ({ doc }: { doc: { title?: string } }) => doc?.title || 'Xelarvis Technologies'
+const generateTitle = ({ doc }: { doc: { title?: string } }) =>
+  doc?.title || process.env.SITE_NAME || 'GoDevs Enterprise'
 
 const generateURL = ({ doc }: { doc: { slug?: string }; collectionConfig?: { slug?: string } }) => {
   const site = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'

@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { adminFieldAccess, isAdmin } from '@/access'
+import { adminFieldAccess, isAdmin, isSuperAdmin } from '@/access'
 import type { UserRole } from '@/access'
 
 export const Users: CollectionConfig = {
@@ -9,11 +9,11 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['email', 'roles', 'updatedAt'],
+    group: 'System',
   },
   access: {
-    // Allow first user creation when no admins exist yet
     create: async ({ req }) => {
-      if (isAdmin({ req })) return true
+      if (isAdmin({ req }) || isSuperAdmin({ req })) return true
       const users = await req.payload.find({
         collection: 'users',
         limit: 1,
@@ -22,15 +22,15 @@ export const Users: CollectionConfig = {
       })
       return users.totalDocs === 0
     },
-    delete: isAdmin,
+    delete: isSuperAdmin,
     read: (args) => {
-      if (isAdmin(args)) return true
+      if (isAdmin(args) || isSuperAdmin(args)) return true
       const { user } = args.req
       if (user) return { id: { equals: user.id } }
       return false
     },
     update: (args) => {
-      if (isAdmin(args)) return true
+      if (isAdmin(args) || isSuperAdmin(args)) return true
       const { user } = args.req
       if (user) return { id: { equals: user.id } }
       return false
@@ -42,12 +42,16 @@ export const Users: CollectionConfig = {
       type: 'select',
       hasMany: true,
       required: true,
-      defaultValue: ['admin'],
+      defaultValue: ['editor'],
       saveToJWT: true,
       options: [
-        { label: 'Admin', value: 'admin' },
+        { label: 'Super Admin', value: 'super-admin' },
+        { label: 'Administrator', value: 'administrator' },
         { label: 'Editor', value: 'editor' },
         { label: 'Content Manager', value: 'content-manager' },
+        { label: 'Marketing', value: 'marketing' },
+        { label: 'Recruiter', value: 'recruiter' },
+        { label: 'Viewer', value: 'viewer' },
       ] satisfies { label: string; value: UserRole }[],
       access: {
         create: adminFieldAccess,

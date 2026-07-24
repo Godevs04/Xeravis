@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { ContactForm } from '@/components/forms/ContactForm'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
@@ -49,7 +51,9 @@ export default async function ContactPage() {
       />
       <Section>
         <Container className="grid gap-16 lg:grid-cols-[1fr_22rem]">
-          <ContactForm />
+          <Suspense fallback={<div className="h-64 animate-pulse rounded-[var(--radius-card)] bg-surface" />}>
+            <ContactForm />
+          </Suspense>
           <aside className="space-y-10">
             <div>
               <h2 className="text-lg font-semibold">Direct</h2>

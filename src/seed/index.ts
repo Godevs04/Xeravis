@@ -8,21 +8,21 @@ import config from '../payload.config'
 
 const richParagraph = (text: string) => ({
   root: {
-    type: 'root',
+    type: 'root' as const,
     children: [
       {
-        type: 'paragraph',
-        children: [{ type: 'text', text, version: 1 }],
-        direction: 'ltr',
-        format: '',
+        type: 'paragraph' as const,
+        children: [{ type: 'text' as const, text, version: 1 as const }],
+        direction: 'ltr' as const,
+        format: '' as const,
         indent: 0,
-        version: 1,
+        version: 1 as const,
       },
     ],
-    direction: 'ltr',
-    format: '',
+    direction: 'ltr' as const,
+    format: '' as const,
     indent: 0,
-    version: 1,
+    version: 1 as const,
   },
 })
 
@@ -44,7 +44,7 @@ async function seed() {
       data: {
         email: adminEmail,
         password: adminPassword,
-        roles: ['admin'],
+        roles: ['super-admin'],
       },
       overrideAccess: true,
     })

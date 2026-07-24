@@ -76,13 +76,18 @@ export interface Config {
     'case-studies': CaseStudy;
     blogs: Blog;
     categories: Category;
+    tags: Tag;
     authors: Author;
     careers: Career;
+    departments: Department;
     testimonials: Testimonial;
     'team-members': TeamMember;
     clients: Client;
     faqs: Faq;
+    technologies: Technology;
     'form-submissions': FormSubmission;
+    'contact-messages': ContactMessage;
+    'newsletter-subscribers': NewsletterSubscriber;
     'job-applications': JobApplication;
     search: Search;
     'payload-kv': PayloadKv;
@@ -101,13 +106,18 @@ export interface Config {
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     careers: CareersSelect<false> | CareersSelect<true>;
+    departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     clients: ClientsSelect<false> | ClientsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    technologies: TechnologiesSelect<false> | TechnologiesSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
+    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
+    'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     'job-applications': JobApplicationsSelect<false> | JobApplicationsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -126,6 +136,10 @@ export interface Config {
     'contact-details': ContactDetail;
     'office-locations': OfficeLocation;
     'seo-defaults': SeoDefault;
+    'social-media': SocialMedia;
+    analytics: Analytics;
+    'announcement-bar': AnnouncementBar;
+    'cookie-banner': CookieBanner;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
@@ -134,6 +148,10 @@ export interface Config {
     'contact-details': ContactDetailsSelect<false> | ContactDetailsSelect<true>;
     'office-locations': OfficeLocationsSelect<false> | OfficeLocationsSelect<true>;
     'seo-defaults': SeoDefaultsSelect<false> | SeoDefaultsSelect<true>;
+    'social-media': SocialMediaSelect<false> | SocialMediaSelect<true>;
+    analytics: AnalyticsSelect<false> | AnalyticsSelect<true>;
+    'announcement-bar': AnnouncementBarSelect<false> | AnnouncementBarSelect<true>;
+    'cookie-banner': CookieBannerSelect<false> | CookieBannerSelect<true>;
   };
   locale: null;
   widgets: {
@@ -169,7 +187,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
-  roles: ('admin' | 'editor' | 'content-manager')[];
+  roles: ('super-admin' | 'administrator' | 'editor' | 'content-manager' | 'marketing' | 'recruiter' | 'viewer')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -195,8 +213,26 @@ export interface User {
  */
 export interface Media {
   id: string;
+  /**
+   * Required for accessibility and SEO.
+   */
   alt: string;
   caption?: string | null;
+  folder?:
+    | (
+        | 'general'
+        | 'hero'
+        | 'blogs'
+        | 'services'
+        | 'industries'
+        | 'team'
+        | 'clients'
+        | 'logos'
+        | 'icons'
+        | 'documents'
+        | 'og'
+      )
+    | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -208,6 +244,32 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    desktop?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -224,10 +286,128 @@ export interface Page {
         subheading?: string | null;
         ctaLabel?: string | null;
         ctaHref?: string | null;
+        secondaryCtaLabel?: string | null;
+        secondaryCtaHref?: string | null;
         image?: (string | null) | Media;
         id?: string | null;
         blockName?: string | null;
         blockType: 'hero';
+      }
+    | {
+        heading?: string | null;
+        stats?:
+          | {
+              label: string;
+              value: string;
+              suffix?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'statistics';
+      }
+    | {
+        heading: string;
+        body: string;
+        cta?: {
+          label?: string | null;
+          href?: string | null;
+          style?: ('primary' | 'secondary' | 'ghost') | null;
+          openInNewTab?: boolean | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'aboutPreview';
+      }
+    | {
+        heading: string;
+        subheading?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'servicesGrid';
+      }
+    | {
+        heading: string;
+        subheading?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'industriesStrip';
+      }
+    | {
+        heading: string;
+        subheading?: string | null;
+        items?:
+          | {
+              title: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'whyChooseUs';
+      }
+    | {
+        heading: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'caseStudyFeature';
+      }
+    | {
+        heading: string;
+        subheading?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'technologyGrid';
+      }
+    | {
+        heading: string;
+        steps?:
+          | {
+              title: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'processSteps';
+      }
+    | {
+        heading: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'testimonials';
+      }
+    | {
+        heading: string;
+        subheading?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'latestBlogs';
+      }
+    | {
+        heading: string;
+        subheading?: string | null;
+        cta?: {
+          label?: string | null;
+          href?: string | null;
+          style?: ('primary' | 'secondary' | 'ghost') | null;
+          openInNewTab?: boolean | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'careerBanner';
+      }
+    | {
+        heading: string;
+        subheading?: string | null;
+        ctaLabel?: string | null;
+        ctaHref?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ctaBand';
       }
     | {
         content: {
@@ -248,32 +428,6 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'richText';
-      }
-    | {
-        heading: string;
-        subheading?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'servicesGrid';
-      }
-    | {
-        heading: string;
-        subheading?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'industriesStrip';
-      }
-    | {
-        heading: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'caseStudyFeature';
-      }
-    | {
-        heading: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'testimonials';
       }
     | {
         heading: string;
@@ -302,18 +456,6 @@ export interface Page {
       }
     | {
         heading: string;
-        subheading?: string | null;
-        ctaLabel: string;
-        ctaHref: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'ctaBand';
-      }
-    | {
-        heading: string;
-        /**
-         * Optional FAQ group filter from the FAQs collection
-         */
         group?: string | null;
         id?: string | null;
         blockName?: string | null;
@@ -321,7 +463,7 @@ export interface Page {
       }
     | {
         heading: string;
-        body: {
+        body?: {
           root: {
             type: string;
             children: {
@@ -335,7 +477,7 @@ export interface Page {
             version: number;
           };
           [k: string]: unknown;
-        };
+        } | null;
         image?: (string | null) | Media;
         reverse?: boolean | null;
         id?: string | null;
@@ -344,16 +486,10 @@ export interface Page {
       }
     | {
         heading: string;
-        steps?:
-          | {
-              title: string;
-              description: string;
-              id?: string | null;
-            }[]
-          | null;
+        subheading?: string | null;
         id?: string | null;
         blockName?: string | null;
-        blockType: 'processSteps';
+        blockType: 'newsletter';
       }
   )[];
   meta?: {
@@ -551,6 +687,18 @@ export interface Blog {
   cover?: (string | null) | Media;
   author?: (string | null) | Author;
   categories?: (string | Category)[] | null;
+  tags?: (string | Tag)[] | null;
+  /**
+   * Minutes. Auto-estimated on save if empty.
+   */
+  readingTime?: number | null;
+  /**
+   * Show in featured lists and homepage modules.
+   */
+  featured?: boolean | null;
+  /**
+   * Public publish timestamp.
+   */
   publishedAt?: string | null;
   meta?: {
     title?: string | null;
@@ -586,6 +734,22 @@ export interface Category {
   id: string;
   title: string;
   slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  title: string;
+  slug: string;
+  description?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -642,6 +806,22 @@ export interface Career {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments".
+ */
+export interface Department {
+  id: string;
+  title: string;
+  slug: string;
+  description?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -703,6 +883,28 @@ export interface Faq {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "technologies".
+ */
+export interface Technology {
+  id: string;
+  title: string;
+  slug: string;
+  category: 'frontend' | 'backend' | 'cloud' | 'devops' | 'ai' | 'database' | 'cms' | 'other';
+  logo?: (string | null) | Media;
+  description?: string | null;
+  /**
+   * Show in featured lists and homepage modules.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -718,6 +920,35 @@ export interface FormSubmission {
     | boolean
     | null;
   status: 'new' | 'reviewed' | 'archived';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages".
+ */
+export interface ContactMessage {
+  id: string;
+  name: string;
+  company?: string | null;
+  email: string;
+  phone?: string | null;
+  subject?: string | null;
+  message: string;
+  intent?: ('project' | 'general' | 'partnership') | null;
+  status: 'new' | 'in-progress' | 'closed';
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers".
+ */
+export interface NewsletterSubscriber {
+  id: string;
+  email: string;
+  status: 'active' | 'unsubscribed';
   updatedAt: string;
   createdAt: string;
 }
@@ -840,12 +1071,20 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
+        relationTo: 'tags';
+        value: string | Tag;
+      } | null)
+    | ({
         relationTo: 'authors';
         value: string | Author;
       } | null)
     | ({
         relationTo: 'careers';
         value: string | Career;
+      } | null)
+    | ({
+        relationTo: 'departments';
+        value: string | Department;
       } | null)
     | ({
         relationTo: 'testimonials';
@@ -864,8 +1103,20 @@ export interface PayloadLockedDocument {
         value: string | Faq;
       } | null)
     | ({
+        relationTo: 'technologies';
+        value: string | Technology;
+      } | null)
+    | ({
         relationTo: 'form-submissions';
         value: string | FormSubmission;
+      } | null)
+    | ({
+        relationTo: 'contact-messages';
+        value: string | ContactMessage;
+      } | null)
+    | ({
+        relationTo: 'newsletter-subscribers';
+        value: string | NewsletterSubscriber;
       } | null)
     | ({
         relationTo: 'job-applications';
@@ -947,6 +1198,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -958,6 +1210,40 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        tablet?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        desktop?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -977,14 +1263,40 @@ export interface PagesSelect<T extends boolean = true> {
               subheading?: T;
               ctaLabel?: T;
               ctaHref?: T;
+              secondaryCtaLabel?: T;
+              secondaryCtaHref?: T;
               image?: T;
               id?: T;
               blockName?: T;
             };
-        richText?:
+        statistics?:
           | T
           | {
-              content?: T;
+              heading?: T;
+              stats?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    suffix?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        aboutPreview?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    style?: T;
+                    openInNewTab?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1004,6 +1316,21 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        whyChooseUs?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         caseStudyFeature?:
           | T
           | {
@@ -1011,10 +1338,73 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        technologyGrid?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              id?: T;
+              blockName?: T;
+            };
+        processSteps?:
+          | T
+          | {
+              heading?: T;
+              steps?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         testimonials?:
           | T
           | {
               heading?: T;
+              id?: T;
+              blockName?: T;
+            };
+        latestBlogs?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              id?: T;
+              blockName?: T;
+            };
+        careerBanner?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    style?: T;
+                    openInNewTab?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        ctaBand?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              ctaLabel?: T;
+              ctaHref?: T;
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              content?: T;
               id?: T;
               blockName?: T;
             };
@@ -1046,16 +1436,6 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        ctaBand?:
-          | T
-          | {
-              heading?: T;
-              subheading?: T;
-              ctaLabel?: T;
-              ctaHref?: T;
-              id?: T;
-              blockName?: T;
-            };
         faqAccordion?:
           | T
           | {
@@ -1074,17 +1454,11 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        processSteps?:
+        newsletter?:
           | T
           | {
               heading?: T;
-              steps?:
-                | T
-                | {
-                    title?: T;
-                    description?: T;
-                    id?: T;
-                  };
+              subheading?: T;
               id?: T;
               blockName?: T;
             };
@@ -1215,6 +1589,9 @@ export interface BlogsSelect<T extends boolean = true> {
   cover?: T;
   author?: T;
   categories?: T;
+  tags?: T;
+  readingTime?: T;
+  featured?: T;
   publishedAt?: T;
   meta?:
     | T
@@ -1234,6 +1611,18 @@ export interface BlogsSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1273,6 +1662,18 @@ export interface CareersSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments_select".
+ */
+export interface DepartmentsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1327,11 +1728,53 @@ export interface FaqsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "technologies_select".
+ */
+export interface TechnologiesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  logo?: T;
+  description?: T;
+  featured?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions_select".
  */
 export interface FormSubmissionsSelect<T extends boolean = true> {
   type?: T;
   data?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages_select".
+ */
+export interface ContactMessagesSelect<T extends boolean = true> {
+  name?: T;
+  company?: T;
+  email?: T;
+  phone?: T;
+  subject?: T;
+  message?: T;
+  intent?: T;
+  status?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers_select".
+ */
+export interface NewsletterSubscribersSelect<T extends boolean = true> {
+  email?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1411,7 +1854,17 @@ export interface SiteSetting {
   siteName: string;
   tagline?: string | null;
   logo?: (string | null) | Media;
+  logoDark?: (string | null) | Media;
   favicon?: (string | null) | Media;
+  theme?: {
+    primaryColor?: string | null;
+    secondaryColor?: string | null;
+    accentColor?: string | null;
+  };
+  footerCopyright?: string | null;
+  /**
+   * Prefer Social Media global for new projects.
+   */
   social?: {
     linkedin?: string | null;
     twitter?: string | null;
@@ -1431,11 +1884,22 @@ export interface Navigation {
     | {
         label: string;
         href: string;
+        mega?: ('none' | 'solutions' | 'services' | 'industries') | null;
         id?: string | null;
       }[]
     | null;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    style?: ('primary' | 'secondary' | 'ghost') | null;
+    openInNewTab?: boolean | null;
+  };
+  /**
+   * Prefer CTA group above. Kept for compatibility.
+   */
   ctaLabel?: string | null;
   ctaHref?: string | null;
+  stickyHeader?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1516,13 +1980,78 @@ export interface SeoDefault {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media".
+ */
+export interface SocialMedia {
+  id: string;
+  linkedin?: string | null;
+  instagram?: string | null;
+  facebook?: string | null;
+  youtube?: string | null;
+  twitter?: string | null;
+  github?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics".
+ */
+export interface Analytics {
+  id: string;
+  googleAnalyticsId?: string | null;
+  googleTagManagerId?: string | null;
+  metaPixelId?: string | null;
+  linkedinPixelId?: string | null;
+  microsoftClarityId?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcement-bar".
+ */
+export interface AnnouncementBar {
+  id: string;
+  enabled?: boolean | null;
+  message?: string | null;
+  ctaLabel?: string | null;
+  ctaLink?: string | null;
+  expiresAt?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cookie-banner".
+ */
+export interface CookieBanner {
+  id: string;
+  enabled?: boolean | null;
+  message?: string | null;
+  policyHref?: string | null;
+  acceptLabel?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
   siteName?: T;
   tagline?: T;
   logo?: T;
+  logoDark?: T;
   favicon?: T;
+  theme?:
+    | T
+    | {
+        primaryColor?: T;
+        secondaryColor?: T;
+        accentColor?: T;
+      };
+  footerCopyright?: T;
   social?:
     | T
     | {
@@ -1545,10 +2074,20 @@ export interface NavigationSelect<T extends boolean = true> {
     | {
         label?: T;
         href?: T;
+        mega?: T;
         id?: T;
+      };
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        style?: T;
+        openInNewTab?: T;
       };
   ctaLabel?: T;
   ctaHref?: T;
+  stickyHeader?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1618,6 +2157,62 @@ export interface SeoDefaultsSelect<T extends boolean = true> {
   defaultDescription?: T;
   ogImage?: T;
   twitterHandle?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media_select".
+ */
+export interface SocialMediaSelect<T extends boolean = true> {
+  linkedin?: T;
+  instagram?: T;
+  facebook?: T;
+  youtube?: T;
+  twitter?: T;
+  github?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics_select".
+ */
+export interface AnalyticsSelect<T extends boolean = true> {
+  googleAnalyticsId?: T;
+  googleTagManagerId?: T;
+  metaPixelId?: T;
+  linkedinPixelId?: T;
+  microsoftClarityId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcement-bar_select".
+ */
+export interface AnnouncementBarSelect<T extends boolean = true> {
+  enabled?: T;
+  message?: T;
+  ctaLabel?: T;
+  ctaLink?: T;
+  expiresAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cookie-banner_select".
+ */
+export interface CookieBannerSelect<T extends boolean = true> {
+  enabled?: T;
+  message?: T;
+  policyHref?: T;
+  acceptLabel?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

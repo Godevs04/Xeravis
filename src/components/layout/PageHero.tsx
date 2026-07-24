@@ -5,7 +5,7 @@ import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-type CTA = { label: string; href: string; variant?: 'default' | 'accent' | 'outline' }
+type CTA = { label: string; href: string; variant?: 'default' | 'primary' | 'accent' | 'outline' | 'secondary' }
 
 type PageHeroProps = {
   eyebrow?: string
@@ -31,29 +31,43 @@ export function PageHero({
   const centered = align === 'center'
 
   return (
-    <section className={cn('relative overflow-hidden border-b border-border', image && 'min-h-[70vh]')}>
+    <section
+      className={cn(
+        'relative overflow-hidden',
+        image ? 'min-h-[100svh] border-b-0' : 'border-b border-border pt-16 lg:pt-[4.5rem]',
+      )}
+    >
       {image && (
         <>
           <Image src={image} alt={imageAlt} fill priority className="object-cover" sizes="100vw" />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark/85 via-dark/70 to-dark/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-dark/88 via-dark/72 to-dark/45" />
         </>
       )}
       <Container
         className={cn(
           'relative flex flex-col justify-center',
-          size === 'default' ? 'min-h-[70vh] py-24 lg:py-32' : 'py-16 lg:py-20',
+          size === 'default'
+            ? image
+              ? 'min-h-[100svh] pb-24 pt-28 lg:pb-32 lg:pt-32'
+              : 'py-20 lg:py-28'
+            : 'py-16 lg:py-20',
           centered && 'items-center text-center',
         )}
       >
         {eyebrow && (
-          <p className={cn('mb-4 text-sm font-semibold uppercase tracking-[0.2em]', image ? 'text-white/80' : 'text-accent')}>
+          <p
+            className={cn(
+              'mb-4 text-sm font-semibold uppercase tracking-[0.2em]',
+              image ? 'text-white/80' : 'text-accent',
+            )}
+          >
             {eyebrow}
           </p>
         )}
         <h1
           className={cn(
-            'max-w-4xl text-balance text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl',
-            image ? 'text-white' : 'text-primary',
+            'max-w-4xl text-balance font-bold tracking-tight',
+            image ? 'text-[length:var(--text-display-xl)] text-white' : 'text-[length:var(--text-h1)] text-primary',
           )}
         >
           {title}
@@ -61,7 +75,7 @@ export function PageHero({
         {subtitle && (
           <p
             className={cn(
-              'mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl',
+              'mt-6 max-w-[65ch] text-lg leading-relaxed sm:text-xl',
               image ? 'text-white/80' : 'text-secondary',
               centered && 'mx-auto',
             )}
@@ -73,12 +87,12 @@ export function PageHero({
           <div className={cn('mt-10 flex flex-wrap gap-4', centered && 'justify-center')}>
             {ctas.map((cta) => (
               <Button
-                key={cta.href}
+                key={`${cta.href}-${cta.label}`}
                 asChild
-                variant={cta.variant || 'accent'}
+                variant={cta.variant === 'accent' ? 'primary' : cta.variant || 'primary'}
                 size="lg"
                 className={
-                  image && cta.variant === 'outline'
+                  image && (cta.variant === 'outline' || cta.variant === 'secondary')
                     ? 'border-white/30 bg-transparent text-white hover:border-white hover:bg-white/10'
                     : undefined
                 }

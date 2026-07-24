@@ -1,0 +1,112 @@
+/**
+ * GoDevs Enterprise Design System — tokens
+ * Source of truth aligned with docs/PHASE-3-DESIGN-SYSTEM.md
+ * Components must consume these variables; no magic numbers.
+ */
+
+:root {
+  /* Color */
+  --color-primary: #0f172a;
+  --color-secondary: #334155;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-muted-line: #e2e8f0;
+  --color-muted: #64748b;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-danger: #dc2626;
+  --color-dark: #020617;
+  --color-border: var(--color-muted-line);
+
+  /* Space scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-30: 120px;
+  --space-40: 160px;
+
+  /* Radius */
+  --radius-button: 12px;
+  --radius-input: 12px;
+  --radius-card: 20px;
+  --radius-image: 20px;
+  --radius-dialog: 24px;
+  --radius-hero: 32px;
+  --radius-pill: 9999px;
+  --radius-sm: var(--radius-button);
+  --radius-md: var(--radius-card);
+
+  /* Shadow */
+  --shadow-light: 0 1px 2px rgb(15 23 42 / 0.04);
+  --shadow-medium: 0 4px 12px rgb(15 23 42 / 0.06);
+  --shadow-large: 0 12px 32px rgb(15 23 42 / 0.08);
+  --shadow-floating: 0 16px 48px rgb(15 23 42 / 0.12);
+  --shadow-hover: 0 8px 24px rgb(15 23 42 / 0.1);
+
+  /* Motion */
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Layout */
+  --grid-container: 1280px;
+  --grid-section: 1200px;
+  --grid-prose: 45rem;
+  --grid-gutter: 32px;
+  --section-pad-y: 120px;
+  --section-pad-y-md: 80px;
+  --section-pad-y-sm: 64px;
+  --touch-min: 44px;
+
+  /* Type sizes */
+  --text-display-xl: 64px;
+  --text-display-l: 56px;
+  --text-h1: 48px;
+  --text-h2: 40px;
+  --text-h3: 32px;
+  --text-h4: 24px;
+  --text-h5: 20px;
+  --text-h6: 18px;
+  --text-body-lg: 18px;
+  --text-body: 16px;
+  --text-caption: 14px;
+  --text-small: 12px;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --section-pad-y: var(--section-pad-y-md);
+    --text-display-xl: 48px;
+    --text-display-l: 40px;
+    --text-h1: 36px;
+    --text-h2: 32px;
+    --text-h3: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-pad-y: var(--section-pad-y-sm);
+    --text-display-xl: 40px;
+    --text-display-l: 36px;
+    --text-h1: 32px;
+    --text-h2: 28px;
+    --text-h3: 24px;
+  }
+}
