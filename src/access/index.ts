@@ -75,3 +75,25 @@ export const staffRead: Access = ({ req: { user } }) =>
     'recruiter',
     'viewer',
   ])
+
+/** Role aliases matching org naming (Admin / Editor / Marketing / Recruiter / Viewer) */
+export const isAdministrator = isAdmin
+export const isEditor: Access = ({ req: { user } }) =>
+  hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'editor'])
+export const isMarketing: Access = ({ req: { user } }) =>
+  hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'marketing'])
+export const isRecruiter: Access = ({ req: { user } }) =>
+  hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'recruiter'])
+export const isViewer: Access = ({ req: { user } }) =>
+  hasRole(user as UserWithRoles, [
+    'super-admin',
+    'administrator',
+    'editor',
+    'content-manager',
+    'marketing',
+    'recruiter',
+    'viewer',
+  ])
+
+export const canManageMarketing: Access = ({ req: { user } }) =>
+  hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'marketing', 'editor'])

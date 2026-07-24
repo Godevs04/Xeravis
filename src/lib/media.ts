@@ -13,5 +13,8 @@ export function getMediaUrl(media: string | MediaObject | null | undefined): str
 
 export function getMediaAlt(media: string | MediaObject | null | undefined, fallback = ''): string {
   if (!media || typeof media === 'string') return fallback
-  return media.alt || fallback
+  return media.alt || media.filename || fallback
 }
+
+export const mediaUrl = getMediaUrl
+export const mediaAlt = getMediaAlt

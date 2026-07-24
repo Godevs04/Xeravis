@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "baseUrl": ".",
     "esModuleInterop": true,
     "target": "ES2022",

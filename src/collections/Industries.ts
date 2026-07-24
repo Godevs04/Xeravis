@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
 import { authenticatedOrPublished, canManageContent, isAdminOrEditor } from '@/access'
+import { featuredField, orderField } from '@/fields'
 import { slugField } from '@/fields/slug'
+import { revalidateSlugPath } from '@/payload/hooks'
 
 export const Industries: CollectionConfig = {
   slug: 'industries',
@@ -21,6 +23,9 @@ export const Industries: CollectionConfig = {
     create: canManageContent,
     update: canManageContent,
     delete: isAdminOrEditor,
+  },
+  hooks: {
+    afterChange: [revalidateSlugPath('/industries', 'industries')],
   },
   fields: [
     {
@@ -50,5 +55,7 @@ export const Industries: CollectionConfig = {
       relationTo: 'services',
       hasMany: true,
     },
+    featuredField(),
+    orderField(),
   ],
 }

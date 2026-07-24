@@ -540,6 +540,14 @@ export interface Service {
       }[]
     | null;
   relatedIndustries?: (string | Industry)[] | null;
+  /**
+   * Show in featured lists and homepage modules.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -578,6 +586,14 @@ export interface Industry {
     [k: string]: unknown;
   } | null;
   relatedServices?: (string | Service)[] | null;
+  /**
+   * Show in featured lists and homepage modules.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -615,6 +631,14 @@ export interface Solution {
     [k: string]: unknown;
   };
   relatedServices?: (string | Service)[] | null;
+  /**
+   * Show in featured lists and homepage modules.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -1492,6 +1516,8 @@ export interface ServicesSelect<T extends boolean = true> {
         id?: T;
       };
   relatedIndustries?: T;
+  featured?: T;
+  order?: T;
   meta?:
     | T
     | {
@@ -1514,6 +1540,8 @@ export interface IndustriesSelect<T extends boolean = true> {
   challenges?: T;
   approach?: T;
   relatedServices?: T;
+  featured?: T;
+  order?: T;
   meta?:
     | T
     | {
@@ -1535,6 +1563,8 @@ export interface SolutionsSelect<T extends boolean = true> {
   summary?: T;
   body?: T;
   relatedServices?: T;
+  featured?: T;
+  order?: T;
   meta?:
     | T
     | {
