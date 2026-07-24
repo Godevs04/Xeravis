@@ -253,16 +253,16 @@ form.login__form {
 
 .template-minimal .form-header,
 .template-minimal h1 {
-  color: #fafafa !important;
+  color: var(--xe-text) !important;
   letter-spacing: -0.03em;
 }
 
 .template-minimal .card,
 .template-minimal form:not(.login__form) {
-  background: #16161a !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
   border-radius: 18px !important;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55) !important;
+  box-shadow: var(--xe-shadow-lg) !important;
 }
 
 @media (max-width: 480px) {

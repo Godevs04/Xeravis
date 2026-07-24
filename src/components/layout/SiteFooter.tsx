@@ -144,7 +144,7 @@ export async function SiteFooter() {
 
         <div className="text-muted mt-16 flex flex-col gap-4 border-t border-[color:var(--glass-border-soft)] pt-8 text-sm sm:flex-row sm:items-center sm:justify-between">
           <p>{copyright}</p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-6">
             <Link href="/privacy-policy" className="hover:text-primary">
               Privacy
             </Link>
@@ -153,6 +153,9 @@ export async function SiteFooter() {
             </Link>
             <Link href="/contact" className="hover:text-primary">
               Contact
+            </Link>
+            <Link href="/admin" className="hover:text-accent font-medium">
+              CMS Login
             </Link>
           </div>
         </div>

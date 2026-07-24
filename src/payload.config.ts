@@ -46,6 +46,7 @@ export default buildConfig({
       actions: [
         './payload/admin/components/AdminThemeToggle#AdminThemeToggle',
         './payload/admin/components/CommandAction#CommandAction',
+        './payload/admin/components/LogoutAction#LogoutAction',
       ],
     },
     livePreview: {

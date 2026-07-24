@@ -80,7 +80,7 @@
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
 
-  --grid-container: 1200px;
+  --grid-container: 1240px;
   --grid-section: 1120px;
   --grid-prose: 40rem;
   --grid-gutter: 24px;

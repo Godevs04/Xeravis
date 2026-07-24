@@ -46,6 +46,8 @@ const ITEMS: CmdItem[] = [
     group: 'action',
   },
   { id: 'account', label: 'Account', href: '/admin/account', group: 'action' },
+  { id: 'logout', label: 'Log out', href: '/admin/logout', group: 'action' },
+  { id: 'website', label: 'View website', href: '/', group: 'action' },
 ]
 
 export const CommandPalette = () => {

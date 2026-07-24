@@ -33,6 +33,7 @@ import { Icon as Icon_4f090f1d512145da0a4cb8f745fcff9a } from '../../../payload/
 import { Logo as Logo_9b451d48b7ff5becf1d58711b3ab64e7 } from '../../../payload/admin/components/graphics/Logo'
 import { AdminThemeToggle as AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f } from '../../../payload/admin/components/AdminThemeToggle'
 import { CommandAction as CommandAction_8e711201309cba2687ecc4ae7869caa0 } from '../../../payload/admin/components/CommandAction'
+import { LogoutAction as LogoutAction_e42ff3e328954a75cac6ff0609c32332 } from '../../../payload/admin/components/LogoutAction'
 import { AfterDashboard as AfterDashboard_0b6c98bab685e4d10d879877120e6c40 } from '../../../payload/admin/components/dashboard/AfterDashboard'
 import { AfterNavLinks as AfterNavLinks_59b0951428604bd2924d91920fe33245 } from '../../../payload/admin/components/nav/AfterNavLinks'
 import { BeforeDashboard as BeforeDashboard_d9c9db557014ea6ee02b178a2e4e50a5 } from '../../../payload/admin/components/dashboard/BeforeDashboard'
@@ -109,6 +110,8 @@ export const importMap = {
     AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f,
   './payload/admin/components/CommandAction#CommandAction':
     CommandAction_8e711201309cba2687ecc4ae7869caa0,
+  './payload/admin/components/LogoutAction#LogoutAction':
+    LogoutAction_e42ff3e328954a75cac6ff0609c32332,
   './payload/admin/components/dashboard/AfterDashboard#AfterDashboard':
     AfterDashboard_0b6c98bab685e4d10d879877120e6c40,
   './payload/admin/components/nav/AfterNavLinks#AfterNavLinks':

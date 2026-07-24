@@ -5,9 +5,11 @@ export const BRAND = {
 } as const
 
 export const UNSPLASH = {
-  office: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80',
+  office:
+    'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80',
   team: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=80',
-  servers: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=2400&q=80',
+  servers:
+    'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=2400&q=80',
 } as const
 
 export const DEFAULT_NAV = {
@@ -31,6 +33,7 @@ export const DEFAULT_FOOTER = {
         { label: 'About', href: '/about' },
         { label: 'Careers', href: '/careers' },
         { label: 'Contact', href: '/contact' },
+        { label: 'CMS Login', href: '/admin' },
       ],
     },
     {
@@ -66,42 +69,48 @@ export const FALLBACK_SERVICES = [
     id: '1',
     title: 'Cloud & Platform Engineering',
     slug: 'cloud-platform-engineering',
-    summary: 'Modernize infrastructure with secure, scalable cloud platforms built for enterprise workloads.',
+    summary:
+      'Modernize infrastructure with secure, scalable cloud platforms built for enterprise workloads.',
     icon: 'cloud',
   },
   {
     id: '2',
     title: 'Custom Software Development',
     slug: 'custom-software-development',
-    summary: 'Design and deliver mission-critical applications with clean architecture and long-term maintainability.',
+    summary:
+      'Design and deliver mission-critical applications with clean architecture and long-term maintainability.',
     icon: 'code',
   },
   {
     id: '3',
     title: 'Data & AI Solutions',
     slug: 'data-ai-solutions',
-    summary: 'Turn data into decisions with pipelines, analytics, and production-grade AI integrations.',
+    summary:
+      'Turn data into decisions with pipelines, analytics, and production-grade AI integrations.',
     icon: 'brain',
   },
   {
     id: '4',
     title: 'DevOps & SRE',
     slug: 'devops-sre',
-    summary: 'Accelerate delivery with CI/CD, observability, and reliability practices that scale with your teams.',
+    summary:
+      'Accelerate delivery with CI/CD, observability, and reliability practices that scale with your teams.',
     icon: 'workflow',
   },
   {
     id: '5',
     title: 'Cybersecurity',
     slug: 'cybersecurity',
-    summary: 'Protect applications and infrastructure with security-by-design across the software lifecycle.',
+    summary:
+      'Protect applications and infrastructure with security-by-design across the software lifecycle.',
     icon: 'shield',
   },
   {
     id: '6',
     title: 'Digital Transformation',
     slug: 'digital-transformation',
-    summary: 'Align technology roadmaps with business outcomes through pragmatic modernization programs.',
+    summary:
+      'Align technology roadmaps with business outcomes through pragmatic modernization programs.',
     icon: 'layers',
   },
 ]
@@ -164,7 +173,8 @@ export const FALLBACK_BLOG_POSTS = [
     id: '1',
     title: 'Building reliable platforms for regulated industries',
     slug: 'reliable-platforms-regulated-industries',
-    excerpt: 'Practical patterns for compliance, observability, and change management in enterprise software.',
+    excerpt:
+      'Practical patterns for compliance, observability, and change management in enterprise software.',
     publishedAt: '2025-06-01',
   },
 ]
