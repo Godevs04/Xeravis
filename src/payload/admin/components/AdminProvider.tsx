@@ -4,11 +4,17 @@ import React from 'react'
 
 import { CommandPalette } from './CommandPalette'
 
+const STORAGE_KEY = 'payload-theme'
+
 export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(() => {
     const root = document.documentElement
-    if (root.getAttribute('data-theme') !== 'dark') {
-      root.setAttribute('data-theme', 'dark')
+    const stored = window.localStorage.getItem(STORAGE_KEY)
+    const theme = stored === 'dark' || stored === 'light' ? stored : 'light'
+    root.setAttribute('data-theme', theme)
+    root.style.colorScheme = theme
+    if (!stored) {
+      window.localStorage.setItem(STORAGE_KEY, 'light')
     }
 
     const onSave = (e: KeyboardEvent) => {

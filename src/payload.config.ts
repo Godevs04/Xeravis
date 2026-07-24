@@ -29,7 +29,7 @@ export default buildConfig({
         },
       ],
     },
-    theme: 'dark',
+    theme: 'all',
     components: {
       providers: ['./payload/admin/components/AdminProvider#AdminProvider'],
       graphics: {
@@ -43,7 +43,10 @@ export default buildConfig({
       beforeDashboard: ['./payload/admin/components/dashboard/BeforeDashboard#BeforeDashboard'],
       afterDashboard: ['./payload/admin/components/dashboard/AfterDashboard#AfterDashboard'],
       header: ['./payload/admin/components/HeaderChip#HeaderChip'],
-      actions: ['./payload/admin/components/CommandAction#CommandAction'],
+      actions: [
+        './payload/admin/components/AdminThemeToggle#AdminThemeToggle',
+        './payload/admin/components/CommandAction#CommandAction',
+      ],
     },
     livePreview: {
       breakpoints: [

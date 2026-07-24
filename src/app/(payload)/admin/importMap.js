@@ -31,6 +31,7 @@ import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from 
 import { HeaderChip as HeaderChip_7909306280128a750b6e8f2ab4e3d64b } from '../../../payload/admin/components/HeaderChip'
 import { Icon as Icon_4f090f1d512145da0a4cb8f745fcff9a } from '../../../payload/admin/components/graphics/Icon'
 import { Logo as Logo_9b451d48b7ff5becf1d58711b3ab64e7 } from '../../../payload/admin/components/graphics/Logo'
+import { AdminThemeToggle as AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f } from '../../../payload/admin/components/AdminThemeToggle'
 import { CommandAction as CommandAction_8e711201309cba2687ecc4ae7869caa0 } from '../../../payload/admin/components/CommandAction'
 import { AfterDashboard as AfterDashboard_0b6c98bab685e4d10d879877120e6c40 } from '../../../payload/admin/components/dashboard/AfterDashboard'
 import { AfterNavLinks as AfterNavLinks_59b0951428604bd2924d91920fe33245 } from '../../../payload/admin/components/nav/AfterNavLinks'
@@ -104,6 +105,8 @@ export const importMap = {
   './payload/admin/components/HeaderChip#HeaderChip': HeaderChip_7909306280128a750b6e8f2ab4e3d64b,
   './payload/admin/components/graphics/Icon#Icon': Icon_4f090f1d512145da0a4cb8f745fcff9a,
   './payload/admin/components/graphics/Logo#Logo': Logo_9b451d48b7ff5becf1d58711b3ab64e7,
+  './payload/admin/components/AdminThemeToggle#AdminThemeToggle':
+    AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f,
   './payload/admin/components/CommandAction#CommandAction':
     CommandAction_8e711201309cba2687ecc4ae7869caa0,
   './payload/admin/components/dashboard/AfterDashboard#AfterDashboard':

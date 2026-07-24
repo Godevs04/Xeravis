@@ -1,9 +1,8 @@
-/* ─── Premium Login (Vercel / Linear feel) ─── */
+/* ─── Premium Login (theme-aware glass) ─── */
 
-/* Full-bleed page canvas */
 html:has(.login),
 body:has(.login) {
-  background: #09090b !important;
+  background: var(--xe-bg) !important;
 }
 
 .template-minimal.login,
@@ -17,9 +16,9 @@ section.login.template-minimal {
   align-items: center !important;
   justify-content: center !important;
   background:
-    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(109, 94, 249, 0.3), transparent 58%),
-    radial-gradient(ellipse 45% 35% at 85% 95%, rgba(109, 94, 249, 0.1), transparent 55%),
-    #09090b !important;
+    radial-gradient(ellipse 90% 55% at 50% -10%, var(--xe-mesh-1), transparent 58%),
+    radial-gradient(ellipse 45% 35% at 85% 95%, var(--xe-mesh-2), transparent 55%),
+    var(--xe-bg) !important;
   font-family: var(--xe-font) !important;
 }
 
@@ -43,12 +42,10 @@ section.login.template-minimal {
   align-self: center !important;
   margin: 0 auto !important;
   padding: 10px 18px 10px 10px !important;
-  background: rgba(24, 24, 27, 0.9) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: var(--xe-glass) !important;
+  border: 1px solid var(--xe-border) !important;
   border-radius: 999px !important;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.05) inset,
-    0 14px 40px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: var(--xe-shadow) !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -70,12 +67,12 @@ section.login.template-minimal {
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: #fafafa;
+  color: var(--xe-text);
 }
 
 .login__brand .xe-logo__subtitle {
   font-size: 11.5px;
-  color: #a1a1aa;
+  color: var(--xe-muted);
   font-weight: 500;
 }
 
@@ -85,7 +82,7 @@ section.login.template-minimal {
 .template-minimal__wrap > p {
   margin: 0 !important;
   text-align: center !important;
-  color: #a1a1aa !important;
+  color: var(--xe-muted) !important;
   font-size: 13.5px !important;
   line-height: 1.5 !important;
   letter-spacing: -0.01em;
@@ -97,12 +94,12 @@ form.login__form {
   width: 100% !important;
   margin: 0 !important;
   padding: 28px !important;
-  background: #16161a !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
   border-radius: 18px !important;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.05) inset,
-    0 28px 70px rgba(0, 0, 0, 0.55) !important;
+  box-shadow: var(--xe-shadow-lg) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   display: flex !important;
   flex-direction: column !important;
   gap: 0 !important;
@@ -125,7 +122,7 @@ form.login__form {
   font-size: 13px !important;
   font-weight: 600 !important;
   letter-spacing: -0.01em !important;
-  color: #f4f4f5 !important;
+  color: var(--xe-text) !important;
   line-height: 1.2 !important;
 }
 
