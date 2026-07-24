@@ -11,16 +11,26 @@ body:has(.login) {
 }
 
 .template-default {
-  background: var(--xe-bg) !important;
+  position: relative;
+  background:
+    radial-gradient(ellipse 70% 50% at 12% -10%, rgba(109, 94, 249, 0.22), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 92% 8%, rgba(161, 140, 255, 0.14), transparent 50%),
+    radial-gradient(ellipse 45% 35% at 70% 100%, rgba(125, 180, 255, 0.08), transparent 55%),
+    var(--xe-bg) !important;
+}
+
+.template-default__wrap {
+  position: relative;
+  z-index: 1;
 }
 
 /* ─── Sidebar ─── */
 .nav {
   background: var(--xe-sidebar) !important;
   border-right: 1px solid var(--xe-border) !important;
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  box-shadow: 8px 0 48px rgba(109, 94, 249, 0.08);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  box-shadow: 8px 0 48px rgba(109, 94, 249, 0.1);
   transition:
     width 0.28s var(--xe-ease),
     transform 0.28s var(--xe-ease),
@@ -28,12 +38,14 @@ body:has(.login) {
 }
 
 .nav__scroll {
-  padding: 16px 12px 24px !important;
+  padding: 14px 12px 24px !important;
   gap: 8px;
+  overflow-x: hidden !important;
 }
 
 .nav__wrap {
   gap: 4px !important;
+  min-width: 0;
 }
 
 .nav__header,
@@ -43,7 +55,7 @@ body:has(.login) {
 
 .nav__link {
   position: relative !important;
-  border-radius: var(--xe-radius-sm) !important;
+  border-radius: 999px !important;
   margin: 2px 0 !important;
   padding: 9px 12px 9px 14px !important;
   color: var(--xe-muted) !important;
@@ -74,6 +86,7 @@ body:has(.login) {
 .nav__link[aria-current='page'] {
   background: var(--xe-primary-soft) !important;
   color: var(--xe-text) !important;
+  box-shadow: inset 0 0 0 1px rgba(109, 94, 249, 0.22);
 }
 
 .nav-group__toggle {
@@ -96,8 +109,8 @@ body:has(.login) {
 .template-default > .template-default__wrap > header,
 .app-header,
 .step-nav {
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
   background: var(--xe-glass) !important;
   border-bottom: 1px solid var(--xe-border) !important;
 }
@@ -106,6 +119,18 @@ body:has(.login) {
   position: sticky;
   top: 0;
   z-index: 30;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  min-height: 56px;
+  padding-inline: 20px !important;
+}
+
+.app-header__controls,
+.collection-list__header-wrap,
+.gutter--left {
+  min-width: 0;
 }
 
 .step-nav {
@@ -122,6 +147,61 @@ body:has(.login) {
   color: var(--xe-text);
 }
 
+/* ─── Document title row + sticky actions ─── */
+.doc-header,
+.collection-edit__header,
+.global-edit__header,
+.render-title {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center !important;
+  justify-content: space-between;
+  gap: 12px 16px;
+}
+
+.doc-controls,
+.document-fields .sticky-toolbar,
+.collection-edit__sticky,
+.form-submit,
+.doc-controls__controls {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.doc-controls,
+.document-fields .sticky-toolbar,
+.collection-edit__sticky {
+  position: sticky !important;
+  top: 64px;
+  z-index: 20;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  margin-left: auto !important;
+  margin-bottom: 16px !important;
+  padding: 8px !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--xe-border) !important;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  background: rgba(22, 18, 36, 0.72) !important;
+  box-shadow: var(--xe-shadow) !important;
+}
+
+.doc-controls .btn,
+.doc-controls__controls .btn {
+  margin: 0 !important;
+  border-radius: 999px !important;
+  min-height: 36px !important;
+  padding-inline: 14px !important;
+}
+
+.doc-controls .btn--style-primary,
+.doc-controls__controls .btn--style-primary {
+  background: linear-gradient(135deg, #6d5ef9, #8b7cff) !important;
+  box-shadow: 0 8px 22px rgba(109, 94, 249, 0.4) !important;
+}
+
 /* ─── Dashboard cards / collection cards ─── */
 .dashboard {
   padding-block: 28px 48px !important;
@@ -134,10 +214,23 @@ body:has(.login) {
   border: 1px solid var(--xe-border) !important;
   border-radius: var(--xe-radius-lg) !important;
   box-shadow: var(--xe-shadow) !important;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
   transition:
     transform 0.22s var(--xe-ease),
     border-color 0.22s var(--xe-ease),
     box-shadow 0.22s var(--xe-ease) !important;
+}
+
+.render-fields > .field-type {
+  background: rgba(36, 30, 56, 0.55) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-radius) !important;
+  box-shadow: var(--xe-shadow) !important;
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  padding: 16px 18px !important;
+  margin-bottom: 12px !important;
 }
 
 .dashboard .card:hover,
@@ -161,13 +254,15 @@ body:has(.login) {
   border-radius: var(--xe-radius-lg);
   overflow: hidden;
   box-shadow: var(--xe-shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .table thead th {
   position: sticky;
   top: 0;
   z-index: 2;
-  background: rgba(30, 30, 36, 0.95) !important;
+  background: rgba(28, 24, 42, 0.92) !important;
   backdrop-filter: blur(8px);
   color: var(--xe-muted) !important;
   font-size: 11px !important;
@@ -197,7 +292,7 @@ body:has(.login) {
 /* ─── Buttons ─── */
 .btn,
 button.btn {
-  border-radius: 10px !important;
+  border-radius: 999px !important;
   font-weight: 600 !important;
   letter-spacing: -0.01em;
   transition:
@@ -208,23 +303,24 @@ button.btn {
 
 .btn--style-primary,
 .btn.btn--style-primary {
-  background: var(--xe-primary) !important;
+  background: linear-gradient(135deg, #6d5ef9, #8b7cff) !important;
   border-color: transparent !important;
   box-shadow: 0 0 0 1px rgba(109, 94, 249, 0.35), 0 8px 24px rgba(109, 94, 249, 0.25);
 }
 
 .btn--style-primary:hover,
 .btn.btn--style-primary:hover {
-  background: var(--xe-primary-hover) !important;
+  background: linear-gradient(135deg, #5a4ce8, #a18cff) !important;
   transform: translateY(-1px);
   box-shadow: 0 0 0 1px rgba(109, 94, 249, 0.5), 0 12px 28px rgba(109, 94, 249, 0.35);
 }
 
 .btn--style-secondary,
 .btn--style-subtle {
-  background: var(--xe-surface) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
   border: 1px solid var(--xe-border) !important;
   color: var(--xe-text) !important;
+  backdrop-filter: blur(10px);
 }
 
 .btn--style-secondary:hover,
@@ -241,32 +337,48 @@ button.btn {
 input.input,
 textarea.textarea,
 .input input,
-.textarea textarea {
-  background: var(--xe-surface) !important;
+.textarea textarea,
+.field-type__wrap input,
+.field-type__wrap textarea {
+  background: rgba(255, 255, 255, 0.04) !important;
   border: 1px solid var(--xe-border) !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   color: var(--xe-text) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   transition:
     border-color 0.18s ease,
-    box-shadow 0.18s ease !important;
+    box-shadow 0.18s ease,
+    background 0.18s ease !important;
 }
 
 .field-type text input:focus,
 .field-type textarea textarea:focus,
 .react-select__control--is-focused,
 .input input:focus,
-.textarea textarea:focus {
+.textarea textarea:focus,
+.field-type__wrap input:focus,
+.field-type__wrap textarea:focus {
   border-color: rgba(109, 94, 249, 0.65) !important;
+  background: rgba(109, 94, 249, 0.08) !important;
   box-shadow: 0 0 0 3px var(--xe-primary-soft) !important;
   outline: none !important;
 }
 
-.doc-controls,
-.document-fields .sticky-toolbar,
-.collection-edit__sticky {
-  backdrop-filter: blur(14px);
-  background: rgba(9, 9, 11, 0.82) !important;
-  border-top: 1px solid var(--xe-border) !important;
+.field-label,
+.field-type__label,
+.label-wrapper label {
+  color: var(--xe-muted) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+}
+
+.field-description,
+.field-type__description {
+  color: #7f7898 !important;
+  font-size: 12px !important;
 }
 
 /* ─── Media / uploads ─── */
@@ -293,17 +405,15 @@ textarea.textarea,
   background: var(--xe-primary-soft) !important;
 }
 
-/* ─── Login ─── */
-/* Moved to login.scss for a full enterprise treatment */
-
 /* ─── Toasts ─── */
 .Toastify__toast {
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   background: var(--xe-card) !important;
   border: 1px solid var(--xe-border) !important;
   box-shadow: var(--xe-shadow-lg) !important;
   color: var(--xe-text) !important;
   font-family: var(--xe-font) !important;
+  backdrop-filter: blur(16px);
 }
 
 /* ─── Drawers / modals ─── */
@@ -314,6 +424,8 @@ textarea.textarea,
   border: 1px solid var(--xe-border) !important;
   border-radius: var(--xe-radius-lg) !important;
   box-shadow: var(--xe-shadow-lg) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
 }
 
 /* ─── Pagination ─── */
@@ -324,9 +436,9 @@ textarea.textarea,
 
 .paginator button,
 .page-controls button {
-  border-radius: 8px !important;
+  border-radius: 999px !important;
   border: 1px solid var(--xe-border) !important;
-  background: var(--xe-surface) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
 }
 
 .paginator button:hover,
@@ -383,7 +495,6 @@ textarea.textarea,
   transition: transform 0.15s var(--xe-ease);
 }
 
-/* Compact denser list preference via data attribute */
 html[data-xe-list='compact'] .table tbody td {
   padding: 8px 14px !important;
   font-size: 12.5px !important;

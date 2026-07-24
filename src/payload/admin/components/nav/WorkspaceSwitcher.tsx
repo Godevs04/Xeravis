@@ -9,20 +9,24 @@ export const WorkspaceSwitcher = () => {
     <div className="xe-workspace">
       <div className="xe-workspace__label">Workspace</div>
       <button type="button" className="xe-workspace__btn" aria-label="Workspace switcher">
-        <span className="xe-workspace__avatar">XV</span>
+        <span className="xe-workspace__avatar" aria-hidden>
+          XV
+        </span>
         <span className="xe-workspace__meta">
-          <span className="xe-workspace__name">Xelarvis Technologies</span>
+          <span className="xe-workspace__name">Xelarvis</span>
           <span className="xe-workspace__env">{env}</span>
         </span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path
-            d="M7 10l5 5 5-5"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <span className="xe-workspace__chevron" aria-hidden>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M7 10l5 5 5-5"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
       </button>
     </div>
   )

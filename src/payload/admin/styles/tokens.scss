@@ -4,20 +4,20 @@
 
 :root {
   --xe-bg: #0c0a14;
-  --xe-sidebar: rgba(22, 18, 36, 0.72);
-  --xe-surface: rgba(28, 24, 42, 0.85);
-  --xe-card: rgba(36, 30, 56, 0.78);
-  --xe-hover: rgba(139, 124, 255, 0.12);
+  --xe-sidebar: rgba(18, 14, 32, 0.78);
+  --xe-surface: rgba(32, 26, 52, 0.72);
+  --xe-card: rgba(36, 30, 56, 0.62);
+  --xe-hover: rgba(139, 124, 255, 0.14);
   --xe-primary: #6d5ef9;
   --xe-primary-hover: #8b7cff;
-  --xe-primary-soft: rgba(109, 94, 249, 0.18);
+  --xe-primary-soft: rgba(109, 94, 249, 0.2);
   --xe-success: #22c55e;
   --xe-warning: #f59e0b;
   --xe-danger: #ef4444;
   --xe-text: #f7f4ff;
   --xe-muted: #a8a2c4;
-  --xe-border: rgba(161, 140, 255, 0.16);
-  --xe-border-strong: rgba(161, 140, 255, 0.28);
+  --xe-border: rgba(161, 140, 255, 0.18);
+  --xe-border-strong: rgba(161, 140, 255, 0.32);
   --xe-radius-sm: 12px;
   --xe-radius: 16px;
   --xe-radius-lg: 20px;
@@ -28,8 +28,8 @@
     sans-serif;
   --xe-display: 'Space Grotesk', var(--xe-font);
   --xe-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --xe-glass: rgba(22, 18, 36, 0.55);
-  --xe-glow: rgba(109, 94, 249, 0.35);
+  --xe-glass: rgba(18, 14, 32, 0.58);
+  --xe-glow: rgba(109, 94, 249, 0.4);
 }
 
 /* Remap Payload palette toward soft purple glass */
