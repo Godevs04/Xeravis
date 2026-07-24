@@ -1,0 +1,394 @@
+/* Layout shell */
+html:has(.template-default),
+html:has(.login),
+body:has(.template-default),
+body:has(.login) {
+  background: var(--xe-bg) !important;
+  color: var(--xe-text);
+  font-family: var(--xe-font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.template-default {
+  background: var(--xe-bg) !important;
+}
+
+/* ─── Sidebar ─── */
+.nav {
+  background: var(--xe-sidebar) !important;
+  border-right: 1px solid var(--xe-border) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 8px 0 48px rgba(109, 94, 249, 0.08);
+  transition:
+    width 0.28s var(--xe-ease),
+    transform 0.28s var(--xe-ease),
+    opacity 0.2s ease !important;
+}
+
+.nav__scroll {
+  padding: 16px 12px 24px !important;
+  gap: 8px;
+}
+
+.nav__wrap {
+  gap: 4px !important;
+}
+
+.nav__header,
+.nav .nav__header-content {
+  border: none !important;
+}
+
+.nav__link {
+  position: relative !important;
+  border-radius: var(--xe-radius-sm) !important;
+  margin: 2px 0 !important;
+  padding: 9px 12px 9px 14px !important;
+  color: var(--xe-muted) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em;
+  transition:
+    background 0.18s var(--xe-ease),
+    color 0.18s var(--xe-ease),
+    transform 0.18s var(--xe-ease) !important;
+}
+
+.nav__link:hover {
+  background: var(--xe-hover) !important;
+  color: var(--xe-text) !important;
+  transform: translateX(2px);
+}
+
+.nav__link-indicator {
+  width: 3px !important;
+  border-radius: 999px !important;
+  background: var(--xe-primary) !important;
+  box-shadow: 0 0 12px var(--xe-glow);
+  left: 4px !important;
+}
+
+.nav__link:has(.nav__link-indicator),
+.nav__link[aria-current='page'] {
+  background: var(--xe-primary-soft) !important;
+  color: var(--xe-text) !important;
+}
+
+.nav-group__toggle {
+  color: var(--xe-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  padding: 14px 12px 6px !important;
+  opacity: 0.85;
+}
+
+.nav__controls {
+  margin-top: 16px !important;
+  padding-top: 12px !important;
+  border-top: 1px solid var(--xe-border) !important;
+}
+
+/* ─── App header / glass ─── */
+.template-default > .template-default__wrap > header,
+.app-header,
+.step-nav {
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  background: var(--xe-glass) !important;
+  border-bottom: 1px solid var(--xe-border) !important;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.step-nav {
+  font-size: 13px;
+  color: var(--xe-muted);
+}
+
+.step-nav a {
+  color: var(--xe-muted);
+  transition: color 0.15s ease;
+}
+
+.step-nav a:hover {
+  color: var(--xe-text);
+}
+
+/* ─── Dashboard cards / collection cards ─── */
+.dashboard {
+  padding-block: 28px 48px !important;
+}
+
+.dashboard .card,
+.collection-list .card,
+.card {
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-radius-lg) !important;
+  box-shadow: var(--xe-shadow) !important;
+  transition:
+    transform 0.22s var(--xe-ease),
+    border-color 0.22s var(--xe-ease),
+    box-shadow 0.22s var(--xe-ease) !important;
+}
+
+.dashboard .card:hover,
+.collection-list .card:hover {
+  transform: translateY(-2px) scale(1.01);
+  border-color: var(--xe-border-strong) !important;
+  box-shadow: var(--xe-shadow-lg) !important;
+}
+
+/* ─── Tables ─── */
+.table,
+.table table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.collection-list,
+.table {
+  background: var(--xe-card);
+  border: 1px solid var(--xe-border);
+  border-radius: var(--xe-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--xe-shadow);
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: rgba(30, 30, 36, 0.95) !important;
+  backdrop-filter: blur(8px);
+  color: var(--xe-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--xe-border) !important;
+  padding: 14px 16px !important;
+}
+
+.table tbody td {
+  border-bottom: 1px solid var(--xe-border) !important;
+  padding: 14px 16px !important;
+  font-size: 13.5px !important;
+  color: var(--xe-text) !important;
+  transition: background 0.15s ease;
+}
+
+.table tbody tr:hover td {
+  background: var(--xe-hover) !important;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* ─── Buttons ─── */
+.btn,
+button.btn {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+  transition:
+    transform 0.18s var(--xe-ease),
+    box-shadow 0.18s var(--xe-ease),
+    background 0.18s ease !important;
+}
+
+.btn--style-primary,
+.btn.btn--style-primary {
+  background: var(--xe-primary) !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 0 1px rgba(109, 94, 249, 0.35), 0 8px 24px rgba(109, 94, 249, 0.25);
+}
+
+.btn--style-primary:hover,
+.btn.btn--style-primary:hover {
+  background: var(--xe-primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(109, 94, 249, 0.5), 0 12px 28px rgba(109, 94, 249, 0.35);
+}
+
+.btn--style-secondary,
+.btn--style-subtle {
+  background: var(--xe-surface) !important;
+  border: 1px solid var(--xe-border) !important;
+  color: var(--xe-text) !important;
+}
+
+.btn--style-secondary:hover,
+.btn--style-subtle:hover {
+  background: var(--xe-hover) !important;
+  border-color: var(--xe-border-strong) !important;
+}
+
+/* ─── Inputs / forms ─── */
+.field-type text input,
+.field-type textarea textarea,
+.field-type select select,
+.react-select__control,
+input.input,
+textarea.textarea,
+.input input,
+.textarea textarea {
+  background: var(--xe-surface) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: 10px !important;
+  color: var(--xe-text) !important;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease !important;
+}
+
+.field-type text input:focus,
+.field-type textarea textarea:focus,
+.react-select__control--is-focused,
+.input input:focus,
+.textarea textarea:focus {
+  border-color: rgba(109, 94, 249, 0.65) !important;
+  box-shadow: 0 0 0 3px var(--xe-primary-soft) !important;
+  outline: none !important;
+}
+
+.doc-controls,
+.document-fields .sticky-toolbar,
+.collection-edit__sticky {
+  backdrop-filter: blur(14px);
+  background: rgba(9, 9, 11, 0.82) !important;
+  border-top: 1px solid var(--xe-border) !important;
+}
+
+/* ─── Media / uploads ─── */
+.file-details,
+.upload,
+.thumbnail,
+.list-drawer__body .upload-gallery {
+  border-radius: var(--xe-radius) !important;
+}
+
+.dropzone,
+.file-field {
+  border: 1px dashed var(--xe-border-strong) !important;
+  border-radius: var(--xe-radius-lg) !important;
+  background: linear-gradient(180deg, rgba(109, 94, 249, 0.06), transparent) !important;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease !important;
+}
+
+.dropzone:hover,
+.file-field:hover {
+  border-color: rgba(109, 94, 249, 0.55) !important;
+  background: var(--xe-primary-soft) !important;
+}
+
+/* ─── Login ─── */
+/* Moved to login.scss for a full enterprise treatment */
+
+/* ─── Toasts ─── */
+.Toastify__toast {
+  border-radius: 12px !important;
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
+  box-shadow: var(--xe-shadow-lg) !important;
+  color: var(--xe-text) !important;
+  font-family: var(--xe-font) !important;
+}
+
+/* ─── Drawers / modals ─── */
+.drawer__content,
+.modal,
+.popup {
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-radius-lg) !important;
+  box-shadow: var(--xe-shadow-lg) !important;
+}
+
+/* ─── Pagination ─── */
+.paginator,
+.page-controls {
+  gap: 8px;
+}
+
+.paginator button,
+.page-controls button {
+  border-radius: 8px !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--xe-surface) !important;
+}
+
+.paginator button:hover,
+.page-controls button:hover {
+  background: var(--xe-hover) !important;
+}
+
+/* ─── Empty / loading ─── */
+.no-results,
+.empty-state {
+  color: var(--xe-muted);
+  padding: 48px 24px;
+  text-align: center;
+}
+
+@keyframes xe-shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.xe-skeleton {
+  background: linear-gradient(90deg, var(--xe-surface) 0%, var(--xe-hover) 50%, var(--xe-surface) 100%);
+  background-size: 800px 100%;
+  animation: xe-shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+
+/* ─── Focus ring a11y ─── */
+:focus-visible {
+  outline: 2px solid var(--xe-primary) !important;
+  outline-offset: 2px !important;
+}
+
+/* ─── Media library grid polish ─── */
+.collection-list.collection-list--media .table,
+.upload-gallery,
+.list-drawer .upload {
+  display: block;
+}
+
+.file-details__thumbnail,
+.thumbnail img,
+.thumbnail__image {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.collection-list .row-1,
+.table tbody tr {
+  transition: transform 0.15s var(--xe-ease);
+}
+
+/* Compact denser list preference via data attribute */
+html[data-xe-list='compact'] .table tbody td {
+  padding: 8px 14px !important;
+  font-size: 12.5px !important;
+}
+
+html[data-xe-list='comfortable'] .table tbody td {
+  padding: 18px 16px !important;
+}

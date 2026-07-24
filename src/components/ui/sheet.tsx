@@ -17,7 +17,10 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
     ref={ref}
-    className={cn('fixed inset-0 z-50 bg-dark/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out', className)}
+    className={cn(
+      'bg-dark/40 data-[state=open]:animate-in data-[state=closed]:animate-out fixed inset-0 z-50 backdrop-blur-sm',
+      className,
+    )}
     {...props}
   />
 ))
@@ -32,15 +35,17 @@ const SheetContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed z-50 flex h-full w-full max-w-sm flex-col gap-6 border-border bg-background p-6 shadow-xl transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out',
-        side === 'right' && 'inset-y-0 right-0 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
-        side === 'left' && 'inset-y-0 left-0 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
+        'data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex h-full w-full max-w-sm flex-col gap-6 border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] p-6 shadow-[var(--shadow-floating)] backdrop-blur-2xl transition ease-in-out',
+        side === 'right' &&
+          'data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 border-l',
+        side === 'left' &&
+          'data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left inset-y-0 left-0 border-r',
         className,
       )}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm text-muted transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+      <DialogPrimitive.Close className="text-muted hover:text-primary focus-visible:ring-accent absolute top-4 right-4 rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none">
         <X className="h-5 w-5" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
@@ -57,7 +62,11 @@ const SheetTitle = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title ref={ref} className={cn('text-lg font-semibold text-primary', className)} {...props} />
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn('text-primary text-lg font-semibold', className)}
+    {...props}
+  />
 ))
 SheetTitle.displayName = DialogPrimitive.Title.displayName
 

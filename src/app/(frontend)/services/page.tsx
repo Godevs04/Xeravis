@@ -4,7 +4,7 @@ import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { listPublished } from '@/lib/cms'
-import { FALLBACK_SERVICES, UNSPLASH } from '@/lib/fallback-data'
+import { FALLBACK_SERVICES } from '@/lib/fallback-data'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -30,22 +30,23 @@ export default async function ServicesPage() {
   return (
     <>
       <PageHero
+        brand="Xelarvis"
         eyebrow="Services"
-        title="Engineering services for every stage of the digital lifecycle."
+        title="Engineering for every stage of the digital lifecycle."
         subtitle="Strategy, build, and operate — with teams that understand enterprise constraints."
-        image={UNSPLASH.servers}
         size="compact"
       />
       <Section>
         <Container>
-          <div className="divide-y divide-border border-t border-border">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((service, index) => (
-              <AnimateIn key={service.id} delay={index * 0.03}>
+              <AnimateIn key={service.id} delay={index * 0.04}>
                 <ServiceCard
                   title={service.title}
                   summary={service.summary}
                   href={`/services/${service.slug}`}
                   icon={service.icon}
+                  className="h-full"
                 />
               </AnimateIn>
             ))}

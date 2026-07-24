@@ -1,5 +1,4 @@
 import { PageHero } from '@/components/layout/PageHero'
-import { getMediaUrl } from '@/lib/media'
 
 type HeroBannerProps = {
   eyebrow?: string | null
@@ -20,9 +19,7 @@ export function HeroBanner({
   ctaHref,
   secondaryCtaLabel,
   secondaryCtaHref,
-  image,
 }: HeroBannerProps) {
-  const imageUrl = getMediaUrl(image as Parameters<typeof getMediaUrl>[0])
   const ctas: { label: string; href: string; variant: 'accent' | 'outline' }[] = []
 
   if (ctaLabel && ctaHref) {
@@ -36,11 +33,13 @@ export function HeroBanner({
 
   return (
     <PageHero
+      brand="Xelarvis"
       eyebrow={eyebrow || undefined}
       title={heading}
       subtitle={subheading || undefined}
-      image={imageUrl}
+      image={null}
       ctas={ctas}
+      variant="product"
     />
   )
 }
@@ -48,14 +47,15 @@ export function HeroBanner({
 export function HeroBannerFallback() {
   return (
     <PageHero
-      eyebrow="Xelarvis Technologies"
+      brand="Xelarvis"
+      eyebrow="Enterprise product engineering"
       title="Engineering Digital Excellence."
-      subtitle="Enterprise consulting, product engineering, and cloud platforms for organizations that need clarity, speed, and lasting quality."
-      image="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80"
+      subtitle="We design and ship cloud platforms, AI systems, and digital products for organizations that refuse compromise."
       ctas={[
-        { label: 'Start Your Project', href: '/contact?intent=project', variant: 'accent' },
-        { label: 'Explore Services', href: '/services', variant: 'outline' },
+        { label: 'Start a project', href: '/contact?intent=project', variant: 'accent' },
+        { label: 'Explore services', href: '/services', variant: 'outline' },
       ]}
+      variant="product"
     />
   )
 }

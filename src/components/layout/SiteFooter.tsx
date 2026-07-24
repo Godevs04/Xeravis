@@ -2,7 +2,6 @@ import Link from 'next/link'
 
 import { Container } from '@/components/layout/Container'
 import { NewsletterForm } from '@/components/forms/NewsletterForm'
-import { Separator } from '@/components/ui/separator'
 import { getGlobal } from '@/lib/cms'
 import { BRAND, DEFAULT_FOOTER } from '@/lib/fallback-data'
 
@@ -33,31 +32,106 @@ export async function SiteFooter() {
   const showNewsletter = footer?.showNewsletter ?? DEFAULT_FOOTER.showNewsletter
   const copyright = footer?.copyright || DEFAULT_FOOTER.copyright
   const tagline = settings?.tagline || BRAND.tagline
+  const social = settings?.social
 
   return (
-    <footer className="border-t border-border bg-dark text-white">
-      <Container className="py-16 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_2fr]">
-          <div className="space-y-4">
-            <Link href="/" className="text-xl font-bold tracking-tight">
+    <footer className="relative overflow-hidden border-t border-[color:var(--glass-border-soft)]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(109,94,249,0.14),transparent_55%)]"
+      />
+      <div
+        aria-hidden
+        className="via-accent/40 pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent"
+      />
+      <Container className="relative py-20 lg:py-28">
+        <div className="mb-16 grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end">
+          <div>
+            <p className="font-display text-primary text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] font-bold tracking-[-0.05em]">
+              Build what
+              <br />
+              <span className="text-gradient">matters.</span>
+            </p>
+            <p className="text-secondary mt-6 max-w-md text-base">{tagline}</p>
+            <Link
+              href="/contact"
+              className="bg-accent mt-8 inline-flex h-12 items-center rounded-full px-7 text-sm font-semibold text-white shadow-[0_12px_32px_var(--color-accent-glow)] transition-transform hover:-translate-y-0.5"
+            >
+              Start a project
+            </Link>
+          </div>
+          {showNewsletter ? (
+            <div className="glass-strong rounded-[28px] p-6 sm:p-8">
+              <p className="font-display mb-1 text-lg font-semibold">Stay ahead</p>
+              <p className="text-secondary mb-4 text-sm">
+                Product notes, architecture essays, and shipping updates.
+              </p>
+              <NewsletterForm />
+            </div>
+          ) : null}
+        </div>
+
+        <div className="grid gap-12 border-t border-[color:var(--glass-border-soft)] pt-14 lg:grid-cols-[1fr_2fr]">
+          <div>
+            <Link href="/" className="font-display text-xl font-bold tracking-tight">
               Xelarvis
             </Link>
-            <p className="max-w-sm text-sm leading-relaxed text-white/70">{tagline}</p>
-            {showNewsletter && (
-              <div className="pt-4">
-                <p className="mb-3 text-sm font-semibold">Stay informed</p>
-                <NewsletterForm variant="dark" />
-              </div>
-            )}
+            <div className="mt-6 flex flex-wrap gap-3">
+              {social?.linkedin ? (
+                <a
+                  href={social.linkedin}
+                  className="text-secondary hover:border-accent/30 hover:text-primary rounded-full border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] px-3.5 py-1.5 text-sm backdrop-blur-md transition-colors"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  LinkedIn
+                </a>
+              ) : null}
+              {social?.twitter ? (
+                <a
+                  href={social.twitter}
+                  className="text-secondary hover:border-accent/30 hover:text-primary rounded-full border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] px-3.5 py-1.5 text-sm backdrop-blur-md transition-colors"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  X
+                </a>
+              ) : null}
+              {social?.github ? (
+                <a
+                  href={social.github}
+                  className="text-secondary hover:border-accent/30 hover:text-primary rounded-full border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] px-3.5 py-1.5 text-sm backdrop-blur-md transition-colors"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub
+                </a>
+              ) : null}
+              {social?.youtube ? (
+                <a
+                  href={social.youtube}
+                  className="text-secondary hover:border-accent/30 hover:text-primary rounded-full border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] px-3.5 py-1.5 text-sm backdrop-blur-md transition-colors"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  YouTube
+                </a>
+              ) : null}
+            </div>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {columns.map((column) => (
               <div key={column.title}>
-                <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white/90">{column.title}</h3>
+                <h3 className="text-muted mb-4 text-xs font-semibold tracking-[0.14em] uppercase">
+                  {column.title}
+                </h3>
                 <ul className="space-y-3">
                   {column.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="text-sm text-white/65 transition-colors hover:text-white">
+                      <Link
+                        href={link.href}
+                        className="text-secondary hover:text-accent text-sm transition-colors"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -67,17 +141,17 @@ export async function SiteFooter() {
             ))}
           </div>
         </div>
-        <Separator className="my-10 bg-white/10" />
-        <div className="flex flex-col gap-4 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
+
+        <div className="text-muted mt-16 flex flex-col gap-4 border-t border-[color:var(--glass-border-soft)] pt-8 text-sm sm:flex-row sm:items-center sm:justify-between">
           <p>{copyright}</p>
           <div className="flex gap-6">
-            <Link href="/privacy-policy" className="hover:text-white">
+            <Link href="/privacy-policy" className="hover:text-primary">
               Privacy
             </Link>
-            <Link href="/terms" className="hover:text-white">
+            <Link href="/terms" className="hover:text-primary">
               Terms
             </Link>
-            <Link href="/contact" className="hover:text-white">
+            <Link href="/contact" className="hover:text-primary">
               Contact
             </Link>
           </div>

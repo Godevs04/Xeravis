@@ -5,7 +5,6 @@
     "strictNullChecks": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "target": "ES2022",
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
@@ -21,7 +20,8 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@payload-config": ["./src/payload.config.ts"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/payload-types": ["./src/payload/generated-types/payload-types.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

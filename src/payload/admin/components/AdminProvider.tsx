@@ -1,0 +1,57 @@
+'use client'
+
+import React from 'react'
+
+import { CommandPalette } from './CommandPalette'
+
+export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
+  React.useEffect(() => {
+    const root = document.documentElement
+    if (root.getAttribute('data-theme') !== 'dark') {
+      root.setAttribute('data-theme', 'dark')
+    }
+
+    const onSave = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
+        const saveBtn =
+          document.querySelector<HTMLButtonElement>('button[type="submit"].form-submit') ||
+          document.querySelector<HTMLButtonElement>(
+            '.doc-controls__controls .btn--style-primary',
+          ) ||
+          document.querySelector<HTMLButtonElement>('button.form-submit')
+        if (saveBtn && !saveBtn.disabled) {
+          e.preventDefault()
+          saveBtn.click()
+        }
+      }
+
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'n') {
+        const path = window.location.pathname
+        const match = path.match(/\/admin\/collections\/([^/]+)/)
+        if (match?.[1] && !path.endsWith('/create')) {
+          e.preventDefault()
+          window.location.href = `/admin/collections/${match[1]}/create`
+        }
+      }
+    }
+
+    const storedDensity = window.localStorage.getItem('xe-list-density')
+    if (storedDensity === 'compact' || storedDensity === 'comfortable') {
+      root.setAttribute('data-xe-list', storedDensity)
+    } else {
+      root.setAttribute('data-xe-list', 'comfortable')
+    }
+
+    window.addEventListener('keydown', onSave)
+    return () => window.removeEventListener('keydown', onSave)
+  }, [])
+
+  return (
+    <>
+      {children}
+      <CommandPalette />
+    </>
+  )
+}
+
+export default AdminProvider

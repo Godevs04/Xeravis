@@ -36,8 +36,10 @@ export async function TestimonialsBlock({ heading }: TestimonialsBlockProps) {
       <Section>
         <Container>
           <AnimateIn>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h2>
-            <p className="mt-4 max-w-2xl text-lg text-secondary">
+            <h2 className="font-display text-[length:var(--text-h2)] font-bold tracking-tight">
+              {heading}
+            </h2>
+            <p className="text-secondary mt-4 max-w-2xl text-lg">
               Client testimonials will appear here once published in the CMS.
             </p>
           </AnimateIn>
@@ -50,21 +52,34 @@ export async function TestimonialsBlock({ heading }: TestimonialsBlockProps) {
     <Section>
       <Container>
         <AnimateIn className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h2>
+          <p className="text-accent mb-3 text-sm font-semibold tracking-[0.16em] uppercase">
+            Trust
+          </p>
+          <h2 className="font-display text-[length:var(--text-h2)] font-bold tracking-tight">
+            {heading}
+          </h2>
         </AnimateIn>
-        <div className="mt-12 grid gap-10 lg:grid-cols-3">
+        <div className="mt-14 grid gap-5 lg:grid-cols-3">
           {testimonials.map((item, index) => {
             const logoUrl = getMediaUrl(item.logo as Parameters<typeof getMediaUrl>[0])
             return (
-              <AnimateIn key={item.id} delay={index * 0.05}>
-                <figure className="flex h-full flex-col border-l-2 border-accent pl-6">
-                  <blockquote className="flex-1 text-base leading-relaxed text-secondary">&ldquo;{item.quote}&rdquo;</blockquote>
-                  <figcaption className="mt-6">
-                    {logoUrl && (
-                      <Image src={logoUrl} alt="" width={96} height={32} className="mb-4 h-8 w-auto object-contain opacity-70" />
-                    )}
-                    <p className="font-semibold text-primary">{item.authorName}</p>
-                    <p className="text-sm text-muted">
+              <AnimateIn key={item.id} delay={index * 0.06}>
+                <figure className="flex h-full flex-col rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--card-bg)] p-7 shadow-[var(--shadow-medium)] backdrop-blur-xl transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hover)]">
+                  <blockquote className="text-secondary flex-1 text-[15px] leading-relaxed">
+                    &ldquo;{item.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="border-border mt-8 border-t pt-5">
+                    {logoUrl ? (
+                      <Image
+                        src={logoUrl}
+                        alt=""
+                        width={96}
+                        height={32}
+                        className="mb-4 h-7 w-auto object-contain opacity-70"
+                      />
+                    ) : null}
+                    <p className="text-primary font-semibold">{item.authorName}</p>
+                    <p className="text-muted mt-1 text-sm">
                       {[item.authorRole, item.company].filter(Boolean).join(' · ')}
                     </p>
                   </figcaption>

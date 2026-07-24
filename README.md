@@ -20,10 +20,10 @@ cp .env.example .env
 
 Required:
 
-| Variable | Purpose |
-|---|---|
-| `DATABASE_URI` | MongoDB Atlas connection string |
-| `PAYLOAD_SECRET` | `openssl rand -hex 32` |
+| Variable               | Purpose                         |
+| ---------------------- | ------------------------------- |
+| `DATABASE_URI`         | MongoDB Atlas connection string |
+| `PAYLOAD_SECRET`       | `openssl rand -hex 32`          |
 | `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` locally |
 
 Optional: Cloudinary, Resend, GA/GTM — see [`.env.example`](.env.example).
@@ -55,14 +55,14 @@ npm run generate:types
 
 ## Scripts
 
-| Script | Description |
-|---|---|
-| `npm run dev` | Local development |
-| `npm run build` | Production build |
-| `npm run start` | Serve production build |
-| `npm run seed` | Seed MongoDB via Payload Local API |
-| `npm run generate:types` | Regenerate `payload-types.ts` |
-| `npm run generate:importmap` | Regenerate admin import map |
+| Script                       | Description                        |
+| ---------------------------- | ---------------------------------- |
+| `npm run dev`                | Local development                  |
+| `npm run build`              | Production build                   |
+| `npm run start`              | Serve production build             |
+| `npm run seed`               | Seed MongoDB via Payload Local API |
+| `npm run generate:types`     | Regenerate `payload-types.ts`      |
+| `npm run generate:importmap` | Regenerate admin import map        |
 
 ## Architecture
 
@@ -73,15 +73,19 @@ npm run generate:types
 - `src/actions` — contact, career, newsletter server actions
 - `src/seed` — content seed script
 
-The frontend renders CMS content when MongoDB is available and falls back to curated static content when it is not — so builds and previews remain stable.
+The frontend renders CMS content when MongoDB is available. Publish Pages (`home`, `about`) and collections in Payload Admin (or run `npm run seed`).
 
 ## Deploy (Vercel)
 
 1. Push repo and import the project in Vercel.
-2. Set all production env vars from `.env.example` (`DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL=https://xelarvis.in`, Cloudinary, Resend).
-3. Use `npm install --legacy-peer-deps` as the install command (or set in Project Settings).
-4. Point `xelarvis.in` DNS to Vercel.
-5. Run `npm run seed` once against production DB (locally with production `DATABASE_URI`, or via a one-off job).
+2. Set all production env vars from `.env.example` (`DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL=https://xelarvis.in`, optional Cloudinary/Resend/`SITE_NAME`).
+3. Install command: `npm install --legacy-peer-deps` (already in `vercel.json`).
+4. Ensure MongoDB Atlas allows Vercel IPs (or `0.0.0.0/0` for serverless).
+5. Point `xelarvis.in` DNS to Vercel.
+6. After first deploy, create the admin user via `/admin` first-user flow or run `npm run seed` against production `DATABASE_URI`.
+7. Smoke-test: `/`, `/admin`, `/contact`, `/careers` apply, newsletter footer.
+
+Git hooks: Husky + lint-staged run ESLint and Prettier on staged files (`prepare` script).
 
 ## Brand system
 

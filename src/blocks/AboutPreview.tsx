@@ -20,19 +20,25 @@ type AboutPreviewProps = {
 export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
   return (
     <Section>
-      <Container className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-        <AnimateIn className="lg:col-span-5">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted">Who we are</p>
-          <h2 className="mt-4 text-balance">{heading}</h2>
-        </AnimateIn>
-        <AnimateIn className="lg:col-span-7" delay={0.05}>
-          <p className="prose-measure text-lg leading-relaxed text-secondary">{body}</p>
-          {cta?.label && cta?.href ? (
-            <Button asChild variant="outline" className="mt-8">
-              <Link href={cta.href}>{cta.label}</Link>
-            </Button>
-          ) : null}
-        </AnimateIn>
+      <Container>
+        <div className="border-border grid items-start gap-10 border-y py-16 lg:grid-cols-12 lg:gap-16 lg:py-24">
+          <AnimateIn className="lg:col-span-5">
+            <p className="text-accent text-sm font-semibold tracking-[0.16em] uppercase">
+              Who we are
+            </p>
+            <h2 className="font-display mt-4 text-[length:var(--text-h2)] font-bold tracking-tight text-balance">
+              {heading}
+            </h2>
+          </AnimateIn>
+          <AnimateIn className="lg:col-span-7" delay={0.08}>
+            <p className="text-secondary max-w-xl text-lg leading-relaxed">{body}</p>
+            {cta?.label && cta?.href ? (
+              <Button asChild variant="outline" className="mt-8 rounded-full">
+                <Link href={cta.href}>{cta.label}</Link>
+              </Button>
+            ) : null}
+          </AnimateIn>
+        </div>
       </Container>
     </Section>
   )

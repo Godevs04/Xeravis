@@ -1,67 +1,63 @@
-import Link from 'next/link'
-
-import { ClientLogos } from '@/blocks/ClientLogos'
-import { CTABand } from '@/blocks/CTABand'
-import { FeatureSplit } from '@/blocks/FeatureSplit'
-import { StatsRow } from '@/blocks/StatsRow'
-import { TeamGrid } from '@/blocks/TeamGrid'
-import { PageHero } from '@/components/layout/PageHero'
+import { RenderBlocks, type PageBlock } from '@/blocks/RenderBlocks'
+import { Container } from '@/components/layout/Container'
+import { EmptyState } from '@/components/ui/empty-state'
+import { safePayload } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
-import { UNSPLASH } from '@/lib/fallback-data'
 
 export const revalidate = 60
 
-export const metadata = buildMetadata({
-  title: 'About',
-  description: 'Learn about Xelarvis Technologies — our mission, leadership, and approach to enterprise engineering.',
-  path: '/about',
-})
+type AboutPageDoc = {
+  title?: string
+  layout?: PageBlock[]
+  meta?: { title?: string; description?: string; image?: unknown }
+}
 
-export default function AboutPage() {
+async function loadAboutPage() {
+  return safePayload(async (payload) => {
+    const result = await payload.find({
+      collection: 'pages',
+      where: {
+        slug: { equals: 'about' },
+      },
+      limit: 1,
+      depth: 2,
+      draft: false,
+      overrideAccess: true,
+    })
+    const doc = result.docs[0] as (AboutPageDoc & { _status?: string }) | undefined
+    if (!doc) return null
+    if (doc._status && doc._status !== 'published') return null
+    return doc
+  })
+}
+
+export async function generateMetadata() {
+  const page = await loadAboutPage()
+  return buildMetadata({
+    title: page?.meta?.title || page?.title || 'About',
+    description:
+      page?.meta?.description ||
+      'Learn about Xelarvis Technologies — our mission, leadership, and approach to enterprise engineering.',
+    image: page?.meta?.image,
+    path: '/about',
+  })
+}
+
+export default async function AboutPage() {
+  const page = await loadAboutPage()
+
+  if (page?.layout?.length) {
+    return <RenderBlocks blocks={page.layout} />
+  }
+
   return (
-    <>
-      <PageHero
-        eyebrow="About"
-        title="Built for enterprises that demand precision."
-        subtitle="Xelarvis Technologies partners with organizations to engineer platforms, products, and data systems with long-term maintainability."
-        image={UNSPLASH.team}
-        ctas={[{ label: 'Talk to us', href: '/contact', variant: 'accent' }]}
+    <Container className="py-24 lg:py-32">
+      <EmptyState
+        title="About page is not published"
+        description="Publish a Pages document with slug “about” including mission, vision, values, timeline, and team blocks."
+        actionLabel="Open admin"
+        href="/admin"
       />
-      <StatsRow heading="Company metrics" />
-      <FeatureSplit
-        heading="Our approach"
-        body={{
-          root: {
-            children: [
-              {
-                type: 'paragraph',
-                children: [
-                  {
-                    type: 'text',
-                    text: 'We combine product thinking, platform engineering, and operational discipline. Every engagement is structured for measurable outcomes — not slide decks.',
-                  },
-                ],
-              },
-            ],
-          },
-        }}
-        image={UNSPLASH.office}
-      />
-      <TeamGrid heading="Leadership" />
-      <ClientLogos heading="Trusted by forward-looking teams" />
-      <CTABand
-        heading="Explore how we work with your industry"
-        subheading="See tailored solutions across financial services, healthcare, manufacturing, and more."
-        ctaLabel="View industries"
-        ctaHref="/industries"
-      />
-      <section className="py-12">
-        <div className="container-x">
-          <Link href="/careers" className="text-sm font-semibold text-accent hover:underline">
-            Join our team →
-          </Link>
-        </div>
-      </section>
-    </>
+    </Container>
   )
 }

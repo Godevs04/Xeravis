@@ -15,6 +15,8 @@ type SearchBarProps = {
   className?: string
   containerClassName?: string
   name?: string
+  action?: string
+  method?: 'get' | 'post'
   'aria-label'?: string
 }
 
@@ -27,6 +29,8 @@ export function SearchBar({
   value,
   defaultValue = '',
   name = 'q',
+  action = '/search',
+  method = 'get',
   'aria-label': ariaLabel,
 }: SearchBarProps) {
   const [internal, setInternal] = React.useState(defaultValue)
@@ -35,14 +39,18 @@ export function SearchBar({
   return (
     <form
       role="search"
+      action={onSubmitSearch ? undefined : action}
+      method={onSubmitSearch ? undefined : method}
       className={cn('relative w-full', containerClassName)}
       onSubmit={(event) => {
-        event.preventDefault()
-        onSubmitSearch?.(current.trim())
+        if (onSubmitSearch) {
+          event.preventDefault()
+          onSubmitSearch(current.trim())
+        }
       }}
     >
       <Search
-        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
+        className="text-muted pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
         aria-hidden
       />
       <Input

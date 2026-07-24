@@ -1,3 +1,5 @@
+export { Timeline } from './timeline'
+export type { TimelineItem } from './timeline'
 export { Button, buttonVariants } from './button'
 export { Badge, badgeVariants } from './badge'
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card'
@@ -6,14 +8,7 @@ export { Textarea } from './textarea'
 export { Label } from './label'
 export { Separator } from './separator'
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './accordion'
-export {
-  Sheet,
-  SheetTrigger,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from './sheet'
+export { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetTitle } from './sheet'
 export {
   Modal,
   ModalTrigger,

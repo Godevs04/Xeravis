@@ -29,41 +29,73 @@ export function CTA({
   return (
     <div
       className={cn(
-        'rounded-[var(--radius-hero)] px-8 py-12 md:px-12 md:py-16',
-        inverted ? 'bg-primary text-white dark:bg-surface' : 'border border-border bg-surface',
+        'relative overflow-hidden rounded-[32px] px-8 py-12 md:px-12 md:py-16',
+        inverted
+          ? 'bg-gradient-to-br from-[#6d5ef9] via-[#8b7cff] to-[#a18cff] text-white shadow-[var(--shadow-floating)]'
+          : 'border border-[color:var(--glass-border-soft)] bg-[color:var(--card-bg)] shadow-[var(--shadow-floating)] backdrop-blur-2xl',
         className,
       )}
     >
+      <div
+        aria-hidden
+        className={cn(
+          'pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full blur-3xl',
+          inverted ? 'bg-white/20' : 'bg-accent/20',
+        )}
+      />
       {eyebrow ? (
         <p
           className={cn(
-            'mb-3 text-xs font-semibold uppercase tracking-[0.14em]',
+            'mb-3 text-xs font-semibold tracking-[0.14em] uppercase',
             inverted ? 'text-white/70' : 'text-muted',
           )}
         >
           {eyebrow}
         </p>
       ) : null}
-      <Heading level="h2" className={cn(inverted && 'text-white')}>
+      <Heading level="h2" className={cn('relative', inverted && 'text-white')}>
         {title}
       </Heading>
       {description ? (
-        <p className={cn('mt-4 max-w-2xl text-base leading-relaxed', inverted ? 'text-white/80' : 'text-secondary')}>
+        <p
+          className={cn(
+            'relative mt-4 max-w-2xl text-base leading-relaxed',
+            inverted ? 'text-white/85' : 'text-secondary',
+          )}
+        >
           {description}
         </p>
       ) : null}
       {(primary || secondary) && (
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="relative mt-8 flex flex-wrap gap-3">
           {primary ? (
-            <Button asChild variant={inverted ? 'secondary' : 'primary'}>
-              <Link href={primary.href} target={primary.openInNewTab ? '_blank' : undefined} rel={primary.openInNewTab ? 'noreferrer' : undefined}>
+            <Button
+              asChild
+              variant={inverted ? 'secondary' : 'primary'}
+              className={
+                inverted ? 'border-white/40 bg-white text-[#6d5ef9] hover:bg-white/95' : undefined
+              }
+            >
+              <Link
+                href={primary.href}
+                target={primary.openInNewTab ? '_blank' : undefined}
+                rel={primary.openInNewTab ? 'noreferrer' : undefined}
+              >
                 {primary.label}
               </Link>
             </Button>
           ) : null}
           {secondary ? (
-            <Button asChild variant={inverted ? 'ghost' : 'outline'} className={inverted ? 'text-white hover:bg-white/10 hover:text-white' : undefined}>
-              <Link href={secondary.href} target={secondary.openInNewTab ? '_blank' : undefined} rel={secondary.openInNewTab ? 'noreferrer' : undefined}>
+            <Button
+              asChild
+              variant={inverted ? 'ghost' : 'outline'}
+              className={inverted ? 'text-white hover:bg-white/15 hover:text-white' : undefined}
+            >
+              <Link
+                href={secondary.href}
+                target={secondary.openInNewTab ? '_blank' : undefined}
+                rel={secondary.openInNewTab ? 'noreferrer' : undefined}
+              >
                 {secondary.label}
               </Link>
             </Button>

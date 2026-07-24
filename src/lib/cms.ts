@@ -6,7 +6,8 @@ export async function safePayload<T>(fn: (payload: Payload) => Promise<T>): Prom
   try {
     const payload = await getPayload()
     return await fn(payload)
-  } catch {
+  } catch (error) {
+    console.error('[cms] Payload query failed:', error)
     return null
   }
 }
@@ -35,12 +36,16 @@ export async function getPublishedBySlug<T>(collection: string, slug: string): P
       collection: collection as 'pages',
       where: {
         slug: { equals: slug },
-        _status: { equals: 'published' },
       },
       limit: 1,
       depth: 2,
+      draft: false,
+      overrideAccess: true,
     })
-    return (result.docs[0] as T) ?? null
+    const doc = result.docs[0] as (T & { _status?: string }) | undefined
+    if (!doc) return null
+    if (doc._status && doc._status !== 'published') return null
+    return doc
   })
 }
 
@@ -57,16 +62,17 @@ export async function listPublished<T>(
   const result = await safePayload(async (payload) => {
     return payload.find({
       collection: collection as 'pages',
-      where: {
-        ...(useDrafts ? { _status: { equals: 'published' } } : {}),
-        ...options.where,
-      },
+      where: options.where ?? {},
       limit: options.limit ?? 100,
       sort: options.sort ?? '-updatedAt',
       depth: 2,
+      draft: useDrafts ? false : undefined,
+      overrideAccess: true,
     })
   })
-  return (result?.docs as T[]) ?? []
+  const docs = (result?.docs as (T & { _status?: string })[]) ?? []
+  if (!useDrafts) return docs as T[]
+  return docs.filter((doc) => !doc._status || doc._status === 'published') as T[]
 }
 
 export async function listDocs<T>(

@@ -26,29 +26,37 @@ export async function ServicesGrid({ heading, subheading }: ServicesGridProps) {
   const items = services.length ? services : FALLBACK_SERVICES
 
   return (
-    <Section surface>
+    <Section>
       <Container>
         <AnimateIn className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h2>
-          {subheading && <p className="mt-4 text-lg text-secondary">{subheading}</p>}
+          <p className="text-accent mb-3 text-sm font-semibold tracking-[0.16em] uppercase">
+            Capabilities
+          </p>
+          <h2 className="font-display text-[length:var(--text-h2)] font-bold tracking-tight">
+            {heading}
+          </h2>
+          {subheading ? <p className="text-secondary mt-4 text-lg">{subheading}</p> : null}
         </AnimateIn>
-        <div className="mt-12 divide-y divide-border border-t border-border">
+
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
           {items.map((service, index) => (
-            <AnimateIn key={service.id} delay={index * 0.05}>
+            <AnimateIn key={service.id} delay={index * 0.06}>
               <ServiceCard
                 title={service.title}
                 summary={service.summary}
                 href={`/services/${service.slug}`}
                 icon={service.icon}
+                className="h-full"
               />
             </AnimateIn>
           ))}
         </div>
-        <div className="mt-10">
-          <Button asChild variant="outline">
+
+        <AnimateIn className="mt-12">
+          <Button asChild variant="outline" className="rounded-full">
             <Link href="/services">View all services</Link>
           </Button>
-        </div>
+        </AnimateIn>
       </Container>
     </Section>
   )

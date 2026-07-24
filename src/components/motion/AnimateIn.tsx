@@ -21,10 +21,10 @@ export function AnimateIn({ children, className, delay = 0 }: AnimateInProps) {
   return (
     <motion.div
       className={cn(className)}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-10% 0px' }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
+      initial={{ opacity: 0, y: 22, filter: 'blur(6px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '-12% 0px' }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay }}
     >
       {children}
     </motion.div>

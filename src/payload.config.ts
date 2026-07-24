@@ -5,36 +5,10 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
-import { Authors } from './collections/Authors'
-import { Blogs } from './collections/Blogs'
-import { Careers } from './collections/Careers'
-import { CaseStudies } from './collections/CaseStudies'
-import { Categories } from './collections/Categories'
-import { Clients } from './collections/Clients'
-import { ContactMessages } from './collections/ContactMessages'
-import { Departments } from './collections/Departments'
-import { Faqs } from './collections/Faqs'
-import { FormSubmissions } from './collections/FormSubmissions'
-import { Industries } from './collections/Industries'
-import { JobApplications } from './collections/JobApplications'
-import { Media } from './collections/Media'
-import { NewsletterSubscribers } from './collections/NewsletterSubscribers'
-import { Pages } from './collections/Pages'
-import { Services } from './collections/Services'
-import { Solutions } from './collections/Solutions'
-import { Tags } from './collections/Tags'
-import { TeamMembers } from './collections/TeamMembers'
-import { Technologies } from './collections/Technologies'
-import { Testimonials } from './collections/Testimonials'
-import { Users } from './collections/Users'
-import { ContactDetails } from './globals/ContactDetails'
-import { Footer } from './globals/Footer'
-import { Analytics, AnnouncementBar, CookieBanner, SocialMedia } from './globals/MarketingGlobals'
-import { Navigation } from './globals/Navigation'
-import { OfficeLocations } from './globals/OfficeLocations'
-import { SeoDefaults } from './globals/SeoDefaults'
-import { SiteSettings } from './globals/SiteSettings'
-import { plugins } from './plugins'
+import { collections } from './payload/collections'
+import { globals } from './payload/globals'
+import { plugins } from './payload/plugins'
+import { Users } from './payload/collections/Users'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -46,7 +20,30 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     meta: {
-      titleSuffix: ' · GoDevs Enterprise CMS',
+      titleSuffix: ' · Xelarvis Enterprise CMS',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          url: '/favicon.ico',
+        },
+      ],
+    },
+    theme: 'dark',
+    components: {
+      providers: ['./payload/admin/components/AdminProvider#AdminProvider'],
+      graphics: {
+        Logo: './payload/admin/components/graphics/Logo#Logo',
+        Icon: './payload/admin/components/graphics/Icon#Icon',
+      },
+      beforeLogin: ['./payload/admin/components/BeforeLogin#BeforeLogin'],
+      beforeNav: ['./payload/admin/components/nav/BeforeNav#BeforeNav'],
+      beforeNavLinks: ['./payload/admin/components/nav/BeforeNavLinks#BeforeNavLinks'],
+      afterNavLinks: ['./payload/admin/components/nav/AfterNavLinks#AfterNavLinks'],
+      beforeDashboard: ['./payload/admin/components/dashboard/BeforeDashboard#BeforeDashboard'],
+      afterDashboard: ['./payload/admin/components/dashboard/AfterDashboard#AfterDashboard'],
+      header: ['./payload/admin/components/HeaderChip#HeaderChip'],
+      actions: ['./payload/admin/components/CommandAction#CommandAction'],
     },
     livePreview: {
       breakpoints: [
@@ -56,46 +53,12 @@ export default buildConfig({
       ],
     },
   },
-  collections: [
-    Users,
-    Media,
-    Pages,
-    Services,
-    Industries,
-    Solutions,
-    CaseStudies,
-    Blogs,
-    Categories,
-    Tags,
-    Authors,
-    Careers,
-    Departments,
-    Testimonials,
-    TeamMembers,
-    Clients,
-    Faqs,
-    Technologies,
-    FormSubmissions,
-    ContactMessages,
-    NewsletterSubscribers,
-    JobApplications,
-  ],
-  globals: [
-    SiteSettings,
-    Navigation,
-    Footer,
-    ContactDetails,
-    OfficeLocations,
-    SeoDefaults,
-    SocialMedia,
-    Analytics,
-    AnnouncementBar,
-    CookieBanner,
-  ],
+  collections,
+  globals,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(dirname, 'payload/generated-types/payload-types.ts'),
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',

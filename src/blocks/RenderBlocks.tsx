@@ -8,6 +8,7 @@ import { FeatureSplit } from '@/blocks/FeatureSplit'
 import { HeroBanner } from '@/blocks/HeroBanner'
 import { IndustriesStrip } from '@/blocks/IndustriesStrip'
 import { LatestBlogs } from '@/blocks/LatestBlogs'
+import { MissionVision, ValuesGrid } from '@/blocks/MissionVision'
 import { ProcessSteps } from '@/blocks/ProcessSteps'
 import { RichTextBlock } from '@/blocks/RichTextBlock'
 import { ServicesGrid } from '@/blocks/ServicesGrid'
@@ -15,6 +16,7 @@ import { StatsRow } from '@/blocks/StatsRow'
 import { TeamGrid } from '@/blocks/TeamGrid'
 import { TechnologyGrid } from '@/blocks/TechnologyGrid'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock'
+import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { WhyChooseUs } from '@/blocks/WhyChooseUs'
 
 export type PageBlock = {
@@ -146,6 +148,55 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
                 ctaHref={(block.ctaHref as string) || '/contact?intent=project'}
               />
             )
+          case 'contactCta': {
+            const cta = block.cta as { label?: string; href?: string } | undefined
+            return (
+              <CTABand
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+                ctaLabel={cta?.label || 'Contact us'}
+                ctaHref={cta?.href || '/contact'}
+              />
+            )
+          }
+          case 'imageGallery':
+            return (
+              <FeatureSplit
+                key={key}
+                heading={(block.heading as string) || 'Gallery'}
+                body={undefined}
+                image={
+                  Array.isArray(block.images) &&
+                  block.images[0] &&
+                  typeof block.images[0] === 'object'
+                    ? (block.images[0] as { image?: unknown }).image
+                    : undefined
+                }
+              />
+            )
+          case 'videoSection':
+            return (
+              <FeatureSplit
+                key={key}
+                heading={block.heading as string}
+                body={
+                  block.subheading
+                    ? {
+                        root: {
+                          children: [
+                            {
+                              type: 'paragraph',
+                              children: [{ type: 'text', text: String(block.subheading) }],
+                            },
+                          ],
+                        },
+                      }
+                    : undefined
+                }
+                image={block.poster}
+              />
+            )
           case 'faqAccordion':
             return (
               <FAQAccordion
@@ -170,6 +221,39 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
                 key={key}
                 heading={block.heading as string}
                 steps={block.steps as { title: string; description: string }[] | undefined}
+              />
+            )
+          case 'timeline':
+            return (
+              <TimelineBlock
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+                items={
+                  block.items as
+                    | { title: string; description?: string | null; date?: string | null }[]
+                    | undefined
+                }
+              />
+            )
+          case 'missionVision':
+            return (
+              <MissionVision
+                key={key}
+                heading={block.heading as string}
+                missionTitle={block.missionTitle as string | undefined}
+                missionBody={block.missionBody as string}
+                visionTitle={block.visionTitle as string | undefined}
+                visionBody={block.visionBody as string}
+              />
+            )
+          case 'valuesGrid':
+            return (
+              <ValuesGrid
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+                values={block.values as { title: string; description: string }[] | undefined}
               />
             )
           default:

@@ -1,26 +1,46 @@
 /**
- * GoDevs Enterprise Design System — tokens
- * Source of truth aligned with docs/PHASE-3-DESIGN-SYSTEM.md
- * Components must consume these variables; no magic numbers.
+ * Xelarvis — Glass Product Experience
+ * Soft lavender · floating depth · light-first
  */
 
 :root {
-  /* Color */
-  --color-primary: #0f172a;
-  --color-secondary: #334155;
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-background: #ffffff;
-  --color-surface: #f8fafc;
-  --color-muted-line: #e2e8f0;
-  --color-muted: #64748b;
-  --color-success: #16a34a;
-  --color-warning: #f59e0b;
-  --color-danger: #dc2626;
-  --color-dark: #020617;
-  --color-border: var(--color-muted-line);
+  --color-primary: #1f1f21;
+  --color-secondary: #5c5c66;
+  --color-muted: #8b8b96;
 
-  /* Space scale */
+  --color-accent: #6d5ef9;
+  --color-accent-hover: #5a4ce8;
+  --color-accent-soft: rgba(109, 94, 249, 0.14);
+  --color-accent-glow: rgba(109, 94, 249, 0.35);
+  --color-secondary-accent: #8b7cff;
+  --color-accent-light: #a18cff;
+
+  --color-background: #f7f4ff;
+  --color-surface: rgba(255, 255, 255, 0.72);
+  --color-surface-elevated: rgba(255, 255, 255, 0.88);
+  --color-card: rgba(255, 255, 255, 0.78);
+  --color-hover: rgba(109, 94, 249, 0.08);
+  --color-dark: #1f1f21;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  --color-border: rgba(109, 94, 249, 0.12);
+  --color-border-strong: rgba(109, 94, 249, 0.22);
+  --color-muted-line: rgba(31, 31, 33, 0.08);
+
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-border-soft: rgba(109, 94, 249, 0.14);
+  --nav-solid: rgba(255, 255, 255, 0.62);
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --mesh-glow: rgba(109, 94, 249, 0.22);
+  --mesh-glow-2: rgba(161, 140, 255, 0.18);
+  --mesh-glow-3: rgba(125, 180, 255, 0.16);
+  --grid-line: rgba(109, 94, 249, 0.06);
+
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -37,97 +57,104 @@
   --space-30: 120px;
   --space-40: 160px;
 
-  /* Radius */
-  --radius-button: 12px;
-  --radius-input: 12px;
-  --radius-card: 20px;
-  --radius-image: 20px;
-  --radius-dialog: 24px;
+  --radius-button: 9999px;
+  --radius-input: 14px;
+  --radius-card: 24px;
+  --radius-image: 24px;
+  --radius-dialog: 28px;
   --radius-hero: 32px;
   --radius-pill: 9999px;
-  --radius-sm: var(--radius-button);
-  --radius-md: var(--radius-card);
+  --radius-sm: 12px;
+  --radius-md: 20px;
 
-  /* Shadow */
-  --shadow-light: 0 1px 2px rgb(15 23 42 / 0.04);
-  --shadow-medium: 0 4px 12px rgb(15 23 42 / 0.06);
-  --shadow-large: 0 12px 32px rgb(15 23 42 / 0.08);
-  --shadow-floating: 0 16px 48px rgb(15 23 42 / 0.12);
-  --shadow-hover: 0 8px 24px rgb(15 23 42 / 0.1);
+  --shadow-light: 0 4px 16px rgba(109, 94, 249, 0.06);
+  --shadow-medium: 0 12px 40px rgba(109, 94, 249, 0.1);
+  --shadow-large: 0 24px 64px rgba(109, 94, 249, 0.14);
+  --shadow-floating: 0 28px 80px rgba(79, 70, 180, 0.16);
+  --shadow-hover: 0 18px 48px rgba(109, 94, 249, 0.18);
+  --shadow-glow: 0 0 48px var(--color-accent-glow);
 
-  /* Motion */
-  --duration-fast: 200ms;
-  --duration-base: 300ms;
-  --duration-slow: 500ms;
-  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 560ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Layout */
-  --grid-container: 1280px;
-  --grid-section: 1200px;
-  --grid-prose: 45rem;
-  --grid-gutter: 32px;
-  --section-pad-y: 120px;
-  --section-pad-y-md: 80px;
-  --section-pad-y-sm: 64px;
+  --grid-container: 1200px;
+  --grid-section: 1120px;
+  --grid-prose: 40rem;
+  --grid-gutter: 24px;
+  --section-pad-y: 140px;
+  --section-pad-y-md: 96px;
+  --section-pad-y-sm: 72px;
   --touch-min: 44px;
 
-  /* Type sizes */
-  --text-display-xl: 64px;
-  --text-display-l: 56px;
-  --text-h1: 48px;
-  --text-h2: 40px;
-  --text-h3: 32px;
-  --text-h4: 24px;
-  --text-h5: 20px;
-  --text-h6: 18px;
-  --text-body-lg: 18px;
-  --text-body: 16px;
-  --text-caption: 14px;
-  --text-small: 12px;
+  --text-display-xl: clamp(3.25rem, 7.5vw, 5.75rem);
+  --text-display-l: clamp(2.75rem, 5.5vw, 4.25rem);
+  --text-h1: clamp(2.4rem, 4.2vw, 3.6rem);
+  --text-h2: clamp(1.85rem, 3.2vw, 2.85rem);
+  --text-h3: clamp(1.35rem, 2.2vw, 1.8rem);
+  --text-h4: 1.25rem;
+  --text-h5: 1.125rem;
+  --text-h6: 1rem;
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-caption: 0.875rem;
+  --text-small: 0.75rem;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-body), var(--font-inter), 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui,
+    sans-serif;
+  --font-display: var(--font-display), 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
 }
 
 .dark {
-  --color-primary: #f8fafc;
-  --color-secondary: #cbd5e1;
-  --color-accent: #3b82f6;
-  --color-accent-hover: #60a5fa;
-  --color-background: #020617;
-  --color-surface: #0f172a;
-  --color-muted-line: #1e293b;
-  --color-muted: #94a3b8;
-  --color-success: #22c55e;
-  --color-warning: #fbbf24;
-  --color-danger: #f87171;
-  --color-dark: #020617;
-  --color-border: var(--color-muted-line);
-  --shadow-light: 0 1px 2px rgb(0 0 0 / 0.35);
-  --shadow-medium: 0 4px 12px rgb(0 0 0 / 0.4);
-  --shadow-large: 0 12px 32px rgb(0 0 0 / 0.45);
-  --shadow-floating: 0 16px 48px rgb(0 0 0 / 0.55);
-  --shadow-hover: 0 8px 24px rgb(0 0 0 / 0.5);
+  --color-primary: #f7f4ff;
+  --color-secondary: #c4c0d8;
+  --color-muted: #908ba8;
+
+  --color-accent: #8b7cff;
+  --color-accent-hover: #a18cff;
+  --color-accent-soft: rgba(139, 124, 255, 0.18);
+  --color-accent-glow: rgba(139, 124, 255, 0.4);
+
+  --color-background: #0c0a14;
+  --color-surface: rgba(28, 24, 42, 0.72);
+  --color-surface-elevated: rgba(36, 30, 56, 0.85);
+  --color-card: rgba(32, 28, 48, 0.78);
+  --color-hover: rgba(139, 124, 255, 0.12);
+  --color-dark: #0c0a14;
+
+  --color-border: rgba(161, 140, 255, 0.16);
+  --color-border-strong: rgba(161, 140, 255, 0.28);
+  --color-muted-line: rgba(255, 255, 255, 0.08);
+
+  --glass-bg: rgba(22, 18, 36, 0.55);
+  --glass-bg-strong: rgba(28, 24, 42, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-soft: rgba(161, 140, 255, 0.2);
+  --nav-solid: rgba(18, 14, 30, 0.65);
+  --card-bg: rgba(28, 24, 42, 0.72);
+  --mesh-glow: rgba(109, 94, 249, 0.28);
+  --mesh-glow-2: rgba(161, 140, 255, 0.2);
+  --mesh-glow-3: rgba(80, 140, 255, 0.14);
+  --grid-line: rgba(255, 255, 255, 0.04);
+
+  --shadow-light: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --shadow-large: 0 24px 64px rgba(0, 0, 0, 0.55);
+  --shadow-floating: 0 28px 80px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 18px 48px rgba(109, 94, 249, 0.25);
 }
 
 @media (max-width: 1023px) {
   :root {
     --section-pad-y: var(--section-pad-y-md);
-    --text-display-xl: 48px;
-    --text-display-l: 40px;
-    --text-h1: 36px;
-    --text-h2: 32px;
-    --text-h3: 28px;
   }
 }
 
 @media (max-width: 767px) {
   :root {
     --section-pad-y: var(--section-pad-y-sm);
-    --text-display-xl: 40px;
-    --text-display-l: 36px;
-    --text-h1: 32px;
-    --text-h2: 28px;
-    --text-h3: 24px;
   }
 }

@@ -4,7 +4,7 @@ import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { listPublished } from '@/lib/cms'
-import { FALLBACK_JOBS, UNSPLASH } from '@/lib/fallback-data'
+import { FALLBACK_JOBS } from '@/lib/fallback-data'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -21,7 +21,8 @@ type CareerDoc = {
 
 export const metadata = buildMetadata({
   title: 'Careers',
-  description: 'Join Xelarvis Technologies — build enterprise platforms with a team that values craft.',
+  description:
+    'Join Xelarvis Technologies — build enterprise platforms with a team that values craft.',
   path: '/careers',
 })
 
@@ -34,10 +35,10 @@ export default async function CareersPage() {
   return (
     <>
       <PageHero
+        brand="Xelarvis"
         eyebrow="Careers"
         title="Engineer the future of enterprise software."
         subtitle="We hire people who care about clarity, quality, and impact."
-        image={UNSPLASH.team}
         size="compact"
       />
       <Section>
@@ -45,17 +46,19 @@ export default async function CareersPage() {
           {items.length === 0 ? (
             <p className="text-secondary">No open roles at the moment. Check back soon.</p>
           ) : (
-            items.map((job, index) => (
-              <AnimateIn key={job.id} delay={index * 0.03}>
-                <JobCard
-                  title={job.title}
-                  department={job.department}
-                  location={job.location}
-                  type={job.type}
-                  href={`/careers/${job.slug}`}
-                />
-              </AnimateIn>
-            ))
+            <div className="grid gap-3">
+              {items.map((job, index) => (
+                <AnimateIn key={job.id} delay={index * 0.04}>
+                  <JobCard
+                    title={job.title}
+                    department={job.department}
+                    location={job.location}
+                    type={job.type}
+                    href={`/careers/${job.slug}`}
+                  />
+                </AnimateIn>
+              ))}
+            </div>
           )}
         </Container>
       </Section>

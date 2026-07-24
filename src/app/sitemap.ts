@@ -1,14 +1,6 @@
 import type { MetadataRoute } from 'next'
 
 import { listPublished } from '@/lib/cms'
-import {
-  FALLBACK_BLOG_POSTS,
-  FALLBACK_CASE_STUDIES,
-  FALLBACK_INDUSTRIES,
-  FALLBACK_JOBS,
-  FALLBACK_SERVICES,
-  FALLBACK_SOLUTIONS,
-} from '@/lib/fallback-data'
 import { absoluteUrl } from '@/lib/utils'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -44,47 +36,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     listPublished<{ slug: string; updatedAt?: string }>('careers'),
   ])
 
-  const serviceSlugs = services.length ? services : FALLBACK_SERVICES
-  const industrySlugs = industries.length ? industries : FALLBACK_INDUSTRIES
-  const solutionSlugs = solutions.length ? solutions : FALLBACK_SOLUTIONS
-  const caseStudySlugs = caseStudies.length ? caseStudies : FALLBACK_CASE_STUDIES
-  const blogSlugs = blogs.length ? blogs : FALLBACK_BLOG_POSTS
-  const careerSlugs = careers.length ? careers : FALLBACK_JOBS
-
   const dynamicRoutes: MetadataRoute.Sitemap = [
-    ...serviceSlugs.map((item) => ({
+    ...services.map((item) => ({
       url: absoluteUrl(`/services/${item.slug}`),
-      lastModified: 'updatedAt' in item && item.updatedAt ? new Date(item.updatedAt) : now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    ...industrySlugs.map((item) => ({
+    ...industries.map((item) => ({
       url: absoluteUrl(`/industries/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    ...solutionSlugs.map((item) => ({
+    ...solutions.map((item) => ({
       url: absoluteUrl(`/solutions/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    ...caseStudySlugs.map((item) => ({
+    ...caseStudies.map((item) => ({
       url: absoluteUrl(`/case-studies/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    ...blogSlugs.map((item) => ({
+    ...blogs.map((item) => ({
       url: absoluteUrl(`/blog/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: 'weekly' as const,
       priority: 0.5,
     })),
-    ...careerSlugs.map((item) => ({
+    ...careers.map((item) => ({
       url: absoluteUrl(`/careers/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: 'weekly' as const,
       priority: 0.5,
     })),

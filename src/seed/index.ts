@@ -4,8 +4,6 @@ import { getPayload } from 'payload'
 loadEnv({ path: '.env' })
 loadEnv({ path: '.env.local', override: true })
 
-import config from '../payload.config'
-
 const richParagraph = (text: string) => ({
   root: {
     type: 'root' as const,
@@ -32,6 +30,7 @@ async function seed() {
     process.exit(1)
   }
 
+  const { default: config } = await import('../payload.config')
   const payload = await getPayload({ config })
 
   const adminEmail = process.env.PAYLOAD_ADMIN_EMAIL || 'admin@xelarvis.in'
@@ -126,7 +125,22 @@ async function seed() {
       email: 'hello@xelarvis.in',
       phone: '+91 00000 00000',
       whatsapp: '',
+      hours: 'Mon–Fri, 9:30–18:30 IST',
+      mapEmbedUrl: '',
       mapEmbed: '',
+    },
+    overrideAccess: true,
+  })
+
+  await payload.updateGlobal({
+    slug: 'social-media',
+    data: {
+      linkedin: 'https://linkedin.com/company/xelarvis',
+      twitter: 'https://x.com/xelarvis',
+      github: '',
+      youtube: '',
+      instagram: '',
+      facebook: '',
     },
     overrideAccess: true,
   })
@@ -162,25 +176,29 @@ async function seed() {
     {
       title: 'IT Consulting',
       slug: 'it-consulting',
-      summary: 'Strategic technology advisory that aligns architecture, delivery, and business outcomes.',
+      summary:
+        'Strategic technology advisory that aligns architecture, delivery, and business outcomes.',
       icon: 'Briefcase',
     },
     {
       title: 'Digital Transformation',
       slug: 'digital-transformation',
-      summary: 'Modernize legacy systems and operating models with measurable transformation programs.',
+      summary:
+        'Modernize legacy systems and operating models with measurable transformation programs.',
       icon: 'RefreshCw',
     },
     {
       title: 'Product Engineering',
       slug: 'product-engineering',
-      summary: 'End-to-end product design and engineering for platforms that scale with your market.',
+      summary:
+        'End-to-end product design and engineering for platforms that scale with your market.',
       icon: 'Boxes',
     },
     {
       title: 'Software Development',
       slug: 'software-development',
-      summary: 'Custom enterprise software built with clean architecture and production discipline.',
+      summary:
+        'Custom enterprise software built with clean architecture and production discipline.',
       icon: 'Code2',
     },
     {
@@ -242,8 +260,14 @@ async function seed() {
           body: richParagraph(service.summary),
           benefits: [
             { title: 'Clear discovery', description: 'Scoped outcomes before execution.' },
-            { title: 'Senior delivery', description: 'Practitioners who own architecture and quality.' },
-            { title: 'Measurable impact', description: 'KPIs tied to business value, not vanity metrics.' },
+            {
+              title: 'Senior delivery',
+              description: 'Practitioners who own architecture and quality.',
+            },
+            {
+              title: 'Measurable impact',
+              description: 'KPIs tied to business value, not vanity metrics.',
+            },
           ],
           _status: 'published',
         },
@@ -254,13 +278,41 @@ async function seed() {
   }
 
   const industries = [
-    { title: 'Manufacturing', slug: 'manufacturing', summary: 'Connected operations, ERP modernization, and industrial software.' },
-    { title: 'Healthcare', slug: 'healthcare', summary: 'Secure clinical and patient platforms with compliance-first delivery.' },
-    { title: 'Education', slug: 'education', summary: 'Learning platforms and campus systems built for scale and accessibility.' },
-    { title: 'Logistics', slug: 'logistics', summary: 'Tracking, optimization, and control towers for complex supply chains.' },
-    { title: 'Retail', slug: 'retail', summary: 'Omnichannel commerce, inventory intelligence, and customer platforms.' },
-    { title: 'Government', slug: 'government', summary: 'Secure digital public services with transparency and reliability.' },
-    { title: 'SaaS', slug: 'saas', summary: 'Product engineering partnerships for venture-backed and enterprise SaaS.' },
+    {
+      title: 'Manufacturing',
+      slug: 'manufacturing',
+      summary: 'Connected operations, ERP modernization, and industrial software.',
+    },
+    {
+      title: 'Healthcare',
+      slug: 'healthcare',
+      summary: 'Secure clinical and patient platforms with compliance-first delivery.',
+    },
+    {
+      title: 'Education',
+      slug: 'education',
+      summary: 'Learning platforms and campus systems built for scale and accessibility.',
+    },
+    {
+      title: 'Logistics',
+      slug: 'logistics',
+      summary: 'Tracking, optimization, and control towers for complex supply chains.',
+    },
+    {
+      title: 'Retail',
+      slug: 'retail',
+      summary: 'Omnichannel commerce, inventory intelligence, and customer platforms.',
+    },
+    {
+      title: 'Government',
+      slug: 'government',
+      summary: 'Secure digital public services with transparency and reliability.',
+    },
+    {
+      title: 'SaaS',
+      slug: 'saas',
+      summary: 'Product engineering partnerships for venture-backed and enterprise SaaS.',
+    },
   ]
 
   for (const industry of industries) {
@@ -275,7 +327,8 @@ async function seed() {
         collection: 'industries',
         data: {
           ...industry,
-          challenges: 'Fragmented systems, slow delivery cycles, and unclear ownership of digital outcomes.',
+          challenges:
+            'Fragmented systems, slow delivery cycles, and unclear ownership of digital outcomes.',
           approach: richParagraph(industry.summary),
           _status: 'published',
         },
@@ -286,9 +339,21 @@ async function seed() {
   }
 
   const solutions = [
-    { title: 'Cloud Modernization', slug: 'cloud-modernization', summary: 'Migrate and optimize workloads for resilience and cost efficiency.' },
-    { title: 'AI Operations', slug: 'ai-operations', summary: 'Operationalize AI assistants and automation across business workflows.' },
-    { title: 'Platform Engineering', slug: 'platform-engineering', summary: 'Internal developer platforms that accelerate safe delivery.' },
+    {
+      title: 'Cloud Modernization',
+      slug: 'cloud-modernization',
+      summary: 'Migrate and optimize workloads for resilience and cost efficiency.',
+    },
+    {
+      title: 'AI Operations',
+      slug: 'ai-operations',
+      summary: 'Operationalize AI assistants and automation across business workflows.',
+    },
+    {
+      title: 'Platform Engineering',
+      slug: 'platform-engineering',
+      summary: 'Internal developer platforms that accelerate safe delivery.',
+    },
   ]
 
   for (const solution of solutions) {
@@ -312,11 +377,69 @@ async function seed() {
     }
   }
 
+  const homeLayout = [
+    {
+      blockType: 'hero' as const,
+      eyebrow: 'Xelarvis Technologies',
+      heading: 'Engineering Digital Excellence.',
+      subheading:
+        'Enterprise consulting, product engineering, and cloud platforms for organizations that need clarity, speed, and lasting quality.',
+      ctaLabel: "Let's Talk",
+      ctaHref: '/contact?intent=project',
+      secondaryCtaLabel: 'Explore services',
+      secondaryCtaHref: '/services',
+    },
+    {
+      blockType: 'statistics' as const,
+      heading: 'Trust indicators',
+      stats: [
+        { label: 'Capability areas', value: '11', suffix: '+' },
+        { label: 'Industries served', value: '7', suffix: '+' },
+        { label: 'Delivery focus', value: 'Production' },
+        { label: 'Engagement', value: 'Senior-led' },
+      ],
+    },
+    {
+      blockType: 'aboutPreview' as const,
+      heading: 'A technology partner built for durable outcomes.',
+      body: 'We help startups, enterprises, and institutions modernize products and platforms — with senior ownership, transparent process, and engineering that lasts.',
+      cta: { label: 'About us', href: '/about', style: 'secondary' as const },
+    },
+    {
+      blockType: 'servicesGrid' as const,
+      heading: 'Capabilities for modern enterprises',
+      subheading:
+        'From platform engineering to AI-enabled products, we deliver with precision and pace.',
+    },
+    {
+      blockType: 'technologyGrid' as const,
+      heading: 'Technology expertise',
+      subheading: 'Modern stacks selected for maintainability, security, and scale.',
+    },
+    {
+      blockType: 'testimonials' as const,
+      heading: 'What clients say',
+    },
+    {
+      blockType: 'latestBlogs' as const,
+      heading: 'Insights',
+      subheading: 'Perspective from our engineering and delivery practice.',
+    },
+    {
+      blockType: 'ctaBand' as const,
+      heading: 'Ready to build your next digital product?',
+      subheading: 'Tell us about your product, platform, or transformation goals.',
+      ctaLabel: 'Schedule a Consultation',
+      ctaHref: '/contact?intent=project',
+    },
+  ]
+
   const home = await payload.find({
     collection: 'pages',
     where: { slug: { equals: 'home' } },
     limit: 1,
     overrideAccess: true,
+    draft: true,
   })
 
   if (home.totalDocs === 0) {
@@ -325,40 +448,118 @@ async function seed() {
       data: {
         title: 'Home',
         slug: 'home',
+        layout: homeLayout,
+        _status: 'published',
+      },
+      overrideAccess: true,
+      context: { disableRevalidate: true },
+    })
+    console.log('Created home page')
+  } else {
+    const existing = home.docs[0]
+    const layoutLen = Array.isArray(existing.layout) ? existing.layout.length : 0
+    if (existing._status !== 'published' || layoutLen === 0) {
+      await payload.update({
+        collection: 'pages',
+        id: existing.id,
+        data: {
+          title: 'Home',
+          slug: 'home',
+          layout: layoutLen === 0 ? homeLayout : existing.layout,
+          _status: 'published',
+        },
+        overrideAccess: true,
+        draft: false,
+        context: { disableRevalidate: true },
+      })
+      console.log('Published home page')
+    } else {
+      console.log('Home page already published')
+    }
+  }
+
+  const about = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: 'about' } },
+    limit: 1,
+    overrideAccess: true,
+  })
+
+  if (about.totalDocs === 0) {
+    await payload.create({
+      collection: 'pages',
+      data: {
+        title: 'About',
+        slug: 'about',
         layout: [
           {
             blockType: 'hero',
-            eyebrow: 'Xelarvis Technologies',
-            heading: 'Engineering Digital Excellence.',
+            eyebrow: 'About',
+            heading: 'Built for enterprises that demand precision.',
             subheading:
-              'Enterprise consulting, product engineering, and cloud platforms for organizations that need clarity, speed, and lasting quality.',
-            ctaLabel: 'Start a conversation',
+              'Xelarvis Technologies partners with organizations to engineer platforms, products, and data systems with long-term maintainability.',
+            ctaLabel: 'Talk to us',
             ctaHref: '/contact',
           },
           {
-            blockType: 'servicesGrid',
-            heading: 'Capabilities that move the business',
-            subheading: 'From strategy to production systems — one accountable partner.',
+            blockType: 'missionVision',
+            heading: 'Mission & vision',
+            missionTitle: 'Mission',
+            missionBody:
+              'Deliver production-grade software and platforms that create measurable business outcomes for our clients.',
+            visionTitle: 'Vision',
+            visionBody:
+              'Become the most trusted engineering partner for enterprises modernizing digital products and operations.',
           },
           {
-            blockType: 'industriesStrip',
-            heading: 'Industries we serve',
-            subheading: 'Domain-aware teams for complex operating environments.',
-          },
-          {
-            blockType: 'statsRow',
-            heading: 'Built for enterprise outcomes',
-            stats: [
-              { label: 'Capability areas', value: '11+' },
-              { label: 'Engagement models', value: 'Flexible' },
-              { label: 'Delivery focus', value: 'Production' },
+            blockType: 'valuesGrid',
+            heading: 'Values',
+            subheading: 'How we work when stakes are high.',
+            values: [
+              {
+                title: 'Clarity',
+                description: 'We prefer precise scope, explicit trade-offs, and honest timelines.',
+              },
+              {
+                title: 'Ownership',
+                description:
+                  'Senior practitioners stay accountable from discovery through production.',
+              },
+              {
+                title: 'Craft',
+                description:
+                  'We optimize for maintainability, security, and operational excellence.',
+              },
             ],
           },
           {
+            blockType: 'timeline',
+            heading: 'Company timeline',
+            subheading: 'Milestones in building Xelarvis.',
+            items: [
+              {
+                date: 'Founding',
+                title: 'Company established',
+                description:
+                  'Xelarvis Technologies formed to deliver enterprise engineering with craft and clarity.',
+              },
+              {
+                date: 'Growth',
+                title: 'Capability expansion',
+                description:
+                  'Expanded cloud, AI, and product engineering practices across regulated industries.',
+              },
+            ],
+          },
+          {
+            blockType: 'teamGrid',
+            heading: 'Leadership',
+          },
+          {
             blockType: 'ctaBand',
-            heading: 'Ready to engineer what comes next?',
-            subheading: 'Tell us about your product, platform, or transformation goals.',
-            ctaLabel: 'Talk to an expert',
+            heading: 'Work with us',
+            subheading: 'Explore open roles or start a project conversation.',
+            ctaLabel: 'Contact',
             ctaHref: '/contact',
           },
         ],
@@ -366,7 +567,7 @@ async function seed() {
       },
       overrideAccess: true,
     })
-    console.log('Created home page')
+    console.log('Created about page')
   }
 
   for (const legal of [
