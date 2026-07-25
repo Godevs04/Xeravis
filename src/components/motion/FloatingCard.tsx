@@ -25,30 +25,27 @@ export function FloatingCard({
 
   return (
     <motion.div
-      className={cn('glass-card relative overflow-hidden will-change-transform', className)}
-      initial={reduce ? false : { opacity: 0, y: 20, scale: 0.98 }}
-      whileInView={
-        float && !reduce ? { opacity: 1, y: [0, -6, 0], scale: 1 } : { opacity: 1, y: 0, scale: 1 }
-      }
+      className={cn('glass-card relative isolate overflow-hidden will-change-transform', className)}
+      initial={reduce ? false : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-8% 0px' }}
-      transition={
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
+      animate={
         float && !reduce
           ? {
-              opacity: { duration: 0.65, ease: [0.22, 1, 0.36, 1], delay },
-              scale: { duration: 0.65, ease: [0.22, 1, 0.36, 1], delay },
-              y: {
-                duration: 7,
+              y: [0, -5, 0],
+              transition: {
+                duration: 8,
                 repeat: Infinity,
                 ease: 'easeInOut',
-                delay: delay + 0.8,
-                times: [0, 0.5, 1],
+                delay: delay + 0.9,
               },
             }
-          : { duration: 0.65, ease: [0.22, 1, 0.36, 1], delay }
+          : undefined
       }
       whileHover={
         lift && !reduce
-          ? { y: -8, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }
+          ? { y: float ? -9 : -6, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }
           : undefined
       }
     >

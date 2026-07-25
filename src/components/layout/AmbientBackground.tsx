@@ -10,19 +10,19 @@ export function AmbientBackground() {
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div className="bg-mesh absolute inset-0" />
       <div
-        className={`absolute top-[-10%] -left-[20%] h-[55vh] w-[55vh] rounded-full bg-[radial-gradient(circle,rgba(109,94,249,0.38),transparent_68%)] blur-3xl ${reduce ? '' : 'animate-blob'}`}
+        className={`absolute top-[-18%] -left-[18%] h-[62vh] w-[62vh] rounded-full bg-[radial-gradient(circle,rgba(109,94,249,0.42),transparent_68%)] blur-3xl ${reduce ? '' : 'animate-blob'}`}
       />
       <div
-        className={`absolute top-[15%] -right-[12%] h-[52vh] w-[52vh] rounded-full bg-[radial-gradient(circle,rgba(161,140,255,0.32),transparent_68%)] blur-3xl ${reduce ? '' : 'animate-blob-slow'}`}
+        className={`absolute top-[8%] -right-[16%] h-[58vh] w-[58vh] rounded-full bg-[radial-gradient(circle,rgba(161,140,255,0.34),transparent_68%)] blur-3xl ${reduce ? '' : 'animate-blob-slow'}`}
       />
       <div
-        className={`absolute bottom-[-8%] left-[28%] h-[44vh] w-[52vh] rounded-full bg-[radial-gradient(circle,rgba(125,180,255,0.24),transparent_70%)] blur-3xl ${reduce ? '' : 'animate-blob'}`}
+        className={`absolute bottom-[-14%] left-[18%] h-[50vh] w-[58vh] rounded-full bg-[radial-gradient(circle,rgba(125,180,255,0.26),transparent_70%)] blur-3xl ${reduce ? '' : 'animate-blob'}`}
       />
       {!reduce ? (
         <motion.div
-          className="absolute top-[40%] left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(109,94,249,0.12),transparent_70%)] blur-2xl"
-          animate={{ opacity: [0.35, 0.7, 0.35], scale: [1, 1.08, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-[36%] left-[42%] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(109,94,249,0.18),transparent_70%)] blur-2xl"
+          animate={{ opacity: [0.4, 0.75, 0.4], scale: [1, 1.12, 1], x: [0, 24, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
         />
       ) : null}
       <div className="noise-overlay" />

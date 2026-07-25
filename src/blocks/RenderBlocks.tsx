@@ -58,7 +58,10 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
               <StatsRow
                 key={key}
                 heading={(block.heading as string) || 'Trust indicators'}
-                stats={block.stats as { label: string; value: string }[] | undefined}
+                stats={
+                  block.stats as
+                    { label: string; value: string; suffix?: string | null }[] | undefined
+                }
               />
             )
           case 'aboutPreview':

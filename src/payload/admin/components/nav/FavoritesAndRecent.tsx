@@ -39,7 +39,7 @@ export const FavoritesAndRecent = () => {
           {RECENT.map((item) => (
             <li key={item.href}>
               <Link href={item.href}>
-                <span className="xe-nav-section__dot" style={{ background: '#a1a1aa' }} />
+                <span className="xe-nav-section__dot xe-nav-section__dot--muted" />
                 {item.label}
               </Link>
             </li>

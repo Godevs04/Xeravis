@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com",
               "worker-src 'self' blob: https://cdn.jsdelivr.net",
               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
-              "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com",
+              "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://www.gravatar.com https://secure.gravatar.com",
               "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
               "connect-src 'self' https://cdn.jsdelivr.net https://www.google-analytics.com https://vitals.vercel-insights.com",
               "manifest-src 'self'",

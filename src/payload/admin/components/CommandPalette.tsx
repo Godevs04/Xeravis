@@ -169,24 +169,11 @@ export const CommandPalette = () => {
                 ))
               )}
             </div>
-            <div
-              style={{
-                display: 'flex',
-                gap: 12,
-                padding: '10px 16px',
-                borderTop: '1px solid rgba(255,255,255,.08)',
-                color: '#a1a1aa',
-                fontSize: 11,
-              }}
-            >
+            <div className="xe-cmd__footer">
               <span>↑↓ navigate</span>
               <span>↵ open</span>
               <span>esc close</span>
-              <Link
-                href="/admin"
-                style={{ marginLeft: 'auto', color: '#93c5fd', textDecoration: 'none' }}
-                onClick={() => setOpen(false)}
-              >
+              <Link href="/admin" className="xe-cmd__dash" onClick={() => setOpen(false)}>
                 Dashboard
               </Link>
             </div>

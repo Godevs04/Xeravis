@@ -108,10 +108,9 @@ body:has(.login) {
   border-top: 1px solid var(--xe-border) !important;
 }
 
-/* ─── App header / glass ─── */
+/* ─── App header / glass (theme only — keep Payload layout) ─── */
 .template-default > .template-default__wrap > header,
-.app-header,
-.step-nav {
+.app-header {
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   background: var(--xe-glass) !important;
@@ -122,23 +121,124 @@ body:has(.login) {
   position: sticky;
   top: 0;
   z-index: 30;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 12px !important;
-  min-height: 56px;
-  padding-inline: 20px !important;
 }
 
-.app-header__controls,
-.collection-list__header-wrap,
-.gutter--left {
+.app-header__bg {
+  background: var(--xe-glass) !important;
+}
+
+.app-header__content,
+.app-header__wrapper,
+.app-header__controls-wrapper {
   min-width: 0;
+}
+
+.app-header__step-nav-wrapper {
+  min-width: 0;
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+/* Keep action buttons + profile avatar from colliding */
+.app-header__actions-wrapper {
+  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 0 0 auto !important;
+  min-width: auto !important;
+  margin-right: 12px !important;
+  overflow: visible !important;
+}
+
+.app-header__actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  overflow: visible !important;
+  white-space: nowrap;
+}
+
+.app-header__account {
+  position: relative !important;
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  margin-left: 4px !important;
+  z-index: 2;
+}
+
+.app-header__account a,
+.app-header__account .graphic-account,
+.app-header__account .gravatar-account,
+.app-header__account img {
+  display: block !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 999px !important;
+  overflow: hidden;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--xe-primary-soft) !important;
+  border: 1px solid var(--xe-border) !important;
+  color: var(--xe-primary) !important;
+}
+
+.app-header__account .graphic-account {
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.app-header__account .graphic-account__bg {
+  fill: var(--xe-primary-soft) !important;
+  stroke: var(--xe-border) !important;
+}
+
+.app-header__account .graphic-account__head,
+.app-header__account .graphic-account__body {
+  fill: var(--xe-primary) !important;
+}
+
+.app-header__localizer.localizer {
+  right: calc(var(--base, 20px) * 3.2) !important;
+}
+
+.app-header__localizer-spacing {
+  width: 0 !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .step-nav {
   font-size: 13px;
   color: var(--xe-muted);
+  background: transparent !important;
+  border: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.step-nav__home {
+  flex-shrink: 0;
+  width: 18px !important;
+  height: 18px !important;
+  overflow: hidden;
+}
+
+.step-nav__home .xe-logo,
+.step-nav__home .xe-logo__mark {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 5px !important;
+}
+
+.step-nav__home .xe-logo__mark svg {
+  width: 10px !important;
+  height: 10px !important;
 }
 
 .step-nav a {
@@ -150,45 +250,78 @@ body:has(.login) {
   color: var(--xe-text);
 }
 
-/* ─── Document title row + sticky actions ─── */
+/* ─── Document controls (theme only — do not alter Payload sticky layout) ─── */
 .doc-header,
 .collection-edit__header,
 .global-edit__header,
 .render-title {
-  display: flex !important;
-  flex-wrap: wrap;
-  align-items: center !important;
-  justify-content: space-between;
   gap: 12px 16px;
+  margin-bottom: 8px;
 }
 
-.doc-controls,
-.document-fields .sticky-toolbar,
-.collection-edit__sticky,
-.form-submit,
+.doc-controls {
+  /* Preserve Payload defaults: sticky, full width, flex, fixed height wrapper */
+  background: color-mix(in srgb, var(--xe-bg) 88%, transparent) !important;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 0 !important;
+  box-shadow: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.doc-controls__divider {
+  background: var(--xe-border) !important;
+}
+
+.doc-controls__wrapper {
+  /* Keep Payload height — never add padding that overflows fixed height */
+  height: var(--doc-controls-height) !important;
+  min-height: var(--doc-controls-height) !important;
+  max-height: var(--doc-controls-height) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  align-items: center !important;
+}
+
+.doc-controls__content,
+.doc-controls__meta,
+.doc-controls__label {
+  color: var(--xe-muted) !important;
+}
+
+.doc-controls__value,
+.doc-controls__status,
+.doc-controls .status {
+  color: var(--xe-text) !important;
+}
+
+.doc-controls__controls-wrapper {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+
 .doc-controls__controls {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
-}
-
-.doc-controls,
-.document-fields .sticky-toolbar,
-.collection-edit__sticky {
-  position: sticky !important;
-  top: 64px;
-  z-index: 20;
-  width: fit-content;
-  max-width: calc(100% - 24px);
-  margin-left: auto !important;
-  margin-bottom: 16px !important;
-  padding: 8px !important;
-  border-radius: 999px !important;
-  border: 1px solid var(--xe-border) !important;
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  background: var(--xe-glass) !important;
-  box-shadow: var(--xe-shadow) !important;
+  margin: 0 !important;
+  flex-wrap: nowrap !important;
 }
 
 .doc-controls .btn,
@@ -197,12 +330,41 @@ body:has(.login) {
   border-radius: 999px !important;
   min-height: 36px !important;
   padding-inline: 14px !important;
+  flex-shrink: 0;
 }
 
 .doc-controls .btn--style-primary,
 .doc-controls__controls .btn--style-primary {
   background: linear-gradient(135deg, #6d5ef9, #8b7cff) !important;
   box-shadow: 0 8px 22px rgba(109, 94, 249, 0.4) !important;
+}
+
+.doc-controls__dots {
+  border-color: var(--xe-border) !important;
+  background: var(--xe-input-bg) !important;
+  color: var(--xe-text) !important;
+}
+
+.collection-edit,
+.global-edit,
+.document-fields {
+  scroll-padding-top: calc(var(--doc-controls-height, 52px) + 12px);
+}
+
+/* Ensure edit form never slides under the sticky controls bar */
+.collection-edit__main,
+.global-edit__main,
+.document-fields {
+  position: relative;
+  z-index: 1;
+  clear: both;
+}
+
+.doc-controls + *,
+.collection-edit > .gutter,
+.collection-edit .document-fields {
+  position: relative;
+  z-index: 1;
 }
 
 /* ─── Dashboard cards / collection cards ─── */
@@ -369,6 +531,55 @@ textarea.textarea,
   outline: none !important;
 }
 
+.react-select__menu,
+.rs__menu,
+.popup-button-list,
+.popup__content,
+.dropdown-menu {
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--xe-shadow-lg) !important;
+  color: var(--xe-text) !important;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  overflow: hidden;
+}
+
+.react-select__option,
+.rs__option,
+.popup-button-list__button {
+  color: var(--xe-text) !important;
+  background: transparent !important;
+}
+
+.react-select__option--is-focused,
+.react-select__option:hover,
+.rs__option--is-focused,
+.popup-button-list__button:hover {
+  background: var(--xe-hover) !important;
+  color: var(--xe-text) !important;
+}
+
+.react-select__option--is-selected,
+.rs__option--is-selected {
+  background: var(--xe-primary-soft) !important;
+  color: var(--xe-text) !important;
+}
+
+.react-select__single-value,
+.react-select__input-container,
+.react-select__placeholder,
+.rs__single-value,
+.rs__placeholder {
+  color: var(--xe-text) !important;
+}
+
+.react-select__placeholder,
+.rs__placeholder {
+  color: var(--xe-muted) !important;
+}
+
 .field-label,
 .field-type__label,
 .label-wrapper label {
@@ -410,13 +621,14 @@ textarea.textarea,
 
 /* ─── Toasts ─── */
 .Toastify__toast {
-  border-radius: 14px !important;
   background: var(--xe-card) !important;
-  border: 1px solid var(--xe-border) !important;
-  box-shadow: var(--xe-shadow-lg) !important;
   color: var(--xe-text) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--xe-shadow-lg) !important;
   font-family: var(--xe-font) !important;
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 /* ─── Drawers / modals ─── */
