@@ -125,10 +125,10 @@ export function PageHero({
         >
           <motion.div
             {...fade(0.04)}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#6d5ef9]/20 bg-white/80 px-3 py-1.5 shadow-[0_8px_24px_rgba(109,94,249,0.12)] backdrop-blur-md dark:border-white/10 dark:bg-white/5"
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-white/80 px-3 py-1.5 shadow-[var(--shadow-medium)] backdrop-blur-md dark:border-white/10 dark:bg-white/5"
           >
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#6d5ef9] shadow-[0_0_10px_#6d5ef9]" />
-            <span className="text-[11px] font-bold tracking-[0.16em] text-[#6d5ef9] uppercase">
+            <span className="bg-accent h-1.5 w-1.5 animate-pulse rounded-full shadow-[0_0_10px_var(--color-accent-glow)]" />
+            <span className="text-accent text-[11px] font-bold tracking-[0.16em] uppercase">
               {eyebrow && eyebrow.toLowerCase() !== brand.toLowerCase() ? eyebrow : brand}
             </span>
           </motion.div>

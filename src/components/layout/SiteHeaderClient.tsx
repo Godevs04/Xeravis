@@ -61,7 +61,7 @@ export function SiteHeaderClient({
             href="/"
             className="group font-display text-primary flex items-center gap-2.5 pl-1 text-lg font-bold tracking-tight"
           >
-            <span className="grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-[#6d5ef9] to-[#a18cff] text-[11px] font-bold text-white shadow-[0_0_28px_var(--color-accent-glow)]">
+            <span className="grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-[color:var(--color-accent)] to-[color:var(--color-accent-light)] text-[11px] font-bold text-white shadow-[0_0_28px_var(--color-accent-glow)]">
               X
             </span>
             <span>

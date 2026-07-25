@@ -19,21 +19,25 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
   const [state, action, pending] = useActionState(submitCareerApplication, initialState)
 
   return (
-    <form action={action} className="space-y-6" encType="multipart/form-data" noValidate>
+    <form action={action} className="space-y-6" noValidate>
       <input type="hidden" name="careerId" value={careerId} />
-      <p className="text-sm text-secondary">
-        Applying for <span className="font-semibold text-primary">{jobTitle}</span>
+      <p className="text-secondary text-sm">
+        Applying for <span className="text-primary font-semibold">{jobTitle}</span>
       </p>
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="applicant-name">Full name</Label>
           <Input id="applicant-name" name="name" autoComplete="name" required />
-          {state.fieldErrors?.name && <p className="text-sm text-danger">{state.fieldErrors.name[0]}</p>}
+          {state.fieldErrors?.name && (
+            <p className="text-danger text-sm">{state.fieldErrors.name[0]}</p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="applicant-email">Email</Label>
           <Input id="applicant-email" name="email" type="email" autoComplete="email" required />
-          {state.fieldErrors?.email && <p className="text-sm text-danger">{state.fieldErrors.email[0]}</p>}
+          {state.fieldErrors?.email && (
+            <p className="text-danger text-sm">{state.fieldErrors.email[0]}</p>
+          )}
         </div>
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="applicant-phone">Phone</Label>
@@ -47,7 +51,9 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
       <div className="space-y-2">
         <Label htmlFor="resume">Resume (PDF, max 5 MB)</Label>
         <Input id="resume" name="resume" type="file" accept="application/pdf,.pdf" required />
-        {state.fieldErrors?.resume && <p className="text-sm text-danger">{state.fieldErrors.resume[0]}</p>}
+        {state.fieldErrors?.resume && (
+          <p className="text-danger text-sm">{state.fieldErrors.resume[0]}</p>
+        )}
       </div>
       {state.message && (
         <p className={`text-sm ${state.ok ? 'text-success' : 'text-danger'}`} role="status">

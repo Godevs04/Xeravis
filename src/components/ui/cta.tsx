@@ -31,7 +31,7 @@ export function CTA({
       className={cn(
         'relative overflow-hidden rounded-[32px] px-8 py-12 md:px-12 md:py-16',
         inverted
-          ? 'bg-gradient-to-br from-[#6d5ef9] via-[#8b7cff] to-[#a18cff] text-white shadow-[var(--shadow-floating)]'
+          ? 'bg-gradient-to-br from-[color:var(--color-accent)] via-[color:var(--color-secondary-accent)] to-[color:var(--color-accent-light)] text-white shadow-[var(--shadow-floating)]'
           : 'border border-[color:var(--glass-border-soft)] bg-[color:var(--card-bg)] shadow-[var(--shadow-floating)] backdrop-blur-2xl',
         className,
       )}

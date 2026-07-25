@@ -33,9 +33,9 @@ export function FloatingCard({
       animate={
         float && !reduce
           ? {
-              y: [0, -5, 0],
+              y: [0, -8, 0],
               transition: {
-                duration: 8,
+                duration: 7.5,
                 repeat: Infinity,
                 ease: 'easeInOut',
                 delay: delay + 0.9,
@@ -45,7 +45,7 @@ export function FloatingCard({
       }
       whileHover={
         lift && !reduce
-          ? { y: float ? -9 : -6, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }
+          ? { y: float ? -12 : -7, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }
           : undefined
       }
     >

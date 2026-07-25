@@ -665,11 +665,11 @@ html[data-theme='dark'] .xe-stat {
 }
 
 .xe-stat:hover {
-  transform: translateY(-3px);
-  border-color: rgba(109, 94, 249, 0.34);
+  transform: translateY(-5px) scale(1.01);
+  border-color: rgba(109, 94, 249, 0.36);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 18px 48px rgba(109, 94, 249, 0.18);
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 22px 56px rgba(79, 70, 229, 0.2);
 }
 
 html[data-theme='dark'] .xe-stat:hover {

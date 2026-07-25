@@ -1,21 +1,21 @@
-/* Xelarvis Admin — Glass Product Language (light default) */
+/* Xelarvis Admin — Aurora Glass */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 :root,
 html[data-theme='light'] {
-  --xe-bg: #f7f4ff;
-  --xe-sidebar: rgba(255, 255, 255, 0.72);
-  --xe-surface: rgba(255, 255, 255, 0.78);
-  --xe-card: rgba(255, 255, 255, 0.82);
+  --xe-bg: #f6f3ff;
+  --xe-sidebar: rgba(255, 255, 255, 0.58);
+  --xe-surface: rgba(255, 255, 255, 0.76);
+  --xe-card: rgba(255, 255, 255, 0.8);
   --xe-hover: rgba(109, 94, 249, 0.1);
   --xe-primary: #6d5ef9;
-  --xe-primary-hover: #5a4ce8;
+  --xe-primary-hover: #5546e8;
   --xe-primary-soft: rgba(109, 94, 249, 0.14);
   --xe-success: #16a34a;
   --xe-warning: #d97706;
   --xe-danger: #dc2626;
-  --xe-text: #1f1f21;
+  --xe-text: #17171c;
   --xe-muted: #5c5c66;
   --xe-border: rgba(109, 94, 249, 0.14);
   --xe-border-strong: rgba(109, 94, 249, 0.26);
@@ -23,23 +23,23 @@ html[data-theme='light'] {
   --xe-radius: 16px;
   --xe-radius-lg: 20px;
   --xe-radius-xl: 28px;
-  --xe-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 10px 32px rgba(109, 94, 249, 0.1);
-  --xe-shadow-lg: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 20px 56px rgba(109, 94, 249, 0.14);
+  --xe-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 12px 36px rgba(79, 70, 229, 0.1);
+  --xe-shadow-lg: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 22px 60px rgba(79, 70, 229, 0.14);
   --xe-font: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
   --xe-display: 'Space Grotesk', var(--xe-font);
   --xe-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --xe-glass: rgba(255, 255, 255, 0.62);
-  --xe-glow: rgba(109, 94, 249, 0.28);
-  --xe-mesh-1: rgba(109, 94, 249, 0.16);
-  --xe-mesh-2: rgba(161, 140, 255, 0.12);
-  --xe-mesh-3: rgba(125, 180, 255, 0.1);
+  --xe-glass: rgba(255, 255, 255, 0.55);
+  --xe-glow: rgba(109, 94, 249, 0.3);
+  --xe-mesh-1: rgba(109, 94, 249, 0.18);
+  --xe-mesh-2: rgba(161, 140, 255, 0.14);
+  --xe-mesh-3: rgba(96, 165, 250, 0.12);
   --xe-input-bg: rgba(255, 255, 255, 0.72);
   --xe-field-desc: #7a7690;
-  --xe-env-text: #5a4ce8;
+  --xe-env-text: #5546e8;
 
   --color-base-0: #ffffff;
-  --color-base-50: #f7f4ff;
+  --color-base-50: #f6f3ff;
   --color-base-100: #efeaff;
   --color-base-150: #e4dcff;
   --color-base-200: #d4c8ff;
@@ -55,7 +55,7 @@ html[data-theme='light'] {
   --color-base-700: #18142a;
   --color-base-750: #120f22;
   --color-base-800: #0e0b1a;
-  --color-base-850: #0c0a14;
+  --color-base-850: #0b0914;
   --color-base-900: #0a0812;
   --color-base-950: #07060e;
   --color-base-1000: #04030a;
@@ -71,7 +71,7 @@ html[data-theme='light'] {
   --color-warning-600: #d97706;
   --color-blue-400: #a18cff;
   --color-blue-500: #6d5ef9;
-  --color-blue-600: #5a4ce8;
+  --color-blue-600: #5546e8;
 
   --font-body: var(--xe-font);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -82,7 +82,7 @@ html[data-theme='light'] {
   --theme-bg: var(--xe-bg);
   --theme-input-bg: var(--xe-surface);
   --theme-text: var(--xe-text);
-  --theme-elevation-0: #f7f4ff;
+  --theme-elevation-0: #f6f3ff;
   --theme-elevation-50: #ffffff;
   --theme-elevation-100: #ffffff;
   --theme-elevation-150: #f2eeff;
@@ -100,7 +100,7 @@ html[data-theme='light'] {
   --theme-elevation-750: #1e1832;
   --theme-elevation-800: #18142a;
   --theme-elevation-850: #120f22;
-  --theme-elevation-900: #0c0a14;
+  --theme-elevation-900: #0b0914;
   --theme-elevation-950: #07060e;
   --theme-elevation-1000: #04030a;
   --theme-border-color: var(--xe-border);
@@ -110,10 +110,10 @@ html[data-theme='light'] {
 }
 
 html[data-theme='dark'] {
-  --xe-bg: #0c0a14;
-  --xe-sidebar: rgba(18, 14, 32, 0.78);
-  --xe-surface: rgba(32, 26, 52, 0.72);
-  --xe-card: rgba(36, 30, 56, 0.62);
+  --xe-bg: #0b0914;
+  --xe-sidebar: rgba(18, 14, 32, 0.72);
+  --xe-surface: rgba(32, 26, 52, 0.7);
+  --xe-card: rgba(36, 30, 56, 0.6);
   --xe-hover: rgba(139, 124, 255, 0.14);
   --xe-primary: #6d5ef9;
   --xe-primary-hover: #8b7cff;
@@ -121,22 +121,22 @@ html[data-theme='dark'] {
   --xe-success: #22c55e;
   --xe-warning: #f59e0b;
   --xe-danger: #ef4444;
-  --xe-text: #f7f4ff;
+  --xe-text: #f6f3ff;
   --xe-muted: #a8a2c4;
   --xe-border: rgba(161, 140, 255, 0.18);
   --xe-border-strong: rgba(161, 140, 255, 0.32);
-  --xe-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 12px 40px rgba(0, 0, 0, 0.35);
-  --xe-shadow-lg: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 24px 64px rgba(0, 0, 0, 0.45);
-  --xe-glass: rgba(18, 14, 32, 0.58);
+  --xe-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 12px 40px rgba(0, 0, 0, 0.35);
+  --xe-shadow-lg: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 64px rgba(0, 0, 0, 0.45);
+  --xe-glass: rgba(18, 14, 32, 0.55);
   --xe-glow: rgba(109, 94, 249, 0.4);
-  --xe-mesh-1: rgba(109, 94, 249, 0.22);
-  --xe-mesh-2: rgba(161, 140, 255, 0.14);
-  --xe-mesh-3: rgba(125, 180, 255, 0.08);
+  --xe-mesh-1: rgba(109, 94, 249, 0.24);
+  --xe-mesh-2: rgba(161, 140, 255, 0.16);
+  --xe-mesh-3: rgba(96, 165, 250, 0.1);
   --xe-input-bg: rgba(255, 255, 255, 0.04);
   --xe-field-desc: #7f7898;
   --xe-env-text: #c4b5fd;
 
-  --color-base-0: #f7f4ff;
+  --color-base-0: #f6f3ff;
   --color-base-50: #efeaff;
   --color-base-100: #e4dcff;
   --color-base-150: #d4c8ff;
@@ -153,7 +153,7 @@ html[data-theme='dark'] {
   --color-base-700: #16122a;
   --color-base-750: #120f22;
   --color-base-800: #0e0b1a;
-  --color-base-850: #0c0a14;
+  --color-base-850: #0b0914;
   --color-base-900: #0a0812;
   --color-base-950: #07060e;
   --color-base-1000: #04030a;
@@ -177,7 +177,7 @@ html[data-theme='dark'] {
   --theme-elevation-650: #d8d0ef;
   --theme-elevation-700: #e8e2f8;
   --theme-elevation-750: #f2eeff;
-  --theme-elevation-800: #f7f4ff;
+  --theme-elevation-800: #f6f3ff;
   --theme-elevation-850: #ffffff;
   --theme-elevation-900: #ffffff;
   --theme-elevation-950: #ffffff;

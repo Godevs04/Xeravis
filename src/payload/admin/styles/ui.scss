@@ -31,9 +31,11 @@ body:has(.login) {
 .nav {
   background: var(--xe-sidebar) !important;
   border-right: 1px solid var(--xe-border) !important;
-  backdrop-filter: blur(24px) saturate(170%);
-  -webkit-backdrop-filter: blur(24px) saturate(170%);
-  box-shadow: 8px 0 48px rgba(109, 94, 249, 0.1);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  box-shadow:
+    inset -1px 0 0 rgba(255, 255, 255, 0.45),
+    12px 0 48px rgba(79, 70, 229, 0.1);
   transition:
     width 0.28s var(--xe-ease),
     transform 0.28s var(--xe-ease),
@@ -390,6 +392,9 @@ body:has(.login) {
 }
 
 .render-fields > .field-type {
+  position: relative;
+  z-index: 1;
+  overflow: visible !important;
   background: var(--xe-card) !important;
   border: 1px solid var(--xe-border) !important;
   border-radius: var(--xe-radius) !important;
@@ -398,6 +403,26 @@ body:has(.login) {
   -webkit-backdrop-filter: blur(14px) saturate(150%);
   padding: 16px 18px !important;
   margin-bottom: 12px !important;
+}
+
+/* Relationship / select menus must float above the next field card */
+.render-fields > .field-type:focus-within,
+.render-fields > .field-type:has(.react-select__menu),
+.render-fields > .field-type:has(.rs__menu),
+.render-fields > .field-type:has(.rs__menu-portal),
+.render-fields > .field-type:has([class*='menu']) {
+  z-index: 50;
+}
+
+.document-fields,
+.render-fields,
+.field-type,
+.field-type__wrap,
+.relationship--single,
+.relationship-diff,
+.react-select-container,
+.css-b62m3t-container {
+  overflow: visible !important;
 }
 
 .dashboard .card:hover,
@@ -537,7 +562,9 @@ textarea.textarea,
 .rs__menu,
 .popup-button-list,
 .popup__content,
-.dropdown-menu {
+.dropdown-menu,
+[class*='rs__menu'] {
+  z-index: 10000 !important;
   background: var(--xe-card) !important;
   border: 1px solid var(--xe-border) !important;
   border-radius: 14px !important;
@@ -545,7 +572,13 @@ textarea.textarea,
   color: var(--xe-text) !important;
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
-  overflow: hidden;
+  overflow: auto;
+}
+
+.rs__menu-portal,
+.react-select__menu-portal,
+[class*='menu-portal'] {
+  z-index: 10000 !important;
 }
 
 .react-select__option,
