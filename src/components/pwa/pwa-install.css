@@ -1,0 +1,230 @@
+/* Shared PWA install prompt — works on website + Payload admin */
+
+.xe-pwa-root {
+  position: fixed;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  z-index: 10050;
+  margin: 0 auto;
+  width: min(420px, calc(100% - 1.5rem));
+  font-family:
+    'Plus Jakarta Sans',
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
+}
+
+@media (min-width: 640px) {
+  .xe-pwa-root {
+    left: auto;
+    right: 1.25rem;
+    margin: 0;
+  }
+}
+
+.xe-pwa-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  padding: 1rem 1rem 1.1rem;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 0 20px 60px rgba(79, 70, 180, 0.28);
+}
+
+@media (min-width: 640px) {
+  .xe-pwa-card {
+    padding: 1.15rem 1.25rem 1.25rem;
+  }
+}
+
+.xe-pwa-card--site {
+  border: 1px solid rgba(109, 94, 249, 0.22);
+  background: rgba(255, 255, 255, 0.88);
+  color: #1f1f21;
+}
+
+.xe-pwa-card--admin {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(22, 18, 42, 0.94);
+  color: #f7f4ff;
+}
+
+.xe-pwa-glow {
+  pointer-events: none;
+  position: absolute;
+  top: -4rem;
+  right: -2.5rem;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(109, 94, 249, 0.38), transparent 70%);
+  filter: blur(18px);
+}
+
+.xe-pwa-dismiss {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.xe-pwa-card--site .xe-pwa-dismiss {
+  color: #8b8b96;
+}
+
+.xe-pwa-card--site .xe-pwa-dismiss:hover {
+  background: rgba(109, 94, 249, 0.1);
+  color: #1f1f21;
+}
+
+.xe-pwa-card--admin .xe-pwa-dismiss {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.xe-pwa-card--admin .xe-pwa-dismiss:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.xe-pwa-body {
+  position: relative;
+  display: flex;
+  gap: 0.9rem;
+  padding-right: 1.6rem;
+}
+
+.xe-pwa-mark {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: linear-gradient(145deg, #6d5ef9, #a18cff);
+  box-shadow: 0 10px 28px rgba(109, 94, 249, 0.45);
+}
+
+.xe-pwa-copy {
+  min-width: 0;
+}
+
+.xe-pwa-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.xe-pwa-desc {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.xe-pwa-card--site .xe-pwa-desc {
+  color: #5c5c66;
+}
+
+.xe-pwa-card--admin .xe-pwa-desc {
+  color: #a8a2c4;
+}
+
+.xe-pwa-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.xe-pwa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.xe-pwa-btn:focus-visible {
+  outline: 2px solid #6d5ef9;
+  outline-offset: 2px;
+}
+
+.xe-pwa-btn--primary {
+  flex: 1 1 auto;
+  color: #fff;
+  background: linear-gradient(90deg, #6d5ef9, #8b7cff);
+  box-shadow: 0 10px 28px rgba(109, 94, 249, 0.4);
+}
+
+.xe-pwa-btn--primary:hover {
+  transform: translateY(-1px);
+}
+
+.xe-pwa-btn--ghost {
+  background: transparent;
+}
+
+.xe-pwa-card--site .xe-pwa-btn--ghost {
+  border: 1px solid rgba(109, 94, 249, 0.22);
+  background: rgba(255, 255, 255, 0.7);
+  color: #1f1f21;
+}
+
+.xe-pwa-card--site .xe-pwa-btn--ghost:hover {
+  background: #fff;
+}
+
+.xe-pwa-card--admin .xe-pwa-btn--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.xe-pwa-card--admin .xe-pwa-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.xe-pwa-btn--full {
+  flex: 1 1 auto;
+}
+
+@media (max-width: 380px) {
+  .xe-pwa-actions {
+    flex-direction: column;
+  }
+
+  .xe-pwa-btn {
+    width: 100%;
+  }
+}

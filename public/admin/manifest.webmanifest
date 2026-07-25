@@ -1,0 +1,50 @@
+{
+  "id": "/admin",
+  "name": "Xelarvis CMS",
+  "short_name": "XV CMS",
+  "description": "Xelarvis enterprise content workspace.",
+  "start_url": "/admin",
+  "scope": "/admin/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0c0a14",
+  "theme_color": "#6d5ef9",
+  "lang": "en",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "/icons/admin-72.png", "sizes": "72x72", "type": "image/png" },
+    { "src": "/icons/admin-96.png", "sizes": "96x96", "type": "image/png" },
+    { "src": "/icons/admin-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/icons/admin-144.png", "sizes": "144x144", "type": "image/png" },
+    { "src": "/icons/admin-152.png", "sizes": "152x152", "type": "image/png" },
+    { "src": "/icons/admin-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/admin-384.png", "sizes": "384x384", "type": "image/png" },
+    { "src": "/icons/admin-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    {
+      "src": "/icons/admin-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Home",
+      "url": "/admin",
+      "icons": [{ "src": "/icons/admin-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Pages",
+      "short_name": "Pages",
+      "url": "/admin/collections/pages",
+      "icons": [{ "src": "/icons/admin-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Media",
+      "short_name": "Media",
+      "url": "/admin/collections/media",
+      "icons": [{ "src": "/icons/admin-96.png", "sizes": "96x96" }]
+    }
+  ]
+}

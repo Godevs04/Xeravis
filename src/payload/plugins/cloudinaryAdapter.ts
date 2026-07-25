@@ -2,6 +2,10 @@ import type { HandleDelete, HandleUpload } from '@payloadcms/plugin-cloud-storag
 import { v2 as cloudinary } from 'cloudinary'
 import type { UploadApiResponse } from 'cloudinary'
 
+import { logger } from '@/lib/logger'
+
+const log = logger.child('cloudinary')
+
 export const isCloudinaryEnabled = () =>
   Boolean(
     process.env.CLOUDINARY_CLOUD_NAME &&
@@ -45,7 +49,7 @@ export const createCloudinaryAdapter = () => {
     try {
       await cloudinary.uploader.destroy(`${folder}/${filename.replace(/\.[^/.]+$/, '')}`)
     } catch (error) {
-      console.error('Cloudinary delete error:', error)
+      log.error('Delete failed:', error)
     }
   }
 

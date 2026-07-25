@@ -2,6 +2,8 @@
 
 import React from 'react'
 
+import { AdminPwa } from '@/components/pwa/AdminPwa'
+
 import { CommandPalette } from './CommandPalette'
 
 const STORAGE_KEY = 'payload-theme'
@@ -56,6 +58,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     <>
       {children}
       <CommandPalette />
+      <AdminPwa />
     </>
   )
 }

@@ -1,5 +1,6 @@
 @import '../../design-system/tokens.css';
 @import 'tailwindcss';
+@import '../../components/pwa/pwa-install.css';
 
 @theme inline {
   --color-primary: var(--color-primary);
@@ -72,6 +73,14 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  @media (display-mode: standalone) {
+    body {
+      min-height: 100dvh;
+    }
   }
 
   h1,

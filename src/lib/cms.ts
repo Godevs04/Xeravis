@@ -1,13 +1,16 @@
 import type { Payload } from 'payload'
 
 import { getPayload } from '@/lib/payload'
+import { logger } from '@/lib/logger'
+
+const log = logger.child('cms')
 
 export async function safePayload<T>(fn: (payload: Payload) => Promise<T>): Promise<T | null> {
   try {
     const payload = await getPayload()
     return await fn(payload)
   } catch (error) {
-    console.error('[cms] Payload query failed:', error)
+    log.error('Payload query failed:', error)
     return null
   }
 }

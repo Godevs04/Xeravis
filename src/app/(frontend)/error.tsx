@@ -4,15 +4,18 @@ import { useEffect } from 'react'
 
 import { Container } from '@/components/layout/Container'
 import { ErrorState } from '@/components/ui/error-state'
+import { logger } from '@/lib/logger'
 
 type ErrorPageProps = {
   error: Error & { digest?: string }
   reset: () => void
 }
 
+const log = logger.child('frontend')
+
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   useEffect(() => {
-    console.error(error)
+    log.error(error)
   }, [error])
 
   return (

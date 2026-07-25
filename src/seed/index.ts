@@ -1,8 +1,12 @@
 import { config as loadEnv } from 'dotenv'
 import { getPayload } from 'payload'
 
+import { logger } from '../lib/logger'
+
 loadEnv({ path: '.env' })
 loadEnv({ path: '.env.local', override: true })
+
+const log = logger.child('seed')
 
 const richParagraph = (text: string) => ({
   root: {
@@ -26,7 +30,7 @@ const richParagraph = (text: string) => ({
 
 async function seed() {
   if (!process.env.DATABASE_URI || !process.env.PAYLOAD_SECRET) {
-    console.error('Missing DATABASE_URI or PAYLOAD_SECRET in environment.')
+    log.error('Missing DATABASE_URI or PAYLOAD_SECRET in environment.')
     process.exit(1)
   }
 
@@ -47,9 +51,9 @@ async function seed() {
       },
       overrideAccess: true,
     })
-    console.log(`Created admin user: ${adminEmail}`)
+    log.success(`Created admin user: ${adminEmail}`)
   } else {
-    console.log('Users exist — skipping admin creation')
+    log.info('Users exist — skipping admin creation')
   }
 
   await payload.updateGlobal({
@@ -273,7 +277,7 @@ async function seed() {
         },
         overrideAccess: true,
       })
-      console.log(`Service: ${service.title}`)
+      log.success(`Service: ${service.title}`)
     }
   }
 
@@ -334,7 +338,7 @@ async function seed() {
         },
         overrideAccess: true,
       })
-      console.log(`Industry: ${industry.title}`)
+      log.success(`Industry: ${industry.title}`)
     }
   }
 
@@ -373,7 +377,7 @@ async function seed() {
         },
         overrideAccess: true,
       })
-      console.log(`Solution: ${solution.title}`)
+      log.success(`Solution: ${solution.title}`)
     }
   }
 
@@ -454,7 +458,7 @@ async function seed() {
       overrideAccess: true,
       context: { disableRevalidate: true },
     })
-    console.log('Created home page')
+    log.success('Created home page')
   } else {
     const existing = home.docs[0]
     const layoutLen = Array.isArray(existing.layout) ? existing.layout.length : 0
@@ -472,9 +476,9 @@ async function seed() {
         draft: false,
         context: { disableRevalidate: true },
       })
-      console.log('Published home page')
+      log.success('Published home page')
     } else {
-      console.log('Home page already published')
+      log.info('Home page already published')
     }
   }
 
@@ -567,7 +571,7 @@ async function seed() {
       },
       overrideAccess: true,
     })
-    console.log('Created about page')
+    log.success('Created about page')
   }
 
   for (const legal of [
@@ -611,7 +615,7 @@ async function seed() {
         },
         overrideAccess: true,
       })
-      console.log(`Page: ${legal.title}`)
+      log.success(`Page: ${legal.title}`)
     }
   }
 
@@ -641,7 +645,7 @@ async function seed() {
       },
       overrideAccess: true,
     })
-    console.log('Created sample career')
+    log.success('Created sample career')
   }
 
   const authorFound = await payload.find({ collection: 'authors', limit: 1, overrideAccess: true })
@@ -699,14 +703,14 @@ async function seed() {
       },
       overrideAccess: true,
     })
-    console.log('Created sample blog post')
+    log.success('Created sample blog post')
   }
 
-  console.log('Seed complete.')
+  log.success('Seed complete.')
   process.exit(0)
 }
 
 seed().catch((error) => {
-  console.error(error)
+  log.error(error)
   process.exit(1)
 })

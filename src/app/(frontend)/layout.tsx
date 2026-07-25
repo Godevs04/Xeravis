@@ -1,5 +1,5 @@
 import { Inter, Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 import { AmbientBackground } from '@/components/layout/AmbientBackground'
 import { SkipLink } from '@/components/layout/SkipLink'
@@ -32,6 +32,18 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = buildMetadata({})
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#6d5ef9' },
+    { media: '(prefers-color-scheme: dark)', color: '#0c0a14' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: 'cover',
+  colorScheme: 'light dark',
+}
 
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = organizationJsonLd()

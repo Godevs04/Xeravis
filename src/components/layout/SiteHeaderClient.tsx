@@ -41,7 +41,9 @@ export function SiteHeaderClient({
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-[transform,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
         hidden && '-translate-y-full',
-        solid ? 'pt-3' : 'pt-4',
+        solid
+          ? 'pt-[max(0.75rem,env(safe-area-inset-top))]'
+          : 'pt-[max(1rem,env(safe-area-inset-top))]',
       )}
     >
       <div

@@ -24,8 +24,13 @@ export default buildConfig({
       icons: [
         {
           rel: 'icon',
-          type: 'image/svg+xml',
-          url: '/favicon.ico',
+          type: 'image/png',
+          url: '/icons/admin-32.png',
+        },
+        {
+          rel: 'apple-touch-icon',
+          type: 'image/png',
+          url: '/icons/admin-192.png',
         },
       ],
     },
