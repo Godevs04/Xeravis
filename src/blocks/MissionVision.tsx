@@ -1,6 +1,8 @@
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
-import { Heading } from '@/components/ui/heading'
+import { SectionHeader } from '@/components/layout/SectionHeader'
+import { AnimateIn } from '@/components/motion/AnimateIn'
+import { SpotlightCard } from '@/components/ui/SpotlightCard'
 
 type MissionVisionProps = {
   heading: string
@@ -18,22 +20,30 @@ export function MissionVision({
   visionBody,
 }: MissionVisionProps) {
   return (
-    <Section surface>
+    <Section>
       <Container>
-        <Heading level="h2" className="mb-10">
-          {heading}
-        </Heading>
-        <div className="grid gap-10 md:grid-cols-2">
-          <div>
-            <h3 className="text-primary text-lg font-semibold">{missionTitle}</h3>
-            <p className="text-secondary mt-3 text-sm leading-relaxed md:text-base">
-              {missionBody}
-            </p>
-          </div>
-          <div>
-            <h3 className="text-primary text-lg font-semibold">{visionTitle}</h3>
-            <p className="text-secondary mt-3 text-sm leading-relaxed md:text-base">{visionBody}</p>
-          </div>
+        <SectionHeader eyebrow="Purpose" title={heading} />
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
+          <AnimateIn>
+            <SpotlightCard className="h-full p-6 sm:p-8">
+              <p className="text-accent text-[11px] font-bold tracking-[0.16em] uppercase">
+                {missionTitle}
+              </p>
+              <p className="text-secondary mt-4 text-base leading-relaxed sm:text-lg">
+                {missionBody}
+              </p>
+            </SpotlightCard>
+          </AnimateIn>
+          <AnimateIn delay={0.08}>
+            <SpotlightCard className="h-full p-6 sm:p-8">
+              <p className="text-accent text-[11px] font-bold tracking-[0.16em] uppercase">
+                {visionTitle}
+              </p>
+              <p className="text-secondary mt-4 text-base leading-relaxed sm:text-lg">
+                {visionBody}
+              </p>
+            </SpotlightCard>
+          </AnimateIn>
         </div>
       </Container>
     </Section>
@@ -52,15 +62,18 @@ export function ValuesGrid({ heading, subheading, values }: ValuesGridProps) {
   return (
     <Section>
       <Container>
-        <div className="mb-10 max-w-2xl">
-          <Heading level="h2">{heading}</Heading>
-          {subheading ? <p className="text-secondary mt-3">{subheading}</p> : null}
-        </div>
-        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {values.map((value) => (
-            <li key={value.title} className="border-border border-t pt-6">
-              <h3 className="text-primary text-base font-semibold">{value.title}</h3>
-              <p className="text-secondary mt-2 text-sm leading-relaxed">{value.description}</p>
+        <SectionHeader eyebrow="Principles" title={heading} description={subheading || undefined} />
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {values.map((value, i) => (
+            <li key={value.title} className="list-none">
+              <AnimateIn delay={0.05 * i}>
+                <SpotlightCard className="h-full p-6">
+                  <h3 className="font-display text-primary text-lg font-semibold tracking-[-0.02em]">
+                    {value.title}
+                  </h3>
+                  <p className="text-secondary mt-3 text-sm leading-relaxed">{value.description}</p>
+                </SpotlightCard>
+              </AnimateIn>
             </li>
           ))}
         </ul>

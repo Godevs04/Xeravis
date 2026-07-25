@@ -1,18 +1,40 @@
 import type { Payload } from 'payload'
 
-import { getPayload } from '@/lib/payload'
+import { getPayload, resetPayloadCache } from '@/lib/payload'
 import { logger } from '@/lib/logger'
 
 const log = logger.child('cms')
 
+function isTransientDbError(error: unknown): boolean {
+  const name = error instanceof Error ? error.name : ''
+  const message = error instanceof Error ? error.message : String(error)
+  return (
+    name === 'MongoExpiredSessionError' ||
+    name === 'MongoServerSelectionError' ||
+    name === 'MongoNetworkError' ||
+    message.includes('session that has ended') ||
+    message.includes('MongoExpiredSessionError') ||
+    message.includes('topology was destroyed') ||
+    message.includes('connection timed out')
+  )
+}
+
 export async function safePayload<T>(fn: (payload: Payload) => Promise<T>): Promise<T | null> {
-  try {
-    const payload = await getPayload()
-    return await fn(payload)
-  } catch (error) {
-    log.error('Payload query failed:', error)
-    return null
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const payload = await getPayload()
+      return await fn(payload)
+    } catch (error) {
+      if (attempt === 0 && isTransientDbError(error)) {
+        log.warn('Transient DB/session error — resetting Payload client and retrying')
+        resetPayloadCache()
+        continue
+      }
+      log.error('Payload query failed:', error)
+      return null
+    }
   }
+  return null
 }
 
 export async function getGlobal<T>(slug: string): Promise<T | null> {

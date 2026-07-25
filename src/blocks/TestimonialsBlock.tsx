@@ -64,8 +64,12 @@ export async function TestimonialsBlock({ heading }: TestimonialsBlockProps) {
             const logoUrl = getMediaUrl(item.logo as Parameters<typeof getMediaUrl>[0])
             return (
               <AnimateIn key={item.id} delay={index * 0.06}>
-                <figure className="flex h-full flex-col rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--card-bg)] p-7 shadow-[var(--shadow-medium)] backdrop-blur-xl transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hover)]">
-                  <blockquote className="text-secondary flex-1 text-[15px] leading-relaxed">
+                <figure className="group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] p-7 shadow-[var(--shadow-medium)] backdrop-blur-2xl transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hover)]">
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -top-10 -right-8 h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(109,94,249,0.22),transparent_70%)] opacity-70"
+                  />
+                  <blockquote className="text-secondary relative flex-1 text-[15px] leading-relaxed">
                     &ldquo;{item.quote}&rdquo;
                   </blockquote>
                   <figcaption className="border-border mt-8 border-t pt-5">

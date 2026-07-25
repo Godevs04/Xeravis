@@ -1,7 +1,6 @@
 import { RenderBlocks, type PageBlock } from '@/blocks/RenderBlocks'
-import { Container } from '@/components/layout/Container'
-import { EmptyState } from '@/components/ui/empty-state'
 import { safePayload } from '@/lib/cms'
+import { FALLBACK_ABOUT_BLOCKS } from '@/lib/fallback-data'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -10,6 +9,7 @@ type AboutPageDoc = {
   title?: string
   layout?: PageBlock[]
   meta?: { title?: string; description?: string; image?: unknown }
+  _status?: string | null
 }
 
 async function loadAboutPage() {
@@ -24,9 +24,25 @@ async function loadAboutPage() {
       draft: false,
       overrideAccess: true,
     })
-    const doc = result.docs[0] as (AboutPageDoc & { _status?: string }) | undefined
-    if (!doc) return null
-    if (doc._status && doc._status !== 'published') return null
+
+    let doc = result.docs[0] as AboutPageDoc | undefined
+
+    if (!doc?.layout?.length) {
+      const draftResult = await payload.find({
+        collection: 'pages',
+        where: { slug: { equals: 'about' } },
+        limit: 1,
+        depth: 2,
+        draft: true,
+        overrideAccess: true,
+      })
+      doc = draftResult.docs[0] as AboutPageDoc | undefined
+    }
+
+    if (!doc?.layout?.length) return null
+    if (doc._status && doc._status !== 'published' && process.env.NODE_ENV === 'production') {
+      return null
+    }
     return doc
   })
 }
@@ -45,19 +61,9 @@ export async function generateMetadata() {
 
 export default async function AboutPage() {
   const page = await loadAboutPage()
+  const blocks = page?.layout?.length
+    ? page.layout
+    : (FALLBACK_ABOUT_BLOCKS as unknown as PageBlock[])
 
-  if (page?.layout?.length) {
-    return <RenderBlocks blocks={page.layout} />
-  }
-
-  return (
-    <Container className="py-24 lg:py-32">
-      <EmptyState
-        title="About page is not published"
-        description="Publish a Pages document with slug “about” including mission, vision, values, timeline, and team blocks."
-        actionLabel="Open admin"
-        href="/admin"
-      />
-    </Container>
-  )
+  return <RenderBlocks blocks={blocks} />
 }

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
 
 import { HeroProductVisual } from '@/components/marketing/HeroProductVisual'
 import { Container } from '@/components/layout/Container'
@@ -69,7 +70,7 @@ export function PageHero({
       className={cn(
         'relative overflow-hidden',
         hasMedia
-          ? 'min-h-[min(100svh,920px)]'
+          ? 'min-h-[min(100svh,940px)]'
           : 'border-b border-[color:var(--glass-border-soft)] pt-20 lg:pt-24',
       )}
     >
@@ -77,17 +78,25 @@ export function PageHero({
         <>
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_70%_40%,rgba(109,94,249,0.18),transparent_60%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_70%_40%,rgba(109,94,249,0.22),transparent_60%)]"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute -top-24 left-[-10%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(161,140,255,0.28),transparent_68%)] blur-3xl"
+            className="pointer-events-none absolute -top-24 left-[-10%] h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,rgba(161,140,255,0.32),transparent_68%)] blur-3xl"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute right-[-8%] bottom-10 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(109,94,249,0.22),transparent_70%)] blur-3xl"
+            className="pointer-events-none absolute right-[-8%] bottom-10 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(109,94,249,0.26),transparent_70%)] blur-3xl"
           />
-          <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
+          <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-45" />
+          {!reduce ? (
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute top-[30%] left-[20%] h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.35),transparent_70%)] blur-2xl"
+              animate={{ opacity: [0.2, 0.55, 0.2], x: [0, 40, 0] }}
+              transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          ) : null}
         </>
       ) : null}
 
@@ -101,11 +110,11 @@ export function PageHero({
       <Container
         className={cn(
           'relative grid items-center',
-          isProduct && 'gap-10 lg:grid-cols-[1.05fr_1.05fr] lg:gap-8 xl:gap-12',
+          isProduct && 'gap-10 lg:grid-cols-[1.02fr_1.08fr] lg:gap-8 xl:gap-12',
           !isProduct && 'gap-12 lg:gap-16',
           size === 'default'
             ? hasMedia
-              ? 'pt-24 pb-14 lg:pt-28 lg:pb-16'
+              ? 'pt-24 pb-16 lg:pt-28 lg:pb-20'
               : 'py-20 lg:py-28'
             : 'py-16 lg:py-20',
           centered && !isProduct && 'justify-items-center text-center',
@@ -118,7 +127,7 @@ export function PageHero({
             {...fade(0.04)}
             className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#6d5ef9]/20 bg-white/80 px-3 py-1.5 shadow-[0_8px_24px_rgba(109,94,249,0.12)] backdrop-blur-md dark:border-white/10 dark:bg-white/5"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#6d5ef9] shadow-[0_0_10px_#6d5ef9]" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#6d5ef9] shadow-[0_0_10px_#6d5ef9]" />
             <span className="text-[11px] font-bold tracking-[0.16em] text-[#6d5ef9] uppercase">
               {eyebrow && eyebrow.toLowerCase() !== brand.toLowerCase() ? eyebrow : brand}
             </span>
@@ -127,20 +136,11 @@ export function PageHero({
           <motion.h1
             {...fade(0.1)}
             className={cn(
-              'font-display max-w-[13ch] font-bold tracking-[-0.055em] text-balance',
+              'font-display max-w-[14ch] font-bold tracking-[-0.055em] text-balance',
               hasMedia
-                ? 'text-gradient text-[clamp(2.75rem,6.2vw,5rem)] leading-[0.98]'
+                ? 'text-gradient text-[clamp(2.85rem,6.4vw,5.25rem)] leading-[0.96]'
                 : 'text-primary text-[length:var(--text-h1)]',
             )}
-            style={
-              hasMedia
-                ? undefined
-                : {
-                    background: 'none',
-                    color: 'var(--color-primary)',
-                    WebkitTextFillColor: 'unset',
-                  }
-            }
           >
             {title}
           </motion.h1>
@@ -149,7 +149,7 @@ export function PageHero({
             <motion.p
               {...fade(0.18)}
               className={cn(
-                'text-secondary mt-5 max-w-[40ch] text-base leading-relaxed sm:text-lg',
+                'text-secondary mt-5 max-w-[42ch] text-base leading-relaxed sm:text-lg',
                 centered && !isProduct && 'mx-auto',
               )}
             >
@@ -192,7 +192,10 @@ export function PageHero({
                 className="mt-10 grid max-w-lg grid-cols-3 gap-3 border-t border-[#6d5ef9]/12 pt-8"
               >
                 {TRUST.map((item) => (
-                  <div key={item.label}>
+                  <div
+                    key={item.label}
+                    className="rounded-2xl border border-[#6d5ef9]/12 bg-white/55 px-3 py-3 backdrop-blur-md dark:border-white/10 dark:bg-white/5"
+                  >
                     <p className="font-display text-2xl font-bold tracking-tight text-[#1f1f21] dark:text-white">
                       {item.value}
                     </p>
@@ -205,7 +208,7 @@ export function PageHero({
                 {TECH.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-full border border-[#6d5ef9]/15 bg-white/70 px-3 py-1 text-xs font-semibold text-[#5c5c66] shadow-[0_4px_14px_rgba(109,94,249,0.08)] backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-[#a8a2c4]"
+                    className="rounded-full border border-[#6d5ef9]/15 bg-white/70 px-3 py-1 text-xs font-semibold text-[#4a4a55] shadow-[0_4px_14px_rgba(109,94,249,0.08)] backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-[#a8a2c4]"
                   >
                     {tech}
                   </span>
@@ -216,11 +219,22 @@ export function PageHero({
         </div>
 
         {isProduct ? (
-          <div className="relative z-10 min-h-[340px] overflow-visible sm:min-h-[420px] lg:min-h-[480px]">
+          <div className="relative z-10 min-h-[360px] overflow-visible sm:min-h-[440px] lg:min-h-[520px]">
             <HeroProductVisual />
           </div>
         ) : null}
       </Container>
+
+      {isProduct && !reduce ? (
+        <motion.div
+          className="text-muted absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.18em] uppercase"
+          animate={{ y: [0, 6, 0], opacity: [0.45, 0.9, 0.45] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <span>Scroll</span>
+          <ChevronDown className="h-3.5 w-3.5" />
+        </motion.div>
+      ) : null}
     </section>
   )
 }

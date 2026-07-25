@@ -84,15 +84,15 @@
   --grid-section: 1120px;
   --grid-prose: 40rem;
   --grid-gutter: 24px;
-  --section-pad-y: 140px;
-  --section-pad-y-md: 96px;
-  --section-pad-y-sm: 72px;
+  --section-pad-y: 96px;
+  --section-pad-y-md: 72px;
+  --section-pad-y-sm: 56px;
   --touch-min: 44px;
 
   --text-display-xl: clamp(3.25rem, 7.5vw, 5.75rem);
   --text-display-l: clamp(2.75rem, 5.5vw, 4.25rem);
-  --text-h1: clamp(2.4rem, 4.2vw, 3.6rem);
-  --text-h2: clamp(1.85rem, 3.2vw, 2.85rem);
+  --text-h1: clamp(2.6rem, 5vw, 4.25rem);
+  --text-h2: clamp(1.95rem, 3.4vw, 3.1rem);
   --text-h3: clamp(1.35rem, 2.2vw, 1.8rem);
   --text-h4: 1.25rem;
   --text-h5: 1.125rem;

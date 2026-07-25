@@ -32,39 +32,45 @@ export async function ClientLogos({ heading }: ClientLogosProps) {
   return (
     <Section>
       <Container>
-        <AnimateIn>
-          <h2 className="text-center text-sm font-semibold uppercase tracking-[0.2em] text-muted">{heading}</h2>
-        </AnimateIn>
-        {clients.length === 0 ? (
-          <p className="mt-8 text-center text-secondary">Client logos will appear here once published.</p>
-        ) : (
-          <div className="mt-10 grid grid-cols-2 items-center gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
-            {clients.map((client, index) => {
-              const logoUrl = getMediaUrl(client.logo as Parameters<typeof getMediaUrl>[0])
-              if (!logoUrl) return null
-              const img = (
-                <Image
-                  src={logoUrl}
-                  alt={getMediaAlt(client.logo as Parameters<typeof getMediaAlt>[0], client.name)}
-                  width={160}
-                  height={48}
-                  className="mx-auto h-10 w-auto object-contain opacity-60 grayscale transition-opacity hover:opacity-100"
-                />
-              )
-              return (
-                <AnimateIn key={client.id} delay={index * 0.03} className="flex justify-center">
-                  {client.url ? (
-                    <a href={client.url} target="_blank" rel="noopener noreferrer">
-                      {img}
-                    </a>
-                  ) : (
-                    img
-                  )}
-                </AnimateIn>
-              )
-            })}
-          </div>
-        )}
+        <div className="overflow-hidden rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] px-6 py-10 shadow-[var(--shadow-medium)] backdrop-blur-2xl sm:px-10">
+          <AnimateIn>
+            <h2 className="text-muted text-center text-sm font-semibold tracking-[0.2em] uppercase">
+              {heading}
+            </h2>
+          </AnimateIn>
+          {clients.length === 0 ? (
+            <p className="text-secondary mt-8 text-center">
+              Client logos will appear here once published.
+            </p>
+          ) : (
+            <div className="mt-10 grid grid-cols-2 items-center gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+              {clients.map((client, index) => {
+                const logoUrl = getMediaUrl(client.logo as Parameters<typeof getMediaUrl>[0])
+                if (!logoUrl) return null
+                const img = (
+                  <Image
+                    src={logoUrl}
+                    alt={getMediaAlt(client.logo as Parameters<typeof getMediaAlt>[0], client.name)}
+                    width={160}
+                    height={48}
+                    className="mx-auto h-10 w-auto object-contain opacity-55 grayscale transition-[opacity,filter] duration-300 hover:opacity-100 hover:grayscale-0"
+                  />
+                )
+                return (
+                  <AnimateIn key={client.id} delay={index * 0.03} className="flex justify-center">
+                    {client.url ? (
+                      <a href={client.url} target="_blank" rel="noopener noreferrer">
+                        {img}
+                      </a>
+                    ) : (
+                      img
+                    )}
+                  </AnimateIn>
+                )
+              })}
+            </div>
+          )}
+        </div>
       </Container>
     </Section>
   )

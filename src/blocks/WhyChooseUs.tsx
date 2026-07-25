@@ -2,8 +2,10 @@ import Link from 'next/link'
 
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
+import { SectionHeader } from '@/components/layout/SectionHeader'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { Button } from '@/components/ui/button'
+import { SpotlightCard } from '@/components/ui/SpotlightCard'
 
 const DEFAULT_ITEMS = [
   {
@@ -44,27 +46,31 @@ export function WhyChooseUs({ heading, subheading, items }: WhyChooseUsProps) {
   return (
     <Section surface>
       <Container>
-        <AnimateIn className="max-w-2xl">
-          <h2 className="text-balance">{heading}</h2>
-          {subheading ? <p className="mt-4 text-lg text-secondary">{subheading}</p> : null}
-        </AnimateIn>
-        <ol className="mt-14 space-y-0 border-t border-border">
+        <SectionHeader
+          eyebrow="Why Xelarvis"
+          title={heading}
+          description={subheading}
+          action={
+            <Button asChild variant="outline" className="rounded-full">
+              <Link href="/about">Learn more about us</Link>
+            </Button>
+          }
+        />
+
+        <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {list.map((item, index) => (
             <AnimateIn key={item.title} delay={index * 0.04}>
-              <li className="grid gap-4 border-b border-border py-8 md:grid-cols-12 md:gap-8">
-                <span className="font-mono text-sm text-muted md:col-span-2">
+              <SpotlightCard className="h-full p-6 sm:p-7">
+                <p className="text-accent font-mono text-xs font-bold tracking-[0.16em]">
                   {String(index + 1).padStart(2, '0')}
-                </span>
-                <h3 className="text-xl font-semibold md:col-span-3">{item.title}</h3>
-                <p className="text-secondary md:col-span-7">{item.description}</p>
-              </li>
+                </p>
+                <h3 className="font-display text-primary mt-4 text-xl font-semibold tracking-tight">
+                  {item.title}
+                </h3>
+                <p className="text-secondary mt-3 text-sm leading-relaxed">{item.description}</p>
+              </SpotlightCard>
             </AnimateIn>
           ))}
-        </ol>
-        <div className="mt-10">
-          <Button asChild variant="ghost">
-            <Link href="/about">Learn more about us</Link>
-          </Button>
         </div>
       </Container>
     </Section>

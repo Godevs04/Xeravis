@@ -179,6 +179,94 @@ export const FALLBACK_BLOG_POSTS = [
   },
 ]
 
+export const FALLBACK_ABOUT_BLOCKS = [
+  {
+    blockType: 'hero',
+    eyebrow: 'About',
+    heading: 'Built for enterprises that demand precision.',
+    subheading:
+      'Xelarvis Technologies partners with organizations to engineer platforms, products, and data systems with long-term maintainability.',
+    ctaLabel: 'Talk to us',
+    ctaHref: '/contact',
+    secondaryCtaLabel: 'Explore services',
+    secondaryCtaHref: '/services',
+  },
+  {
+    blockType: 'aboutPreview',
+    heading: 'A technology partner built for durable outcomes.',
+    body: 'We help startups, enterprises, and institutions modernize products and platforms — with senior ownership, transparent process, and engineering that lasts.',
+    cta: { label: 'Start a project', href: '/contact?intent=project', style: 'secondary' },
+  },
+  {
+    blockType: 'missionVision',
+    heading: 'Mission & vision',
+    missionTitle: 'Mission',
+    missionBody:
+      'Deliver production-grade software and platforms that create measurable business outcomes for our clients.',
+    visionTitle: 'Vision',
+    visionBody:
+      'Become the most trusted engineering partner for enterprises modernizing digital products and operations.',
+  },
+  {
+    blockType: 'valuesGrid',
+    heading: 'Values',
+    subheading: 'How we work when stakes are high.',
+    values: [
+      {
+        title: 'Clarity',
+        description: 'We prefer precise scope, explicit trade-offs, and honest timelines.',
+      },
+      {
+        title: 'Ownership',
+        description: 'Senior practitioners stay accountable from discovery through production.',
+      },
+      {
+        title: 'Craft',
+        description: 'We optimize for maintainability, security, and operational excellence.',
+      },
+    ],
+  },
+  {
+    blockType: 'timeline',
+    heading: 'Company timeline',
+    subheading: 'Milestones in building Xelarvis.',
+    items: [
+      {
+        date: '2014',
+        title: 'Company established',
+        description:
+          'Xelarvis Technologies formed to deliver enterprise engineering with craft and clarity.',
+      },
+      {
+        date: '2018',
+        title: 'Enterprise scale',
+        description: 'Expanded delivery across regulated industries and complex platform programs.',
+      },
+      {
+        date: '2022',
+        title: 'AI platforms',
+        description: 'Grew applied AI and data practices for production-grade assistants and ops.',
+      },
+      {
+        date: '2026',
+        title: 'Global delivery',
+        description: 'Senior-led teams shipping durable products across markets and time zones.',
+      },
+    ],
+  },
+  {
+    blockType: 'teamGrid',
+    heading: 'Leadership',
+  },
+  {
+    blockType: 'ctaBand',
+    heading: 'Work with us',
+    subheading: 'Explore open roles or start a project conversation.',
+    ctaLabel: 'Contact',
+    ctaHref: '/contact',
+  },
+] as const
+
 export const FALLBACK_JOBS = [
   {
     id: '1',
