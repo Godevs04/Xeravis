@@ -144,11 +144,17 @@ export const DashboardShell = ({ userName, stats, blogs, services, careers, mess
         </Link>
       </motion.section>
 
-      <div className="xe-stats">
-        {stats.map((stat, index) => (
-          <StatCard key={stat.label} stat={stat} index={index} />
-        ))}
-      </div>
+      <section className="xe-analytics" aria-label="Analytics overview">
+        <div className="xe-analytics__head">
+          <h2 className="xe-analytics__title">Analytics</h2>
+          <p className="xe-analytics__hint">Live snapshot across content and demand</p>
+        </div>
+        <div className="xe-stats">
+          {stats.map((stat, index) => (
+            <StatCard key={stat.label} stat={stat} index={index} />
+          ))}
+        </div>
+      </section>
 
       <div className="xe-shortcuts">
         {[
