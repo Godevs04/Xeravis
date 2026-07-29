@@ -1,55 +1,57 @@
 /**
- * Xelarvis — Aurora Glass
- * Apple × Linear × Framer · frosted glass · soft violet / indigo aurora
+ * Xelarvis Design System V2 — Premium SaaS
+ * Navy · Teal · Cyan · Enterprise product language
  */
 
 :root {
-  /* Ink */
-  --color-primary: #17171c;
-  --color-secondary: #4a4a58;
-  --color-muted: #6e6e7c;
+  --color-primary: #0f172a;
+  --color-secondary: #475569;
+  --color-muted: #64748b;
 
-  /* Aurora brand — soft violet → indigo */
-  --color-accent: #6d5ef9;
-  --color-accent-hover: #5546e8;
-  --color-accent-soft: rgba(109, 94, 249, 0.14);
-  --color-accent-glow: rgba(109, 94, 249, 0.38);
-  --color-secondary-accent: #8b7cff;
-  --color-accent-light: #a18cff;
-  --color-indigo: #4f46e5;
-  --color-lavender: #efeaff;
+  --color-accent: #0d9488;
+  --color-accent-hover: #0f766e;
+  --color-accent-soft: rgba(13, 148, 136, 0.12);
+  --color-accent-glow: rgba(6, 182, 212, 0.35);
+  --color-secondary-accent: #06b6d4;
+  --color-accent-light: #22d3ee;
+  --color-navy: #0f172a;
+  --color-teal: #0d9488;
+  --color-cyan: #06b6d4;
 
-  /* Surfaces — white / lavender field */
-  --color-background: #f6f3ff;
-  --color-surface: rgba(255, 255, 255, 0.7);
-  --color-surface-elevated: rgba(255, 255, 255, 0.88);
-  --color-card: rgba(255, 255, 255, 0.76);
-  --color-hover: rgba(109, 94, 249, 0.08);
-  --color-dark: #17171c;
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-card: #ffffff;
+  --color-hover: rgba(6, 182, 212, 0.08);
+  --color-dark: #0f172a;
+  --color-neutral: #f8fafc;
 
-  --color-success: #22c55e;
+  --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
 
-  --color-border: rgba(109, 94, 249, 0.13);
-  --color-border-strong: rgba(109, 94, 249, 0.26);
-  --color-muted-line: rgba(23, 23, 28, 0.08);
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-muted-line: #e2e8f0;
 
-  /* Frosted glass */
-  --glass-bg: rgba(255, 255, 255, 0.52);
-  --glass-bg-strong: rgba(255, 255, 255, 0.78);
-  --glass-border: rgba(255, 255, 255, 0.72);
-  --glass-border-soft: rgba(109, 94, 249, 0.15);
-  --nav-solid: rgba(255, 255, 255, 0.58);
-  --card-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-bg-strong: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(226, 232, 240, 0.9);
+  --glass-border-soft: rgba(15, 23, 42, 0.08);
+  --nav-solid: rgba(255, 255, 255, 0.82);
+  --card-bg: #ffffff;
 
-  /* Aurora mesh (violet · lavender · soft blue) */
-  --mesh-glow: rgba(109, 94, 249, 0.26);
-  --mesh-glow-2: rgba(161, 140, 255, 0.2);
-  --mesh-glow-3: rgba(96, 165, 250, 0.18);
-  --mesh-glow-4: rgba(196, 181, 253, 0.22);
-  --grid-line: rgba(109, 94, 249, 0.055);
-  --aurora-spot: rgba(109, 94, 249, 0.2);
+  --mesh-glow: rgba(13, 148, 136, 0.14);
+  --mesh-glow-2: rgba(6, 182, 212, 0.12);
+  --mesh-glow-3: rgba(15, 23, 42, 0.06);
+  --mesh-glow-4: rgba(34, 211, 238, 0.1);
+  --grid-line: rgba(15, 23, 42, 0.05);
+  --aurora-spot: rgba(6, 182, 212, 0.16);
+
+  --hero-bg: #0f172a;
+  --hero-text: #ffffff;
+  --hero-muted: #94a3b8;
+  --footer-bg: #0f172a;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -77,13 +79,13 @@
   --radius-sm: 12px;
   --radius-md: 20px;
 
-  --shadow-light: 0 4px 18px rgba(79, 70, 229, 0.06);
-  --shadow-medium: 0 12px 40px rgba(79, 70, 229, 0.1);
-  --shadow-large: 0 24px 64px rgba(79, 70, 229, 0.14);
-  --shadow-floating: 0 28px 80px rgba(79, 70, 229, 0.16);
-  --shadow-hover: 0 18px 52px rgba(109, 94, 249, 0.2);
-  --shadow-glow: 0 0 56px var(--color-accent-glow);
-  --shadow-inset-glass: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  --shadow-light: 0 4px 16px rgba(15, 23, 42, 0.04);
+  --shadow-medium: 0 12px 32px rgba(15, 23, 42, 0.06);
+  --shadow-large: 0 24px 56px rgba(15, 23, 42, 0.08);
+  --shadow-floating: 0 28px 64px rgba(15, 23, 42, 0.1);
+  --shadow-hover: 0 18px 40px rgba(13, 148, 136, 0.14);
+  --shadow-glow: 0 0 48px var(--color-accent-glow);
+  --shadow-inset-glass: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
   --duration-fast: 180ms;
   --duration-base: 320ms;
@@ -120,46 +122,54 @@
 }
 
 .dark {
-  --color-primary: #f6f3ff;
-  --color-secondary: #c4c0d8;
-  --color-muted: #908ba8;
+  --color-primary: #f8fafc;
+  --color-secondary: #94a3b8;
+  --color-muted: #64748b;
 
-  --color-accent: #8b7cff;
-  --color-accent-hover: #a18cff;
-  --color-accent-soft: rgba(139, 124, 255, 0.18);
-  --color-accent-glow: rgba(139, 124, 255, 0.42);
-  --color-lavender: #1a1630;
+  --color-accent: #14b8a6;
+  --color-accent-hover: #2dd4bf;
+  --color-accent-soft: rgba(20, 184, 166, 0.16);
+  --color-accent-glow: rgba(6, 182, 212, 0.4);
+  --color-secondary-accent: #22d3ee;
+  --color-accent-light: #67e8f9;
 
-  --color-background: #0b0914;
-  --color-surface: rgba(28, 24, 42, 0.7);
-  --color-surface-elevated: rgba(36, 30, 56, 0.85);
-  --color-card: rgba(32, 28, 48, 0.76);
-  --color-hover: rgba(139, 124, 255, 0.12);
-  --color-dark: #0b0914;
+  --color-background: #020617;
+  --color-surface: rgba(15, 23, 42, 0.85);
+  --color-surface-elevated: rgba(30, 41, 59, 0.9);
+  --color-card: rgba(15, 23, 42, 0.9);
+  --color-hover: rgba(6, 182, 212, 0.12);
+  --color-dark: #020617;
+  --color-neutral: #0f172a;
 
-  --color-border: rgba(161, 140, 255, 0.16);
-  --color-border-strong: rgba(161, 140, 255, 0.28);
-  --color-muted-line: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(148, 163, 184, 0.18);
+  --color-border-strong: rgba(148, 163, 184, 0.28);
+  --color-muted-line: rgba(148, 163, 184, 0.14);
 
-  --glass-bg: rgba(18, 14, 32, 0.55);
-  --glass-bg-strong: rgba(28, 24, 42, 0.78);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-border-soft: rgba(161, 140, 255, 0.2);
-  --nav-solid: rgba(14, 10, 26, 0.68);
-  --card-bg: rgba(28, 24, 42, 0.7);
-  --mesh-glow: rgba(109, 94, 249, 0.3);
-  --mesh-glow-2: rgba(161, 140, 255, 0.22);
-  --mesh-glow-3: rgba(96, 165, 250, 0.12);
-  --mesh-glow-4: rgba(139, 124, 255, 0.18);
-  --grid-line: rgba(255, 255, 255, 0.04);
-  --aurora-spot: rgba(139, 124, 255, 0.22);
+  --glass-bg: rgba(15, 23, 42, 0.72);
+  --glass-bg-strong: rgba(30, 41, 59, 0.88);
+  --glass-border: rgba(148, 163, 184, 0.16);
+  --glass-border-soft: rgba(148, 163, 184, 0.12);
+  --nav-solid: rgba(2, 6, 23, 0.78);
+  --card-bg: rgba(15, 23, 42, 0.85);
+
+  --mesh-glow: rgba(13, 148, 136, 0.18);
+  --mesh-glow-2: rgba(6, 182, 212, 0.14);
+  --mesh-glow-3: rgba(15, 23, 42, 0.5);
+  --mesh-glow-4: rgba(34, 211, 238, 0.12);
+  --grid-line: rgba(148, 163, 184, 0.08);
+  --aurora-spot: rgba(6, 182, 212, 0.2);
+
+  --hero-bg: #020617;
+  --hero-text: #f8fafc;
+  --hero-muted: #94a3b8;
+  --footer-bg: #020617;
 
   --shadow-light: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.45);
-  --shadow-large: 0 24px 64px rgba(0, 0, 0, 0.55);
-  --shadow-floating: 0 28px 80px rgba(0, 0, 0, 0.6);
-  --shadow-hover: 0 18px 48px rgba(109, 94, 249, 0.28);
-  --shadow-inset-glass: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-medium: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-large: 0 24px 56px rgba(0, 0, 0, 0.55);
+  --shadow-floating: 0 28px 64px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 18px 40px rgba(13, 148, 136, 0.22);
+  --shadow-inset-glass: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 @media (max-width: 1023px) {

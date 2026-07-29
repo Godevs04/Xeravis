@@ -19,12 +19,13 @@ type ServiceDoc = {
 
 export const metadata = buildMetadata({
   title: 'Services',
-  description: 'Enterprise software, cloud, data, and AI services from Xelarvis Technologies.',
+  description:
+    'AI research, data science, IT consulting, clinical data science, and cloud data platforms from XELARVIS.',
   path: '/services',
 })
 
 export default async function ServicesPage() {
-  const services = await listPublished<ServiceDoc>('services')
+  const services = await listPublished<ServiceDoc>('services', { sort: 'order' })
   const items = services.length ? services : FALLBACK_SERVICES
 
   return (
@@ -32,9 +33,10 @@ export default async function ServicesPage() {
       <PageHero
         brand="Xelarvis"
         eyebrow="Services"
-        title="Engineering for every stage of the digital lifecycle."
-        subtitle="Strategy, build, and operate — with teams that understand enterprise constraints."
+        title="Our Core Services"
+        subtitle="Artificial Intelligence, Data Science, IT Consulting, Clinical Data Science, and Cloud Data platforms — engineered for measurable outcomes."
         size="compact"
+        variant="default"
       />
       <Section>
         <Container>

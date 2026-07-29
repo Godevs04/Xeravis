@@ -12,7 +12,7 @@ export function Section({ className, surface = false, ...props }: SectionProps) 
       className={cn(
         'section-y relative',
         surface &&
-          'before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(ellipse_at_center,rgba(109,94,249,0.08),transparent_70%)]',
+          'before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.08),transparent_70%)]',
         className,
       )}
       {...props}

@@ -73,7 +73,7 @@ export function CTA({
               asChild
               variant={inverted ? 'secondary' : 'primary'}
               className={
-                inverted ? 'border-white/40 bg-white text-[#6d5ef9] hover:bg-white/95' : undefined
+                inverted ? 'border-white/40 bg-white text-[#0D9488] hover:bg-white/95' : undefined
               }
             >
               <Link

@@ -695,7 +695,18 @@ export interface Technology {
    * URL slug. Auto-generated from title when empty.
    */
   slug: string
-  category: 'frontend' | 'backend' | 'cloud' | 'devops' | 'ai' | 'database' | 'cms' | 'other'
+  category:
+    | 'frontend'
+    | 'backend'
+    | 'cloud'
+    | 'devops'
+    | 'ai'
+    | 'database'
+    | 'data'
+    | 'clinical'
+    | 'bi'
+    | 'cms'
+    | 'other'
   logo?: (string | null) | Media
   description?: string | null
   /**
@@ -910,6 +921,10 @@ export interface Blog {
    * URL slug. Auto-generated from title when empty.
    */
   slug: string
+  /**
+   * Used by Insights hub filters.
+   */
+  insightType?: ('blog' | 'white-paper' | 'news' | 'resource') | null
   excerpt: string
   content: {
     root: {
@@ -1018,11 +1033,20 @@ export interface Career {
    */
   department?: string | null
   /**
-   * Display location (e.g. Chennai · Hybrid)
+   * Display location (e.g. Hyderabad · Hybrid)
    */
   office?: string | null
   location: string
   type: 'full-time' | 'part-time' | 'contract' | 'internship'
+  workMode?: ('onsite' | 'hybrid' | 'remote') | null
+  /**
+   * e.g. 2–5 Years
+   */
+  experienceRequired?: string | null
+  openings?: number | null
+  postedAt?: string | null
+  applicationDeadline?: string | null
+  aboutRole?: string | null
   description: {
     root: {
       type: string
@@ -1038,6 +1062,31 @@ export interface Career {
     }
     [k: string]: unknown
   }
+  responsibilities?:
+    | {
+        item: string
+        id?: string | null
+      }[]
+    | null
+  requiredSkills?:
+    | {
+        item: string
+        id?: string | null
+      }[]
+    | null
+  preferredSkills?:
+    | {
+        item: string
+        id?: string | null
+      }[]
+    | null
+  qualifications?: string | null
+  benefits?:
+    | {
+        item: string
+        id?: string | null
+      }[]
+    | null
   requirements: {
     root: {
       type: string
@@ -1174,13 +1223,58 @@ export interface NewsletterSubscriber {
  */
 export interface JobApplication {
   id: string
+  applicationId?: string | null
   career: string | Career
+  /**
+   * Display name (auto from first/last).
+   */
   name: string
+  firstName?: string | null
+  lastName?: string | null
   email: string
   phone?: string | null
+  country?: string | null
+  city?: string | null
+  linkedin?: string | null
+  portfolio?: string | null
+  currentCompany?: string | null
+  currentDesignation?: string | null
+  totalExperience?: string | null
+  relevantExperience?: string | null
+  currentSalary?: string | null
+  expectedSalary?: string | null
+  noticePeriod?: string | null
+  workAuthorization?: string | null
+  education?: {
+    highestQualification?: string | null
+    university?: string | null
+    graduationYear?: string | null
+  }
+  skills?:
+    | {
+        item: string
+        id?: string | null
+      }[]
+    | null
   resume: string | Media
   coverLetter?: string | null
-  status: 'new' | 'reviewed' | 'shortlisted' | 'rejected' | 'hired'
+  whyJoin?: string | null
+  willingToRelocate?: ('yes' | 'no' | 'maybe') | null
+  earliestJoinDate?: string | null
+  healthcareExperience?: ('yes' | 'no') | null
+  consent: boolean
+  status:
+    | 'new'
+    | 'under-review'
+    | 'shortlisted'
+    | 'interview-scheduled'
+    | 'technical-assessment'
+    | 'final-interview'
+    | 'offered'
+    | 'hired'
+    | 'rejected'
+    | 'withdrawn'
+  recruiterNotes?: string | null
   updatedAt: string
   createdAt: string
 }
@@ -1940,6 +2034,7 @@ export interface CaseStudiesSelect<T extends boolean = true> {
 export interface BlogsSelect<T extends boolean = true> {
   title?: T
   slug?: T
+  insightType?: T
   excerpt?: T
   content?: T
   cover?: T
@@ -2007,7 +2102,38 @@ export interface CareersSelect<T extends boolean = true> {
   office?: T
   location?: T
   type?: T
+  workMode?: T
+  experienceRequired?: T
+  openings?: T
+  postedAt?: T
+  applicationDeadline?: T
+  aboutRole?: T
   description?: T
+  responsibilities?:
+    | T
+    | {
+        item?: T
+        id?: T
+      }
+  requiredSkills?:
+    | T
+    | {
+        item?: T
+        id?: T
+      }
+  preferredSkills?:
+    | T
+    | {
+        item?: T
+        id?: T
+      }
+  qualifications?: T
+  benefits?:
+    | T
+    | {
+        item?: T
+        id?: T
+      }
   requirements?: T
   active?: T
   meta?:
@@ -2146,13 +2272,47 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
  * via the `definition` "job-applications_select".
  */
 export interface JobApplicationsSelect<T extends boolean = true> {
+  applicationId?: T
   career?: T
   name?: T
+  firstName?: T
+  lastName?: T
   email?: T
   phone?: T
+  country?: T
+  city?: T
+  linkedin?: T
+  portfolio?: T
+  currentCompany?: T
+  currentDesignation?: T
+  totalExperience?: T
+  relevantExperience?: T
+  currentSalary?: T
+  expectedSalary?: T
+  noticePeriod?: T
+  workAuthorization?: T
+  education?:
+    | T
+    | {
+        highestQualification?: T
+        university?: T
+        graduationYear?: T
+      }
+  skills?:
+    | T
+    | {
+        item?: T
+        id?: T
+      }
   resume?: T
   coverLetter?: T
+  whyJoin?: T
+  willingToRelocate?: T
+  earliestJoinDate?: T
+  healthcareExperience?: T
+  consent?: T
   status?: T
+  recruiterNotes?: T
   updatedAt?: T
   createdAt?: T
 }
@@ -2246,7 +2406,18 @@ export interface Navigation {
     | {
         label: string
         href: string
-        mega?: ('none' | 'solutions' | 'services' | 'industries') | null
+        mega?:
+          | (
+              | 'none'
+              | 'about'
+              | 'company'
+              | 'solutions'
+              | 'services'
+              | 'industries'
+              | 'insights'
+              | 'research'
+            )
+          | null
         id?: string | null
       }[]
     | null

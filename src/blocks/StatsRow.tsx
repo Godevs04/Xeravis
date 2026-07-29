@@ -116,7 +116,7 @@ export function StatsRow({ heading, stats }: StatsRowProps) {
             >
               <div
                 aria-hidden
-                className="pointer-events-none absolute -top-12 -right-10 h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(109,94,249,0.22),transparent_70%)] opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+                className="pointer-events-none absolute -top-12 -right-10 h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(13,148,136,0.22),transparent_70%)] opacity-80 transition-opacity duration-300 group-hover:opacity-100"
               />
               <div className="relative min-w-0">
                 <AnimatedValue value={displayValue(stat)} />

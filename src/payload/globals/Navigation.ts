@@ -27,9 +27,13 @@ export const Navigation: GlobalConfig = {
           type: 'select',
           options: [
             { label: 'None', value: 'none' },
+            { label: 'About', value: 'about' },
+            { label: 'Company', value: 'company' },
             { label: 'Solutions', value: 'solutions' },
             { label: 'Services', value: 'services' },
             { label: 'Industries', value: 'industries' },
+            { label: 'Insights', value: 'insights' },
+            { label: 'AI Research Lab', value: 'research' },
           ],
           defaultValue: 'none',
         },

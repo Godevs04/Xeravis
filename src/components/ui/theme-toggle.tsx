@@ -7,13 +7,22 @@ import { Moon, Sun } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { useMounted } from '@/hooks/useMediaQuery'
+import { cn } from '@/lib/utils'
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme()
   const mounted = useMounted()
 
   if (!mounted) {
-    return <Button variant="ghost" size="icon" aria-label="Toggle theme" disabled />
+    return (
+      <Button
+        variant="ghost"
+        size="icon"
+        aria-label="Toggle theme"
+        disabled
+        className={cn('text-[#0F172A]', className)}
+      />
+    )
   }
 
   const isDark = resolvedTheme === 'dark'
@@ -23,6 +32,7 @@ export function ThemeToggle() {
       type="button"
       variant="ghost"
       size="icon"
+      className={cn('text-[#0F172A] hover:bg-slate-100 hover:text-[#0F172A]', className)}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >

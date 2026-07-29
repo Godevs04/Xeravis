@@ -59,7 +59,7 @@ export function TechnologyEcosystem({
         <div className="relative mt-12 overflow-hidden rounded-[32px] border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] p-6 shadow-[var(--shadow-floating)] backdrop-blur-2xl sm:p-8 lg:p-10">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(109,94,249,0.16),transparent_65%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(13,148,136,0.16),transparent_65%)]"
           />
           <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
 
@@ -79,7 +79,7 @@ export function TechnologyEcosystem({
                 className="group relative rounded-[22px] border border-[color:var(--glass-border-soft)] bg-white/70 p-4 shadow-[var(--shadow-light)] backdrop-blur-xl dark:bg-white/5"
               >
                 <div className="flex items-center gap-2">
-                  <span className="bg-accent h-2 w-2 rounded-full shadow-[0_0_12px_rgba(109,94,249,0.8)]" />
+                  <span className="bg-accent h-2 w-2 rounded-full shadow-[0_0_12px_rgba(13,148,136,0.8)]" />
                   <p className="text-muted text-[10px] font-bold tracking-[0.14em] uppercase">
                     {item.category}
                   </p>

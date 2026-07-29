@@ -13,7 +13,7 @@ export const Blogs: CollectionConfig = {
   slug: 'blogs',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'publishedAt', '_status', 'updatedAt'],
+    defaultColumns: ['title', 'insightType', 'slug', 'publishedAt', '_status', 'updatedAt'],
     group: 'Content',
   },
   versions: {
@@ -41,6 +41,21 @@ export const Blogs: CollectionConfig = {
       maxLength: 140,
     },
     slugField(),
+    {
+      name: 'insightType',
+      type: 'select',
+      defaultValue: 'blog',
+      options: [
+        { label: 'Blog', value: 'blog' },
+        { label: 'White Paper', value: 'white-paper' },
+        { label: 'News', value: 'news' },
+        { label: 'Resource', value: 'resource' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Used by Insights hub filters.',
+      },
+    },
     {
       name: 'excerpt',
       type: 'textarea',

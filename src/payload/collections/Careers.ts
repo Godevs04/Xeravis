@@ -18,7 +18,9 @@ export const Careers: CollectionConfig = {
       'departmentRef',
       'location',
       'type',
+      'workMode',
       'active',
+      'applicationDeadline',
       '_status',
       'updatedAt',
     ],
@@ -68,7 +70,7 @@ export const Careers: CollectionConfig = {
       type: 'text',
       label: 'Office / Location label',
       admin: {
-        description: 'Display location (e.g. Chennai · Hybrid)',
+        description: 'Display location (e.g. Hyderabad · Hybrid)',
       },
     },
     {
@@ -80,6 +82,7 @@ export const Careers: CollectionConfig = {
       name: 'type',
       type: 'select',
       required: true,
+      label: 'Employment type',
       options: [
         { label: 'Full-time', value: 'full-time' },
         { label: 'Part-time', value: 'part-time' },
@@ -88,14 +91,84 @@ export const Careers: CollectionConfig = {
       ],
     },
     {
+      name: 'workMode',
+      type: 'select',
+      defaultValue: 'hybrid',
+      options: [
+        { label: 'On-site', value: 'onsite' },
+        { label: 'Hybrid', value: 'hybrid' },
+        { label: 'Remote', value: 'remote' },
+      ],
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'experienceRequired',
+      type: 'text',
+      label: 'Experience required',
+      admin: { description: 'e.g. 2–5 Years' },
+    },
+    {
+      name: 'openings',
+      type: 'number',
+      defaultValue: 1,
+      min: 1,
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'postedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        date: { pickerAppearance: 'dayOnly' },
+      },
+    },
+    {
+      name: 'applicationDeadline',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        date: { pickerAppearance: 'dayOnly' },
+      },
+    },
+    {
+      name: 'aboutRole',
+      type: 'textarea',
+      label: 'About the role',
+    },
+    {
       name: 'description',
       type: 'richText',
       required: true,
     },
     {
+      name: 'responsibilities',
+      type: 'array',
+      fields: [{ name: 'item', type: 'text', required: true }],
+    },
+    {
+      name: 'requiredSkills',
+      type: 'array',
+      fields: [{ name: 'item', type: 'text', required: true }],
+    },
+    {
+      name: 'preferredSkills',
+      type: 'array',
+      fields: [{ name: 'item', type: 'text', required: true }],
+    },
+    {
+      name: 'qualifications',
+      type: 'textarea',
+    },
+    {
+      name: 'benefits',
+      type: 'array',
+      fields: [{ name: 'item', type: 'text', required: true }],
+    },
+    {
       name: 'requirements',
       type: 'richText',
       required: true,
+      label: 'Requirements (legacy rich text)',
     },
     {
       name: 'active',

@@ -33,7 +33,7 @@ export function AdminPwa() {
 
     ensure('manifest', { href: '/admin/manifest.webmanifest' })
     ensure('apple-touch-icon', { href: '/icons/admin-192.png' })
-    ensureMeta('theme-color', '#6d5ef9')
+    ensureMeta('theme-color', '#0D9488')
     ensureMeta('mobile-web-app-capable', 'yes')
     ensureMeta('apple-mobile-web-app-capable', 'yes')
     ensureMeta('apple-mobile-web-app-status-bar-style', 'black-translucent')

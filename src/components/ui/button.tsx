@@ -11,13 +11,13 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-primary text-background hover:bg-primary/90 shadow-[var(--shadow-light)]',
         primary:
-          'bg-accent text-white hover:bg-[var(--color-accent-hover)] shadow-[0_0_0_1px_rgba(109,94,249,0.35),0_10px_28px_rgba(109,94,249,0.32)] hover:shadow-[0_0_0_1px_rgba(109,94,249,0.5),0_14px_36px_rgba(109,94,249,0.4)]',
+          'bg-accent text-white hover:bg-[var(--color-accent-hover)] shadow-[0_10px_28px_rgba(13,148,136,0.28)] hover:shadow-[0_14px_36px_rgba(6,182,212,0.28)]',
         accent:
-          'bg-accent text-white hover:bg-[var(--color-accent-hover)] shadow-[0_0_0_1px_rgba(109,94,249,0.35),0_10px_28px_rgba(109,94,249,0.32)]',
+          'bg-accent text-white hover:bg-[var(--color-accent-hover)] shadow-[0_10px_28px_rgba(13,148,136,0.28)]',
         secondary:
           'border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] text-primary backdrop-blur-md hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-hover)]',
         outline:
-          'border border-[color:var(--color-border-strong)] bg-[color:var(--glass-bg)] text-primary backdrop-blur-md hover:border-accent/40 hover:bg-[color:var(--color-accent-soft)]',
+          'border border-[color:var(--color-border-strong)] bg-[color:var(--glass-bg)] text-primary backdrop-blur-md hover:border-[color:var(--color-cyan)]/50 hover:bg-[color:var(--color-accent-soft)]',
         ghost: 'text-secondary hover:text-primary hover:bg-[color:var(--color-hover)]',
         link: 'text-accent underline-offset-4 hover:underline',
         danger: 'bg-[var(--color-danger)] text-white hover:opacity-90',

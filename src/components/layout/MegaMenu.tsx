@@ -24,7 +24,7 @@ export function MegaMenu({ items, className, id }: MegaMenuProps) {
       id={id}
       role="menu"
       className={cn(
-        'absolute top-full left-0 z-50 mt-3 w-[24rem] rounded-[24px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] p-3 shadow-[var(--shadow-floating)] backdrop-blur-2xl',
+        'absolute top-full left-1/2 z-50 mt-3 max-h-[min(70vh,28rem)] w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_24px_60px_rgba(15,23,42,0.18)]',
         className,
       )}
     >
@@ -34,11 +34,11 @@ export function MegaMenu({ items, className, id }: MegaMenuProps) {
             <Link
               href={item.href}
               role="menuitem"
-              className="hover:bg-surface focus-visible:ring-accent block rounded-xl px-3.5 py-3 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+              className="block rounded-xl px-3.5 py-3 transition-colors hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-[#06B6D4] focus-visible:outline-none"
             >
-              <span className="text-primary block text-sm font-semibold">{item.label}</span>
+              <span className="block text-sm font-semibold text-[#0F172A]">{item.label}</span>
               {item.description ? (
-                <span className="text-secondary mt-0.5 block text-xs leading-relaxed">
+                <span className="mt-0.5 block text-xs leading-relaxed text-slate-500">
                   {item.description}
                 </span>
               ) : null}

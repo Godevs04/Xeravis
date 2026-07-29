@@ -10,6 +10,8 @@ export const Media: CollectionConfig = {
       'image/*',
       'image/svg+xml',
       'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'video/mp4',
       'video/webm',
       'video/quicktime',

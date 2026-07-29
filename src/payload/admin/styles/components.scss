@@ -17,10 +17,10 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: linear-gradient(145deg, #8b7cff, #6d5ef9);
+  background: linear-gradient(145deg, #06B6D4, #0D9488);
   display: grid;
   place-items: center;
-  box-shadow: 0 8px 24px rgba(109, 94, 249, 0.4);
+  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.4);
   flex-shrink: 0;
 }
 
@@ -114,14 +114,14 @@
   width: 30px;
   height: 30px;
   border-radius: 10px;
-  background: linear-gradient(145deg, #8b7cff, #6d5ef9);
+  background: linear-gradient(145deg, #06B6D4, #0D9488);
   color: #fff;
   display: grid;
   place-items: center;
   font-size: 11px;
   font-weight: 700;
   flex-shrink: 0;
-  box-shadow: 0 6px 16px rgba(109, 94, 249, 0.35);
+  box-shadow: 0 6px 16px rgba(13, 148, 136, 0.35);
 }
 
 .xe-workspace__meta {
@@ -181,12 +181,12 @@
   padding: 10px 12px;
   border-radius: 999px;
   border: none;
-  background: linear-gradient(135deg, #6d5ef9, #8b7cff);
+  background: linear-gradient(135deg, #0D9488, #06B6D4);
   color: white;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(109, 94, 249, 0.35);
+  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.35);
   transition:
     transform 0.18s var(--xe-ease),
     box-shadow 0.18s ease,
@@ -196,7 +196,7 @@
 .xe-quick-create__btn:hover {
   background: var(--xe-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 12px 28px rgba(109, 94, 249, 0.4);
+  box-shadow: 0 12px 28px rgba(13, 148, 136, 0.4);
 }
 
 .xe-nav-section {
@@ -504,8 +504,8 @@
   border-radius: var(--xe-radius-xl);
   border: 1px solid var(--xe-border-strong);
   background:
-    radial-gradient(ellipse 80% 140% at 0% -20%, rgba(109, 94, 249, 0.28), transparent 55%),
-    radial-gradient(ellipse 55% 90% at 100% 120%, rgba(161, 140, 255, 0.18), transparent 50%),
+    radial-gradient(ellipse 80% 140% at 0% -20%, rgba(13, 148, 136, 0.28), transparent 55%),
+    radial-gradient(ellipse 55% 90% at 100% 120%, rgba(6, 182, 212, 0.18), transparent 50%),
     linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(247, 244, 255, 0.55) 100%);
   backdrop-filter: blur(28px) saturate(170%);
   -webkit-backdrop-filter: blur(28px) saturate(170%);
@@ -514,8 +514,8 @@
 
 html[data-theme='dark'] .xe-dash__hero {
   background:
-    radial-gradient(ellipse 80% 140% at 0% -20%, rgba(109, 94, 249, 0.35), transparent 55%),
-    radial-gradient(ellipse 55% 90% at 100% 120%, rgba(161, 140, 255, 0.2), transparent 50%),
+    radial-gradient(ellipse 80% 140% at 0% -20%, rgba(13, 148, 136, 0.35), transparent 55%),
+    radial-gradient(ellipse 55% 90% at 100% 120%, rgba(6, 182, 212, 0.2), transparent 50%),
     linear-gradient(135deg, rgba(36, 30, 56, 0.78) 0%, rgba(18, 14, 32, 0.72) 100%);
 }
 
@@ -543,7 +543,7 @@ html[data-theme='dark'] .xe-dash__hero::before {
 }
 
 html[data-theme='dark'] .xe-dash__eyebrow {
-  color: #c4b5fd;
+  color: #99F6E4;
 }
 
 .xe-dash__title {
@@ -572,12 +572,12 @@ html[data-theme='dark'] .xe-dash__eyebrow {
   gap: 8px;
   padding: 11px 18px;
   border-radius: 999px;
-  background: linear-gradient(135deg, #6d5ef9, #8b7cff);
+  background: linear-gradient(135deg, #0D9488, #06B6D4);
   color: white;
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
-  box-shadow: 0 12px 28px rgba(109, 94, 249, 0.35);
+  box-shadow: 0 12px 28px rgba(13, 148, 136, 0.35);
   transition:
     transform 0.18s var(--xe-ease),
     box-shadow 0.18s ease;
@@ -585,7 +585,7 @@ html[data-theme='dark'] .xe-dash__eyebrow {
 
 .xe-dash__cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 16px 36px rgba(109, 94, 249, 0.42);
+  box-shadow: 0 16px 36px rgba(13, 148, 136, 0.42);
 }
 
 .xe-stats {
@@ -642,14 +642,14 @@ html[data-theme='dark'] .xe-dash__eyebrow {
   isolation: isolate;
   padding: 20px 20px 18px;
   border-radius: var(--xe-radius-lg);
-  border: 1px solid rgba(109, 94, 249, 0.18);
+  border: 1px solid rgba(13, 148, 136, 0.18);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.72) 0%, rgba(247, 244, 255, 0.42) 100%);
   backdrop-filter: blur(22px) saturate(175%);
   -webkit-backdrop-filter: blur(22px) saturate(175%);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.85) inset,
-    0 12px 36px rgba(109, 94, 249, 0.1);
+    0 12px 36px rgba(13, 148, 136, 0.1);
   transition:
     transform 0.28s var(--xe-ease),
     border-color 0.28s ease,
@@ -657,7 +657,7 @@ html[data-theme='dark'] .xe-dash__eyebrow {
 }
 
 html[data-theme='dark'] .xe-stat {
-  border-color: rgba(161, 140, 255, 0.2);
+  border-color: rgba(6, 182, 212, 0.2);
   background: linear-gradient(145deg, rgba(48, 40, 78, 0.55) 0%, rgba(24, 18, 42, 0.45) 100%);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.08) inset,
@@ -666,17 +666,17 @@ html[data-theme='dark'] .xe-stat {
 
 .xe-stat:hover {
   transform: translateY(-5px) scale(1.01);
-  border-color: rgba(109, 94, 249, 0.36);
+  border-color: rgba(13, 148, 136, 0.36);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 22px 56px rgba(79, 70, 229, 0.2);
+    0 22px 56px rgba(15, 23, 42, 0.2);
 }
 
 html[data-theme='dark'] .xe-stat:hover {
-  border-color: rgba(161, 140, 255, 0.36);
+  border-color: rgba(6, 182, 212, 0.36);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.1) inset,
-    0 20px 52px rgba(109, 94, 249, 0.22);
+    0 20px 52px rgba(13, 148, 136, 0.22);
 }
 
 .xe-stat__label {
@@ -719,7 +719,7 @@ html[data-theme='dark'] .xe-stat:hover {
   width: 140px;
   height: 140px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(109, 94, 249, 0.32), transparent 68%);
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.32), transparent 68%);
   pointer-events: none;
   z-index: 0;
 }
@@ -789,7 +789,7 @@ html[data-theme='dark'] .xe-panel {
 }
 
 html[data-theme='dark'] .xe-panel__link {
-  color: #c4b5fd;
+  color: #99F6E4;
 }
 
 .xe-panel__link:hover {
@@ -827,7 +827,7 @@ html[data-theme='dark'] .xe-panel__link {
 }
 
 html[data-theme='dark'] .xe-row__icon {
-  color: #c4b5fd;
+  color: #99F6E4;
 }
 
 .xe-row__main {
@@ -1048,7 +1048,7 @@ html[data-theme='dark'] .xe-cmd {
   padding: 18px 20px;
   border-radius: 16px;
   border: 1px solid var(--xe-border);
-  background: linear-gradient(160deg, rgba(109, 94, 249, 0.08), transparent 70%), var(--xe-glass);
+  background: linear-gradient(160deg, rgba(13, 148, 136, 0.08), transparent 70%), var(--xe-glass);
   backdrop-filter: blur(16px) saturate(160%);
   -webkit-backdrop-filter: blur(16px) saturate(160%);
   box-shadow: var(--xe-shadow);

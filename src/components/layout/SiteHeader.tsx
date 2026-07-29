@@ -2,6 +2,7 @@ import { SiteHeaderClient } from '@/components/layout/SiteHeaderClient'
 import type { MegaMenuItem } from '@/components/layout/MegaMenu'
 import { getGlobal, listPublished } from '@/lib/cms'
 import { BRAND, DEFAULT_NAV } from '@/lib/fallback-data'
+import { ABOUT_MEGA, INSIGHTS_MEGA } from '@/lib/site-ia'
 
 type NavigationGlobal = {
   primaryLinks?: { label: string; href: string; mega?: string | null }[]
@@ -18,11 +19,7 @@ type CmsNavDoc = {
   shortDescription?: string | null
 }
 
-function toMegaItems(
-  docs: CmsNavDoc[],
-  basePath: string,
-  overview: MegaMenuItem,
-): MegaMenuItem[] {
+function toMegaItems(docs: CmsNavDoc[], basePath: string, overview: MegaMenuItem): MegaMenuItem[] {
   const items: MegaMenuItem[] = []
 
   for (const doc of docs) {
@@ -38,6 +35,30 @@ function toMegaItems(
   return [overview, ...items]
 }
 
+const COMPANY_MEGA: MegaMenuItem[] = [
+  {
+    label: 'About XELARVIS',
+    href: '/about',
+    description: 'Company story, mission, and values.',
+  },
+  ...ABOUT_MEGA,
+  {
+    label: 'AI Research Lab',
+    href: '/ai-research-lab',
+    description: 'Research that ships to production.',
+  },
+  {
+    label: 'Technologies',
+    href: '/technologies',
+    description: 'AI, clinical, cloud, and data stack.',
+  },
+  {
+    label: 'Case Studies',
+    href: '/case-studies',
+    description: 'Selected delivery outcomes.',
+  },
+]
+
 export async function SiteHeader() {
   const [navigation, solutions, services, industries] = await Promise.all([
     getGlobal<NavigationGlobal>('navigation'),
@@ -46,11 +67,15 @@ export async function SiteHeader() {
     listPublished<CmsNavDoc>('industries', { limit: 8, sort: 'order' }),
   ])
 
-  const links = navigation?.primaryLinks?.length ? navigation.primaryLinks : DEFAULT_NAV.primaryLinks
+  // Keep the desktop bar slim — overcrowded CMS menus fall back to the designed nav.
+  const cmsLinks = navigation?.primaryLinks ?? []
+  const links = cmsLinks.length > 0 && cmsLinks.length <= 7 ? cmsLinks : DEFAULT_NAV.primaryLinks
   const ctaLabel = navigation?.cta?.label || navigation?.ctaLabel || DEFAULT_NAV.ctaLabel
   const ctaHref = navigation?.cta?.href || navigation?.ctaHref || DEFAULT_NAV.ctaHref
 
   const megaMenus: Record<string, MegaMenuItem[]> = {
+    about: COMPANY_MEGA,
+    company: COMPANY_MEGA,
     solutions: toMegaItems(solutions, '/solutions', {
       label: 'All solutions',
       href: '/solutions',
@@ -66,6 +91,7 @@ export async function SiteHeader() {
       href: '/industries',
       description: 'Sector experience.',
     }),
+    insights: INSIGHTS_MEGA,
   }
 
   return (

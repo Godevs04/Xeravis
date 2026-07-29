@@ -1,4 +1,4 @@
-import type { Payload } from 'payload'
+import type { Payload, Where } from 'payload'
 
 import { getPayload, resetPayloadCache } from '@/lib/payload'
 import { logger } from '@/lib/logger'
@@ -67,7 +67,7 @@ export async function getPublishedBySlug<T>(collection: string, slug: string): P
       draft: false,
       overrideAccess: true,
     })
-    const doc = result.docs[0] as (T & { _status?: string }) | undefined
+    const doc = result.docs[0] as unknown as (T & { _status?: string }) | undefined
     if (!doc) return null
     if (doc._status && doc._status !== 'published') return null
     return doc
@@ -79,7 +79,7 @@ export async function listPublished<T>(
   options: {
     limit?: number
     sort?: string
-    where?: Record<string, unknown>
+    where?: Where
     drafts?: boolean
   } = {},
 ): Promise<T[]> {
@@ -95,7 +95,7 @@ export async function listPublished<T>(
       overrideAccess: true,
     })
   })
-  const docs = (result?.docs as (T & { _status?: string })[]) ?? []
+  const docs = (result?.docs as unknown as (T & { _status?: string })[]) ?? []
   if (!useDrafts) return docs as T[]
   return docs.filter((doc) => !doc._status || doc._status === 'published') as T[]
 }
@@ -105,7 +105,7 @@ export async function listDocs<T>(
   options: {
     limit?: number
     sort?: string
-    where?: Record<string, unknown>
+    where?: Where
   } = {},
 ): Promise<T[]> {
   return listPublished<T>(collection, { ...options, drafts: false })

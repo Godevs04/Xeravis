@@ -1,7 +1,8 @@
 import { config as loadEnv } from 'dotenv'
-import { getPayload } from 'payload'
+import { getPayload, type Payload } from 'payload'
 
 import { logger } from '../lib/logger'
+import { SEED_INDUSTRIES, SEED_SERVICES, SEED_SOLUTIONS, SEED_TECHNOLOGIES } from './content'
 
 loadEnv({ path: '.env' })
 loadEnv({ path: '.env.local', override: true })
@@ -27,6 +28,53 @@ const richParagraph = (text: string) => ({
     version: 1 as const,
   },
 })
+
+async function upsertBySlug(
+  payload: Payload,
+  collection:
+    | 'services'
+    | 'solutions'
+    | 'industries'
+    | 'technologies'
+    | 'careers'
+    | 'blogs'
+    | 'pages'
+    | 'departments',
+  slug: string,
+  data: Record<string, unknown>,
+) {
+  const withStatus = !['technologies', 'departments'].includes(collection)
+  const found = await payload.find({
+    collection,
+    where: { slug: { equals: slug } },
+    limit: 1,
+    overrideAccess: true,
+    draft: withStatus ? true : undefined,
+  })
+
+  const payloadData = withStatus ? { ...data, slug, _status: 'published' } : { ...data, slug }
+
+  if (found.totalDocs === 0) {
+    await payload.create({
+      collection,
+      data: payloadData as never,
+      overrideAccess: true,
+      context: { disableRevalidate: true },
+    })
+    log.success(`${collection}: created ${slug}`)
+    return
+  }
+
+  await payload.update({
+    collection,
+    id: found.docs[0].id,
+    data: payloadData as never,
+    overrideAccess: true,
+    draft: withStatus ? false : undefined,
+    context: { disableRevalidate: true },
+  })
+  log.success(`${collection}: updated ${slug}`)
+}
 
 async function seed() {
   if (!process.env.DATABASE_URI || !process.env.PAYLOAD_SECRET) {
@@ -60,7 +108,7 @@ async function seed() {
     slug: 'site-settings',
     data: {
       siteName: 'Xelarvis Technologies',
-      tagline: 'Engineering Digital Excellence.',
+      tagline: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
       social: {
         linkedin: 'https://linkedin.com/company/xelarvis',
         twitter: 'https://x.com/xelarvis',
@@ -75,14 +123,15 @@ async function seed() {
     slug: 'navigation',
     data: {
       primaryLinks: [
-        { label: 'Services', href: '/services' },
-        { label: 'Industries', href: '/industries' },
-        { label: 'Solutions', href: '/solutions' },
-        { label: 'Insights', href: '/insights' },
-        { label: 'Careers', href: '/careers' },
-        { label: 'About', href: '/about' },
+        { label: 'Services', href: '/services', mega: 'services' },
+        { label: 'Solutions', href: '/solutions', mega: 'solutions' },
+        { label: 'Industries', href: '/industries', mega: 'industries' },
+        { label: 'Insights', href: '/insights', mega: 'insights' },
+        { label: 'Careers', href: '/careers', mega: 'none' },
+        { label: 'Company', href: '/about', mega: 'company' },
       ],
-      ctaLabel: 'Talk to us',
+      cta: { label: 'Contact Us', href: '/contact' },
+      ctaLabel: 'Contact Us',
       ctaHref: '/contact',
     },
     overrideAccess: true,
@@ -96,6 +145,7 @@ async function seed() {
           title: 'Company',
           links: [
             { label: 'About', href: '/about' },
+            { label: 'AI Research Lab', href: '/ai-research-lab' },
             { label: 'Careers', href: '/careers' },
             { label: 'Contact', href: '/contact' },
           ],
@@ -104,21 +154,23 @@ async function seed() {
           title: 'Capabilities',
           links: [
             { label: 'Services', href: '/services' },
-            { label: 'Industries', href: '/industries' },
             { label: 'Solutions', href: '/solutions' },
+            { label: 'Industries', href: '/industries' },
+            { label: 'Technologies', href: '/technologies' },
             { label: 'Case Studies', href: '/case-studies' },
           ],
         },
         {
           title: 'Insights',
           links: [
-            { label: 'Blog', href: '/blog' },
             { label: 'Insights Hub', href: '/insights' },
+            { label: 'Blogs', href: '/insights/blogs' },
+            { label: 'White Papers', href: '/insights/white-papers' },
           ],
         },
       ],
       showNewsletter: true,
-      copyright: 'Xelarvis Technologies. All rights reserved.',
+      copyright: 'XELARVIS PRIVATE LIMITED. All rights reserved.',
     },
     overrideAccess: true,
   })
@@ -156,7 +208,7 @@ async function seed() {
         {
           name: 'Headquarters',
           address: 'India',
-          city: 'Chennai',
+          city: 'Hyderabad',
           country: 'India',
           hours: 'Mon–Fri, 9:30–18:30 IST',
         },
@@ -170,226 +222,162 @@ async function seed() {
     data: {
       titleTemplate: '%s · Xelarvis Technologies',
       defaultDescription:
-        'Xelarvis Technologies delivers IT consulting, product engineering, cloud, DevOps, and AI solutions for enterprises and growth-stage companies.',
+        'XELARVIS PRIVATE LIMITED delivers IT consulting, AI research, clinical data science, analytics, and cloud solutions for healthcare and enterprise organizations.',
       twitterHandle: '@xelarvis',
     },
     overrideAccess: true,
   })
 
-  const services = [
-    {
-      title: 'IT Consulting',
-      slug: 'it-consulting',
-      summary:
-        'Strategic technology advisory that aligns architecture, delivery, and business outcomes.',
-      icon: 'Briefcase',
-    },
-    {
-      title: 'Digital Transformation',
-      slug: 'digital-transformation',
-      summary:
-        'Modernize legacy systems and operating models with measurable transformation programs.',
-      icon: 'RefreshCw',
-    },
-    {
-      title: 'Product Engineering',
-      slug: 'product-engineering',
-      summary:
-        'End-to-end product design and engineering for platforms that scale with your market.',
-      icon: 'Boxes',
-    },
-    {
-      title: 'Software Development',
-      slug: 'software-development',
-      summary:
-        'Custom enterprise software built with clean architecture and production discipline.',
-      icon: 'Code2',
-    },
-    {
-      title: 'Cloud Solutions',
-      slug: 'cloud-solutions',
-      summary: 'Cloud architecture, migration, and optimization across AWS, Azure, and GCP.',
-      icon: 'Cloud',
-    },
-    {
-      title: 'DevOps',
-      slug: 'devops',
-      summary: 'CI/CD, infrastructure as code, observability, and reliable release engineering.',
-      icon: 'GitBranch',
-    },
-    {
-      title: 'AI Solutions',
-      slug: 'ai-solutions',
-      summary: 'Applied AI and LLM systems that improve operations, products, and decision speed.',
-      icon: 'Sparkles',
-    },
-    {
-      title: 'Enterprise Applications',
-      slug: 'enterprise-applications',
-      summary: 'Mission-critical applications designed for security, compliance, and longevity.',
-      icon: 'Building2',
-    },
-    {
-      title: 'UI/UX Design',
-      slug: 'ui-ux',
-      summary: 'Research-led product interfaces that convert, clarify, and build trust.',
-      icon: 'Palette',
-    },
-    {
-      title: 'Staff Augmentation',
-      slug: 'staff-augmentation',
-      summary: 'Embed senior engineers into your teams with clear ownership and delivery cadence.',
-      icon: 'Users',
-    },
-    {
-      title: 'SaaS Development',
-      slug: 'saas-development',
-      summary: 'Multi-tenant SaaS platforms with billing, identity, and growth-ready foundations.',
-      icon: 'Layers',
-    },
-  ]
-
-  for (const service of services) {
+  const techIds = new Map<string, string>()
+  for (const [index, tech] of SEED_TECHNOLOGIES.entries()) {
+    await upsertBySlug(payload, 'technologies', tech.slug, {
+      title: tech.title,
+      category: tech.category,
+      description: tech.description,
+      featured: index < 8,
+      order: index + 1,
+    })
     const found = await payload.find({
-      collection: 'services',
-      where: { slug: { equals: service.slug } },
+      collection: 'technologies',
+      where: { slug: { equals: tech.slug } },
       limit: 1,
       overrideAccess: true,
     })
-    if (found.totalDocs === 0) {
-      await payload.create({
+    if (found.docs[0]?.id) techIds.set(tech.title, String(found.docs[0].id))
+  }
+
+  for (const [index, service] of SEED_SERVICES.entries()) {
+    const relatedTech = service.techLabels
+      .map((label) => techIds.get(label))
+      .filter(Boolean) as string[]
+
+    await upsertBySlug(payload, 'services', service.slug, {
+      title: service.title,
+      summary: service.summary,
+      icon: service.icon,
+      challenges: service.challenges,
+      body: richParagraph(service.body),
+      process: service.process.map((step) => ({ ...step })),
+      benefits: service.benefits.map((b) => ({ ...b })),
+      technologies: relatedTech,
+      featured: true,
+      order: index + 1,
+    })
+  }
+
+  const keepServiceSlugs = new Set(SEED_SERVICES.map((s) => s.slug as string))
+  const allServices = await payload.find({
+    collection: 'services',
+    limit: 100,
+    overrideAccess: true,
+    draft: true,
+  })
+  for (const doc of allServices.docs) {
+    if (!keepServiceSlugs.has(String(doc.slug)) && doc._status === 'published') {
+      await payload.update({
         collection: 'services',
+        id: doc.id,
         data: {
-          ...service,
-          body: richParagraph(service.summary),
-          benefits: [
-            { title: 'Clear discovery', description: 'Scoped outcomes before execution.' },
-            {
-              title: 'Senior delivery',
-              description: 'Practitioners who own architecture and quality.',
-            },
-            {
-              title: 'Measurable impact',
-              description: 'KPIs tied to business value, not vanity metrics.',
-            },
-          ],
-          _status: 'published',
+          title: doc.title,
+          slug: doc.slug,
+          summary: doc.summary,
+          body: doc.body,
+          featured: false,
+          _status: 'draft',
         },
         overrideAccess: true,
+        draft: false,
+        context: { disableRevalidate: true },
       })
-      log.success(`Service: ${service.title}`)
+      log.info(`services: unpublished legacy ${doc.slug}`)
     }
   }
 
-  const industries = [
-    {
-      title: 'Manufacturing',
-      slug: 'manufacturing',
-      summary: 'Connected operations, ERP modernization, and industrial software.',
-    },
-    {
-      title: 'Healthcare',
-      slug: 'healthcare',
-      summary: 'Secure clinical and patient platforms with compliance-first delivery.',
-    },
-    {
-      title: 'Education',
-      slug: 'education',
-      summary: 'Learning platforms and campus systems built for scale and accessibility.',
-    },
-    {
-      title: 'Logistics',
-      slug: 'logistics',
-      summary: 'Tracking, optimization, and control towers for complex supply chains.',
-    },
-    {
-      title: 'Retail',
-      slug: 'retail',
-      summary: 'Omnichannel commerce, inventory intelligence, and customer platforms.',
-    },
-    {
-      title: 'Government',
-      slug: 'government',
-      summary: 'Secure digital public services with transparency and reliability.',
-    },
-    {
-      title: 'SaaS',
-      slug: 'saas',
-      summary: 'Product engineering partnerships for venture-backed and enterprise SaaS.',
-    },
-  ]
-
-  for (const industry of industries) {
-    const found = await payload.find({
-      collection: 'industries',
-      where: { slug: { equals: industry.slug } },
-      limit: 1,
-      overrideAccess: true,
+  for (const [index, industry] of SEED_INDUSTRIES.entries()) {
+    await upsertBySlug(payload, 'industries', industry.slug, {
+      title: industry.title,
+      summary: industry.summary,
+      challenges: industry.summary,
+      approach: richParagraph(industry.summary),
+      featured: index < 4,
+      order: index + 1,
     })
-    if (found.totalDocs === 0) {
-      await payload.create({
+  }
+
+  const keepIndustrySlugs = new Set(SEED_INDUSTRIES.map((i) => i.slug as string))
+  const allIndustries = await payload.find({
+    collection: 'industries',
+    limit: 100,
+    overrideAccess: true,
+    draft: true,
+  })
+  for (const doc of allIndustries.docs) {
+    if (!keepIndustrySlugs.has(String(doc.slug)) && doc._status === 'published') {
+      await payload.update({
         collection: 'industries',
+        id: doc.id,
         data: {
-          ...industry,
-          challenges:
-            'Fragmented systems, slow delivery cycles, and unclear ownership of digital outcomes.',
-          approach: richParagraph(industry.summary),
-          _status: 'published',
+          title: doc.title,
+          slug: doc.slug,
+          summary: doc.summary,
+          featured: false,
+          _status: 'draft',
         },
         overrideAccess: true,
+        draft: false,
+        context: { disableRevalidate: true },
       })
-      log.success(`Industry: ${industry.title}`)
+      log.info(`industries: unpublished legacy ${doc.slug}`)
     }
   }
 
-  const solutions = [
-    {
-      title: 'Cloud Modernization',
-      slug: 'cloud-modernization',
-      summary: 'Migrate and optimize workloads for resilience and cost efficiency.',
-    },
-    {
-      title: 'AI Operations',
-      slug: 'ai-operations',
-      summary: 'Operationalize AI assistants and automation across business workflows.',
-    },
-    {
-      title: 'Platform Engineering',
-      slug: 'platform-engineering',
-      summary: 'Internal developer platforms that accelerate safe delivery.',
-    },
-  ]
-
-  for (const solution of solutions) {
-    const found = await payload.find({
-      collection: 'solutions',
-      where: { slug: { equals: solution.slug } },
-      limit: 1,
-      overrideAccess: true,
+  for (const [index, solution] of SEED_SOLUTIONS.entries()) {
+    await upsertBySlug(payload, 'solutions', solution.slug, {
+      title: solution.title,
+      summary: solution.summary,
+      body: richParagraph(solution.summary),
+      featured: index < 4,
+      order: index + 1,
     })
-    if (found.totalDocs === 0) {
-      await payload.create({
+  }
+
+  const keepSolutionSlugs = new Set(SEED_SOLUTIONS.map((s) => s.slug as string))
+  const allSolutions = await payload.find({
+    collection: 'solutions',
+    limit: 100,
+    overrideAccess: true,
+    draft: true,
+  })
+  for (const doc of allSolutions.docs) {
+    if (!keepSolutionSlugs.has(String(doc.slug)) && doc._status === 'published') {
+      await payload.update({
         collection: 'solutions',
+        id: doc.id,
         data: {
-          ...solution,
-          body: richParagraph(solution.summary),
-          _status: 'published',
+          title: doc.title,
+          slug: doc.slug,
+          summary: doc.summary,
+          body: doc.body,
+          featured: false,
+          _status: 'draft',
         },
         overrideAccess: true,
+        draft: false,
+        context: { disableRevalidate: true },
       })
-      log.success(`Solution: ${solution.title}`)
+      log.info(`solutions: unpublished legacy ${doc.slug}`)
     }
   }
 
   const homeLayout = [
     {
       blockType: 'hero' as const,
-      eyebrow: 'Xelarvis Technologies',
-      heading: 'Engineering Digital Excellence.',
+      eyebrow: 'XELARVIS TECHNOLOGIES',
+      heading: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
       subheading:
-        'Enterprise consulting, product engineering, and cloud platforms for organizations that need clarity, speed, and lasting quality.',
+        'XELARVIS PRIVATE LIMITED is an IT Consulting and Artificial Intelligence Research company delivering innovative solutions in AI, Machine Learning, Data Science, Healthcare Analytics, Clinical Data Science, Cloud Technologies, and Enterprise Software Development.',
       ctaLabel: "Let's Talk",
-      ctaHref: '/contact?intent=project',
+      ctaHref: '/contact',
       secondaryCtaLabel: 'Explore services',
       secondaryCtaHref: '/services',
     },
@@ -397,177 +385,106 @@ async function seed() {
       blockType: 'statistics' as const,
       heading: 'Trust indicators',
       stats: [
-        { label: 'Capability areas', value: '11', suffix: '+' },
-        { label: 'Industries served', value: '7', suffix: '+' },
-        { label: 'Delivery focus', value: 'Production' },
-        { label: 'Engagement', value: 'Senior-led' },
+        { label: 'Core services', value: '5' },
+        { label: 'Industries served', value: '8' },
+        { label: 'Solution areas', value: '8' },
+        { label: 'Focus', value: 'AI + Healthcare' },
       ],
     },
     {
       blockType: 'aboutPreview' as const,
-      heading: 'A technology partner built for durable outcomes.',
-      body: 'We help startups, enterprises, and institutions modernize products and platforms — with senior ownership, transparent process, and engineering that lasts.',
-      cta: { label: 'About us', href: '/about', style: 'secondary' as const },
+      heading: 'Transform data into intelligence.',
+      body: 'We help organizations accelerate innovation and build scalable digital solutions through research-driven methodologies and secure, future-ready platforms.',
+      cta: {
+        label: 'Company overview',
+        href: '/about/company-overview',
+        style: 'secondary' as const,
+      },
     },
     {
       blockType: 'servicesGrid' as const,
-      heading: 'Capabilities for modern enterprises',
+      heading: 'Our Core Services',
       subheading:
-        'From platform engineering to AI-enabled products, we deliver with precision and pace.',
+        'AI research, data science, IT consulting, clinical data science, and cloud data platforms.',
+    },
+    {
+      blockType: 'industriesStrip' as const,
+      heading: 'Industries We Serve',
+      subheading:
+        'Healthcare, life sciences, finance, manufacturing, retail, logistics, and education.',
     },
     {
       blockType: 'technologyGrid' as const,
       heading: 'Technology expertise',
-      subheading: 'Modern stacks selected for maintainability, security, and scale.',
-    },
-    {
-      blockType: 'testimonials' as const,
-      heading: 'What clients say',
+      subheading: 'Modern stacks for AI, clinical programming, analytics, and cloud.',
     },
     {
       blockType: 'latestBlogs' as const,
       heading: 'Insights',
-      subheading: 'Perspective from our engineering and delivery practice.',
+      subheading: 'Perspective from our AI, healthcare, and engineering practice.',
     },
     {
       blockType: 'ctaBand' as const,
-      heading: 'Ready to build your next digital product?',
-      subheading: 'Tell us about your product, platform, or transformation goals.',
+      heading: 'Ready to build your next intelligent solution?',
+      subheading: 'Tell us about your AI, clinical, analytics, or transformation goals.',
       ctaLabel: 'Schedule a Consultation',
-      ctaHref: '/contact?intent=project',
+      ctaHref: '/contact',
     },
   ]
 
-  const home = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: 'home' } },
-    limit: 1,
-    overrideAccess: true,
-    draft: true,
-  })
-
-  if (home.totalDocs === 0) {
-    await payload.create({
-      collection: 'pages',
-      data: {
-        title: 'Home',
-        slug: 'home',
-        layout: homeLayout,
-        _status: 'published',
-      },
-      overrideAccess: true,
-      context: { disableRevalidate: true },
-    })
-    log.success('Created home page')
-  } else {
-    const existing = home.docs[0]
-    const layoutLen = Array.isArray(existing.layout) ? existing.layout.length : 0
-    if (existing._status !== 'published' || layoutLen === 0) {
-      await payload.update({
-        collection: 'pages',
-        id: existing.id,
-        data: {
-          title: 'Home',
-          slug: 'home',
-          layout: layoutLen === 0 ? homeLayout : existing.layout,
-          _status: 'published',
-        },
-        overrideAccess: true,
-        draft: false,
-        context: { disableRevalidate: true },
-      })
-      log.success('Published home page')
-    } else {
-      log.info('Home page already published')
-    }
-  }
-
-  const about = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: 'about' } },
-    limit: 1,
-    overrideAccess: true,
-    draft: true,
+  await upsertBySlug(payload, 'pages', 'home', {
+    title: 'Home',
+    layout: homeLayout,
   })
 
   const aboutLayout = [
     {
       blockType: 'hero' as const,
-      eyebrow: 'About',
-      heading: 'Built for enterprises that demand precision.',
+      eyebrow: 'About Us',
+      heading: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
       subheading:
-        'Xelarvis Technologies partners with organizations to engineer platforms, products, and data systems with long-term maintainability.',
+        'XELARVIS PRIVATE LIMITED specializes in Healthcare AI, Clinical Data Science, Machine Learning, Advanced Analytics, and Enterprise Software Solutions.',
       ctaLabel: 'Talk to us',
       ctaHref: '/contact',
-      secondaryCtaLabel: 'Explore services',
-      secondaryCtaHref: '/services',
+      secondaryCtaLabel: 'Why XELARVIS',
+      secondaryCtaHref: '/about/why-xelarvis',
     },
     {
       blockType: 'aboutPreview' as const,
-      heading: 'A technology partner built for durable outcomes.',
-      body: 'We help startups, enterprises, and institutions modernize products and platforms — with senior ownership, transparent process, and engineering that lasts.',
+      heading: 'About the Company',
+      body: 'We help organizations transform complex data into intelligent solutions through innovative technologies, research-driven methodologies, and scalable digital platforms. Our mission is to bridge the gap between healthcare, artificial intelligence, and enterprise technology.',
       cta: {
-        label: 'Start a project',
-        href: '/contact?intent=project',
+        label: 'Company overview',
+        href: '/about/company-overview',
         style: 'secondary' as const,
       },
     },
     {
       blockType: 'missionVision' as const,
-      heading: 'Mission & vision',
+      heading: 'Vision & Mission',
       missionTitle: 'Mission',
       missionBody:
-        'Deliver production-grade software and platforms that create measurable business outcomes for our clients.',
+        'Bridge healthcare, artificial intelligence, and enterprise technology by delivering reliable, secure, and future-ready solutions.',
       visionTitle: 'Vision',
       visionBody:
-        'Become the most trusted engineering partner for enterprises modernizing digital products and operations.',
+        'Be a trusted global partner for intelligent healthcare, AI research, and digital transformation.',
     },
     {
       blockType: 'valuesGrid' as const,
-      heading: 'Values',
-      subheading: 'How we work when stakes are high.',
+      heading: 'Why XELARVIS',
+      subheading: 'What makes our partnership different.',
       values: [
         {
-          title: 'Clarity',
-          description: 'We prefer precise scope, explicit trade-offs, and honest timelines.',
+          title: 'Healthcare + AI depth',
+          description: 'Clinical data science and healthcare AI alongside enterprise engineering.',
         },
         {
-          title: 'Ownership',
-          description: 'Senior practitioners stay accountable from discovery through production.',
+          title: 'Research-driven',
+          description: 'Methods grounded in evaluation, standards, and continuous learning.',
         },
         {
-          title: 'Craft',
-          description: 'We optimize for maintainability, security, and operational excellence.',
-        },
-      ],
-    },
-    {
-      blockType: 'timeline' as const,
-      heading: 'Company timeline',
-      subheading: 'Milestones in building Xelarvis.',
-      items: [
-        {
-          date: '2014',
-          title: 'Company established',
-          description:
-            'Xelarvis Technologies formed to deliver enterprise engineering with craft and clarity.',
-        },
-        {
-          date: '2018',
-          title: 'Enterprise scale',
-          description:
-            'Expanded delivery across regulated industries and complex platform programs.',
-        },
-        {
-          date: '2022',
-          title: 'AI platforms',
-          description:
-            'Grew applied AI and data practices for production-grade assistants and ops.',
-        },
-        {
-          date: '2026',
-          title: 'Global delivery',
-          description: 'Senior-led teams shipping durable products across markets and time zones.',
+          title: 'Senior ownership',
+          description: 'Practitioners accountable from discovery through production.',
         },
       ],
     },
@@ -584,117 +501,163 @@ async function seed() {
     },
   ]
 
-  if (about.totalDocs === 0) {
-    await payload.create({
-      collection: 'pages',
-      data: {
-        title: 'About',
-        slug: 'about',
-        layout: aboutLayout,
-        _status: 'published',
-      },
-      overrideAccess: true,
-    })
-    log.success('Created about page')
-  } else {
-    const existing = about.docs[0] as {
-      id: string
-      layout?: { blockType?: string }[]
-      _status?: string
-    }
-    const hasStoryBlock = existing.layout?.some((block) => block.blockType === 'aboutPreview')
-    const needsRefresh =
-      !existing.layout?.length || existing._status !== 'published' || !hasStoryBlock
-    if (needsRefresh) {
-      await payload.update({
-        collection: 'pages',
-        id: existing.id,
-        data: {
-          layout: aboutLayout,
-          _status: 'published',
-        },
-        overrideAccess: true,
-        draft: false,
-      })
-      log.success('Published about page')
-    } else {
-      log.info('About page already published')
-    }
-  }
+  await upsertBySlug(payload, 'pages', 'about', {
+    title: 'About',
+    layout: aboutLayout,
+  })
 
   for (const legal of [
     {
       slug: 'privacy-policy',
       title: 'Privacy Policy',
       heading: 'Privacy Policy',
-      body: 'This privacy policy describes how Xelarvis Technologies collects and uses information. Update this page in the CMS with your final legal copy.',
+      body: 'This privacy policy describes how XELARVIS PRIVATE LIMITED collects and uses information. Update this page in the CMS with your final legal copy.',
     },
     {
       slug: 'terms',
       title: 'Terms & Conditions',
       heading: 'Terms & Conditions',
-      body: 'These terms govern use of xelarvis.in. Replace this placeholder with counsel-approved terms in the CMS.',
+      body: 'These terms govern use of the XELARVIS website. Replace this placeholder with counsel-approved terms in the CMS.',
     },
   ]) {
-    const found = await payload.find({
-      collection: 'pages',
-      where: { slug: { equals: legal.slug } },
-      limit: 1,
-      overrideAccess: true,
+    await upsertBySlug(payload, 'pages', legal.slug, {
+      title: legal.title,
+      layout: [
+        { blockType: 'hero', heading: legal.heading, subheading: legal.body },
+        { blockType: 'richText', content: richParagraph(legal.body) },
+      ],
     })
-    if (found.totalDocs === 0) {
-      await payload.create({
-        collection: 'pages',
-        data: {
-          title: legal.title,
-          slug: legal.slug,
-          layout: [
-            {
-              blockType: 'hero',
-              heading: legal.heading,
-              subheading: legal.body,
-            },
-            {
-              blockType: 'richText',
-              content: richParagraph(legal.body),
-            },
-          ],
-          _status: 'published',
-        },
-        overrideAccess: true,
-      })
-      log.success(`Page: ${legal.title}`)
-    }
   }
 
-  const careerFound = await payload.find({
-    collection: 'careers',
-    where: { slug: { equals: 'senior-fullstack-engineer' } },
+  const deptFound = await payload.find({
+    collection: 'departments',
+    where: { slug: { equals: 'artificial-intelligence' } },
     limit: 1,
     overrideAccess: true,
   })
-  if (careerFound.totalDocs === 0) {
-    await payload.create({
-      collection: 'careers',
+  let aiDeptId = deptFound.docs[0]?.id
+  if (!aiDeptId) {
+    const dept = await payload.create({
+      collection: 'departments',
       data: {
-        title: 'Senior Full-Stack Engineer',
-        slug: 'senior-fullstack-engineer',
-        department: 'Engineering',
-        location: 'Remote / India',
-        type: 'full-time',
-        description: richParagraph(
-          'Build enterprise web platforms with Next.js, TypeScript, and cloud-native services. You will own features end-to-end with a senior team.',
-        ),
-        requirements: richParagraph(
-          '5+ years shipping production software. Strong TypeScript. Experience with Next.js or similar React frameworks. Comfort with system design and code review.',
-        ),
-        active: true,
-        _status: 'published',
+        title: 'Artificial Intelligence',
+        slug: 'artificial-intelligence',
+        description: 'AI engineering and research roles.',
+        order: 1,
       },
       overrideAccess: true,
     })
-    log.success('Created sample career')
+    aiDeptId = dept.id
   }
+
+  const clinicalDeptFound = await payload.find({
+    collection: 'departments',
+    where: { slug: { equals: 'clinical-data-science' } },
+    limit: 1,
+    overrideAccess: true,
+  })
+  let clinicalDeptId = clinicalDeptFound.docs[0]?.id
+  if (!clinicalDeptId) {
+    const dept = await payload.create({
+      collection: 'departments',
+      data: {
+        title: 'Clinical Data Science',
+        slug: 'clinical-data-science',
+        description: 'Clinical programming and healthcare analytics.',
+        order: 2,
+      },
+      overrideAccess: true,
+    })
+    clinicalDeptId = dept.id
+  }
+
+  await upsertBySlug(payload, 'careers', 'ai-engineer', {
+    title: 'AI Engineer',
+    department: 'Artificial Intelligence',
+    departmentRef: aiDeptId,
+    office: 'Hyderabad / Remote',
+    location: 'Hyderabad / Remote',
+    type: 'full-time',
+    workMode: 'hybrid',
+    experienceRequired: '2–5 Years',
+    openings: 2,
+    postedAt: new Date().toISOString(),
+    aboutRole:
+      'Design AI models, develop APIs, train ML models, deploy solutions, and collaborate with clients across healthcare and enterprise programs.',
+    description: richParagraph(
+      'Join XELARVIS to build production AI systems spanning generative AI, NLP, and intelligent automation.',
+    ),
+    requirements: richParagraph(
+      'Strong Python, machine learning fundamentals, SQL, cloud platforms, and Git. Preferred: TensorFlow, LangChain, Azure AI, Docker.',
+    ),
+    responsibilities: [
+      { item: 'Design AI models' },
+      { item: 'Develop APIs' },
+      { item: 'Train ML models' },
+      { item: 'Deploy solutions' },
+      { item: 'Collaborate with clients' },
+    ],
+    requiredSkills: [
+      { item: 'Python' },
+      { item: 'Machine Learning' },
+      { item: 'SQL' },
+      { item: 'Cloud Platforms' },
+      { item: 'Git' },
+    ],
+    preferredSkills: [
+      { item: 'TensorFlow' },
+      { item: 'LangChain' },
+      { item: 'Azure AI' },
+      { item: 'Docker' },
+    ],
+    qualifications:
+      "Bachelor's or Master's degree in Computer Science, Data Science, AI, Statistics, or related field.",
+    benefits: [
+      { item: 'Flexible work' },
+      { item: 'Learning budget' },
+      { item: 'Paid leave' },
+      { item: 'Research opportunities' },
+    ],
+    active: true,
+  })
+
+  await upsertBySlug(payload, 'careers', 'clinical-sas-programmer', {
+    title: 'Clinical SAS Programmer',
+    department: 'Clinical Data Science',
+    departmentRef: clinicalDeptId,
+    office: 'Hyderabad / Hybrid',
+    location: 'Hyderabad / Hybrid',
+    type: 'full-time',
+    workMode: 'hybrid',
+    experienceRequired: '3–6 Years',
+    openings: 1,
+    postedAt: new Date().toISOString(),
+    aboutRole:
+      'Develop SDTM/ADaM datasets, TLFs, and validated clinical programming deliverables for regulatory submissions.',
+    description: richParagraph(
+      'Support pharmaceutical and biotechnology clients with CDISC-aligned statistical programming and quality control.',
+    ),
+    requirements: richParagraph(
+      'Hands-on SAS experience with SDTM/ADaM, TLF programming, and QC. Familiarity with Pinnacle 21 and clinical trial data preferred.',
+    ),
+    responsibilities: [
+      { item: 'SDTM and ADaM development' },
+      { item: 'TLF programming' },
+      { item: 'QC programming' },
+      { item: 'Define.xml support' },
+      { item: 'Collaborate with biostatistics and data management' },
+    ],
+    requiredSkills: [{ item: 'SAS' }, { item: 'SDTM' }, { item: 'ADaM' }, { item: 'SQL' }],
+    preferredSkills: [{ item: 'Pinnacle 21' }, { item: 'Python' }, { item: 'R' }],
+    qualifications:
+      "Bachelor's or Master's in Statistics, Life Sciences, Computer Science, or related field.",
+    benefits: [
+      { item: 'Flexible work' },
+      { item: 'Learning budget' },
+      { item: 'Healthcare domain exposure' },
+    ],
+    active: true,
+  })
 
   const authorFound = await payload.find({ collection: 'authors', limit: 1, overrideAccess: true })
   let authorId = authorFound.docs[0]?.id
@@ -703,8 +666,8 @@ async function seed() {
       collection: 'authors',
       data: {
         name: 'Xelarvis Editorial',
-        role: 'Engineering',
-        bio: 'Insights from the Xelarvis delivery and architecture practice.',
+        role: 'AI & Healthcare Practice',
+        bio: 'Insights from the XELARVIS delivery and research practice.',
       },
       overrideAccess: true,
     })
@@ -713,7 +676,7 @@ async function seed() {
 
   const catFound = await payload.find({
     collection: 'categories',
-    where: { slug: { equals: 'engineering' } },
+    where: { slug: { equals: 'ai-healthcare' } },
     limit: 1,
     overrideAccess: true,
   })
@@ -721,38 +684,38 @@ async function seed() {
   if (!categoryId) {
     const category = await payload.create({
       collection: 'categories',
-      data: { title: 'Engineering', slug: 'engineering' },
+      data: { title: 'AI & Healthcare', slug: 'ai-healthcare' },
       overrideAccess: true,
     })
     categoryId = category.id
   }
 
-  const blogFound = await payload.find({
-    collection: 'blogs',
-    where: { slug: { equals: 'engineering-for-enterprise-outcomes' } },
-    limit: 1,
-    overrideAccess: true,
+  await upsertBySlug(payload, 'blogs', 'engineering-intelligent-healthcare-ai', {
+    title: 'Engineering Intelligent Healthcare AI',
+    excerpt:
+      'Practical patterns for combining clinical data science, CDISC standards, and production AI safely.',
+    content: richParagraph(
+      'Healthcare AI succeeds when clinical standards, data quality, and model governance stay aligned. XELARVIS builds solutions that are research-informed and deployment-ready.',
+    ),
+    insightType: 'blog',
+    author: authorId,
+    categories: [categoryId],
+    publishedAt: new Date().toISOString(),
+    featured: true,
   })
-  if (blogFound.totalDocs === 0) {
-    await payload.create({
-      collection: 'blogs',
-      data: {
-        title: 'Engineering for Enterprise Outcomes',
-        slug: 'engineering-for-enterprise-outcomes',
-        excerpt:
-          'How disciplined product engineering, cloud foundations, and measurable delivery create durable advantage.',
-        content: richParagraph(
-          'Enterprise software succeeds when architecture, delivery, and business outcomes stay aligned. At Xelarvis, we treat every engagement as a production system — not a slide deck.',
-        ),
-        author: authorId,
-        categories: [categoryId],
-        publishedAt: new Date().toISOString(),
-        _status: 'published',
-      },
-      overrideAccess: true,
-    })
-    log.success('Created sample blog post')
-  }
+
+  await upsertBySlug(payload, 'blogs', 'clinical-data-standards-primer', {
+    title: 'Clinical Data Standards Primer',
+    excerpt:
+      'A practical overview of SDTM, ADaM, and validated deliverables for clinical research teams.',
+    content: richParagraph(
+      'CDISC standards help life sciences organizations produce consistent, submission-ready clinical datasets. This primer outlines how XELARVIS approaches SDTM, ADaM, and QC.',
+    ),
+    insightType: 'white-paper',
+    author: authorId,
+    categories: [categoryId],
+    publishedAt: new Date().toISOString(),
+  })
 
   log.success('Seed complete.')
   process.exit(0)

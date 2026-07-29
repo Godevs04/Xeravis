@@ -77,7 +77,7 @@ export function HeroProductVisual() {
   const rotateY = useTransform(sx, [-30, 30], reduce ? [0, 0] : [-6, 6])
   const glowX = useTransform(sx, [-30, 30], [38, 62])
   const glowY = useTransform(sy, [-30, 30], [28, 52])
-  const glowBg = useMotionTemplate`radial-gradient(circle at ${glowX}% ${glowY}%, rgba(109,94,249,0.65), rgba(161,140,255,0.25) 42%, transparent 68%)`
+  const glowBg = useMotionTemplate`radial-gradient(circle at ${glowX}% ${glowY}%, rgba(13,148,136,0.65), rgba(6,182,212,0.25) 42%, transparent 68%)`
 
   return (
     <div
@@ -113,21 +113,21 @@ export function HeroProductVisual() {
         transition={{ duration: 0.85, ease: EASE, delay: 0.12 }}
         className="relative h-full w-full overflow-visible will-change-transform"
       >
-        <div className="absolute inset-x-3 inset-y-2 overflow-hidden rounded-[28px] border border-[#6d5ef9]/25 bg-white shadow-[0_28px_80px_rgba(79,70,180,0.28)] sm:inset-x-5 sm:inset-y-3 dark:border-white/15 dark:bg-[#12101f] dark:shadow-[0_28px_80px_rgba(0,0,0,0.55)]">
-          <div className="flex items-center gap-2 border-b border-[#6d5ef9]/12 bg-gradient-to-r from-[#f7f4ff] to-white px-4 py-3.5 dark:border-white/10 dark:from-[#1a1630] dark:to-[#12101f]">
+        <div className="absolute inset-x-3 inset-y-2 overflow-hidden rounded-[28px] border border-[#0D9488]/25 border-white/15 bg-[#0B1224] shadow-[0_28px_80px_rgba(0,0,0,0.55)] sm:inset-x-5 sm:inset-y-3">
+          <div className="flex items-center gap-2 border-b border-white/10 bg-[#0F172A] px-4 py-3.5">
             <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-            <span className="ml-3 text-[11px] font-semibold tracking-[0.12em] text-[#5c5c66] uppercase dark:text-[#a8a2c4]">
+            <span className="ml-3 text-[11px] font-semibold tracking-[0.12em] text-slate-400 uppercase">
               Xelarvis Control
             </span>
-            <span className="ml-auto rounded-full bg-[#6d5ef9]/12 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[#6d5ef9]">
+            <span className="ml-auto rounded-full bg-[#0D9488]/12 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[#0D9488]">
               LIVE
             </span>
           </div>
 
           <div className="grid h-[calc(100%-50px)] grid-cols-[72px_1fr] sm:grid-cols-[84px_1fr]">
-            <aside className="space-y-2 border-r border-[#6d5ef9]/10 bg-[#f7f4ff] p-3 dark:border-white/10 dark:bg-[#16122a]">
+            <aside className="space-y-2 border-r border-white/10 bg-[#0F172A] p-3">
               {['Ops', 'Build', 'Ship', 'Data', 'AI'].map((item, i) => (
                 <motion.div
                   key={item}
@@ -136,8 +136,8 @@ export function HeroProductVisual() {
                   transition={{ delay: 0.3 + i * 0.05, duration: 0.4, ease: EASE }}
                   className={`rounded-xl px-2 py-2 text-center text-[10px] font-bold tracking-wide ${
                     i === 0
-                      ? 'bg-[#6d5ef9] text-white shadow-[0_8px_20px_rgba(109,94,249,0.45)]'
-                      : 'bg-white text-[#5c5c66] dark:bg-white/5 dark:text-[#a8a2c4]'
+                      ? 'bg-[#0D9488] text-white shadow-[0_8px_20px_rgba(13,148,136,0.45)]'
+                      : 'bg-white/5 text-slate-400'
                   }`}
                 >
                   {item}
@@ -145,7 +145,7 @@ export function HeroProductVisual() {
               ))}
             </aside>
 
-            <div className="space-y-3 bg-gradient-to-br from-white via-[#fbf9ff] to-[#f0ebff] p-3 sm:p-4 dark:from-[#12101f] dark:via-[#16122a] dark:to-[#1a1630]">
+            <div className="space-y-3 bg-gradient-to-br from-[#0F172A] via-[#0B1224] to-[#020617] p-3 sm:p-4">
               <div className="grid grid-cols-3 gap-2 sm:gap-3">
                 {METRICS.map((metric, i) => (
                   <motion.div
@@ -153,17 +153,17 @@ export function HeroProductVisual() {
                     initial={reduce ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.38 + i * 0.08, duration: 0.5, ease: EASE }}
-                    className="rounded-2xl border border-[#6d5ef9]/15 bg-white p-3 shadow-[0_10px_28px_rgba(109,94,249,0.12)] dark:border-white/10 dark:bg-[#1c1830]"
+                    className="rounded-2xl border border-white/10 bg-white/5 p-3 shadow-[0_10px_28px_rgba(0,0,0,0.25)]"
                   >
                     <p className="text-[10px] font-semibold tracking-[0.12em] text-[#8b8b96] uppercase">
                       {metric.label}
                     </p>
-                    <p className="font-display mt-1.5 text-xl font-bold tracking-tight text-[#1f1f21] tabular-nums sm:text-2xl dark:text-white">
+                    <p className="font-display mt-1.5 text-xl font-bold tracking-tight text-white tabular-nums sm:text-2xl">
                       <CountUp value={metric.value} delay={0.5 + i * 0.08} suffix={metric.suffix} />
                     </p>
-                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#efeaff]">
+                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
                       <motion.div
-                        className="h-full rounded-full bg-gradient-to-r from-[#6d5ef9] to-[#a18cff]"
+                        className="h-full rounded-full bg-gradient-to-r from-[#0D9488] to-[#22D3EE]"
                         initial={{ width: 0 }}
                         animate={{ width: `${Math.min(100, metric.value)}%` }}
                         transition={{
@@ -181,7 +181,7 @@ export function HeroProductVisual() {
                 initial={reduce ? false : { opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55, duration: 0.5, ease: EASE }}
-                className="rounded-2xl border border-[#6d5ef9]/15 bg-white p-3 shadow-[0_12px_32px_rgba(109,94,249,0.14)] dark:border-white/10 dark:bg-[#1c1830]"
+                className="rounded-2xl border border-white/10 bg-white/5 p-3 shadow-[0_12px_32px_rgba(0,0,0,0.25)]"
               >
                 <div className="mb-3 flex items-center justify-between">
                   <p className="text-xs font-semibold text-[#1f1f21] dark:text-white">
@@ -195,7 +195,7 @@ export function HeroProductVisual() {
                   {BARS.map((v, i) => (
                     <motion.div
                       key={i}
-                      className="flex-1 origin-bottom rounded-t-md bg-gradient-to-t from-[#6d5ef9] to-[#c4b5fd]"
+                      className="flex-1 origin-bottom rounded-t-md bg-gradient-to-t from-[#0D9488] to-[#99F6E4]"
                       initial={{ scaleY: 0, opacity: 0.35 }}
                       animate={{ scaleY: 1, opacity: 1 }}
                       transition={{
@@ -225,7 +225,7 @@ export function HeroProductVisual() {
                 }
           }
         >
-          <div className="rounded-2xl border border-[#6d5ef9]/20 bg-white px-3.5 py-2.5 shadow-[0_16px_40px_rgba(109,94,249,0.22)] dark:border-white/10 dark:bg-[#1a1630]">
+          <div className="rounded-2xl border border-white/15 bg-[#0F172A] px-3.5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
             <p className="text-[10px] font-bold tracking-[0.14em] text-[#8b8b96] uppercase">
               Latency
             </p>
@@ -246,11 +246,11 @@ export function HeroProductVisual() {
                 }
           }
         >
-          <div className="rounded-2xl border border-[#6d5ef9]/20 bg-white px-3.5 py-2.5 shadow-[0_16px_40px_rgba(109,94,249,0.22)] dark:border-white/10 dark:bg-[#1a1630]">
+          <div className="rounded-2xl border border-white/15 bg-[#0F172A] px-3.5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
             <p className="text-[10px] font-bold tracking-[0.14em] text-[#8b8b96] uppercase">
               Active builds
             </p>
-            <p className="font-display text-sm font-bold text-[#6d5ef9]">24 pipelines</p>
+            <p className="font-display text-sm font-bold text-[#0D9488]">24 pipelines</p>
           </div>
         </motion.div>
 
@@ -267,7 +267,7 @@ export function HeroProductVisual() {
                 }
           }
         >
-          <div className="rounded-full bg-gradient-to-r from-[#6d5ef9] to-[#a18cff] px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_12px_32px_rgba(109,94,249,0.5)]">
+          <div className="rounded-full bg-gradient-to-r from-[#0D9488] to-[#22D3EE] px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_12px_32px_rgba(13,148,136,0.5)]">
             Deploy live
           </div>
         </motion.div>

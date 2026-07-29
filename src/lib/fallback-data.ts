@@ -1,6 +1,6 @@
 export const BRAND = {
   name: 'Xelarvis Technologies',
-  tagline: 'Engineering Digital Excellence.',
+  tagline: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
   domain: 'xelarvis.in',
 } as const
 
@@ -14,15 +14,15 @@ export const UNSPLASH = {
 
 export const DEFAULT_NAV = {
   primaryLinks: [
-    { label: 'Solutions', href: '/solutions', mega: 'solutions' },
     { label: 'Services', href: '/services', mega: 'services' },
+    { label: 'Solutions', href: '/solutions', mega: 'solutions' },
     { label: 'Industries', href: '/industries', mega: 'industries' },
-    { label: 'Insights', href: '/insights', mega: 'none' },
+    { label: 'Insights', href: '/insights', mega: 'insights' },
     { label: 'Careers', href: '/careers', mega: 'none' },
-    { label: 'About', href: '/about', mega: 'none' },
+    { label: 'Company', href: '/about', mega: 'company' },
   ],
-  ctaLabel: "Let's Talk",
-  ctaHref: '/contact?intent=project',
+  ctaLabel: 'Contact Us',
+  ctaHref: '/contact',
 }
 
 export const DEFAULT_FOOTER = {
@@ -67,93 +67,145 @@ export const DEFAULT_FOOTER = {
 export const FALLBACK_SERVICES = [
   {
     id: '1',
-    title: 'Cloud & Platform Engineering',
-    slug: 'cloud-platform-engineering',
+    title: 'Artificial Intelligence & AI Research',
+    slug: 'artificial-intelligence-ai-research',
     summary:
-      'Modernize infrastructure with secure, scalable cloud platforms built for enterprise workloads.',
-    icon: 'cloud',
+      'Develop intelligent systems using machine learning, generative AI, computer vision, NLP, and AI agents.',
+    icon: 'Sparkles',
   },
   {
     id: '2',
-    title: 'Custom Software Development',
-    slug: 'custom-software-development',
+    title: 'Data Science & Advanced Analytics',
+    slug: 'data-science-advanced-analytics',
     summary:
-      'Design and deliver mission-critical applications with clean architecture and long-term maintainability.',
-    icon: 'code',
+      'Transform data into actionable insights with predictive analytics, BI, statistical modeling, and visualization.',
+    icon: 'BarChart3',
   },
   {
     id: '3',
-    title: 'Data & AI Solutions',
-    slug: 'data-ai-solutions',
+    title: 'IT Consulting & Digital Transformation',
+    slug: 'it-consulting-digital-transformation',
     summary:
-      'Turn data into decisions with pipelines, analytics, and production-grade AI integrations.',
-    icon: 'brain',
+      'Modernize operations through technology consulting, software engineering, cloud adoption, and automation.',
+    icon: 'Briefcase',
   },
   {
     id: '4',
-    title: 'DevOps & SRE',
-    slug: 'devops-sre',
+    title: 'Clinical Data Science & Healthcare AI',
+    slug: 'clinical-data-science-healthcare-ai',
     summary:
-      'Accelerate delivery with CI/CD, observability, and reliability practices that scale with your teams.',
-    icon: 'workflow',
+      'Clinical SAS, CDISC standards, healthcare analytics, and AI-powered research solutions.',
+    icon: 'HeartPulse',
   },
   {
     id: '5',
-    title: 'Cybersecurity',
-    slug: 'cybersecurity',
+    title: 'Data Engineering & Cloud Solutions',
+    slug: 'data-engineering-cloud-solutions',
     summary:
-      'Protect applications and infrastructure with security-by-design across the software lifecycle.',
-    icon: 'shield',
-  },
-  {
-    id: '6',
-    title: 'Digital Transformation',
-    slug: 'digital-transformation',
-    summary:
-      'Align technology roadmaps with business outcomes through pragmatic modernization programs.',
-    icon: 'layers',
+      'Design scalable cloud platforms, data pipelines, AI infrastructure, and enterprise data architectures.',
+    icon: 'Cloud',
   },
 ]
 
 export const FALLBACK_INDUSTRIES = [
   {
     id: '1',
-    title: 'Financial Services',
-    slug: 'financial-services',
-    summary: 'Regulated platforms, payment systems, and data platforms for financial institutions.',
+    title: 'Healthcare & Life Sciences',
+    slug: 'healthcare-life-sciences',
+    summary: 'Clinical research, pharmaceutical, biotechnology, medical devices, and hospitals.',
   },
   {
     id: '2',
-    title: 'Healthcare',
-    slug: 'healthcare',
-    summary: 'Secure patient-facing and clinical systems with compliance-aware engineering.',
+    title: 'Pharmaceutical',
+    slug: 'pharmaceutical',
+    summary: 'Regulatory-ready analytics, clinical programming, and R&D intelligence.',
   },
   {
     id: '3',
-    title: 'Manufacturing',
-    slug: 'manufacturing',
-    summary: 'Connected operations, supply chain visibility, and industrial IoT at scale.',
+    title: 'Biotechnology',
+    slug: 'biotechnology',
+    summary: 'Data platforms and AI for discovery, trials, and translational research.',
   },
   {
     id: '4',
-    title: 'Retail & E-commerce',
-    slug: 'retail-ecommerce',
-    summary: 'High-performance storefronts, omnichannel experiences, and fulfillment integrations.',
+    title: 'Banking & Finance',
+    slug: 'banking-finance',
+    summary: 'Risk analytics, fraud detection, and intelligent automation.',
+  },
+  {
+    id: '5',
+    title: 'Manufacturing',
+    slug: 'manufacturing',
+    summary: 'Predictive maintenance, quality analytics, and connected operations.',
+  },
+  {
+    id: '6',
+    title: 'Retail',
+    slug: 'retail',
+    summary: 'Customer intelligence, forecasting, and recommendation systems.',
+  },
+  {
+    id: '7',
+    title: 'Logistics',
+    slug: 'logistics',
+    summary: 'Supply chain analytics and optimization.',
+  },
+  {
+    id: '8',
+    title: 'Education',
+    slug: 'education',
+    summary: 'Learning platforms, analytics, and digital transformation for institutions.',
   },
 ]
 
 export const FALLBACK_SOLUTIONS = [
   {
     id: '1',
-    title: 'Cloud Modernization',
-    slug: 'cloud-modernization',
-    summary: 'Migrate and refactor legacy systems onto cloud-native foundations.',
+    title: 'Healthcare Solutions',
+    slug: 'healthcare-solutions',
+    summary: 'Clinical and healthcare platforms that improve research and care outcomes.',
   },
   {
     id: '2',
-    title: 'Enterprise AI Ops',
-    slug: 'enterprise-ai-ops',
-    summary: 'Operationalize AI with governance, monitoring, and secure model deployment.',
+    title: 'Enterprise AI Solutions',
+    slug: 'enterprise-ai-solutions',
+    summary: 'Production AI systems aligned to business workflows and governance.',
+  },
+  {
+    id: '3',
+    title: 'Business Intelligence',
+    slug: 'business-intelligence',
+    summary: 'Executive dashboards and reporting that turn data into decisions.',
+  },
+  {
+    id: '4',
+    title: 'Predictive Analytics',
+    slug: 'predictive-analytics',
+    summary: 'Forecasting and risk models that anticipate outcomes.',
+  },
+  {
+    id: '5',
+    title: 'Intelligent Automation',
+    slug: 'intelligent-automation',
+    summary: 'Automate processes with AI-assisted workflows and integrations.',
+  },
+  {
+    id: '6',
+    title: 'AI Agents',
+    slug: 'ai-agents',
+    summary: 'Autonomous and assisted agents for research, support, and operations.',
+  },
+  {
+    id: '7',
+    title: 'Clinical Research Solutions',
+    slug: 'clinical-research-solutions',
+    summary: 'CDISC-aligned programming, TLFs, and research analytics.',
+  },
+  {
+    id: '8',
+    title: 'Custom Software Solutions',
+    slug: 'custom-software-solutions',
+    summary: 'Enterprise applications engineered for security, scale, and longevity.',
   },
 ]
 
@@ -182,75 +234,47 @@ export const FALLBACK_BLOG_POSTS = [
 export const FALLBACK_ABOUT_BLOCKS = [
   {
     blockType: 'hero',
-    eyebrow: 'About',
-    heading: 'Built for enterprises that demand precision.',
+    eyebrow: 'About Us',
+    heading: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
     subheading:
-      'Xelarvis Technologies partners with organizations to engineer platforms, products, and data systems with long-term maintainability.',
+      'XELARVIS PRIVATE LIMITED specializes in Healthcare AI, Clinical Data Science, Machine Learning, Advanced Analytics, and Enterprise Software Solutions.',
     ctaLabel: 'Talk to us',
     ctaHref: '/contact',
-    secondaryCtaLabel: 'Explore services',
-    secondaryCtaHref: '/services',
+    secondaryCtaLabel: 'Company overview',
+    secondaryCtaHref: '/about/company-overview',
   },
   {
     blockType: 'aboutPreview',
-    heading: 'A technology partner built for durable outcomes.',
-    body: 'We help startups, enterprises, and institutions modernize products and platforms — with senior ownership, transparent process, and engineering that lasts.',
-    cta: { label: 'Start a project', href: '/contact?intent=project', style: 'secondary' },
+    heading: 'About the Company',
+    body: 'We help organizations transform complex data into intelligent solutions through innovative technologies, research-driven methodologies, and scalable digital platforms.',
+    cta: { label: 'Why XELARVIS', href: '/about/why-xelarvis', style: 'secondary' },
   },
   {
     blockType: 'missionVision',
-    heading: 'Mission & vision',
+    heading: 'Vision & Mission',
     missionTitle: 'Mission',
     missionBody:
-      'Deliver production-grade software and platforms that create measurable business outcomes for our clients.',
+      'Bridge healthcare, artificial intelligence, and enterprise technology by delivering reliable, secure, and future-ready solutions.',
     visionTitle: 'Vision',
     visionBody:
-      'Become the most trusted engineering partner for enterprises modernizing digital products and operations.',
+      'Be a trusted global partner for intelligent healthcare, AI research, and digital transformation.',
   },
   {
     blockType: 'valuesGrid',
-    heading: 'Values',
-    subheading: 'How we work when stakes are high.',
+    heading: 'Why XELARVIS',
+    subheading: 'What makes our partnership different.',
     values: [
       {
-        title: 'Clarity',
-        description: 'We prefer precise scope, explicit trade-offs, and honest timelines.',
+        title: 'Healthcare + AI depth',
+        description: 'Clinical data science and healthcare AI alongside enterprise engineering.',
       },
       {
-        title: 'Ownership',
-        description: 'Senior practitioners stay accountable from discovery through production.',
+        title: 'Research-driven',
+        description: 'Methods grounded in evaluation, standards, and continuous learning.',
       },
       {
-        title: 'Craft',
-        description: 'We optimize for maintainability, security, and operational excellence.',
-      },
-    ],
-  },
-  {
-    blockType: 'timeline',
-    heading: 'Company timeline',
-    subheading: 'Milestones in building Xelarvis.',
-    items: [
-      {
-        date: '2014',
-        title: 'Company established',
-        description:
-          'Xelarvis Technologies formed to deliver enterprise engineering with craft and clarity.',
-      },
-      {
-        date: '2018',
-        title: 'Enterprise scale',
-        description: 'Expanded delivery across regulated industries and complex platform programs.',
-      },
-      {
-        date: '2022',
-        title: 'AI platforms',
-        description: 'Grew applied AI and data practices for production-grade assistants and ops.',
-      },
-      {
-        date: '2026',
-        title: 'Global delivery',
-        description: 'Senior-led teams shipping durable products across markets and time zones.',
+        title: 'Senior ownership',
+        description: 'Practitioners accountable from discovery through production.',
       },
     ],
   },
@@ -270,20 +294,26 @@ export const FALLBACK_ABOUT_BLOCKS = [
 export const FALLBACK_JOBS = [
   {
     id: '1',
-    title: 'Senior Full-Stack Engineer',
-    slug: 'senior-full-stack-engineer',
-    department: 'Engineering',
-    location: 'Remote / India',
+    title: 'AI Engineer',
+    slug: 'ai-engineer',
+    department: 'Artificial Intelligence',
+    location: 'Hyderabad / Remote',
     type: 'full-time',
+    workMode: 'hybrid',
+    experienceRequired: '2–5 Years',
+    openings: 2,
     active: true,
   },
   {
     id: '2',
-    title: 'Cloud Solutions Architect',
-    slug: 'cloud-solutions-architect',
-    department: 'Consulting',
-    location: 'Hybrid',
+    title: 'Clinical SAS Programmer',
+    slug: 'clinical-sas-programmer',
+    department: 'Clinical Data Science',
+    location: 'Hyderabad / Hybrid',
     type: 'full-time',
+    workMode: 'hybrid',
+    experienceRequired: '3–6 Years',
+    openings: 1,
     active: true,
   },
 ]

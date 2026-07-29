@@ -38,7 +38,7 @@ export async function SiteFooter() {
     <footer className="relative overflow-hidden border-t border-[color:var(--glass-border-soft)]">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(109,94,249,0.14),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(13,148,136,0.12),transparent_55%)]"
       />
       <div
         aria-hidden
