@@ -12,6 +12,7 @@ import {
 export const Careers: CollectionConfig = {
   slug: 'careers',
   admin: {
+    group: 'Talent',
     useAsTitle: 'title',
     defaultColumns: [
       'title',

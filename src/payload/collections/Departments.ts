@@ -8,7 +8,7 @@ export const Departments: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    group: 'Taxonomy',
+    group: 'Talent',
   },
   access: {
     read: anyone,

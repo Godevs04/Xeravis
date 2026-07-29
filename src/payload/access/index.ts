@@ -38,7 +38,14 @@ export const canManageContent: Access = ({ req: { user } }) =>
   ])
 
 export const canPublish: Access = ({ req: { user } }) =>
-  hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'editor', 'marketing'])
+  hasRole(user as UserWithRoles, [
+    'super-admin',
+    'administrator',
+    'editor',
+    'marketing',
+    'content-manager',
+    'recruiter',
+  ])
 
 export const canManageCareers: Access = ({ req: { user } }) =>
   hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'recruiter', 'editor'])

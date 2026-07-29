@@ -5,6 +5,7 @@ import { isAdminOrEditor } from '@/payload/access'
 export const FormSubmissions: CollectionConfig = {
   slug: 'form-submissions',
   admin: {
+    group: 'Inbox',
     useAsTitle: 'type',
     defaultColumns: ['type', 'status', 'createdAt'],
   },

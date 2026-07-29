@@ -41,6 +41,14 @@ import { BeforeLogin as BeforeLogin_6834cc0e5183808a75cbc16f726667d5 } from '../
 import { BeforeNav as BeforeNav_7975ec3298ed9bf6caeea012226eafcd } from '../../../payload/admin/components/nav/BeforeNav'
 import { BeforeNavLinks as BeforeNavLinks_d786bec6faff403bab540306dcdcbb25 } from '../../../payload/admin/components/nav/BeforeNavLinks'
 import { AdminProvider as AdminProvider_478188ea52ac70b0256f91b347543d43 } from '../../../payload/admin/components/AdminProvider'
+import { RecruitmentView as RecruitmentView_28a47a8ea1810fe276fc1a2e4657f0d4 } from '../../../payload/admin/workspace/RecruitmentView'
+import { CrmView as CrmView_237a248b74abb0df5640beff16c4f5e2 } from '../../../payload/admin/workspace/CrmView'
+import { AnalyticsView as AnalyticsView_ff6406eee69b8bbcf9d7313a1f4265c7 } from '../../../payload/admin/workspace/AnalyticsView'
+import { NewsletterView as NewsletterView_e3ba11201d9b9a749692beca988126cd } from '../../../payload/admin/workspace/NewsletterView'
+import { SeoView as SeoView_69d519869bcef4973e82d4333b080065 } from '../../../payload/admin/workspace/SeoView'
+import { AiAssistantView as AiAssistantView_53a2ed4579a62bd5c3dc8673271d72b2 } from '../../../payload/admin/workspace/AiAssistantView'
+import { MediaStudioView as MediaStudioView_b9350c1f78035068b5d93eb6d1a91f39 } from '../../../payload/admin/workspace/MediaStudioView'
+import { ActivityView as ActivityView_e68cb81ffeaf09e4017be886a57432b7 } from '../../../payload/admin/workspace/ActivityView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -125,5 +133,19 @@ export const importMap = {
     BeforeNavLinks_d786bec6faff403bab540306dcdcbb25,
   './payload/admin/components/AdminProvider#AdminProvider':
     AdminProvider_478188ea52ac70b0256f91b347543d43,
+  './payload/admin/workspace/RecruitmentView#RecruitmentView':
+    RecruitmentView_28a47a8ea1810fe276fc1a2e4657f0d4,
+  './payload/admin/workspace/CrmView#CrmView': CrmView_237a248b74abb0df5640beff16c4f5e2,
+  './payload/admin/workspace/AnalyticsView#AnalyticsView':
+    AnalyticsView_ff6406eee69b8bbcf9d7313a1f4265c7,
+  './payload/admin/workspace/NewsletterView#NewsletterView':
+    NewsletterView_e3ba11201d9b9a749692beca988126cd,
+  './payload/admin/workspace/SeoView#SeoView': SeoView_69d519869bcef4973e82d4333b080065,
+  './payload/admin/workspace/AiAssistantView#AiAssistantView':
+    AiAssistantView_53a2ed4579a62bd5c3dc8673271d72b2,
+  './payload/admin/workspace/MediaStudioView#MediaStudioView':
+    MediaStudioView_b9350c1f78035068b5d93eb6d1a91f39,
+  './payload/admin/workspace/ActivityView#ActivityView':
+    ActivityView_e68cb81ffeaf09e4017be886a57432b7,
   '@payloadcms/next/rsc#CollectionCards': CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
 }

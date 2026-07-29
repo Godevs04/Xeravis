@@ -13,15 +13,73 @@ type CmdItem = {
 }
 
 const ITEMS: CmdItem[] = [
+  {
+    id: 'recruitment',
+    label: 'Recruitment workspace',
+    href: '/admin/workspace/recruitment',
+    group: 'action',
+  },
+  { id: 'crm', label: 'CRM Inbox', href: '/admin/workspace/crm', group: 'action' },
+  {
+    id: 'analytics-ws',
+    label: 'Analytics workspace',
+    href: '/admin/workspace/analytics',
+    group: 'action',
+  },
+  {
+    id: 'newsletter-ws',
+    label: 'Newsletter workspace',
+    href: '/admin/workspace/newsletter',
+    group: 'action',
+  },
+  { id: 'seo-ws', label: 'SEO Center', href: '/admin/workspace/seo', group: 'action' },
+  { id: 'ai-ws', label: 'AI Content Assistant', href: '/admin/workspace/ai', group: 'action' },
+  { id: 'media-ws', label: 'Media Studio', href: '/admin/workspace/media', group: 'action' },
+  {
+    id: 'activity-ws',
+    label: 'Activity timeline',
+    href: '/admin/workspace/activity',
+    group: 'action',
+  },
   { id: 'pages', label: 'Pages', href: '/admin/collections/pages', group: 'collection' },
-  { id: 'blogs', label: 'Blogs', href: '/admin/collections/blogs', group: 'collection' },
+  { id: 'blogs', label: 'Insights / Blogs', href: '/admin/collections/blogs', group: 'collection' },
   { id: 'services', label: 'Services', href: '/admin/collections/services', group: 'collection' },
+  {
+    id: 'solutions',
+    label: 'Solutions',
+    href: '/admin/collections/solutions',
+    group: 'collection',
+  },
+  {
+    id: 'industries',
+    label: 'Industries',
+    href: '/admin/collections/industries',
+    group: 'collection',
+  },
+  {
+    id: 'technologies',
+    label: 'Technologies',
+    href: '/admin/collections/technologies',
+    group: 'collection',
+  },
   { id: 'careers', label: 'Careers', href: '/admin/collections/careers', group: 'collection' },
+  {
+    id: 'applications',
+    label: 'Job Applications',
+    href: '/admin/collections/job-applications',
+    group: 'collection',
+  },
   { id: 'media', label: 'Media', href: '/admin/collections/media', group: 'collection' },
   {
     id: 'messages',
     label: 'Contact Messages',
     href: '/admin/collections/contact-messages',
+    group: 'collection',
+  },
+  {
+    id: 'newsletter',
+    label: 'Newsletter Subscribers',
+    href: '/admin/collections/newsletter-subscribers',
     group: 'collection',
   },
   { id: 'users', label: 'Users', href: '/admin/collections/users', group: 'collection' },
@@ -34,9 +92,21 @@ const ITEMS: CmdItem[] = [
   { id: 'navigation', label: 'Navigation', href: '/admin/globals/navigation', group: 'global' },
   { id: 'seo', label: 'SEO Defaults', href: '/admin/globals/seo-defaults', group: 'global' },
   {
+    id: 'analytics',
+    label: 'Analytics settings',
+    href: '/admin/globals/analytics',
+    group: 'global',
+  },
+  {
     id: 'create-blog',
     label: 'Create blog post',
     href: '/admin/collections/blogs/create',
+    group: 'action',
+  },
+  {
+    id: 'create-job',
+    label: 'Create job',
+    href: '/admin/collections/careers/create',
     group: 'action',
   },
   {

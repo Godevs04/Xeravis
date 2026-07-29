@@ -15,7 +15,7 @@ export const JobApplications: CollectionConfig = {
       'totalExperience',
       'createdAt',
     ],
-    group: 'Inbox',
+    group: 'Talent',
     listSearchableFields: ['name', 'email', 'applicationId', 'firstName', 'lastName'],
   },
   access: {

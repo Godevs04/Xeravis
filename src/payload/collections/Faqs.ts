@@ -6,6 +6,7 @@ import { orderField } from '@/payload/fields'
 export const Faqs: CollectionConfig = {
   slug: 'faqs',
   admin: {
+    group: 'Brand',
     useAsTitle: 'question',
     defaultColumns: ['question', 'group', 'updatedAt'],
   },

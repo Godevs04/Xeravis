@@ -4,17 +4,17 @@ import Link from 'next/link'
 import React from 'react'
 
 const FAVORITES = [
+  { label: 'Recruitment', href: '/admin/workspace/recruitment' },
+  { label: 'CRM Inbox', href: '/admin/workspace/crm' },
   { label: 'Pages', href: '/admin/collections/pages' },
-  { label: 'Blogs', href: '/admin/collections/blogs' },
-  { label: 'Services', href: '/admin/collections/services' },
-  { label: 'Media', href: '/admin/collections/media' },
+  { label: 'Insights', href: '/admin/collections/blogs' },
 ]
 
 const RECENT = [
+  { label: 'SEO Center', href: '/admin/workspace/seo' },
+  { label: 'AI Assistant', href: '/admin/workspace/ai' },
+  { label: 'Applications', href: '/admin/collections/job-applications' },
   { label: 'Site Settings', href: '/admin/globals/site-settings' },
-  { label: 'Navigation', href: '/admin/globals/navigation' },
-  { label: 'Contact Messages', href: '/admin/collections/contact-messages' },
-  { label: 'Careers', href: '/admin/collections/careers' },
 ]
 
 export const FavoritesAndRecent = () => {

@@ -107,8 +107,8 @@ export const BeforeDashboard = async (props: BeforeDashboardProps) => {
   const [
     blogsCount,
     servicesCount,
-    careersCount,
     messagesCount,
+    applicationsCount,
     blogs,
     services,
     careers,
@@ -116,8 +116,8 @@ export const BeforeDashboard = async (props: BeforeDashboardProps) => {
   ] = await Promise.all([
     countSafe(payload, 'blogs'),
     countSafe(payload, 'services'),
-    countSafe(payload, 'careers'),
     countSafe(payload, 'contact-messages'),
+    countSafe(payload, 'job-applications'),
     recentDocs(payload, 'blogs', 'title'),
     recentDocs(payload, 'services', 'title'),
     recentDocs(payload, 'careers', 'title'),
@@ -126,7 +126,7 @@ export const BeforeDashboard = async (props: BeforeDashboardProps) => {
 
   const stats: DashStat[] = [
     {
-      label: 'Blog posts',
+      label: 'Insights',
       value: blogsCount,
       meta: 'Content library',
       href: '/admin/collections/blogs',
@@ -138,16 +138,16 @@ export const BeforeDashboard = async (props: BeforeDashboardProps) => {
       href: '/admin/collections/services',
     },
     {
-      label: 'Open careers',
-      value: careersCount,
+      label: 'Applications',
+      value: applicationsCount,
       meta: 'Hiring pipeline',
-      href: '/admin/collections/careers',
+      href: '/admin/workspace/recruitment',
     },
     {
-      label: 'Messages',
+      label: 'Inquiries',
       value: messagesCount,
-      meta: 'Inbound demand',
-      href: '/admin/collections/contact-messages',
+      meta: 'CRM inbox',
+      href: '/admin/workspace/crm',
     },
   ]
 

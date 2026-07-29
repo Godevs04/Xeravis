@@ -5,6 +5,7 @@ import { anyone, canManageContent, isAdminOrEditor } from '@/payload/access'
 export const Authors: CollectionConfig = {
   slug: 'authors',
   admin: {
+    group: 'Taxonomy',
     useAsTitle: 'name',
     defaultColumns: ['name', 'role', 'updatedAt'],
   },

@@ -5,6 +5,7 @@ import { anyone, canManageContent, isAdminOrEditor } from '@/payload/access'
 export const Clients: CollectionConfig = {
   slug: 'clients',
   admin: {
+    group: 'Brand',
     useAsTitle: 'name',
     defaultColumns: ['name', 'featured', 'updatedAt'],
   },

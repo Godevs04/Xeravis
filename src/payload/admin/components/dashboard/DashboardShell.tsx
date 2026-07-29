@@ -127,11 +127,11 @@ export const DashboardShell = ({ userName, stats, blogs, services, careers, mess
           <div className="xe-dash__eyebrow">Xelarvis · Operations</div>
           <h1 className="xe-dash__title">{greeting}</h1>
           <p className="xe-dash__subtitle">
-            Monitor content, careers, and inbound demand from one enterprise workspace.
+            Monitor content, careers, CRM, and recruitment from one Payload workspace.
           </p>
         </div>
-        <Link className="xe-dash__cta" href="/admin/collections/blogs/create">
-          New blog post
+        <Link className="xe-dash__cta" href="/admin/workspace/recruitment">
+          Open workspace
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
               d="M5 12h14M13 6l6 6-6 6"
@@ -158,18 +158,22 @@ export const DashboardShell = ({ userName, stats, blogs, services, careers, mess
 
       <div className="xe-shortcuts">
         {[
-          { label: 'Pages', hint: 'Manage site structure', href: '/admin/collections/pages' },
-          { label: 'Media library', hint: 'Assets & folders', href: '/admin/collections/media' },
           {
-            label: 'Messages',
-            hint: 'Inbound contact queue',
-            href: '/admin/collections/contact-messages',
+            label: 'Recruitment',
+            hint: 'Jobs & hiring pipeline',
+            href: '/admin/workspace/recruitment',
           },
+          { label: 'CRM Inbox', hint: 'Contact inquiries', href: '/admin/workspace/crm' },
+          { label: 'SEO Center', hint: 'Defaults & coverage', href: '/admin/workspace/seo' },
+          { label: 'AI Assistant', hint: 'Draft marketing copy', href: '/admin/workspace/ai' },
+          { label: 'Media Studio', hint: 'Asset library', href: '/admin/workspace/media' },
+          { label: 'Analytics', hint: 'CMS metrics', href: '/admin/workspace/analytics' },
           {
-            label: 'Site settings',
-            hint: 'Brand & SEO defaults',
-            href: '/admin/globals/site-settings',
+            label: 'Newsletter',
+            hint: 'Subscriber health',
+            href: '/admin/workspace/newsletter',
           },
+          { label: 'Activity', hint: 'Recent changes', href: '/admin/workspace/activity' },
         ].map((item) => (
           <Link key={item.href} href={item.href} className="xe-shortcut">
             <span className="xe-shortcut__label">{item.label}</span>

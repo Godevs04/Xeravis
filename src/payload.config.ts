@@ -54,6 +54,48 @@ export default buildConfig({
         './payload/admin/components/CommandAction#CommandAction',
         './payload/admin/components/LogoutAction#LogoutAction',
       ],
+      views: {
+        recruitment: {
+          Component: './payload/admin/workspace/RecruitmentView#RecruitmentView',
+          path: '/workspace/recruitment',
+          meta: { title: 'Recruitment' },
+        },
+        crm: {
+          Component: './payload/admin/workspace/CrmView#CrmView',
+          path: '/workspace/crm',
+          meta: { title: 'CRM Inbox' },
+        },
+        analyticsWorkspace: {
+          Component: './payload/admin/workspace/AnalyticsView#AnalyticsView',
+          path: '/workspace/analytics',
+          meta: { title: 'Analytics' },
+        },
+        newsletterWorkspace: {
+          Component: './payload/admin/workspace/NewsletterView#NewsletterView',
+          path: '/workspace/newsletter',
+          meta: { title: 'Newsletter' },
+        },
+        seoCenter: {
+          Component: './payload/admin/workspace/SeoView#SeoView',
+          path: '/workspace/seo',
+          meta: { title: 'SEO Center' },
+        },
+        aiAssistant: {
+          Component: './payload/admin/workspace/AiAssistantView#AiAssistantView',
+          path: '/workspace/ai',
+          meta: { title: 'AI Assistant' },
+        },
+        mediaStudio: {
+          Component: './payload/admin/workspace/MediaStudioView#MediaStudioView',
+          path: '/workspace/media',
+          meta: { title: 'Media Studio' },
+        },
+        activityTimeline: {
+          Component: './payload/admin/workspace/ActivityView#ActivityView',
+          path: '/workspace/activity',
+          meta: { title: 'Activity' },
+        },
+      },
     },
     livePreview: {
       breakpoints: [
