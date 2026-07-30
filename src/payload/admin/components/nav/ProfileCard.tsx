@@ -1,6 +1,7 @@
 'use client'
 
 import { useAuth } from '@payloadcms/ui'
+import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
@@ -8,10 +9,12 @@ import { useWorkspaceOptional } from '@/payload/admin/workspace/WorkspaceContext
 
 function toggleTheme() {
   const root = document.documentElement
-  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+  const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'
+  root.setAttribute('data-xe-ui', 'v5')
   root.setAttribute('data-theme', next)
   root.style.colorScheme = next
   window.localStorage.setItem('payload-theme', next)
+  window.localStorage.setItem('xe-theme-preference', next)
 }
 
 function roleLabel(roles: unknown): string {
@@ -19,7 +22,6 @@ function roleLabel(roles: unknown): string {
   return String(roles[0]).replace(/-/g, ' ')
 }
 
-/** Compact profile — real user from Payload auth */
 export const ProfileCard = () => {
   const ctx = useWorkspaceOptional()
   const { user } = useAuth()
@@ -34,6 +36,7 @@ export const ProfileCard = () => {
   const role = roleLabel(roles)
   const name = email.includes('@') ? email.split('@')[0] : email
   const initials = name.slice(0, 2).toUpperCase()
+  const workspace = ctx?.workspace.label || 'Website'
 
   return (
     <div className={`xe-profile${open ? 'is-open' : ''}`}>
@@ -45,12 +48,12 @@ export const ProfileCard = () => {
       >
         <span className="xe-profile__avatar" aria-hidden>
           {initials}
-          <span className="xe-profile__presence" />
+          <span className="xe-profile__presence" title="Online" />
         </span>
         <span className="xe-profile__meta">
           <span className="xe-profile__name">{name}</span>
           <span className="xe-profile__role">
-            {role} · {ctx?.workspace.label || 'Website'}
+            {role} · {workspace}
           </span>
         </span>
         <span className="xe-profile__chevron" aria-hidden>
@@ -58,30 +61,52 @@ export const ProfileCard = () => {
         </span>
       </button>
 
-      {open ? (
-        <div className="xe-profile__menu" role="menu">
-          <div className="xe-profile__email">{email}</div>
-          <Link href="/admin/account" role="menuitem" onClick={() => setOpen(false)}>
-            Account settings
-          </Link>
-          <button
-            type="button"
-            role="menuitem"
-            onClick={() => window.dispatchEvent(new CustomEvent('xe-open-command'))}
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            className="xe-profile__menu"
+            role="menu"
+            initial={{ opacity: 0, y: 6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            Command palette ⌘K
-          </button>
-          <button type="button" role="menuitem" onClick={() => toggleTheme()}>
-            Toggle theme
-          </button>
-          <a href="/" target="_blank" rel="noreferrer" role="menuitem">
-            View website
-          </a>
-          <Link href="/admin/logout" role="menuitem" className="is-danger">
-            Log out
-          </Link>
-        </div>
-      ) : null}
+            <div className="xe-profile__email">{email}</div>
+            <div className="xe-profile__meta-row">
+              <span>Workspace</span>
+              <strong>{workspace}</strong>
+            </div>
+            <div className="xe-profile__meta-row">
+              <span>Role</span>
+              <strong style={{ textTransform: 'capitalize' }}>{role}</strong>
+            </div>
+            <div className="xe-profile__meta-row">
+              <span>Status</span>
+              <strong className="is-online">Online</strong>
+            </div>
+            <hr className="xe-profile__rule" />
+            <Link href="/admin/account" role="menuitem" onClick={() => setOpen(false)}>
+              Account settings
+            </Link>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => window.dispatchEvent(new CustomEvent('xe-open-command'))}
+            >
+              Keyboard shortcuts ⌘K
+            </button>
+            <button type="button" role="menuitem" onClick={() => toggleTheme()}>
+              Toggle theme
+            </button>
+            <a href="/" target="_blank" rel="noreferrer" role="menuitem">
+              View website
+            </a>
+            <Link href="/admin/logout" role="menuitem" className="is-danger">
+              Log out
+            </Link>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }

@@ -1,0 +1,293 @@
+/* ============================================================
+   XELARVIS ENTERPRISE ADMIN — Forms V5
+   Section cards · 48px inputs · 20px field rhythm
+   ============================================================ */
+
+/* Flat field wrappers — section cards provide structure */
+html[data-xe-ui='v5'] .field-type,
+html[data-xe-ui='v5'] .render-fields > .field-type,
+html[data-xe-ui='v5'] .auth-fields,
+html[data-xe-ui='v5'] .collection-edit__auth,
+html[data-xe-ui='v5'] .login-fields {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .render-fields,
+html[data-xe-ui='v5'] .document-fields,
+html[data-xe-ui='v5'] .form-fields {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+}
+
+/* Auth + main fields as elegant section card */
+html[data-xe-ui='v5'] .auth-fields,
+html[data-xe-ui='v5'] .collection-edit__auth,
+html[data-xe-ui='v5'] .account .render-fields,
+html[data-xe-ui='v5'] .document-fields__edit > .render-fields,
+html[data-xe-ui='v5'] .payload-settings {
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-radius-lg) !important;
+  box-shadow: var(--xe-shadow) !important;
+  padding: var(--xe-card-pad) !important;
+  margin-bottom: var(--xe-section-gap) !important;
+}
+
+html[data-xe-ui='v5'] .render-fields > .field-type,
+html[data-xe-ui='v5'] .auth-fields .field-type {
+  padding: var(--xe-field-gap) 0 !important;
+}
+
+html[data-xe-ui='v5'] .render-fields > .field-type + .field-type,
+html[data-xe-ui='v5'] .auth-fields .field-type + .field-type {
+  border-top: 1px solid var(--xe-border) !important;
+}
+
+/* Labels above fields */
+html[data-xe-ui='v5'] .field-label,
+html[data-xe-ui='v5'] .field-type__label,
+html[data-xe-ui='v5'] label {
+  display: block !important;
+  color: var(--xe-muted) !important;
+  font-size: var(--xe-fs-label) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  margin-bottom: var(--xe-space-2) !important;
+  text-transform: none !important;
+}
+
+html[data-xe-ui='v5'] .field-description,
+html[data-xe-ui='v5'] .field-type__description {
+  color: var(--xe-field-desc) !important;
+  font-size: var(--xe-fs-caption) !important;
+  line-height: 1.45 !important;
+  margin: 0 0 var(--xe-space-3) !important;
+}
+
+/* Description after label but before input when Payload puts it after —
+   keep muted and readable */
+html[data-xe-ui='v5'] .field-type .field-description {
+  margin-top: var(--xe-space-2) !important;
+  margin-bottom: 0 !important;
+}
+
+/* Inputs — 48px · 16px radius · focus motion */
+html[data-xe-ui='v5'] input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
+html[data-xe-ui='v5'] textarea,
+html[data-xe-ui='v5'] select,
+html[data-xe-ui='v5'] .input input,
+html[data-xe-ui='v5'] .textarea textarea,
+html[data-xe-ui='v5'] .field-type__wrap input,
+html[data-xe-ui='v5'] .field-type__wrap textarea {
+  min-height: var(--xe-input-h) !important;
+  height: auto !important;
+  padding: 12px 16px !important;
+  border-radius: var(--xe-radius) !important;
+  border: 1px solid var(--xe-border-strong) !important;
+  background: var(--xe-input-bg) !important;
+  color: var(--xe-text) !important;
+  font-size: var(--xe-fs-body) !important;
+  font-family: var(--xe-font) !important;
+  box-shadow: none !important;
+  caret-color: var(--xe-accent);
+  transition:
+    border-color var(--xe-dur) var(--xe-ease),
+    box-shadow var(--xe-dur) var(--xe-ease),
+    transform var(--xe-dur-fast) var(--xe-ease) !important;
+}
+
+html[data-xe-ui='v5'] textarea,
+html[data-xe-ui='v5'] .textarea textarea {
+  min-height: 128px !important;
+  resize: vertical;
+}
+
+html[data-xe-ui='v5'] input::placeholder,
+html[data-xe-ui='v5'] textarea::placeholder {
+  color: var(--xe-faint) !important;
+}
+
+html[data-xe-ui='v5'] input:focus,
+html[data-xe-ui='v5'] textarea:focus,
+html[data-xe-ui='v5'] select:focus,
+html[data-xe-ui='v5'] .input input:focus,
+html[data-xe-ui='v5'] .textarea textarea:focus {
+  outline: none !important;
+  border-color: color-mix(in srgb, var(--xe-accent) 70%, transparent) !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--xe-accent) 16%, transparent) !important;
+  transform: translateY(-1px);
+}
+
+/* React Select */
+html[data-xe-ui='v5'] .react-select__control,
+html[data-xe-ui='v5'] .rs__control {
+  min-height: var(--xe-input-h) !important;
+  border-radius: var(--xe-radius) !important;
+  border: 1px solid var(--xe-border-strong) !important;
+  background: var(--xe-input-bg) !important;
+  box-shadow: none !important;
+  color: var(--xe-text) !important;
+  transition:
+    border-color var(--xe-dur) var(--xe-ease),
+    box-shadow var(--xe-dur) var(--xe-ease) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__control--is-focused,
+html[data-xe-ui='v5'] .rs__control--is-focused {
+  border-color: color-mix(in srgb, var(--xe-accent) 70%, transparent) !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--xe-accent) 16%, transparent) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__menu,
+html[data-xe-ui='v5'] .rs__menu {
+  background: var(--xe-menu-bg) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-radius) !important;
+  box-shadow: var(--xe-shadow-lg) !important;
+  overflow: hidden;
+  z-index: 80 !important;
+}
+
+html[data-xe-ui='v5'] .react-select__option,
+html[data-xe-ui='v5'] .rs__option {
+  background: transparent !important;
+  color: var(--xe-option-text) !important;
+  font-size: var(--xe-fs-caption) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__option--is-focused,
+html[data-xe-ui='v5'] .rs__option--is-focused {
+  background: var(--xe-hover) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__option--is-selected,
+html[data-xe-ui='v5'] .rs__option--is-selected {
+  background: var(--xe-secondary-soft) !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__single-value,
+html[data-xe-ui='v5'] .rs__single-value,
+html[data-xe-ui='v5'] .react-select__input-container,
+html[data-xe-ui='v5'] .rs__input-container,
+html[data-xe-ui='v5'] .react-select__input input,
+html[data-xe-ui='v5'] .rs__input input,
+html[data-xe-ui='v5'] .react-select__value-container,
+html[data-xe-ui='v5'] .rs__value-container {
+  color: var(--xe-text) !important;
+  background: transparent !important;
+}
+
+html[data-xe-ui='v5'] .react-select__placeholder,
+html[data-xe-ui='v5'] .rs__placeholder {
+  color: var(--xe-faint) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__multi-value,
+html[data-xe-ui='v5'] .rs__multi-value,
+html[data-xe-ui='v5'] .multi-value {
+  background: var(--xe-pill-bg) !important;
+  border: 1px solid var(--xe-pill-border) !important;
+  border-radius: var(--xe-radius-pill) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__multi-value__label,
+html[data-xe-ui='v5'] .multi-value-label,
+html[data-xe-ui='v5'] .multi-value-label__text {
+  color: var(--xe-pill-text) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__indicator,
+html[data-xe-ui='v5'] .rs__indicator {
+  color: var(--xe-muted) !important;
+}
+
+/* Radios / checkboxes */
+html[data-xe-ui='v5'] .radio-group,
+html[data-xe-ui='v5'] .radio-input,
+html[data-xe-ui='v5'] .checkbox,
+html[data-xe-ui='v5'] .radio-input__label {
+  color: var(--xe-text) !important;
+  font-size: var(--xe-fs-caption) !important;
+}
+
+html[data-xe-ui='v5'] .pill,
+html[data-xe-ui='v5'] .chip,
+html[data-xe-ui='v5'] .status {
+  background: var(--xe-pill-bg) !important;
+  color: var(--xe-pill-text) !important;
+  border: 1px solid var(--xe-pill-border) !important;
+  border-radius: var(--xe-radius-pill) !important;
+}
+
+/* Groups / tabs / collapsibles as section cards */
+html[data-xe-ui='v5'] .group-field,
+html[data-xe-ui='v5'] .tabs-field,
+html[data-xe-ui='v5'] .blocks-field,
+html[data-xe-ui='v5'] .array-field {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  margin-bottom: var(--xe-section-gap) !important;
+}
+
+html[data-xe-ui='v5'] .collapsible {
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-radius-lg) !important;
+  box-shadow: var(--xe-shadow) !important;
+  overflow: hidden !important;
+  margin-bottom: var(--xe-space-6) !important;
+}
+
+html[data-xe-ui='v5'] .collapsible__toggle,
+html[data-xe-ui='v5'] .collapsible__content {
+  background: transparent !important;
+  color: var(--xe-text) !important;
+  border-color: var(--xe-border) !important;
+}
+
+html[data-xe-ui='v5'] .collapsible__content {
+  padding: var(--xe-card-pad) !important;
+}
+
+html[data-xe-ui='v5'] hr,
+html[data-xe-ui='v5'] .divider {
+  border-color: var(--xe-border) !important;
+  margin: var(--xe-section-gap) 0 !important;
+}
+
+/* Rich text */
+html[data-xe-ui='v5'] .rich-text-lexical,
+html[data-xe-ui='v5'] .ContentEditable__root,
+html[data-xe-ui='v5'] [class*='ContentEditable'] {
+  background: var(--xe-input-bg) !important;
+  color: var(--xe-text) !important;
+  border: 1px solid var(--xe-border-strong) !important;
+  border-radius: var(--xe-radius) !important;
+  min-height: 160px !important;
+}
+
+html[data-xe-ui='v5'] .rich-text-lexical__toolbar {
+  background: color-mix(in srgb, var(--xe-bg) 60%, var(--xe-surface)) !important;
+  border-color: var(--xe-border) !important;
+  color: var(--xe-text) !important;
+  border-radius: var(--xe-radius) var(--xe-radius) 0 0 !important;
+}
+
+/* Section heading inside Payload settings */
+html[data-xe-ui='v5'] .payload-settings > h3:first-child {
+  margin-top: 0 !important;
+}
+
+html[data-xe-ui='v5'] .account,
+html[data-xe-ui='v5'] .preferences,
+html[data-xe-ui='v5'] .collection-edit,
+html[data-xe-ui='v5'] .doc-header {
+  color: var(--xe-text) !important;
+}

@@ -1,26 +1,16 @@
 'use client'
 
-import Link from 'next/link'
 import React from 'react'
 
-import { useWorkspaceOptional } from '@/payload/admin/workspace/WorkspaceContext'
-import { getWorkspace } from '@/payload/admin/workspace/definitions'
+import { BusinessNav } from './BusinessNav'
+import { FavoritesAndRecent } from './FavoritesAndRecent'
 
-/** Compact module links for the active workspace */
+/** Workspaces → pinned shortcuts; Payload collection links render below */
 export const BeforeNavLinks = () => {
-  const ctx = useWorkspaceOptional()
-  const workspace = ctx?.workspace ?? getWorkspace('website')
-
-  if (workspace.modules.length === 0) return null
-
   return (
-    <div className="xe-ws-nav xe-ws-nav--compact">
-      <div className="xe-ws-nav__label">Modules</div>
-      {workspace.modules.map((item) => (
-        <Link key={item.href} href={item.href} title={item.hint}>
-          {item.label}
-        </Link>
-      ))}
+    <div className="xe-before-links">
+      <BusinessNav />
+      <FavoritesAndRecent />
     </div>
   )
 }

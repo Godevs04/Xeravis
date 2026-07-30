@@ -6,18 +6,20 @@ const STORAGE_KEY = 'payload-theme'
 
 function applyTheme(theme: 'light' | 'dark') {
   const root = document.documentElement
+  root.setAttribute('data-xe-ui', 'v5')
   root.setAttribute('data-theme', theme)
   root.style.colorScheme = theme
   window.localStorage.setItem(STORAGE_KEY, theme)
+  window.localStorage.setItem('xe-theme-preference', theme)
 }
 
 export const AdminThemeToggle = () => {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light')
+  const [theme, setTheme] = React.useState<'light' | 'dark'>('dark')
   const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY)
-    const next = stored === 'dark' || stored === 'light' ? stored : 'light'
+    const next = stored === 'light' || stored === 'dark' ? stored : 'dark'
     applyTheme(next)
     setTheme(next)
     setMounted(true)

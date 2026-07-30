@@ -337,8 +337,8 @@ body:has(.login) {
 
 .doc-controls .btn--style-primary,
 .doc-controls__controls .btn--style-primary {
-  background: linear-gradient(135deg, #0D9488, #06B6D4) !important;
-  box-shadow: 0 8px 22px rgba(13, 148, 136, 0.4) !important;
+  background: #0d9488 !important;
+  box-shadow: none !important;
 }
 
 .doc-controls__dots {
@@ -393,14 +393,19 @@ body:has(.login) {
   position: relative;
   z-index: 1;
   overflow: visible !important;
-  background: var(--xe-card) !important;
-  border: 1px solid var(--xe-border) !important;
-  border-radius: var(--xe-radius) !important;
-  box-shadow: var(--xe-shadow) !important;
-  backdrop-filter: blur(14px) saturate(150%);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-  padding: 16px 18px !important;
-  margin-bottom: 12px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 14px 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.render-fields > .field-type + .field-type {
+  border-top: 1px solid var(--xe-border) !important;
+  padding-top: 18px !important;
 }
 
 /* Relationship / select menus must float above the next field card */
@@ -718,11 +723,33 @@ textarea.textarea,
   border-radius: 8px;
 }
 
-/* ─── Focus ring a11y ─── */
-:focus-visible {
-  outline: 2px solid var(--xe-primary) !important;
-  outline-offset: 2px !important;
+.react-select__control,
+.react-select__menu,
+.react-select__option,
+.rs__control,
+.rs__menu {
+  background: var(--xe-input-bg) !important;
+  color: var(--xe-text) !important;
+  border-color: var(--xe-border) !important;
 }
+
+.react-select__multi-value,
+.rs__multi-value {
+  background: var(--xe-primary-soft) !important;
+}
+
+.react-select__multi-value__label,
+.rs__multi-value__label,
+.react-select__single-value,
+.rs__single-value {
+  color: var(--xe-text) !important;
+}
+
+.react-select__placeholder,
+.rs__placeholder {
+  color: var(--xe-muted) !important;
+}
+
 
 /* ─── Media library grid polish ─── */
 .collection-list.collection-list--media .table,
