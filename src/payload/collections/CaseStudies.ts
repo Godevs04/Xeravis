@@ -12,7 +12,7 @@ import {
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
   admin: {
-    group: 'Content',
+    group: 'Website',
     useAsTitle: 'title',
     defaultColumns: ['title', 'clientRef', 'slug', '_status', 'updatedAt'],
   },

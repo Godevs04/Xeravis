@@ -21,7 +21,10 @@ export type ContactFormState = {
   fieldErrors?: Record<string, string[]>
 }
 
-export async function submitContact(_prev: ContactFormState, formData: FormData): Promise<ContactFormState> {
+export async function submitContact(
+  _prev: ContactFormState,
+  formData: FormData,
+): Promise<ContactFormState> {
   const parsed = contactSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
@@ -61,12 +64,25 @@ export async function submitContact(_prev: ContactFormState, formData: FormData)
       },
     })
 
+    await payload.create({
+      collection: 'analytics-events',
+      overrideAccess: true,
+      data: {
+        type: 'lead',
+        path: '/contact',
+        meta: { email: parsed.data.email },
+      },
+    })
+
     const resendKey = process.env.RESEND_API_KEY
     const notifyEmail = process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO
     if (resendKey && notifyEmail) {
       const resend = new Resend(resendKey)
       await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || process.env.EMAIL_FROM || 'Xelarvis <onboarding@resend.dev>',
+        from:
+          process.env.RESEND_FROM_EMAIL ||
+          process.env.EMAIL_FROM ||
+          'Xelarvis <onboarding@resend.dev>',
         to: notifyEmail,
         subject: `New contact enquiry from ${parsed.data.name}`,
         text: [
@@ -85,6 +101,9 @@ export async function submitContact(_prev: ContactFormState, formData: FormData)
 
     return { ok: true, message: 'Thank you. Our team will respond within one business day.' }
   } catch {
-    return { ok: false, message: 'Unable to submit right now. Please email hello@xelarvis.in directly.' }
+    return {
+      ok: false,
+      message: 'Unable to submit right now. Please email hello@xelarvis.in directly.',
+    }
   }
 }

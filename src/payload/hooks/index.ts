@@ -1,3 +1,4 @@
+export { trackActivity, trackActivityDelete } from './activity'
 export {
   revalidateCollection,
   revalidateGlobal,

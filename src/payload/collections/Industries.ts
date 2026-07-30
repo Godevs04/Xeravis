@@ -13,7 +13,7 @@ import {
 export const Industries: CollectionConfig = {
   slug: 'industries',
   admin: {
-    group: 'Content',
+    group: 'Website',
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
   },

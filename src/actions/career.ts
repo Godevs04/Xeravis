@@ -194,6 +194,16 @@ export async function submitCareerApplication(
       },
     })
 
+    await payload.create({
+      collection: 'analytics-events',
+      overrideAccess: true,
+      data: {
+        type: 'application',
+        path: '/careers',
+        meta: { applicationId, email: parsed.data.email },
+      },
+    })
+
     return {
       ok: true,
       applicationId,

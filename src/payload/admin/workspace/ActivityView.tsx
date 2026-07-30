@@ -4,52 +4,72 @@ import React from 'react'
 import { listRecent, type WorkspaceRow } from './lib'
 import { WorkspacePanel, WorkspaceShell, WorkspaceTable } from './WorkspaceShell'
 
-const TRACKED = [
-  { collection: 'pages', label: 'Page' },
-  { collection: 'blogs', label: 'Insight' },
-  { collection: 'services', label: 'Service' },
-  { collection: 'careers', label: 'Career' },
-  { collection: 'job-applications', label: 'Application', titleField: 'name' },
-  { collection: 'contact-messages', label: 'Inquiry', titleField: 'name' },
-  { collection: 'solutions', label: 'Solution' },
-  { collection: 'industries', label: 'Industry' },
-] as const
-
 export async function ActivityView(props: AdminViewServerProps) {
   const { payload } = props
 
-  const batches = await Promise.all(
-    TRACKED.map(async (item) => {
-      const rows = await listRecent(payload, item.collection, {
-        titleField: 'titleField' in item ? item.titleField : 'title',
-        limit: 5,
-        sort: '-updatedAt',
-      })
-      return rows.map((row) => ({
-        ...row,
-        subtitle: `${item.label}${row.subtitle ? ` · ${row.subtitle}` : ''}`,
-      }))
-    }),
-  )
-
-  const merged: WorkspaceRow[] = batches
-    .flat()
-    .sort((a, b) => {
-      const at = a.subtitle?.match(/\d{1,2}\/\d{1,2}\/\d{2,4}/)?.[0] || ''
-      const bt = b.subtitle?.match(/\d{1,2}\/\d{1,2}\/\d{2,4}/)?.[0] || ''
-      return bt.localeCompare(at)
+  let rows: WorkspaceRow[] = []
+  try {
+    const result = await payload.find({
+      collection: 'activity-logs',
+      depth: 0,
+      limit: 40,
+      sort: '-createdAt',
+      overrideAccess: true,
     })
-    .slice(0, 24)
+
+    rows = result.docs.map((doc) => {
+      const record = doc as unknown as Record<string, unknown>
+      const summary = typeof record.summary === 'string' ? record.summary : 'Activity'
+      const collection = typeof record.collection === 'string' ? record.collection : ''
+      const documentId = typeof record.documentId === 'string' ? record.documentId : ''
+      const createdAt =
+        typeof record.createdAt === 'string' ? new Date(record.createdAt).toLocaleString() : ''
+      const action = typeof record.action === 'string' ? record.action : undefined
+
+      return {
+        id: String(record.id),
+        title: summary,
+        subtitle: createdAt,
+        href:
+          collection && documentId
+            ? `/admin/collections/${collection}/${documentId}`
+            : '/admin/collections/activity-logs',
+        badge: action,
+        badgeTone:
+          action === 'published' || action === 'created'
+            ? 'open'
+            : action === 'deleted'
+              ? 'warn'
+              : 'default',
+      }
+    })
+  } catch {
+    rows = []
+  }
+
+  // Fallback if activity log is empty: show recent collection edits
+  if (rows.length === 0) {
+    const fallback = await Promise.all([
+      listRecent(payload, 'blogs', { limit: 5 }),
+      listRecent(payload, 'careers', { limit: 5 }),
+      listRecent(payload, 'contact-messages', { titleField: 'name', limit: 5 }),
+      listRecent(payload, 'media', { titleField: 'filename', limit: 5 }),
+    ])
+    rows = fallback.flat().slice(0, 20)
+  }
 
   return (
     <WorkspaceShell
       active="activity"
       title="Activity Timeline"
-      subtitle="Recent changes across content, careers, CRM, and recruitment — one audit surface."
-      actions={[{ label: 'Dashboard', href: '/admin', primary: true }]}
+      subtitle="Append-only enterprise feed: publishes, leads, jobs, media, and SEO edits."
+      actions={[
+        { label: 'Activity log', href: '/admin/collections/activity-logs', primary: true },
+        { label: 'Dashboard', href: '/admin' },
+      ]}
     >
       <WorkspacePanel title="Latest updates">
-        <WorkspaceTable rows={merged} empty="No recent activity." />
+        <WorkspaceTable rows={rows} empty="No activity recorded yet." />
       </WorkspacePanel>
     </WorkspaceShell>
   )

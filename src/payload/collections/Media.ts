@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { anyone, canManageContent, isAdminOrEditor } from '@/payload/access'
+import { trackActivity } from '@/payload/hooks/activity'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -61,13 +62,16 @@ export const Media: CollectionConfig = {
   admin: {
     useAsTitle: 'filename',
     defaultColumns: ['filename', 'folder', 'alt', 'mimeType', 'updatedAt'],
-    group: 'System',
+    group: 'Media',
   },
   access: {
     read: anyone,
     create: canManageContent,
     update: canManageContent,
     delete: isAdminOrEditor,
+  },
+  hooks: {
+    afterChange: [trackActivity('media')],
   },
   fields: [
     {
@@ -85,6 +89,15 @@ export const Media: CollectionConfig = {
       type: 'text',
       maxLength: 200,
       admin: { placeholder: 'Optional caption' },
+    },
+    {
+      name: 'tags',
+      type: 'array',
+      labels: { singular: 'Tag', plural: 'Tags' },
+      fields: [{ name: 'tag', type: 'text', required: true }],
+      admin: {
+        description: 'Freeform tags for Media Studio filters.',
+      },
     },
     {
       name: 'folder',

@@ -6,6 +6,9 @@ import { revalidateGlobal } from '@/payload/hooks'
 export const SocialMedia: GlobalConfig = {
   slug: 'social-media',
   label: 'Social Media',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: canManageMarketing,
@@ -26,6 +29,9 @@ export const SocialMedia: GlobalConfig = {
 export const Analytics: GlobalConfig = {
   slug: 'analytics',
   label: 'Analytics',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: isAdmin,
@@ -42,6 +48,9 @@ export const Analytics: GlobalConfig = {
 export const AnnouncementBar: GlobalConfig = {
   slug: 'announcement-bar',
   label: 'Announcement Bar',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: canManageMarketing,
@@ -65,6 +74,9 @@ export const AnnouncementBar: GlobalConfig = {
 export const CookieBanner: GlobalConfig = {
   slug: 'cookie-banner',
   label: 'Cookie Banner',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: isAdmin,

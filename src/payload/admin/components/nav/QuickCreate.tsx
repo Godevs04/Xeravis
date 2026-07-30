@@ -3,15 +3,20 @@
 import Link from 'next/link'
 import React from 'react'
 
-const CREATE_TARGETS = [
+const FALLBACK = [
   { label: 'Blog post', href: '/admin/collections/blogs/create' },
   { label: 'Service', href: '/admin/collections/services/create' },
-  { label: 'Career', href: '/admin/collections/careers/create' },
+  { label: 'Job', href: '/admin/collections/careers/create' },
   { label: 'Page', href: '/admin/collections/pages/create' },
 ]
 
-export const QuickCreate = () => {
+type Props = {
+  creates?: { label: string; href: string }[]
+}
+
+export const QuickCreate = ({ creates }: Props) => {
   const [open, setOpen] = React.useState(false)
+  const targets = creates && creates.length > 0 ? creates : FALLBACK
 
   return (
     <div className="xe-quick-create">
@@ -30,8 +35,8 @@ export const QuickCreate = () => {
         <div className="xe-nav-section" style={{ marginTop: 8 }}>
           <div className="xe-nav-section__title">New</div>
           <ul className="xe-nav-section__list">
-            {CREATE_TARGETS.map((item) => (
-              <li key={item.href}>
+            {targets.map((item) => (
+              <li key={`${item.href}-${item.label}`}>
                 <Link href={item.href} onClick={() => setOpen(false)}>
                   <span className="xe-nav-section__dot" />
                   {item.label}

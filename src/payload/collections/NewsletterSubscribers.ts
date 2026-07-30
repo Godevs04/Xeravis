@@ -7,7 +7,7 @@ export const NewsletterSubscribers: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['email', 'status', 'createdAt'],
-    group: 'Inbox',
+    group: 'Marketing',
   },
   access: {
     read: staffRead,

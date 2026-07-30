@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import React, { useActionState } from 'react'
 
 import { runAiAssist, type AiAssistState } from './ai-action'
@@ -30,11 +31,20 @@ export function AiAssistantForm() {
         <span>Brief (optional)</span>
         <textarea name="brief" rows={4} placeholder="Audience, tone, must-include points…" />
       </label>
+      <label className="xe-ai__check">
+        <input type="checkbox" name="writeBack" />
+        <span>Create Payload draft (blog or job) after generate</span>
+      </label>
       <button type="submit" className="xe-ws-btn xe-ws-btn--primary" disabled={pending}>
         {pending ? 'Generating…' : 'Generate draft'}
       </button>
       {state.message ? (
         <p className={`xe-ai__status${state.ok ? 'is-ok' : 'is-err'}`}>{state.message}</p>
+      ) : null}
+      {state.draftHref ? (
+        <p className="xe-ai__status is-ok">
+          <Link href={state.draftHref}>Open draft in Payload →</Link>
+        </p>
       ) : null}
       {state.output ? <pre className="xe-ai__output">{state.output}</pre> : null}
     </form>

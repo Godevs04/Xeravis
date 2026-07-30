@@ -26,7 +26,10 @@ export async function AiAssistantView(_props: AdminViewServerProps) {
               Uses workspace templates by default. Configure <code>OPENAI_API_KEY</code> or{' '}
               <code>AI_GATEWAY_API_KEY</code> for live model output.
             </li>
-            <li>Paste results into Lexical fields on pages, blogs, services, or careers.</li>
+            <li>
+              Confirm &quot;Create Payload draft&quot; to write a draft blog or job into collections
+              — review before publishing.
+            </li>
             <li>
               Does not create a second CMS or API surface — Payload remains the source of truth.
             </li>

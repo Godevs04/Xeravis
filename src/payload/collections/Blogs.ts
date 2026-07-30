@@ -8,13 +8,14 @@ import {
   revalidateOnDelete,
   revalidateSlugPath,
 } from '@/payload/hooks'
+import { trackActivity } from '@/payload/hooks/activity'
 
 export const Blogs: CollectionConfig = {
   slug: 'blogs',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'insightType', 'slug', 'publishedAt', '_status', 'updatedAt'],
-    group: 'Content',
+    group: 'Website',
   },
   versions: {
     drafts: {
@@ -30,7 +31,7 @@ export const Blogs: CollectionConfig = {
   hooks: {
     beforeValidate: [autoSlugFromTitle('title')],
     beforeChange: [enforcePublishRole],
-    afterChange: [revalidateSlugPath('/blog', 'blogs')],
+    afterChange: [revalidateSlugPath('/blog', 'blogs'), trackActivity('blogs')],
     afterDelete: [revalidateOnDelete(['/blog'], ['blogs'])],
   },
   fields: [

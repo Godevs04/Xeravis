@@ -8,7 +8,7 @@ export const Technologies: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'featured', 'updatedAt'],
-    group: 'Content',
+    group: 'Website',
   },
   access: {
     read: anyone,

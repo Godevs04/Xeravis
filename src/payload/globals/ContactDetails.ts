@@ -6,6 +6,9 @@ import { revalidateGlobal } from '@/payload/hooks'
 export const ContactDetails: GlobalConfig = {
   slug: 'contact-details',
   label: 'Contact Details',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: canManageContent,

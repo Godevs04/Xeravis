@@ -1,14 +1,12 @@
 import React from 'react'
 
-import { NavSearchTrigger } from './NavSearchTrigger'
 import { WorkspaceSwitcher } from './WorkspaceSwitcher'
 
-/** Injected above the nav wrap via admin.components.beforeNav */
+/** Top of sidebar: workspace only — search/create live in the header */
 export const BeforeNav = () => {
   return (
     <div className="xe-before-nav">
       <WorkspaceSwitcher />
-      <NavSearchTrigger />
     </div>
   )
 }

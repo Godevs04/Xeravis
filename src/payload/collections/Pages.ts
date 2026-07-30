@@ -15,7 +15,7 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
-    group: 'Content',
+    group: 'Website',
     livePreview: {
       url: ({ data }) => {
         const base = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'

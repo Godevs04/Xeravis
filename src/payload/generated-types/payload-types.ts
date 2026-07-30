@@ -75,11 +75,14 @@ export interface Config {
     solutions: Solution
     'case-studies': CaseStudy
     blogs: Blog
+    research: Research
     categories: Category
     tags: Tag
     authors: Author
     careers: Career
     departments: Department
+    interviews: Interview
+    'job-applications': JobApplication
     testimonials: Testimonial
     'team-members': TeamMember
     clients: Client
@@ -88,7 +91,11 @@ export interface Config {
     'form-submissions': FormSubmission
     'contact-messages': ContactMessage
     'newsletter-subscribers': NewsletterSubscriber
-    'job-applications': JobApplication
+    'newsletter-campaigns': NewsletterCampaign
+    downloads: Download
+    'activity-logs': ActivityLog
+    notifications: Notification
+    'analytics-events': AnalyticsEvent
     search: Search
     'payload-kv': PayloadKv
     'payload-locked-documents': PayloadLockedDocument
@@ -105,11 +112,14 @@ export interface Config {
     solutions: SolutionsSelect<false> | SolutionsSelect<true>
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>
     blogs: BlogsSelect<false> | BlogsSelect<true>
+    research: ResearchSelect<false> | ResearchSelect<true>
     categories: CategoriesSelect<false> | CategoriesSelect<true>
     tags: TagsSelect<false> | TagsSelect<true>
     authors: AuthorsSelect<false> | AuthorsSelect<true>
     careers: CareersSelect<false> | CareersSelect<true>
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>
+    interviews: InterviewsSelect<false> | InterviewsSelect<true>
+    'job-applications': JobApplicationsSelect<false> | JobApplicationsSelect<true>
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>
     clients: ClientsSelect<false> | ClientsSelect<true>
@@ -118,7 +128,11 @@ export interface Config {
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>
-    'job-applications': JobApplicationsSelect<false> | JobApplicationsSelect<true>
+    'newsletter-campaigns': NewsletterCampaignsSelect<false> | NewsletterCampaignsSelect<true>
+    downloads: DownloadsSelect<false> | DownloadsSelect<true>
+    'activity-logs': ActivityLogsSelect<false> | ActivityLogsSelect<true>
+    notifications: NotificationsSelect<false> | NotificationsSelect<true>
+    'analytics-events': AnalyticsEventsSelect<false> | AnalyticsEventsSelect<true>
     search: SearchSelect<false> | SearchSelect<true>
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>
     'payload-locked-documents':
@@ -227,6 +241,15 @@ export interface Media {
    */
   alt: string
   caption?: string | null
+  /**
+   * Freeform tags for Media Studio filters.
+   */
+  tags?:
+    | {
+        tag: string
+        id?: string | null
+      }[]
+    | null
   folder?:
     | (
         | 'general'
@@ -1018,6 +1041,47 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research".
+ */
+export interface Research {
+  id: string
+  title: string
+  /**
+   * URL slug. Auto-generated from title when empty.
+   */
+  slug: string
+  excerpt: string
+  content: {
+    root: {
+      type: string
+      children: {
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  }
+  cover?: (string | null) | Media
+  authors?: (string | Author)[] | null
+  /**
+   * Show in featured lists and homepage modules.
+   */
+  featured?: boolean | null
+  /**
+   * Public publish timestamp.
+   */
+  publishedAt?: string | null
+  updatedAt: string
+  createdAt: string
+  _status?: ('draft' | 'published') | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "careers".
  */
 export interface Career {
@@ -1136,6 +1200,88 @@ export interface Department {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "interviews".
+ */
+export interface Interview {
+  id: string
+  /**
+   * e.g. Technical screen — Jane Doe
+   */
+  title: string
+  application: string | JobApplication
+  job?: (string | null) | Career
+  interviewers?: (string | User)[] | null
+  scheduledAt: string
+  mode: 'video' | 'onsite' | 'phone'
+  meetingLink?: string | null
+  outcome?: ('scheduled' | 'completed' | 'no-show' | 'cancelled' | 'advance' | 'reject') | null
+  notes?: string | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications".
+ */
+export interface JobApplication {
+  id: string
+  applicationId?: string | null
+  career: string | Career
+  /**
+   * Display name (auto from first/last).
+   */
+  name: string
+  firstName?: string | null
+  lastName?: string | null
+  email: string
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  linkedin?: string | null
+  portfolio?: string | null
+  currentCompany?: string | null
+  currentDesignation?: string | null
+  totalExperience?: string | null
+  relevantExperience?: string | null
+  currentSalary?: string | null
+  expectedSalary?: string | null
+  noticePeriod?: string | null
+  workAuthorization?: string | null
+  education?: {
+    highestQualification?: string | null
+    university?: string | null
+    graduationYear?: string | null
+  }
+  skills?:
+    | {
+        item: string
+        id?: string | null
+      }[]
+    | null
+  resume: string | Media
+  coverLetter?: string | null
+  whyJoin?: string | null
+  willingToRelocate?: ('yes' | 'no' | 'maybe') | null
+  earliestJoinDate?: string | null
+  healthcareExperience?: ('yes' | 'no') | null
+  consent: boolean
+  status:
+    | 'new'
+    | 'under-review'
+    | 'shortlisted'
+    | 'interview-scheduled'
+    | 'technical-assessment'
+    | 'final-interview'
+    | 'offered'
+    | 'hired'
+    | 'rejected'
+    | 'withdrawn'
+  recruiterNotes?: string | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1201,7 +1347,24 @@ export interface ContactMessage {
   subject?: string | null
   message: string
   intent?: ('project' | 'general' | 'partnership') | null
-  status: 'new' | 'in-progress' | 'closed'
+  status: 'new' | 'assigned' | 'meeting' | 'proposal' | 'won' | 'lost' | 'in-progress' | 'closed'
+  assignee?: (string | null) | User
+  meetingAt?: string | null
+  nextFollowUp?: string | null
+  /**
+   * Optional estimated deal value
+   */
+  dealValue?: number | null
+  activityNotes?:
+    | {
+        note: string
+        at?: string | null
+        id?: string | null
+      }[]
+    | null
+  /**
+   * Internal summary notes
+   */
   notes?: string | null
   updatedAt: string
   createdAt: string
@@ -1219,62 +1382,97 @@ export interface NewsletterSubscriber {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job-applications".
+ * via the `definition` "newsletter-campaigns".
  */
-export interface JobApplication {
+export interface NewsletterCampaign {
   id: string
-  applicationId?: string | null
-  career: string | Career
+  title: string
+  subject: string
+  sentAt?: string | null
+  audienceFilter?: ('active' | 'all' | 'unsubscribed') | null
+  notes?: string | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads".
+ */
+export interface Download {
+  id: string
+  title: string
   /**
-   * Display name (auto from first/last).
+   * URL slug. Auto-generated from title when empty.
    */
-  name: string
-  firstName?: string | null
-  lastName?: string | null
-  email: string
-  phone?: string | null
-  country?: string | null
-  city?: string | null
-  linkedin?: string | null
-  portfolio?: string | null
-  currentCompany?: string | null
-  currentDesignation?: string | null
-  totalExperience?: string | null
-  relevantExperience?: string | null
-  currentSalary?: string | null
-  expectedSalary?: string | null
-  noticePeriod?: string | null
-  workAuthorization?: string | null
-  education?: {
-    highestQualification?: string | null
-    university?: string | null
-    graduationYear?: string | null
-  }
-  skills?:
+  slug: string
+  description?: string | null
+  file: string | Media
+  relatedBlog?: (string | null) | Blog
+  relatedResearch?: (string | null) | Research
+  /**
+   * Require email capture before download (handled on the site).
+   */
+  gated?: boolean | null
+  downloadCount?: number | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activity-logs".
+ */
+export interface ActivityLog {
+  id: string
+  summary: string
+  action: 'created' | 'updated' | 'published' | 'deleted' | 'status-change' | 'upload'
+  collection: string
+  documentId?: string | null
+  actor?: (string | null) | User
+  meta?:
     | {
-        item: string
-        id?: string | null
-      }[]
+        [k: string]: unknown
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null
-  resume: string | Media
-  coverLetter?: string | null
-  whyJoin?: string | null
-  willingToRelocate?: ('yes' | 'no' | 'maybe') | null
-  earliestJoinDate?: string | null
-  healthcareExperience?: ('yes' | 'no') | null
-  consent: boolean
-  status:
-    | 'new'
-    | 'under-review'
-    | 'shortlisted'
-    | 'interview-scheduled'
-    | 'technical-assessment'
-    | 'final-interview'
-    | 'offered'
-    | 'hired'
-    | 'rejected'
-    | 'withdrawn'
-  recruiterNotes?: string | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications".
+ */
+export interface Notification {
+  id: string
+  title: string
+  body?: string | null
+  type: 'lead' | 'application' | 'interview' | 'publish' | 'media' | 'info'
+  href?: string | null
+  user: string | User
+  read?: boolean | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics-events".
+ */
+export interface AnalyticsEvent {
+  id: string
+  type: 'pageview' | 'lead' | 'application' | 'download' | 'newsletter'
+  path?: string | null
+  referrer?: string | null
+  meta?:
+    | {
+        [k: string]: unknown
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null
   updatedAt: string
   createdAt: string
 }
@@ -1377,6 +1575,10 @@ export interface PayloadLockedDocument {
         value: string | Blog
       } | null)
     | ({
+        relationTo: 'research'
+        value: string | Research
+      } | null)
+    | ({
         relationTo: 'categories'
         value: string | Category
       } | null)
@@ -1395,6 +1597,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'departments'
         value: string | Department
+      } | null)
+    | ({
+        relationTo: 'interviews'
+        value: string | Interview
+      } | null)
+    | ({
+        relationTo: 'job-applications'
+        value: string | JobApplication
       } | null)
     | ({
         relationTo: 'testimonials'
@@ -1429,8 +1639,24 @@ export interface PayloadLockedDocument {
         value: string | NewsletterSubscriber
       } | null)
     | ({
-        relationTo: 'job-applications'
-        value: string | JobApplication
+        relationTo: 'newsletter-campaigns'
+        value: string | NewsletterCampaign
+      } | null)
+    | ({
+        relationTo: 'downloads'
+        value: string | Download
+      } | null)
+    | ({
+        relationTo: 'activity-logs'
+        value: string | ActivityLog
+      } | null)
+    | ({
+        relationTo: 'notifications'
+        value: string | Notification
+      } | null)
+    | ({
+        relationTo: 'analytics-events'
+        value: string | AnalyticsEvent
       } | null)
     | ({
         relationTo: 'search'
@@ -1508,6 +1734,12 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T
   caption?: T
+  tags?:
+    | T
+    | {
+        tag?: T
+        id?: T
+      }
   folder?: T
   updatedAt?: T
   createdAt?: T
@@ -2057,6 +2289,23 @@ export interface BlogsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research_select".
+ */
+export interface ResearchSelect<T extends boolean = true> {
+  title?: T
+  slug?: T
+  excerpt?: T
+  content?: T
+  cover?: T
+  authors?: T
+  featured?: T
+  publishedAt?: T
+  updatedAt?: T
+  createdAt?: T
+  _status?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
@@ -2161,6 +2410,72 @@ export interface DepartmentsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "interviews_select".
+ */
+export interface InterviewsSelect<T extends boolean = true> {
+  title?: T
+  application?: T
+  job?: T
+  interviewers?: T
+  scheduledAt?: T
+  mode?: T
+  meetingLink?: T
+  outcome?: T
+  notes?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications_select".
+ */
+export interface JobApplicationsSelect<T extends boolean = true> {
+  applicationId?: T
+  career?: T
+  name?: T
+  firstName?: T
+  lastName?: T
+  email?: T
+  phone?: T
+  country?: T
+  city?: T
+  linkedin?: T
+  portfolio?: T
+  currentCompany?: T
+  currentDesignation?: T
+  totalExperience?: T
+  relevantExperience?: T
+  currentSalary?: T
+  expectedSalary?: T
+  noticePeriod?: T
+  workAuthorization?: T
+  education?:
+    | T
+    | {
+        highestQualification?: T
+        university?: T
+        graduationYear?: T
+      }
+  skills?:
+    | T
+    | {
+        item?: T
+        id?: T
+      }
+  resume?: T
+  coverLetter?: T
+  whyJoin?: T
+  willingToRelocate?: T
+  earliestJoinDate?: T
+  healthcareExperience?: T
+  consent?: T
+  status?: T
+  recruiterNotes?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials_select".
  */
 export interface TestimonialsSelect<T extends boolean = true> {
@@ -2253,6 +2568,17 @@ export interface ContactMessagesSelect<T extends boolean = true> {
   message?: T
   intent?: T
   status?: T
+  assignee?: T
+  meetingAt?: T
+  nextFollowUp?: T
+  dealValue?: T
+  activityNotes?:
+    | T
+    | {
+        note?: T
+        at?: T
+        id?: T
+      }
   notes?: T
   updatedAt?: T
   createdAt?: T
@@ -2269,50 +2595,70 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job-applications_select".
+ * via the `definition` "newsletter-campaigns_select".
  */
-export interface JobApplicationsSelect<T extends boolean = true> {
-  applicationId?: T
-  career?: T
-  name?: T
-  firstName?: T
-  lastName?: T
-  email?: T
-  phone?: T
-  country?: T
-  city?: T
-  linkedin?: T
-  portfolio?: T
-  currentCompany?: T
-  currentDesignation?: T
-  totalExperience?: T
-  relevantExperience?: T
-  currentSalary?: T
-  expectedSalary?: T
-  noticePeriod?: T
-  workAuthorization?: T
-  education?:
-    | T
-    | {
-        highestQualification?: T
-        university?: T
-        graduationYear?: T
-      }
-  skills?:
-    | T
-    | {
-        item?: T
-        id?: T
-      }
-  resume?: T
-  coverLetter?: T
-  whyJoin?: T
-  willingToRelocate?: T
-  earliestJoinDate?: T
-  healthcareExperience?: T
-  consent?: T
-  status?: T
-  recruiterNotes?: T
+export interface NewsletterCampaignsSelect<T extends boolean = true> {
+  title?: T
+  subject?: T
+  sentAt?: T
+  audienceFilter?: T
+  notes?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads_select".
+ */
+export interface DownloadsSelect<T extends boolean = true> {
+  title?: T
+  slug?: T
+  description?: T
+  file?: T
+  relatedBlog?: T
+  relatedResearch?: T
+  gated?: T
+  downloadCount?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activity-logs_select".
+ */
+export interface ActivityLogsSelect<T extends boolean = true> {
+  summary?: T
+  action?: T
+  collection?: T
+  documentId?: T
+  actor?: T
+  meta?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications_select".
+ */
+export interface NotificationsSelect<T extends boolean = true> {
+  title?: T
+  body?: T
+  type?: T
+  href?: T
+  user?: T
+  read?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics-events_select".
+ */
+export interface AnalyticsEventsSelect<T extends boolean = true> {
+  type?: T
+  path?: T
+  referrer?: T
+  meta?: T
   updatedAt?: T
   createdAt?: T
 }

@@ -6,6 +6,9 @@ import { revalidateGlobal } from '@/payload/hooks'
 export const Footer: GlobalConfig = {
   slug: 'footer',
   label: 'Footer',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: canManageContent,

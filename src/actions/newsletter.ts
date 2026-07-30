@@ -51,6 +51,16 @@ export async function submitNewsletter(
       })
     }
 
+    await payload.create({
+      collection: 'analytics-events',
+      overrideAccess: true,
+      data: {
+        type: 'newsletter',
+        path: '/newsletter',
+        meta: { email: parsed.data.email },
+      },
+    })
+
     return { ok: true, message: 'Thanks for subscribing.' }
   } catch {
     return { ok: false, message: 'Unable to subscribe right now. Please try again later.' }

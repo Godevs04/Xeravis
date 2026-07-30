@@ -8,11 +8,12 @@ import {
   revalidateOnDelete,
   revalidateSlugPath,
 } from '@/payload/hooks'
+import { trackActivity } from '@/payload/hooks/activity'
 
 export const Careers: CollectionConfig = {
   slug: 'careers',
   admin: {
-    group: 'Talent',
+    group: 'Careers',
     useAsTitle: 'title',
     defaultColumns: [
       'title',
@@ -42,7 +43,7 @@ export const Careers: CollectionConfig = {
   hooks: {
     beforeValidate: [autoSlugFromTitle('title')],
     beforeChange: [enforcePublishRole],
-    afterChange: [revalidateSlugPath('/careers', 'careers')],
+    afterChange: [revalidateSlugPath('/careers', 'careers'), trackActivity('careers')],
     afterDelete: [revalidateOnDelete(['/careers'], ['careers'])],
   },
   fields: [

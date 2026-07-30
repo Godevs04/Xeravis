@@ -1,9 +1,12 @@
 'use server'
 
+import { getPayload } from '@/lib/payload'
+
 export type AiAssistState = {
   ok: boolean
   message: string
   output?: string
+  draftHref?: string
 }
 
 const TEMPLATES: Record<string, (topic: string) => string> = {
@@ -50,18 +53,7 @@ const TEMPLATES: Record<string, (topic: string) => string> = {
     ].join('\n'),
 }
 
-export async function runAiAssist(
-  _prev: AiAssistState,
-  formData: FormData,
-): Promise<AiAssistState> {
-  const mode = String(formData.get('mode') || 'blog-outline')
-  const topic = String(formData.get('topic') || '').trim()
-  const brief = String(formData.get('brief') || '').trim()
-
-  if (!topic) {
-    return { ok: false, message: 'Add a topic or title to generate from.' }
-  }
-
+async function generateCopy(mode: string, topic: string, brief: string) {
   const apiKey =
     process.env.AI_GATEWAY_API_KEY ||
     process.env.OPENAI_API_KEY ||
@@ -97,26 +89,135 @@ export async function runAiAssist(
 
       if (res.ok) {
         const json = (await res.json()) as {
-          choices?: { message?: { content?: string } }[]
+          choices?: Array<{ message?: { content?: string } }>
         }
         const output = json.choices?.[0]?.message?.content?.trim()
         if (output) {
-          return { ok: true, message: 'Generated with your configured AI provider.', output }
+          return {
+            output,
+            message: 'Generated with your configured AI provider.',
+          }
         }
       }
     } catch {
-      // fall through to templates
+      // fall through
     }
   }
 
   const template = TEMPLATES[mode] || TEMPLATES['blog-outline']
-  const output = [template(topic), brief ? `\n\nNotes:\n${brief}` : ''].join('')
-
   return {
-    ok: true,
+    output: [template(topic), brief ? `\n\nNotes:\n${brief}` : ''].join(''),
     message: apiKey
       ? 'Provider call failed — used structured workspace template.'
       : 'Generated with workspace templates. Add OPENAI_API_KEY or AI_GATEWAY_API_KEY for live model output.',
-    output,
+  }
+}
+
+function slugify(input: string) {
+  return input
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .slice(0, 80)
+}
+
+export async function runAiAssist(
+  _prev: AiAssistState,
+  formData: FormData,
+): Promise<AiAssistState> {
+  const mode = String(formData.get('mode') || 'blog-outline')
+  const topic = String(formData.get('topic') || '').trim()
+  const brief = String(formData.get('brief') || '').trim()
+  const writeBack = String(formData.get('writeBack') || '') === 'on'
+
+  if (!topic) {
+    return { ok: false, message: 'Add a topic or title to generate from.' }
+  }
+
+  const generated = await generateCopy(mode, topic, brief)
+
+  if (!writeBack) {
+    return {
+      ok: true,
+      message: generated.message,
+      output: generated.output,
+    }
+  }
+
+  try {
+    const payload = await getPayload()
+
+    if (mode === 'job-post') {
+      const created = await payload.create({
+        collection: 'careers',
+        overrideAccess: true,
+        draft: true,
+        data: {
+          title: topic.slice(0, 140),
+          slug: slugify(topic) || `role-${Date.now()}`,
+          location: 'Remote / Hybrid',
+          type: 'full-time',
+          workMode: 'hybrid',
+          aboutRole: generated.output,
+          active: false,
+          _status: 'draft',
+        },
+      })
+
+      return {
+        ok: true,
+        message: `${generated.message} Draft job created — review before publishing.`,
+        output: generated.output,
+        draftHref: `/admin/collections/careers/${created.id}`,
+      }
+    }
+
+    const created = await payload.create({
+      collection: 'blogs',
+      overrideAccess: true,
+      draft: true,
+      data: {
+        title: topic.slice(0, 140),
+        slug: slugify(topic) || `draft-${Date.now()}`,
+        excerpt: (generated.output.slice(0, 280) || topic).trim(),
+        content: {
+          root: {
+            type: 'root',
+            children: [
+              {
+                type: 'paragraph',
+                version: 1,
+                children: [
+                  {
+                    type: 'text',
+                    text: generated.output,
+                    version: 1,
+                  },
+                ],
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            version: 1,
+          },
+        } as never,
+        insightType: 'blog',
+        _status: 'draft',
+      },
+    })
+
+    return {
+      ok: true,
+      message: `${generated.message} Draft insight created — open to refine in Lexical.`,
+      output: generated.output,
+      draftHref: `/admin/collections/blogs/${created.id}`,
+    }
+  } catch {
+    return {
+      ok: true,
+      message: `${generated.message} Write-back failed — copy the draft below and paste manually.`,
+      output: generated.output,
+    }
   }
 }

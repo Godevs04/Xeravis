@@ -1,15 +1,13 @@
 import React from 'react'
 
-import { AdminAccountBar } from './AdminAccountBar'
-import { FavoritesAndRecent } from './FavoritesAndRecent'
+import { ProfileCard } from './ProfileCard'
 
-/** Injected after collection/global nav links */
+/** Bottom of sidebar: profile only — keep nav clean */
 export const AfterNavLinks = () => {
   return (
-    <>
-      <FavoritesAndRecent />
-      <AdminAccountBar />
-    </>
+    <div className="xe-after-nav">
+      <ProfileCard />
+    </div>
   )
 }
 

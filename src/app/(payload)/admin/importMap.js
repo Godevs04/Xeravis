@@ -31,16 +31,15 @@ import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from 
 import { HeaderChip as HeaderChip_7909306280128a750b6e8f2ab4e3d64b } from '../../../payload/admin/components/HeaderChip'
 import { Icon as Icon_4f090f1d512145da0a4cb8f745fcff9a } from '../../../payload/admin/components/graphics/Icon'
 import { Logo as Logo_9b451d48b7ff5becf1d58711b3ab64e7 } from '../../../payload/admin/components/graphics/Logo'
-import { AdminThemeToggle as AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f } from '../../../payload/admin/components/AdminThemeToggle'
+import { QuickCreateAction as QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd } from '../../../payload/admin/components/QuickCreateAction'
+import { NotificationBell as NotificationBell_74fcf33514bb1f87e1e1bcf3339ed7d2 } from '../../../payload/admin/components/NotificationBell'
 import { CommandAction as CommandAction_8e711201309cba2687ecc4ae7869caa0 } from '../../../payload/admin/components/CommandAction'
-import { LogoutAction as LogoutAction_e42ff3e328954a75cac6ff0609c32332 } from '../../../payload/admin/components/LogoutAction'
-import { AfterDashboard as AfterDashboard_0b6c98bab685e4d10d879877120e6c40 } from '../../../payload/admin/components/dashboard/AfterDashboard'
 import { AfterNavLinks as AfterNavLinks_59b0951428604bd2924d91920fe33245 } from '../../../payload/admin/components/nav/AfterNavLinks'
-import { BeforeDashboard as BeforeDashboard_d9c9db557014ea6ee02b178a2e4e50a5 } from '../../../payload/admin/components/dashboard/BeforeDashboard'
 import { BeforeLogin as BeforeLogin_6834cc0e5183808a75cbc16f726667d5 } from '../../../payload/admin/components/BeforeLogin'
 import { BeforeNav as BeforeNav_7975ec3298ed9bf6caeea012226eafcd } from '../../../payload/admin/components/nav/BeforeNav'
 import { BeforeNavLinks as BeforeNavLinks_d786bec6faff403bab540306dcdcbb25 } from '../../../payload/admin/components/nav/BeforeNavLinks'
 import { AdminProvider as AdminProvider_478188ea52ac70b0256f91b347543d43 } from '../../../payload/admin/components/AdminProvider'
+import { EnterpriseDashboard as EnterpriseDashboard_d70c9fe38d5e747bb1201bcf13c49658 } from '../../../payload/admin/components/dashboard/EnterpriseDashboard'
 import { RecruitmentView as RecruitmentView_28a47a8ea1810fe276fc1a2e4657f0d4 } from '../../../payload/admin/workspace/RecruitmentView'
 import { CrmView as CrmView_237a248b74abb0df5640beff16c4f5e2 } from '../../../payload/admin/workspace/CrmView'
 import { AnalyticsView as AnalyticsView_ff6406eee69b8bbcf9d7313a1f4265c7 } from '../../../payload/admin/workspace/AnalyticsView'
@@ -114,18 +113,14 @@ export const importMap = {
   './payload/admin/components/HeaderChip#HeaderChip': HeaderChip_7909306280128a750b6e8f2ab4e3d64b,
   './payload/admin/components/graphics/Icon#Icon': Icon_4f090f1d512145da0a4cb8f745fcff9a,
   './payload/admin/components/graphics/Logo#Logo': Logo_9b451d48b7ff5becf1d58711b3ab64e7,
-  './payload/admin/components/AdminThemeToggle#AdminThemeToggle':
-    AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f,
+  './payload/admin/components/QuickCreateAction#QuickCreateAction':
+    QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd,
+  './payload/admin/components/NotificationBell#NotificationBell':
+    NotificationBell_74fcf33514bb1f87e1e1bcf3339ed7d2,
   './payload/admin/components/CommandAction#CommandAction':
     CommandAction_8e711201309cba2687ecc4ae7869caa0,
-  './payload/admin/components/LogoutAction#LogoutAction':
-    LogoutAction_e42ff3e328954a75cac6ff0609c32332,
-  './payload/admin/components/dashboard/AfterDashboard#AfterDashboard':
-    AfterDashboard_0b6c98bab685e4d10d879877120e6c40,
   './payload/admin/components/nav/AfterNavLinks#AfterNavLinks':
     AfterNavLinks_59b0951428604bd2924d91920fe33245,
-  './payload/admin/components/dashboard/BeforeDashboard#BeforeDashboard':
-    BeforeDashboard_d9c9db557014ea6ee02b178a2e4e50a5,
   './payload/admin/components/BeforeLogin#BeforeLogin':
     BeforeLogin_6834cc0e5183808a75cbc16f726667d5,
   './payload/admin/components/nav/BeforeNav#BeforeNav': BeforeNav_7975ec3298ed9bf6caeea012226eafcd,
@@ -133,6 +128,8 @@ export const importMap = {
     BeforeNavLinks_d786bec6faff403bab540306dcdcbb25,
   './payload/admin/components/AdminProvider#AdminProvider':
     AdminProvider_478188ea52ac70b0256f91b347543d43,
+  './payload/admin/components/dashboard/EnterpriseDashboard#EnterpriseDashboard':
+    EnterpriseDashboard_d70c9fe38d5e747bb1201bcf13c49658,
   './payload/admin/workspace/RecruitmentView#RecruitmentView':
     RecruitmentView_28a47a8ea1810fe276fc1a2e4657f0d4,
   './payload/admin/workspace/CrmView#CrmView': CrmView_237a248b74abb0df5640beff16c4f5e2,

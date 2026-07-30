@@ -17,199 +17,181 @@ export type DashRow = {
   subtitle: string
   href: string
   badge?: string
-  badgeTone?: 'default' | 'open'
+  badgeTone?: 'default' | 'open' | 'warn'
+}
+
+export type DashTask = {
+  id: string
+  title: string
+  meta: string
+  href: string
+  tone?: 'default' | 'warn' | 'accent'
 }
 
 type Props = {
   userName?: string
+  summary: string
   stats: DashStat[]
-  blogs: DashRow[]
-  services: DashRow[]
-  careers: DashRow[]
+  tasks: DashTask[]
+  activity: DashRow[]
   messages: DashRow[]
+  applications: DashRow[]
+  quickActions: { label: string; href: string }[]
 }
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, y: 8 },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 0.04 * i, duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: 0.03 * i, duration: 0.28, ease: [0.22, 1, 0.36, 1] },
   }),
 }
 
-function StatCard({ stat, index }: { stat: DashStat; index: number }) {
-  return (
-    <motion.a
-      href={stat.href}
-      className="xe-stat"
-      custom={index}
-      variants={fadeUp}
-      initial="hidden"
-      animate="show"
-      style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
-    >
-      <div className="xe-stat__glow" />
-      <div className="xe-stat__label">{stat.label}</div>
-      <div className="xe-stat__value">{stat.value.toLocaleString()}</div>
-      <div className="xe-stat__meta xe-stat__meta--up">{stat.meta}</div>
-    </motion.a>
-  )
-}
-
-function Panel({
-  title,
-  href,
-  rows,
-  empty,
-}: {
-  title: string
-  href: string
-  rows: DashRow[]
-  empty: string
-}) {
-  return (
-    <div className="xe-panel">
-      <div className="xe-panel__head">
-        <h3 className="xe-panel__title">{title}</h3>
-        <Link className="xe-panel__link" href={href}>
-          View all
-        </Link>
-      </div>
-      <div className="xe-panel__body">
-        {rows.length === 0 ? (
-          <div className="xe-empty">{empty}</div>
-        ) : (
-          rows.map((row) => (
-            <Link key={row.id} href={row.href} className="xe-row">
-              <span className="xe-row__icon">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M5 12h14M13 6l6 6-6 6"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              <span className="xe-row__main">
-                <span className="xe-row__title">{row.title}</span>
-                <span className="xe-row__sub">{row.subtitle}</span>
-              </span>
-              {row.badge ? (
-                <span
-                  className={`xe-row__badge${row.badgeTone === 'open' ? 'xe-row__badge--open' : ''}`}
-                >
-                  {row.badge}
-                </span>
-              ) : null}
-            </Link>
-          ))
-        )}
-      </div>
-    </div>
-  )
-}
-
-export const DashboardShell = ({ userName, stats, blogs, services, careers, messages }: Props) => {
-  const greeting = userName ? `Welcome back, ${userName}` : 'Command center'
+export const DashboardShell = ({
+  userName,
+  summary,
+  stats,
+  tasks,
+  activity,
+  messages,
+  applications,
+  quickActions,
+}: Props) => {
+  const greeting = userName ? `Good to see you, ${userName}` : 'Today'
 
   return (
-    <div className="xe-dash">
-      <motion.section
-        className="xe-dash__hero"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      >
+    <div className="xe-dash xe-dash--v3 xe-dash--tight">
+      <header className="xe-dash__top">
         <div>
-          <div className="xe-dash__eyebrow">Xelarvis · Operations</div>
+          <p className="xe-dash__eyebrow">Today</p>
           <h1 className="xe-dash__title">{greeting}</h1>
-          <p className="xe-dash__subtitle">
-            Monitor content, careers, CRM, and recruitment from one Payload workspace.
-          </p>
+          <p className="xe-dash__subtitle">{summary}</p>
         </div>
-        <Link className="xe-dash__cta" href="/admin/workspace/recruitment">
-          Open workspace
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M5 12h14M13 6l6 6-6 6"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Link>
-      </motion.section>
+        <div className="xe-dash__actions">
+          {quickActions.map((item) => (
+            <Link key={item.href} href={item.href} className="xe-dash__chip">
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </header>
 
-      <section className="xe-analytics" aria-label="Analytics overview">
-        <div className="xe-analytics__head">
-          <h2 className="xe-analytics__title">Analytics</h2>
-          <p className="xe-analytics__hint">Live snapshot across content and demand</p>
+      <section className="xe-dash-section xe-dash-section--first" aria-label="Needs attention">
+        <div className="xe-dash-section__head">
+          <h2>Needs attention</h2>
         </div>
-        <div className="xe-stats">
+        <div className="xe-tasks">
+          {tasks.length === 0 ? (
+            <div className="xe-empty xe-empty--inline">Nothing urgent. You&apos;re clear.</div>
+          ) : (
+            tasks.map((task, i) => (
+              <motion.a
+                key={task.id}
+                href={task.href}
+                className={`xe-task xe-task--${task.tone || 'default'}`}
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                animate="show"
+              >
+                <strong>{task.title}</strong>
+                <span>{task.meta}</span>
+              </motion.a>
+            ))
+          )}
+        </div>
+      </section>
+
+      <section className="xe-analytics xe-analytics--tight" aria-label="Key metrics">
+        <div className="xe-stats xe-stats--four">
           {stats.map((stat, index) => (
-            <StatCard key={stat.label} stat={stat} index={index} />
+            <motion.a
+              key={stat.label}
+              href={stat.href}
+              className="xe-stat xe-stat--clean"
+              custom={index}
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+            >
+              <div className="xe-stat__label">{stat.label}</div>
+              <div className="xe-stat__value">{stat.value.toLocaleString()}</div>
+              <div className="xe-stat__meta">{stat.meta}</div>
+            </motion.a>
           ))}
         </div>
       </section>
 
-      <div className="xe-shortcuts">
-        {[
-          {
-            label: 'Recruitment',
-            hint: 'Jobs & hiring pipeline',
-            href: '/admin/workspace/recruitment',
-          },
-          { label: 'CRM Inbox', hint: 'Contact inquiries', href: '/admin/workspace/crm' },
-          { label: 'SEO Center', hint: 'Defaults & coverage', href: '/admin/workspace/seo' },
-          { label: 'AI Assistant', hint: 'Draft marketing copy', href: '/admin/workspace/ai' },
-          { label: 'Media Studio', hint: 'Asset library', href: '/admin/workspace/media' },
-          { label: 'Analytics', hint: 'CMS metrics', href: '/admin/workspace/analytics' },
-          {
-            label: 'Newsletter',
-            hint: 'Subscriber health',
-            href: '/admin/workspace/newsletter',
-          },
-          { label: 'Activity', hint: 'Recent changes', href: '/admin/workspace/activity' },
-        ].map((item) => (
-          <Link key={item.href} href={item.href} className="xe-shortcut">
-            <span className="xe-shortcut__label">{item.label}</span>
-            <span className="xe-shortcut__hint">{item.hint}</span>
-          </Link>
-        ))}
-      </div>
+      <div className="xe-panels xe-panels--3">
+        <div className="xe-panel">
+          <div className="xe-panel__head">
+            <h3 className="xe-panel__title">Leads</h3>
+            <Link className="xe-panel__link" href="/admin/workspace/crm">
+              CRM
+            </Link>
+          </div>
+          <div className="xe-panel__body">
+            {messages.length === 0 ? (
+              <div className="xe-empty">No new leads.</div>
+            ) : (
+              messages.map((row) => (
+                <Link key={row.id} href={row.href} className="xe-row">
+                  <span className="xe-row__main">
+                    <span className="xe-row__title">{row.title}</span>
+                    <span className="xe-row__sub">{row.subtitle}</span>
+                  </span>
+                </Link>
+              ))
+            )}
+          </div>
+        </div>
 
-      <div className="xe-panels">
-        <Panel
-          title="Latest blogs"
-          href="/admin/collections/blogs"
-          rows={blogs}
-          empty="No blog posts yet. Create your first article."
-        />
-        <Panel
-          title="Services"
-          href="/admin/collections/services"
-          rows={services}
-          empty="No services published yet."
-        />
-      </div>
+        <div className="xe-panel">
+          <div className="xe-panel__head">
+            <h3 className="xe-panel__title">Applications</h3>
+            <Link className="xe-panel__link" href="/admin/workspace/recruitment">
+              Hiring
+            </Link>
+          </div>
+          <div className="xe-panel__body">
+            {applications.length === 0 ? (
+              <div className="xe-empty">No applications.</div>
+            ) : (
+              applications.map((row) => (
+                <Link key={row.id} href={row.href} className="xe-row">
+                  <span className="xe-row__main">
+                    <span className="xe-row__title">{row.title}</span>
+                    <span className="xe-row__sub">{row.subtitle}</span>
+                  </span>
+                </Link>
+              ))
+            )}
+          </div>
+        </div>
 
-      <div className="xe-panels">
-        <Panel
-          title="Open careers"
-          href="/admin/collections/careers"
-          rows={careers}
-          empty="No open roles right now."
-        />
-        <Panel
-          title="Recent messages"
-          href="/admin/collections/contact-messages"
-          rows={messages}
-          empty="Inbox is clear."
-        />
+        <div className="xe-panel">
+          <div className="xe-panel__head">
+            <h3 className="xe-panel__title">Activity</h3>
+            <Link className="xe-panel__link" href="/admin/workspace/activity">
+              All
+            </Link>
+          </div>
+          <div className="xe-panel__body">
+            {activity.length === 0 ? (
+              <div className="xe-empty">No recent activity.</div>
+            ) : (
+              activity.slice(0, 5).map((row) => (
+                <Link key={row.id} href={row.href} className="xe-row">
+                  <span className="xe-row__main">
+                    <span className="xe-row__title">{row.title}</span>
+                    <span className="xe-row__sub">{row.subtitle}</span>
+                  </span>
+                </Link>
+              ))
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )

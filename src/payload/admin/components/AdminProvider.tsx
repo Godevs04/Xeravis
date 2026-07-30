@@ -3,6 +3,7 @@
 import React from 'react'
 
 import { AdminPwa } from '@/components/pwa/AdminPwa'
+import { WorkspaceProvider } from '@/payload/admin/workspace/WorkspaceContext'
 
 import { CommandPalette } from './CommandPalette'
 
@@ -18,6 +19,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     if (!stored) {
       window.localStorage.setItem(STORAGE_KEY, 'light')
     }
+    root.setAttribute('data-xe-ui', 'v3')
 
     const onSave = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
@@ -55,11 +57,11 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <>
+    <WorkspaceProvider>
       {children}
       <CommandPalette />
       <AdminPwa />
-    </>
+    </WorkspaceProvider>
   )
 }
 

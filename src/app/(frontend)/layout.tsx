@@ -5,6 +5,7 @@ import { AmbientBackground } from '@/components/layout/AmbientBackground'
 import { SkipLink } from '@/components/layout/SkipLink'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
+import { PageviewBeacon } from '@/components/analytics/PageviewBeacon'
 import { buildMetadata, organizationJsonLd } from '@/lib/seo'
 import { AppProviders } from '@/providers'
 
@@ -63,6 +64,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
             {children}
           </main>
           <SiteFooter />
+          <PageviewBeacon />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

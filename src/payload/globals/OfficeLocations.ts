@@ -5,6 +5,9 @@ import { anyone, canManageContent } from '@/payload/access'
 export const OfficeLocations: GlobalConfig = {
   slug: 'office-locations',
   label: 'Office Locations',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: canManageContent,

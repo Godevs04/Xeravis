@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { canManageCareers, isAdmin } from '@/payload/access'
+import { trackActivity } from '@/payload/hooks/activity'
 
 export const JobApplications: CollectionConfig = {
   slug: 'job-applications',
@@ -15,7 +16,7 @@ export const JobApplications: CollectionConfig = {
       'totalExperience',
       'createdAt',
     ],
-    group: 'Talent',
+    group: 'Careers',
     listSearchableFields: ['name', 'email', 'applicationId', 'firstName', 'lastName'],
   },
   access: {
@@ -36,6 +37,7 @@ export const JobApplications: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [trackActivity('job-applications')],
   },
   fields: [
     {

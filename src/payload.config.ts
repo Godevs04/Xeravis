@@ -46,15 +46,18 @@ export default buildConfig({
       beforeNav: ['./payload/admin/components/nav/BeforeNav#BeforeNav'],
       beforeNavLinks: ['./payload/admin/components/nav/BeforeNavLinks#BeforeNavLinks'],
       afterNavLinks: ['./payload/admin/components/nav/AfterNavLinks#AfterNavLinks'],
-      beforeDashboard: ['./payload/admin/components/dashboard/BeforeDashboard#BeforeDashboard'],
-      afterDashboard: ['./payload/admin/components/dashboard/AfterDashboard#AfterDashboard'],
       header: ['./payload/admin/components/HeaderChip#HeaderChip'],
       actions: [
-        './payload/admin/components/AdminThemeToggle#AdminThemeToggle',
+        './payload/admin/components/QuickCreateAction#QuickCreateAction',
+        './payload/admin/components/NotificationBell#NotificationBell',
         './payload/admin/components/CommandAction#CommandAction',
-        './payload/admin/components/LogoutAction#LogoutAction',
       ],
       views: {
+        dashboard: {
+          Component: './payload/admin/components/dashboard/EnterpriseDashboard#EnterpriseDashboard',
+          path: '/',
+          meta: { title: 'Command Center' },
+        },
         recruitment: {
           Component: './payload/admin/workspace/RecruitmentView#RecruitmentView',
           path: '/workspace/recruitment',

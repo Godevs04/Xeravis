@@ -1,111 +1,113 @@
-import type { AdminViewServerProps } from 'payload'
+import type { AdminViewServerProps, Payload, Where } from 'payload'
 import Link from 'next/link'
 import React from 'react'
 
 import { countCollection } from './lib'
 import { WorkspacePanel, WorkspaceShell } from './WorkspaceShell'
 
+async function topPages(payload: Payload) {
+  try {
+    const result = await payload.find({
+      collection: 'analytics-events',
+      depth: 0,
+      limit: 500,
+      overrideAccess: true,
+      where: { type: { equals: 'pageview' } } as Where,
+      sort: '-createdAt',
+    })
+
+    const counts = new Map<string, number>()
+    for (const doc of result.docs) {
+      const path =
+        typeof (doc as { path?: string }).path === 'string' ? (doc as { path: string }).path : '/'
+      counts.set(path, (counts.get(path) || 0) + 1)
+    }
+
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([path, views]) => ({ path, views }))
+  } catch {
+    return []
+  }
+}
+
 export async function AnalyticsView(props: AdminViewServerProps) {
   const { payload } = props
 
-  const [
-    pages,
-    blogs,
-    services,
-    industries,
-    solutions,
-    careers,
-    media,
-    apps,
-    messages,
-    subscribers,
-  ] = await Promise.all([
-    countCollection(payload, 'pages'),
-    countCollection(payload, 'blogs'),
-    countCollection(payload, 'services'),
-    countCollection(payload, 'industries'),
-    countCollection(payload, 'solutions'),
-    countCollection(payload, 'careers'),
-    countCollection(payload, 'media'),
-    countCollection(payload, 'job-applications'),
-    countCollection(payload, 'contact-messages'),
-    countCollection(payload, 'newsletter-subscribers'),
-  ])
-
-  let analyticsGlobal: Record<string, unknown> = {}
-  try {
-    analyticsGlobal = (await payload.findGlobal({
-      slug: 'analytics',
-      overrideAccess: true,
-    })) as unknown as Record<string, unknown>
-  } catch {
-    analyticsGlobal = {}
-  }
-
-  const tracking = [
-    { label: 'Google Analytics', configured: Boolean(analyticsGlobal.googleAnalyticsId) },
-    { label: 'GTM', configured: Boolean(analyticsGlobal.googleTagManagerId) },
-    { label: 'Meta Pixel', configured: Boolean(analyticsGlobal.metaPixelId) },
-    { label: 'LinkedIn', configured: Boolean(analyticsGlobal.linkedinPartnerId) },
-  ]
+  const [pageviews, leads, applications, downloads, newsletter, blogs, jobs, pages] =
+    await Promise.all([
+      countCollection(payload, 'analytics-events', { type: { equals: 'pageview' } }),
+      countCollection(payload, 'analytics-events', { type: { equals: 'lead' } }),
+      countCollection(payload, 'analytics-events', { type: { equals: 'application' } }),
+      countCollection(payload, 'analytics-events', { type: { equals: 'download' } }),
+      countCollection(payload, 'analytics-events', { type: { equals: 'newsletter' } }),
+      countCollection(payload, 'blogs'),
+      countCollection(payload, 'careers'),
+      topPages(payload),
+    ])
 
   return (
     <WorkspaceShell
       active="analytics"
       title="Analytics"
-      subtitle="Operational metrics from Payload collections plus tracking configuration health."
+      subtitle="First-party traffic and conversion events stored in Payload — one database."
       stats={[
-        { label: 'Pages', value: pages, href: '/admin/collections/pages' },
-        { label: 'Insights', value: blogs, href: '/admin/collections/blogs', tone: 'accent' },
-        { label: 'Services', value: services, href: '/admin/collections/services' },
         {
-          label: 'Applications',
-          value: apps,
-          href: '/admin/collections/job-applications',
-          tone: 'warn',
+          label: 'Page views',
+          value: pageviews,
+          tone: 'accent',
+          href: '/admin/collections/analytics-events',
         },
+        { label: 'Leads', value: leads, href: '/admin/workspace/crm' },
+        { label: 'Applications', value: applications, href: '/admin/workspace/recruitment' },
+        { label: 'Downloads', value: downloads, href: '/admin/collections/downloads' },
+        { label: 'Newsletter', value: newsletter, href: '/admin/workspace/newsletter' },
+        { label: 'Insights', value: blogs, href: '/admin/collections/blogs' },
       ]}
-      actions={[{ label: 'Tracking settings', href: '/admin/globals/analytics', primary: true }]}
+      actions={[
+        { label: 'Event log', href: '/admin/collections/analytics-events', primary: true },
+        { label: 'Tracking IDs', href: '/admin/globals/analytics' },
+      ]}
     >
       <div className="xe-ws-grid xe-ws-grid--2">
+        <WorkspacePanel title="Top pages">
+          {pages.length === 0 ? (
+            <p className="xe-ws-note">
+              No pageviews yet. Browse the public site to start collecting.
+            </p>
+          ) : (
+            <ul className="xe-ws-kv">
+              {pages.map((item) => (
+                <li key={item.path}>
+                  <span>{item.path}</span>
+                  <strong>{item.views}</strong>
+                </li>
+              ))}
+            </ul>
+          )}
+        </WorkspacePanel>
         <WorkspacePanel title="Content footprint">
           <ul className="xe-ws-kv">
-            {[
-              ['Industries', industries, '/admin/collections/industries'],
-              ['Solutions', solutions, '/admin/collections/solutions'],
-              ['Careers', careers, '/admin/collections/careers'],
-              ['Media assets', media, '/admin/collections/media'],
-              ['Contact messages', messages, '/admin/collections/contact-messages'],
-              ['Newsletter subscribers', subscribers, '/admin/collections/newsletter-subscribers'],
-            ].map(([label, value, href]) => (
-              <li key={String(label)}>
-                <Link href={String(href)}>
-                  <span>{label}</span>
-                  <strong>{value as number}</strong>
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link href="/admin/collections/careers">
+                <span>Jobs</span>
+                <strong>{jobs}</strong>
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/collections/blogs">
+                <span>Insights</span>
+                <strong>{blogs}</strong>
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/collections/analytics-events">
+                <span>All events</span>
+                <strong>{pageviews + leads + applications + downloads + newsletter}</strong>
+              </Link>
+            </li>
           </ul>
-        </WorkspacePanel>
-        <WorkspacePanel
-          title="Tracking health"
-          href="/admin/globals/analytics"
-          linkLabel="Configure"
-        >
-          <ul className="xe-ws-kv">
-            {tracking.map((item) => (
-              <li key={item.label}>
-                <span>{item.label}</span>
-                <strong className={item.configured ? 'is-ok' : 'is-miss'}>
-                  {item.configured ? 'Configured' : 'Missing'}
-                </strong>
-              </li>
-            ))}
-          </ul>
-          <p className="xe-ws-note">
-            Traffic charts live in your analytics provider. This workspace keeps CMS-side counts and
-            tag configuration under one authentication layer.
-          </p>
         </WorkspacePanel>
       </div>
     </WorkspaceShell>

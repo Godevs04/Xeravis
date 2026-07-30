@@ -5,6 +5,9 @@ import { anyone, isAdmin } from '@/payload/access'
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   label: 'Site Settings',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: isAdmin,

@@ -7,6 +7,9 @@ import { revalidateGlobal } from '@/payload/hooks'
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
   label: 'Navigation',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: canManageContent,
@@ -44,7 +47,9 @@ export const Navigation: GlobalConfig = {
       name: 'ctaLabel',
       type: 'text',
       label: 'CTA Label (legacy)',
-      admin: { description: 'Prefer CTA group above. Kept for compatibility.' },
+      admin: {
+        description: 'Prefer CTA group above. Kept for compatibility.',
+      },
     },
     {
       name: 'ctaHref',

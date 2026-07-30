@@ -6,7 +6,7 @@ import { orderField } from '@/payload/fields'
 export const TeamMembers: CollectionConfig = {
   slug: 'team-members',
   admin: {
-    group: 'Brand',
+    group: 'Website',
     useAsTitle: 'name',
     defaultColumns: ['name', 'role', 'department', 'order', 'updatedAt'],
   },

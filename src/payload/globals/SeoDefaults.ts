@@ -5,6 +5,9 @@ import { anyone, canManageContent } from '@/payload/access'
 export const SeoDefaults: GlobalConfig = {
   slug: 'seo-defaults',
   label: 'SEO Defaults',
+  admin: {
+    group: 'Settings',
+  },
   access: {
     read: anyone,
     update: canManageContent,

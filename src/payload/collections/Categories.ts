@@ -6,7 +6,7 @@ import { slugField } from '@/payload/fields/slug'
 export const Categories: CollectionConfig = {
   slug: 'categories',
   admin: {
-    group: 'Taxonomy',
+    group: 'Website',
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
   },

@@ -9,40 +9,41 @@ type CmdItem = {
   id: string
   label: string
   href: string
-  group: 'collection' | 'global' | 'action'
+  group: string
 }
 
-const ITEMS: CmdItem[] = [
+const STATIC_ITEMS: CmdItem[] = [
   {
     id: 'recruitment',
     label: 'Recruitment workspace',
     href: '/admin/workspace/recruitment',
-    group: 'action',
+    group: 'workspace',
   },
-  { id: 'crm', label: 'CRM Inbox', href: '/admin/workspace/crm', group: 'action' },
+  { id: 'crm', label: 'CRM Inbox', href: '/admin/workspace/crm', group: 'workspace' },
   {
     id: 'analytics-ws',
     label: 'Analytics workspace',
     href: '/admin/workspace/analytics',
-    group: 'action',
+    group: 'workspace',
   },
   {
     id: 'newsletter-ws',
     label: 'Newsletter workspace',
     href: '/admin/workspace/newsletter',
-    group: 'action',
+    group: 'workspace',
   },
-  { id: 'seo-ws', label: 'SEO Center', href: '/admin/workspace/seo', group: 'action' },
-  { id: 'ai-ws', label: 'AI Content Assistant', href: '/admin/workspace/ai', group: 'action' },
-  { id: 'media-ws', label: 'Media Studio', href: '/admin/workspace/media', group: 'action' },
+  { id: 'seo-ws', label: 'SEO Center', href: '/admin/workspace/seo', group: 'workspace' },
+  { id: 'ai-ws', label: 'AI Content Assistant', href: '/admin/workspace/ai', group: 'workspace' },
+  { id: 'media-ws', label: 'Media Studio', href: '/admin/workspace/media', group: 'workspace' },
   {
     id: 'activity-ws',
     label: 'Activity timeline',
     href: '/admin/workspace/activity',
-    group: 'action',
+    group: 'workspace',
   },
   { id: 'pages', label: 'Pages', href: '/admin/collections/pages', group: 'collection' },
   { id: 'blogs', label: 'Insights / Blogs', href: '/admin/collections/blogs', group: 'collection' },
+  { id: 'research', label: 'Research', href: '/admin/collections/research', group: 'collection' },
   { id: 'services', label: 'Services', href: '/admin/collections/services', group: 'collection' },
   {
     id: 'solutions',
@@ -65,38 +66,24 @@ const ITEMS: CmdItem[] = [
   { id: 'careers', label: 'Careers', href: '/admin/collections/careers', group: 'collection' },
   {
     id: 'applications',
-    label: 'Job Applications',
+    label: 'Candidates',
     href: '/admin/collections/job-applications',
     group: 'collection',
   },
+  {
+    id: 'interviews',
+    label: 'Interviews',
+    href: '/admin/collections/interviews',
+    group: 'collection',
+  },
+  { id: 'leads', label: 'Leads', href: '/admin/collections/contact-messages', group: 'collection' },
+  {
+    id: 'downloads',
+    label: 'Downloads',
+    href: '/admin/collections/downloads',
+    group: 'collection',
+  },
   { id: 'media', label: 'Media', href: '/admin/collections/media', group: 'collection' },
-  {
-    id: 'messages',
-    label: 'Contact Messages',
-    href: '/admin/collections/contact-messages',
-    group: 'collection',
-  },
-  {
-    id: 'newsletter',
-    label: 'Newsletter Subscribers',
-    href: '/admin/collections/newsletter-subscribers',
-    group: 'collection',
-  },
-  { id: 'users', label: 'Users', href: '/admin/collections/users', group: 'collection' },
-  {
-    id: 'site-settings',
-    label: 'Site Settings',
-    href: '/admin/globals/site-settings',
-    group: 'global',
-  },
-  { id: 'navigation', label: 'Navigation', href: '/admin/globals/navigation', group: 'global' },
-  { id: 'seo', label: 'SEO Defaults', href: '/admin/globals/seo-defaults', group: 'global' },
-  {
-    id: 'analytics',
-    label: 'Analytics settings',
-    href: '/admin/globals/analytics',
-    group: 'global',
-  },
   {
     id: 'create-blog',
     label: 'Create blog post',
@@ -109,14 +96,7 @@ const ITEMS: CmdItem[] = [
     href: '/admin/collections/careers/create',
     group: 'action',
   },
-  {
-    id: 'create-page',
-    label: 'Create page',
-    href: '/admin/collections/pages/create',
-    group: 'action',
-  },
   { id: 'account', label: 'Account', href: '/admin/account', group: 'action' },
-  { id: 'logout', label: 'Log out', href: '/admin/logout', group: 'action' },
   { id: 'website', label: 'View website', href: '/', group: 'action' },
 ]
 
@@ -125,13 +105,25 @@ export const CommandPalette = () => {
   const [open, setOpen] = React.useState(false)
   const [query, setQuery] = React.useState('')
   const [active, setActive] = React.useState(0)
+  const [live, setLive] = React.useState<CmdItem[]>([])
+  const [searching, setSearching] = React.useState(false)
   const inputRef = React.useRef<HTMLInputElement>(null)
 
-  const filtered = React.useMemo(() => {
+  const staticFiltered = React.useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return ITEMS
-    return ITEMS.filter((item) => item.label.toLowerCase().includes(q) || item.group.includes(q))
+    if (!q) return STATIC_ITEMS
+    return STATIC_ITEMS.filter(
+      (item) => item.label.toLowerCase().includes(q) || item.group.includes(q),
+    )
   }, [query])
+
+  const filtered = React.useMemo(() => {
+    const map = new Map<string, CmdItem>()
+    for (const item of [...live, ...staticFiltered]) {
+      map.set(item.id, item)
+    }
+    return [...map.values()]
+  }, [live, staticFiltered])
 
   React.useEffect(() => {
     const onOpen = () => setOpen(true)
@@ -154,6 +146,7 @@ export const CommandPalette = () => {
   React.useEffect(() => {
     if (open) {
       setQuery('')
+      setLive([])
       setActive(0)
       requestAnimationFrame(() => inputRef.current?.focus())
     }
@@ -161,6 +154,42 @@ export const CommandPalette = () => {
 
   React.useEffect(() => {
     setActive(0)
+    const q = query.trim()
+    if (q.length < 2) {
+      setLive([])
+      setSearching(false)
+      return
+    }
+
+    const controller = new AbortController()
+    const timer = window.setTimeout(() => {
+      setSearching(true)
+      void fetch(`/api/admin/search?q=${encodeURIComponent(q)}`, {
+        credentials: 'include',
+        signal: controller.signal,
+      })
+        .then(async (res) => {
+          if (!res.ok) return
+          const data = (await res.json()) as {
+            results?: { id: string; label: string; href: string; group: string }[]
+          }
+          setLive(
+            (data.results || []).map((item) => ({
+              id: item.id,
+              label: item.label,
+              href: item.href,
+              group: item.group,
+            })),
+          )
+        })
+        .catch(() => {})
+        .finally(() => setSearching(false))
+    }, 220)
+
+    return () => {
+      controller.abort()
+      window.clearTimeout(timer)
+    }
   }, [query])
 
   const go = React.useCallback(
@@ -212,7 +241,7 @@ export const CommandPalette = () => {
             <input
               ref={inputRef}
               className="xe-cmd__input"
-              placeholder="Search collections, globals, actions…"
+              placeholder="Search blogs, jobs, leads, media, candidates…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={onKeyDown}
@@ -220,7 +249,9 @@ export const CommandPalette = () => {
             />
             <div className="xe-cmd__list" role="listbox">
               {filtered.length === 0 ? (
-                <div className="xe-cmd__empty">No matches. Try “blogs” or “media”.</div>
+                <div className="xe-cmd__empty">
+                  {searching ? 'Searching…' : 'No matches. Try “blogs” or a candidate name.'}
+                </div>
               ) : (
                 filtered.map((item, index) => (
                   <button
