@@ -16,6 +16,7 @@ export const DEFAULT_NAV = {
   primaryLinks: [
     { label: 'Services', href: '/services', mega: 'services' },
     { label: 'Solutions', href: '/solutions', mega: 'solutions' },
+    { label: 'Technologies', href: '/technologies', mega: 'none' },
     { label: 'Industries', href: '/industries', mega: 'industries' },
     { label: 'Insights', href: '/insights', mega: 'insights' },
     { label: 'Careers', href: '/careers', mega: 'none' },
@@ -232,17 +233,6 @@ export const FALLBACK_BLOG_POSTS = [
 ]
 
 export const FALLBACK_ABOUT_BLOCKS = [
-  {
-    blockType: 'hero',
-    eyebrow: 'About Us',
-    heading: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
-    subheading:
-      'XELARVIS PRIVATE LIMITED specializes in Healthcare AI, Clinical Data Science, Machine Learning, Advanced Analytics, and Enterprise Software Solutions.',
-    ctaLabel: 'Talk to us',
-    ctaHref: '/contact',
-    secondaryCtaLabel: 'Company overview',
-    secondaryCtaHref: '/about/company-overview',
-  },
   {
     blockType: 'aboutPreview',
     heading: 'About the Company',

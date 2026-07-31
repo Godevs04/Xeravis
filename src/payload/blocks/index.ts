@@ -278,6 +278,130 @@ export const pageBlocks: Block[] = [
       },
     ],
   },
+  // ——— V5 Storytelling blocks ———
+  {
+    slug: 'storyHero',
+    labels: { singular: 'Story Hero', plural: 'Story Heroes' },
+    fields: [
+      { name: 'brand', type: 'text', maxLength: 40, defaultValue: 'Xelarvis' },
+      { name: 'eyebrow', type: 'text', maxLength: 80 },
+      { name: 'heading', type: 'text', required: true, maxLength: 160 },
+      { name: 'subheading', type: 'textarea', maxLength: 360 },
+      { name: 'ctaLabel', type: 'text', maxLength: 48 },
+      { name: 'ctaHref', type: 'text' },
+      { name: 'secondaryCtaLabel', type: 'text', maxLength: 48 },
+      { name: 'secondaryCtaHref', type: 'text' },
+    ],
+  },
+  {
+    slug: 'storyChallenge',
+    labels: { singular: 'Story Challenge', plural: 'Story Challenges' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 200 },
+      {
+        name: 'items',
+        type: 'array',
+        fields: [
+          { name: 'title', type: 'text', required: true, maxLength: 120 },
+          { name: 'body', type: 'textarea', maxLength: 240 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'storySolution',
+    labels: { singular: 'Story Solution', plural: 'Story Solutions' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 160 },
+      {
+        name: 'chapters',
+        type: 'array',
+        fields: [
+          { name: 'title', type: 'text', required: true, maxLength: 120 },
+          { name: 'body', type: 'textarea', required: true, maxLength: 400 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'storyCapabilities',
+    labels: { singular: 'Story Capabilities', plural: 'Story Capabilities' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 120 },
+      { name: 'subheading', type: 'textarea', maxLength: 240 },
+    ],
+  },
+  {
+    slug: 'storyTechOrbit',
+    labels: { singular: 'Story Tech Orbit', plural: 'Story Tech Orbits' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 120 },
+      { name: 'subheading', type: 'textarea', maxLength: 240 },
+    ],
+  },
+  {
+    slug: 'storyProof',
+    labels: { singular: 'Story Proof', plural: 'Story Proof' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 160 },
+      {
+        name: 'stats',
+        type: 'array',
+        fields: [
+          { name: 'label', type: 'text', required: true, maxLength: 60 },
+          { name: 'value', type: 'text', required: true, maxLength: 24 },
+          { name: 'suffix', type: 'text', maxLength: 24 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'storyCases',
+    labels: { singular: 'Story Cases', plural: 'Story Cases' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 120 },
+    ],
+  },
+  {
+    slug: 'storyProcess',
+    labels: { singular: 'Story Process', plural: 'Story Processes' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 120 },
+      {
+        name: 'steps',
+        type: 'array',
+        fields: [
+          { name: 'title', type: 'text', required: true, maxLength: 80 },
+          { name: 'description', type: 'textarea', required: true, maxLength: 280 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'storyPresence',
+    labels: { singular: 'Story Presence', plural: 'Story Presence' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 120 },
+    ],
+  },
+  {
+    slug: 'storyCta',
+    labels: { singular: 'Story CTA', plural: 'Story CTAs' },
+    fields: [
+      { name: 'heading', type: 'text', required: true, maxLength: 160 },
+      { name: 'subheading', type: 'textarea', maxLength: 280 },
+      { name: 'ctaLabel', type: 'text', maxLength: 48 },
+      { name: 'ctaHref', type: 'text' },
+    ],
+  },
 ]
 
 export default pageBlocks

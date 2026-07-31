@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
 import { JobCard } from '@/components/domain/JobCard'
+import { CareersPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
-import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { Button } from '@/components/ui/button'
@@ -49,17 +49,9 @@ export default async function CareersPage() {
 
   return (
     <>
-      <PageHero
-        brand="Xelarvis"
-        eyebrow="Careers"
+      <CareersPageHero
         title="Build the Future with AI, Healthcare, and Technology"
         subtitle="Join XELARVIS and work on innovative projects in Artificial Intelligence, Clinical Data Science, Healthcare Analytics, Enterprise Software, and Cloud Technologies."
-        size="compact"
-        variant="default"
-        ctas={[
-          { label: 'View Open Positions', href: '#open-positions', variant: 'accent' },
-          { label: 'Join Our Talent Network', href: '/contact?intent=careers', variant: 'outline' },
-        ]}
       />
 
       <Section>
@@ -67,16 +59,13 @@ export default async function CareersPage() {
           <h2 className="font-display text-3xl font-bold tracking-tight text-[#0F172A]">
             Why Join XELARVIS
           </h2>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-10 divide-y divide-slate-200 border-y border-slate-200">
             {WHY_JOIN.map((item) => (
-              <div
-                key={item}
-                className="rounded-[20px] border border-slate-200 bg-white px-4 py-4 text-sm font-medium text-[#0F172A] shadow-[0_8px_24px_rgba(15,23,42,0.04)]"
-              >
+              <li key={item} className="py-5 text-base font-medium text-[#0F172A]">
                 {item}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </Container>
       </Section>
 
@@ -88,24 +77,26 @@ export default async function CareersPage() {
           <p className="mt-3 max-w-2xl text-slate-600">
             A clear path from application to onboarding so you always know what to expect.
           </p>
-          <ol className="mt-10 grid gap-4 md:grid-cols-2">
+          <ol className="mt-10 space-y-8">
             {HIRING_STEPS.map((step, index) => (
               <li
                 key={step.title}
-                className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.04)]"
+                className="grid gap-2 border-l-2 border-teal-500 pl-6 md:grid-cols-[6rem_1fr]"
               >
-                <p className="text-xs font-bold tracking-[0.14em] text-[#0D9488] uppercase">
+                <p className="font-display text-xs font-bold tracking-[0.14em] text-[#0D9488] uppercase">
                   Step {index + 1}
                 </p>
-                <h3 className="mt-2 font-semibold text-[#0F172A]">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
+                <div>
+                  <h3 className="font-semibold text-[#0F172A]">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
+                </div>
               </li>
             ))}
           </ol>
         </Container>
       </Section>
 
-      <Section id="open-positions">
+      <Section id="open-roles">
         <Container>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -142,7 +133,7 @@ export default async function CareersPage() {
       </Section>
 
       <Section surface>
-        <Container className="grid gap-8 lg:grid-cols-3">
+        <Container className="space-y-10">
           {[
             {
               title: 'Internship Program',
@@ -157,9 +148,12 @@ export default async function CareersPage() {
               body: 'Flexible work, learning budget, paid leave, and growth-focused career paths.',
             },
           ].map((card) => (
-            <div key={card.title} className="rounded-[24px] border border-slate-200 bg-white p-6">
+            <div
+              key={card.title}
+              className="border-t border-slate-200 pt-8 first:border-t-0 first:pt-0"
+            >
               <h3 className="font-display text-xl font-semibold text-[#0F172A]">{card.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">{card.body}</p>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">{card.body}</p>
             </div>
           ))}
         </Container>

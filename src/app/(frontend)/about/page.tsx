@@ -1,4 +1,5 @@
 import { RenderBlocks, type PageBlock } from '@/blocks/RenderBlocks'
+import { AboutPageHero } from '@/components/marketing/PageHeroes'
 import { safePayload } from '@/lib/cms'
 import { FALLBACK_ABOUT_BLOCKS } from '@/lib/fallback-data'
 import { buildMetadata } from '@/lib/seo'
@@ -47,6 +48,10 @@ async function loadAboutPage() {
   })
 }
 
+function withoutHeroBlocks(blocks: PageBlock[]) {
+  return blocks.filter((b) => b.blockType !== 'hero' && b.blockType !== 'storyHero')
+}
+
 export async function generateMetadata() {
   const page = await loadAboutPage()
   return buildMetadata({
@@ -61,9 +66,15 @@ export async function generateMetadata() {
 
 export default async function AboutPage() {
   const page = await loadAboutPage()
-  const blocks = page?.layout?.length
-    ? page.layout
-    : (FALLBACK_ABOUT_BLOCKS as unknown as PageBlock[])
+  const raw = page?.layout?.length ? page.layout : (FALLBACK_ABOUT_BLOCKS as unknown as PageBlock[])
 
-  return <RenderBlocks blocks={blocks} />
+  return (
+    <>
+      <AboutPageHero
+        title="Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation"
+        subtitle="XELARVIS PRIVATE LIMITED specializes in Healthcare AI, Clinical Data Science, Machine Learning, Advanced Analytics, and Enterprise Software Solutions."
+      />
+      <RenderBlocks blocks={withoutHeroBlocks(raw)} />
+    </>
+  )
 }

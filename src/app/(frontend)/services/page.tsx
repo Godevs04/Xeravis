@@ -1,6 +1,7 @@
-import { ServiceCard } from '@/components/domain/ServiceCard'
+import Link from 'next/link'
+
+import { ServicesPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
-import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { listPublished } from '@/lib/cms'
@@ -30,29 +31,34 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <PageHero
-        brand="Xelarvis"
-        eyebrow="Services"
+      <ServicesPageHero
         title="Our Core Services"
         subtitle="Artificial Intelligence, Data Science, IT Consulting, Clinical Data Science, and Cloud Data platforms — engineered for measurable outcomes."
-        size="compact"
-        variant="default"
       />
       <Section>
         <Container>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="divide-y divide-[color:var(--color-navy)]/10 border-t border-[color:var(--color-navy)]/10">
             {items.map((service, index) => (
               <AnimateIn key={service.id} delay={index * 0.04}>
-                <ServiceCard
-                  title={service.title}
-                  summary={service.summary}
-                  href={`/services/${service.slug}`}
-                  icon={service.icon}
-                  className="h-full"
-                />
+                <li>
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="group grid gap-3 py-10 transition-[padding] hover:pl-2 lg:grid-cols-[4rem_1fr_1.2fr]"
+                  >
+                    <span className="font-display text-sm tracking-[0.14em] text-teal-600">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-[color:var(--color-navy)] group-hover:text-teal-700 sm:text-3xl">
+                      {service.title}
+                    </h2>
+                    <p className="max-w-xl text-sm leading-relaxed text-slate-600 lg:justify-self-end">
+                      {service.summary}
+                    </p>
+                  </Link>
+                </li>
               </AnimateIn>
             ))}
-          </div>
+          </ul>
         </Container>
       </Section>
     </>

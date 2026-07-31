@@ -13,6 +13,18 @@ import { ProcessSteps } from '@/blocks/ProcessSteps'
 import { RichTextBlock } from '@/blocks/RichTextBlock'
 import { ServicesGrid } from '@/blocks/ServicesGrid'
 import { StatsRow } from '@/blocks/StatsRow'
+import {
+  StoryCapabilitiesBlock,
+  StoryCasesBlock,
+  StoryChallenge,
+  StoryCta,
+  StoryHero,
+  StoryPresenceBlock,
+  StoryProcess,
+  StoryProof,
+  StorySolution,
+  StoryTechOrbitBlock,
+} from '@/blocks/story'
 import { TeamGrid } from '@/blocks/TeamGrid'
 import { TechnologyGrid } from '@/blocks/TechnologyGrid'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock'
@@ -257,6 +269,103 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
                 heading={block.heading as string}
                 subheading={block.subheading as string | undefined}
                 values={block.values as { title: string; description: string }[] | undefined}
+              />
+            )
+          case 'storyHero':
+            return (
+              <StoryHero
+                key={key}
+                brand={block.brand as string | undefined}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+                ctaLabel={block.ctaLabel as string | undefined}
+                ctaHref={block.ctaHref as string | undefined}
+                secondaryCtaLabel={block.secondaryCtaLabel as string | undefined}
+                secondaryCtaHref={block.secondaryCtaHref as string | undefined}
+              />
+            )
+          case 'storyChallenge':
+            return (
+              <StoryChallenge
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+                items={block.items as { title: string; body?: string | null }[] | undefined}
+              />
+            )
+          case 'storySolution':
+            return (
+              <StorySolution
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+                chapters={block.chapters as { title: string; body: string }[] | undefined}
+              />
+            )
+          case 'storyCapabilities':
+            return (
+              <StoryCapabilitiesBlock
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+              />
+            )
+          case 'storyTechOrbit':
+            return (
+              <StoryTechOrbitBlock
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+              />
+            )
+          case 'storyProof':
+            return (
+              <StoryProof
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+                stats={
+                  block.stats as
+                    { label: string; value: string; suffix?: string | null }[] | undefined
+                }
+              />
+            )
+          case 'storyCases':
+            return (
+              <StoryCasesBlock
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+              />
+            )
+          case 'storyProcess':
+            return (
+              <StoryProcess
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+                steps={block.steps as { title: string; description: string }[] | undefined}
+              />
+            )
+          case 'storyPresence':
+            return (
+              <StoryPresenceBlock
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+              />
+            )
+          case 'storyCta':
+            return (
+              <StoryCta
+                key={key}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+                ctaLabel={block.ctaLabel as string | undefined}
+                ctaHref={block.ctaHref as string | undefined}
               />
             )
           default:

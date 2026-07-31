@@ -125,6 +125,7 @@ async function seed() {
       primaryLinks: [
         { label: 'Services', href: '/services', mega: 'services' },
         { label: 'Solutions', href: '/solutions', mega: 'solutions' },
+        { label: 'Technologies', href: '/technologies', mega: 'none' },
         { label: 'Industries', href: '/industries', mega: 'industries' },
         { label: 'Insights', href: '/insights', mega: 'insights' },
         { label: 'Careers', href: '/careers', mega: 'none' },
@@ -332,10 +333,15 @@ async function seed() {
   }
 
   for (const [index, solution] of SEED_SOLUTIONS.entries()) {
+    const relatedTech = solution.techLabels
+      .map((label) => techIds.get(label))
+      .filter(Boolean) as string[]
+
     await upsertBySlug(payload, 'solutions', solution.slug, {
       title: solution.title,
       summary: solution.summary,
       body: richParagraph(solution.summary),
+      technologies: relatedTech,
       featured: index < 4,
       order: index + 1,
     })
@@ -371,61 +377,116 @@ async function seed() {
 
   const homeLayout = [
     {
-      blockType: 'hero' as const,
-      eyebrow: 'XELARVIS TECHNOLOGIES',
-      heading: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
+      blockType: 'storyHero' as const,
+      brand: 'Xelarvis',
+      eyebrow: 'Healthcare · AI · Digital Transformation',
+      heading: 'Intelligence that survives the real world.',
       subheading:
-        'XELARVIS PRIVATE LIMITED is an IT Consulting and Artificial Intelligence Research company delivering innovative solutions in AI, Machine Learning, Data Science, Healthcare Analytics, Clinical Data Science, Cloud Technologies, and Enterprise Software Development.',
+        'We engineer AI, clinical data science, and enterprise platforms that operators trust — not demos that fade.',
       ctaLabel: "Let's Talk",
       ctaHref: '/contact',
-      secondaryCtaLabel: 'Explore services',
-      secondaryCtaHref: '/services',
+      secondaryCtaLabel: 'Explore solutions',
+      secondaryCtaHref: '/solutions',
     },
     {
-      blockType: 'statistics' as const,
-      heading: 'Trust indicators',
+      blockType: 'storyChallenge' as const,
+      eyebrow: 'The challenge',
+      heading: 'Most digital programs look finished. Few feel inevitable.',
+      items: [
+        {
+          title: 'Fragmented clinical & enterprise data',
+          body: 'Signals live in silos. Decisions wait on spreadsheets.',
+        },
+        {
+          title: 'AI without operational grounding',
+          body: 'Models that impress demos but stall in regulated reality.',
+        },
+        {
+          title: 'Transformation without craft',
+          body: 'Generic platforms. Generic outcomes. Forgotten brands.',
+        },
+      ],
+    },
+    {
+      blockType: 'storySolution' as const,
+      eyebrow: 'The solution',
+      heading: 'One practice where research, regulation, and delivery meet.',
+      chapters: [
+        {
+          title: 'Intelligence that ships',
+          body: 'We design AI and analytics systems that survive audits, scale in production, and move real clinical and enterprise decisions.',
+        },
+        {
+          title: 'Healthcare-first engineering',
+          body: 'CDISC, SAS, and regulated workflows sit beside modern cloud and LLM stacks — not as afterthoughts.',
+        },
+        {
+          title: 'One narrative, many surfaces',
+          body: 'From research lab to delivery cockpit, every capability connects to a measurable outcome for your teams.',
+        },
+      ],
+    },
+    {
+      blockType: 'storyCapabilities' as const,
+      eyebrow: 'Capabilities',
+      heading: 'What we bring to the table.',
+      subheading:
+        'AI research, data science, IT consulting, clinical data science, and cloud platforms — scroll sideways to explore.',
+    },
+    {
+      blockType: 'storyTechOrbit' as const,
+      eyebrow: 'Technology',
+      heading: 'A constellation, not a checklist.',
+      subheading:
+        'Hover the orbit. Each node is a capability we put into production for healthcare, AI, and enterprise delivery.',
+    },
+    {
+      blockType: 'storyProof' as const,
+      eyebrow: 'Proof',
+      heading: 'Numbers that leave room to breathe.',
       stats: [
         { label: 'Core services', value: '5' },
         { label: 'Industries served', value: '8' },
         { label: 'Solution areas', value: '8' },
-        { label: 'Focus', value: 'AI + Healthcare' },
+        { label: 'Focus', value: 'AI', suffix: '+Health' },
       ],
     },
     {
-      blockType: 'aboutPreview' as const,
-      heading: 'Transform data into intelligence.',
-      body: 'We help organizations accelerate innovation and build scalable digital solutions through research-driven methodologies and secure, future-ready platforms.',
-      cta: {
-        label: 'Company overview',
-        href: '/about/company-overview',
-        style: 'secondary' as const,
-      },
+      blockType: 'storyCases' as const,
+      eyebrow: 'Success stories',
+      heading: 'Outcomes, one story at a time.',
     },
     {
-      blockType: 'servicesGrid' as const,
-      heading: 'Our Core Services',
-      subheading:
-        'AI research, data science, IT consulting, clinical data science, and cloud data platforms.',
+      blockType: 'storyProcess' as const,
+      eyebrow: 'Process',
+      heading: 'How intelligence becomes delivery.',
+      steps: [
+        {
+          title: 'Discover',
+          description: 'Map constraints, data reality, and the decision that must improve.',
+        },
+        {
+          title: 'Design',
+          description: 'Architect the stack, compliance path, and measurable success criteria.',
+        },
+        {
+          title: 'Build',
+          description: 'Ship in slices — models, pipelines, and interfaces that operators trust.',
+        },
+        {
+          title: 'Scale',
+          description: 'Harden, observe, and expand into the next surface of the business.',
+        },
+      ],
     },
     {
-      blockType: 'industriesStrip' as const,
-      heading: 'Industries We Serve',
-      subheading:
-        'Healthcare, life sciences, finance, manufacturing, retail, logistics, and education.',
+      blockType: 'storyPresence' as const,
+      eyebrow: 'Presence',
+      heading: 'Voices from the work.',
     },
     {
-      blockType: 'technologyGrid' as const,
-      heading: 'Technology expertise',
-      subheading: 'Modern stacks for AI, clinical programming, analytics, and cloud.',
-    },
-    {
-      blockType: 'latestBlogs' as const,
-      heading: 'Insights',
-      subheading: 'Perspective from our AI, healthcare, and engineering practice.',
-    },
-    {
-      blockType: 'ctaBand' as const,
-      heading: 'Ready to build your next intelligent solution?',
+      blockType: 'storyCta' as const,
+      heading: 'Ready for the next intelligent chapter?',
       subheading: 'Tell us about your AI, clinical, analytics, or transformation goals.',
       ctaLabel: 'Schedule a Consultation',
       ctaHref: '/contact',
@@ -438,17 +499,6 @@ async function seed() {
   })
 
   const aboutLayout = [
-    {
-      blockType: 'hero' as const,
-      eyebrow: 'About Us',
-      heading: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
-      subheading:
-        'XELARVIS PRIVATE LIMITED specializes in Healthcare AI, Clinical Data Science, Machine Learning, Advanced Analytics, and Enterprise Software Solutions.',
-      ctaLabel: 'Talk to us',
-      ctaHref: '/contact',
-      secondaryCtaLabel: 'Why XELARVIS',
-      secondaryCtaHref: '/about/why-xelarvis',
-    },
     {
       blockType: 'aboutPreview' as const,
       heading: 'About the Company',

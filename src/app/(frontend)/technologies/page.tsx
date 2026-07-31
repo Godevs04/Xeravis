@@ -1,6 +1,6 @@
 import { TechnologyCard } from '@/components/domain/TechnologyCard'
+import { TechnologiesPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
-import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { listPublished } from '@/lib/cms'
@@ -102,24 +102,25 @@ export default async function TechnologiesPage() {
 
   return (
     <>
-      <PageHero
-        brand="Xelarvis"
-        eyebrow="Technologies"
+      <TechnologiesPageHero
         title="Modern stacks for intelligent delivery."
-        subtitle="We select technologies for maintainability, security, compliance, and scale — from clinical SAS to cloud-native AI."
-        size="compact"
-        variant="default"
+        subtitle="Our overall capability set across AI, clinical, cloud, and data. Each Solution page also lists the Technology Stack specific to that offering."
       />
       <Section>
         <Container>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-col gap-8">
             {items.map((item, index) => (
               <AnimateIn key={item.id} delay={index * 0.03}>
-                <TechnologyCard
-                  name={item.title}
-                  category={item.category}
-                  description={item.description}
-                />
+                <div className="grid items-start gap-4 border-t border-[color:var(--color-navy)]/10 pt-8 sm:grid-cols-[10rem_1fr]">
+                  <p className="text-xs font-semibold tracking-[0.14em] text-teal-700 uppercase">
+                    {item.category || 'stack'}
+                  </p>
+                  <TechnologyCard
+                    name={item.title}
+                    category={item.category}
+                    description={item.description}
+                  />
+                </div>
               </AnimateIn>
             ))}
           </div>

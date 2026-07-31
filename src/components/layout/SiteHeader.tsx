@@ -69,7 +69,7 @@ export async function SiteHeader() {
 
   // Keep the desktop bar slim — overcrowded CMS menus fall back to the designed nav.
   const cmsLinks = navigation?.primaryLinks ?? []
-  const links = cmsLinks.length > 0 && cmsLinks.length <= 7 ? cmsLinks : DEFAULT_NAV.primaryLinks
+  const links = cmsLinks.length > 0 && cmsLinks.length <= 8 ? cmsLinks : DEFAULT_NAV.primaryLinks
   const ctaLabel = navigation?.cta?.label || navigation?.ctaLabel || DEFAULT_NAV.ctaLabel
   const ctaHref = navigation?.cta?.href || navigation?.ctaHref || DEFAULT_NAV.ctaHref
 

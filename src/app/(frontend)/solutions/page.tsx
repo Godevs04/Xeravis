@@ -1,11 +1,11 @@
 import Link from 'next/link'
 
+import { SolutionsPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
-import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { listPublished } from '@/lib/cms'
-import { FALLBACK_SOLUTIONS, UNSPLASH } from '@/lib/fallback-data'
+import { FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -19,7 +19,8 @@ type SolutionDoc = {
 
 export const metadata = buildMetadata({
   title: 'Solutions',
-  description: 'Solution themes for cloud modernization, AI operations, and enterprise transformation.',
+  description:
+    'Solution themes for cloud modernization, AI operations, and enterprise transformation.',
   path: '/solutions',
 })
 
@@ -29,23 +30,23 @@ export default async function SolutionsPage() {
 
   return (
     <>
-      <PageHero
-        eyebrow="Solutions"
+      <SolutionsPageHero
         title="Outcome-oriented solution themes."
         subtitle="Packaged approaches that combine services, accelerators, and delivery playbooks."
-        image={UNSPLASH.servers}
-        size="compact"
       />
       <Section>
         <Container>
-          <div className="divide-y divide-border border-t border-border">
+          <div className="divide-y divide-[color:var(--color-navy)]/15 border-t border-[color:var(--color-navy)]/15">
             {items.map((solution, index) => (
               <AnimateIn key={solution.id} delay={index * 0.03}>
-                <Link href={`/solutions/${solution.slug}`} className="group block py-10">
-                  <h2 className="text-2xl font-semibold text-primary transition-colors group-hover:text-accent">
+                <Link href={`/solutions/${solution.slug}`} className="group block py-12">
+                  <p className="font-display text-xs tracking-[0.16em] text-teal-600">
+                    {String(index + 1).padStart(2, '0')}
+                  </p>
+                  <h2 className="font-display mt-3 text-[clamp(1.6rem,3vw,2.6rem)] font-semibold tracking-[-0.035em] text-[color:var(--color-navy)] transition-colors group-hover:text-teal-700">
                     {solution.title}
                   </h2>
-                  <p className="mt-3 max-w-2xl text-secondary">{solution.summary}</p>
+                  <p className="text-secondary mt-4 max-w-2xl">{solution.summary}</p>
                 </Link>
               </AnimateIn>
             ))}

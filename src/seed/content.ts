@@ -323,41 +323,49 @@ export const SEED_SOLUTIONS = [
     title: 'Healthcare Solutions',
     slug: 'healthcare-solutions',
     summary: 'Clinical and healthcare platforms that improve research and care outcomes.',
+    techLabels: ['Python', 'SAS', 'CDISC Standards', 'Power BI'],
   },
   {
     title: 'Enterprise AI Solutions',
     slug: 'enterprise-ai-solutions',
     summary: 'Production AI systems aligned to business workflows and governance.',
+    techLabels: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'LangChain'],
   },
   {
     title: 'Business Intelligence',
     slug: 'business-intelligence',
     summary: 'Executive dashboards and reporting that turn data into decisions.',
+    techLabels: ['Power BI', 'Tableau', 'Python', 'Apache Spark'],
   },
   {
     title: 'Predictive Analytics',
     slug: 'predictive-analytics',
     summary: 'Forecasting and risk models that anticipate outcomes.',
+    techLabels: ['Python', 'TensorFlow', 'Apache Spark', 'Power BI'],
   },
   {
     title: 'Intelligent Automation',
     slug: 'intelligent-automation',
     summary: 'Automate processes with AI-assisted workflows and integrations.',
+    techLabels: ['Python', 'LangChain', 'OpenAI', 'Apache Kafka'],
   },
   {
     title: 'AI Agents',
     slug: 'ai-agents',
     summary: 'Autonomous and assisted agents for research, support, and operations.',
+    techLabels: ['LangChain', 'OpenAI', 'Python', 'Hugging Face'],
   },
   {
     title: 'Clinical Research Solutions',
     slug: 'clinical-research-solutions',
     summary: 'CDISC-aligned programming, TLFs, and research analytics.',
+    techLabels: ['SAS', 'CDISC Standards', 'Pinnacle 21', 'Python'],
   },
   {
     title: 'Custom Software Solutions',
     slug: 'custom-software-solutions',
     summary: 'Enterprise applications engineered for security, scale, and longevity.',
+    techLabels: ['Python', 'Apache Kafka', 'Apache Spark', 'Power BI'],
   },
 ] as const
 

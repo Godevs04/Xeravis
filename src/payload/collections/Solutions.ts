@@ -59,6 +59,17 @@ export const Solutions: CollectionConfig = {
       relationTo: 'services',
       hasMany: true,
     },
+    {
+      name: 'technologies',
+      type: 'relationship',
+      relationTo: 'technologies',
+      hasMany: true,
+      label: 'Technology Stack',
+      admin: {
+        description:
+          'Technologies specific to this solution. Overall capabilities live on /technologies.',
+      },
+    },
     featuredField(),
     orderField(),
   ],

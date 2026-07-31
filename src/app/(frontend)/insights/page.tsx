@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
 import { BlogCard } from '@/components/domain/BlogCard'
+import { InsightsPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
-import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { listPublished } from '@/lib/cms'
@@ -33,28 +33,29 @@ export default async function InsightsPage() {
 
   return (
     <>
-      <PageHero
-        brand="Xelarvis"
-        eyebrow="Insights"
+      <InsightsPageHero
         title="Knowledge for intelligent organizations."
         subtitle="Perspective on AI research, clinical data science, analytics, and enterprise technology."
-        size="compact"
-        variant="default"
       />
       <Section>
         <Container>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="divide-y divide-slate-200 border-y border-slate-200">
             {INSIGHTS_MEGA.filter((i) => i.href !== '/insights').map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-[#0D9488]/40"
-              >
-                <h2 className="font-display text-lg font-semibold text-[#0F172A]">{item.label}</h2>
-                <p className="mt-2 text-sm text-slate-600">{item.description}</p>
-              </Link>
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="group flex flex-col gap-2 py-8 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
+                >
+                  <h2 className="font-display text-xl font-semibold text-[#0F172A] group-hover:text-teal-700">
+                    {item.label}
+                  </h2>
+                  <p className="max-w-md text-sm text-slate-600 sm:text-right">
+                    {item.description}
+                  </p>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </Container>
       </Section>
       <Section surface>

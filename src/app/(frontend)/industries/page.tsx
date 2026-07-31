@@ -1,10 +1,11 @@
-import { IndustryCard } from '@/components/domain/IndustryCard'
+import Link from 'next/link'
+
+import { IndustriesPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
-import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { listPublished } from '@/lib/cms'
-import { FALLBACK_INDUSTRIES, UNSPLASH } from '@/lib/fallback-data'
+import { FALLBACK_INDUSTRIES } from '@/lib/fallback-data'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -28,26 +29,31 @@ export default async function IndustriesPage() {
 
   return (
     <>
-      <PageHero
-        eyebrow="Industries"
+      <IndustriesPageHero
         title="Domain expertise where regulation, scale, and reliability intersect."
         subtitle="We adapt platform patterns to the realities of your sector."
-        image={UNSPLASH.office}
-        size="compact"
       />
       <Section>
         <Container>
-          <div className="grid gap-6 sm:grid-cols-2">
+          <ul className="space-y-0">
             {items.map((industry, index) => (
               <AnimateIn key={industry.id} delay={index * 0.03}>
-                <IndustryCard
-                  title={industry.title}
-                  summary={industry.summary}
-                  href={`/industries/${industry.slug}`}
-                />
+                <li className="border-t border-[color:var(--color-navy)]/10 last:border-b">
+                  <Link
+                    href={`/industries/${industry.slug}`}
+                    className="group flex flex-col gap-3 py-10 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
+                  >
+                    <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-[color:var(--color-navy)] group-hover:text-teal-700 sm:text-3xl">
+                      {industry.title}
+                    </h2>
+                    <p className="max-w-md text-sm leading-relaxed text-slate-600 sm:text-right">
+                      {industry.summary}
+                    </p>
+                  </Link>
+                </li>
               </AnimateIn>
             ))}
-          </div>
+          </ul>
         </Container>
       </Section>
     </>

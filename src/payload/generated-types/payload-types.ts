@@ -623,6 +623,115 @@ export interface Page {
         blockName?: string | null
         blockType: 'valuesGrid'
       }
+    | {
+        brand?: string | null
+        eyebrow?: string | null
+        heading: string
+        subheading?: string | null
+        ctaLabel?: string | null
+        ctaHref?: string | null
+        secondaryCtaLabel?: string | null
+        secondaryCtaHref?: string | null
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyHero'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        items?:
+          | {
+              title: string
+              body?: string | null
+              id?: string | null
+            }[]
+          | null
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyChallenge'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        chapters?:
+          | {
+              title: string
+              body: string
+              id?: string | null
+            }[]
+          | null
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storySolution'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        subheading?: string | null
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyCapabilities'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        subheading?: string | null
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyTechOrbit'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        stats?:
+          | {
+              label: string
+              value: string
+              suffix?: string | null
+              id?: string | null
+            }[]
+          | null
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyProof'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyCases'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        steps?:
+          | {
+              title: string
+              description: string
+              id?: string | null
+            }[]
+          | null
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyProcess'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyPresence'
+      }
+    | {
+        heading: string
+        subheading?: string | null
+        ctaLabel?: string | null
+        ctaHref?: string | null
+        id?: string | null
+        blockName?: string | null
+        blockType: 'storyCta'
+      }
   )[]
   meta?: {
     title?: string | null
@@ -913,6 +1022,10 @@ export interface Solution {
     [k: string]: unknown
   }
   relatedServices?: (string | Service)[] | null
+  /**
+   * Technologies specific to this solution. Overall capabilities live on /technologies.
+   */
+  technologies?: (string | Technology)[] | null
   /**
    * Show in featured lists and homepage modules.
    */
@@ -2109,6 +2222,125 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T
               blockName?: T
             }
+        storyHero?:
+          | T
+          | {
+              brand?: T
+              eyebrow?: T
+              heading?: T
+              subheading?: T
+              ctaLabel?: T
+              ctaHref?: T
+              secondaryCtaLabel?: T
+              secondaryCtaHref?: T
+              id?: T
+              blockName?: T
+            }
+        storyChallenge?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              items?:
+                | T
+                | {
+                    title?: T
+                    body?: T
+                    id?: T
+                  }
+              id?: T
+              blockName?: T
+            }
+        storySolution?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              chapters?:
+                | T
+                | {
+                    title?: T
+                    body?: T
+                    id?: T
+                  }
+              id?: T
+              blockName?: T
+            }
+        storyCapabilities?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              subheading?: T
+              id?: T
+              blockName?: T
+            }
+        storyTechOrbit?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              subheading?: T
+              id?: T
+              blockName?: T
+            }
+        storyProof?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              stats?:
+                | T
+                | {
+                    label?: T
+                    value?: T
+                    suffix?: T
+                    id?: T
+                  }
+              id?: T
+              blockName?: T
+            }
+        storyCases?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              id?: T
+              blockName?: T
+            }
+        storyProcess?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              steps?:
+                | T
+                | {
+                    title?: T
+                    description?: T
+                    id?: T
+                  }
+              id?: T
+              blockName?: T
+            }
+        storyPresence?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              id?: T
+              blockName?: T
+            }
+        storyCta?:
+          | T
+          | {
+              heading?: T
+              subheading?: T
+              ctaLabel?: T
+              ctaHref?: T
+              id?: T
+              blockName?: T
+            }
       }
   meta?:
     | T
@@ -2214,6 +2446,7 @@ export interface SolutionsSelect<T extends boolean = true> {
   summary?: T
   body?: T
   relatedServices?: T
+  technologies?: T
   featured?: T
   order?: T
   meta?:
