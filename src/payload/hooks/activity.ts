@@ -50,7 +50,7 @@ async function writeActivity(
   input: {
     summary: string
     action: ActivityAction
-    collection: string
+    collectionSlug: string
     documentId?: string
     actorId?: string | number
     meta?: Record<string, unknown>
@@ -62,7 +62,7 @@ async function writeActivity(
       data: {
         summary: input.summary,
         action: input.action,
-        collection: input.collection,
+        collectionSlug: input.collectionSlug,
         documentId: input.documentId,
         actor: input.actorId != null ? String(input.actorId) : undefined,
         meta: input.meta,
@@ -108,7 +108,7 @@ export function trackActivity(collectionSlug: string): CollectionAfterChangeHook
     await writeActivity(req.payload, {
       summary: `${action.replace(/-/g, ' ')} · ${slug} · ${label}`,
       action,
-      collection: slug,
+      collectionSlug: slug,
       documentId: String(record.id),
       actorId,
       meta: {
@@ -171,7 +171,7 @@ export function trackActivityDelete(collectionSlug: string): CollectionAfterDele
     await writeActivity(req.payload, {
       summary: `deleted · ${collectionSlug || collection?.slug} · ${docLabel(record)}`,
       action: 'deleted',
-      collection: collectionSlug || collection?.slug || 'unknown',
+      collectionSlug: collectionSlug || collection?.slug || 'unknown',
       documentId: String(record.id),
       actorId: req.user?.id,
     })

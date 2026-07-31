@@ -20,7 +20,12 @@ export async function ActivityView(props: AdminViewServerProps) {
     rows = result.docs.map((doc) => {
       const record = doc as unknown as Record<string, unknown>
       const summary = typeof record.summary === 'string' ? record.summary : 'Activity'
-      const collection = typeof record.collection === 'string' ? record.collection : ''
+      const collection =
+        typeof record.collectionSlug === 'string'
+          ? record.collectionSlug
+          : typeof record.collection === 'string'
+            ? record.collection
+            : ''
       const documentId = typeof record.documentId === 'string' ? record.documentId : ''
       const createdAt =
         typeof record.createdAt === 'string' ? new Date(record.createdAt).toLocaleString() : ''

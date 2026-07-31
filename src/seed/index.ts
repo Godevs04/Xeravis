@@ -443,12 +443,14 @@ async function seed() {
     {
       blockType: 'storyProof' as const,
       eyebrow: 'Proof',
-      heading: 'Numbers that leave room to breathe.',
+      heading: 'Why Fortune-facing teams trust Xelarvis.',
       stats: [
         { label: 'Core services', value: '5' },
         { label: 'Industries served', value: '8' },
         { label: 'Solution areas', value: '8' },
-        { label: 'Focus', value: 'AI', suffix: '+Health' },
+        { label: 'Infrastructure availability', value: '99.9', suffix: '%' },
+        { label: 'Projects delivered', value: '120', suffix: '+' },
+        { label: 'Enterprise clients', value: '40', suffix: '+' },
       ],
     },
     {

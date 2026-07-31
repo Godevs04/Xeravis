@@ -10,7 +10,7 @@ export const ActivityLogs: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'summary',
-    defaultColumns: ['summary', 'action', 'collection', 'createdAt'],
+    defaultColumns: ['summary', 'action', 'collectionSlug', 'createdAt'],
     group: 'System',
   },
   access: {
@@ -39,9 +39,13 @@ export const ActivityLogs: CollectionConfig = {
       ],
     },
     {
-      name: 'collection',
+      name: 'collectionSlug',
       type: 'text',
       required: true,
+      label: 'Collection',
+      admin: {
+        description: 'Source collection slug (avoids Mongoose reserved key “collection”).',
+      },
     },
     {
       name: 'documentId',

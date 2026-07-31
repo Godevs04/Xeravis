@@ -1538,7 +1538,10 @@ export interface ActivityLog {
   id: string
   summary: string
   action: 'created' | 'updated' | 'published' | 'deleted' | 'status-change' | 'upload'
-  collection: string
+  /**
+   * Source collection slug (avoids Mongoose reserved key “collection”).
+   */
+  collectionSlug: string
   documentId?: string | null
   actor?: (string | null) | User
   meta?:
@@ -2862,7 +2865,7 @@ export interface DownloadsSelect<T extends boolean = true> {
 export interface ActivityLogsSelect<T extends boolean = true> {
   summary?: T
   action?: T
-  collection?: T
+  collectionSlug?: T
   documentId?: T
   actor?: T
   meta?: T
