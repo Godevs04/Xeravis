@@ -14,6 +14,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { Container } from '@/components/layout/Container'
+import { useMediaQuery, useMounted } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/utils'
 
 type ChallengeItem = { title: string; body?: string | null }
@@ -351,7 +352,11 @@ function ChallengeVisual({
 }
 
 export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: StoryChallengeProps) {
+  const mounted = useMounted()
   const reduce = useReducedMotion()
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
+  // Wait for mount so SSR + first client paint stay in sync (no media/reduced-motion mismatch)
+  const sticky = mounted && !reduce && isDesktop
   const list = items?.length ? items : FALLBACK
   const chapters = useMemo(
     () =>
@@ -365,12 +370,12 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
   const containerRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState(0)
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  })
+  const { scrollYProgress } = useScroll(
+    sticky ? { target: containerRef, offset: ['start start', 'end end'] } : undefined,
+  )
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    if (!sticky) return
     const next = Math.min(count - 1, Math.max(0, Math.floor(v * count)))
     setActive((prev) => (prev === next ? prev : next))
   })
@@ -383,37 +388,50 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
   const cursorGlow = useMotionTemplate`radial-gradient(ellipse 50% 40% at ${sx}% ${sy}%, rgba(13,148,136,0.28), transparent 60%)`
 
   useEffect(() => {
-    if (reduce) return
+    if (!sticky) return
     const onMove = (e: PointerEvent) => {
       mx.set((e.clientX / window.innerWidth) * 100)
       my.set((e.clientY / window.innerHeight) * 100)
     }
     window.addEventListener('pointermove', onMove, { passive: true })
     return () => window.removeEventListener('pointermove', onMove)
-  }, [reduce, mx, my])
+  }, [sticky, mx, my])
 
   const current = chapters[active] ?? chapters[0]
   const mode = (active % 3) as 0 | 1 | 2
 
-  // Reduced motion: stacked chapters, still premium — no pin
-  if (reduce) {
+  // Mobile / reduced motion / pre-hydration: stacked chapters — no sticky pin
+  if (!sticky) {
     return (
-      <section className="relative overflow-hidden bg-[color:var(--color-navy)] py-24 text-white lg:py-32">
+      <section className="surface-navy relative overflow-hidden bg-[color:var(--color-navy)] py-20 text-white sm:py-24 lg:py-32">
         <Container>
           <p className="text-[11px] font-bold tracking-[0.22em] text-teal-300 uppercase">
             {eyebrow}
           </p>
-          <h2 className="font-display mt-5 max-w-3xl text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-[-0.04em]">
+          <h2 className="font-display mt-5 max-w-3xl text-[clamp(1.85rem,6vw,3.5rem)] font-bold tracking-[-0.04em] text-white">
             {heading}
           </h2>
-          <ul className="mt-16 space-y-12">
+          <ul className="mt-12 space-y-10 sm:mt-16 sm:space-y-12">
             {chapters.map((ch, i) => (
-              <li key={ch.title} className="border-l-2 border-teal-500/50 pl-6">
+              <li key={ch.title} className="border-l-2 border-teal-500/50 pl-5 sm:pl-6">
                 <p className="font-display text-sm tracking-[0.16em] text-teal-300">
                   {String(i + 1).padStart(2, '0')}
                 </p>
-                <h3 className="font-display mt-2 text-2xl font-semibold">{ch.title}</h3>
-                {ch.body ? <p className="mt-3 max-w-xl text-slate-300">{ch.body}</p> : null}
+                <h3 className="font-display mt-2 text-xl font-semibold text-white sm:text-2xl">
+                  {ch.title}
+                </h3>
+                {ch.body ? (
+                  <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
+                    {ch.body}
+                  </p>
+                ) : null}
+                <p className="font-display mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  {ch.statValue}
+                  {ch.statSuffix}
+                  <span className="mt-1 block text-sm font-medium tracking-normal text-slate-400">
+                    {ch.statLabel}
+                  </span>
+                </p>
               </li>
             ))}
           </ul>
@@ -429,7 +447,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
       style={{ height: `${count * 100}vh` }}
       aria-label={eyebrow || 'The challenge'}
     >
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-[color:var(--color-navy)] text-white">
+      <div className="surface-navy sticky top-0 h-[100svh] overflow-hidden bg-[color:var(--color-navy)] text-white">
         {/* Background atmosphere */}
         <div
           aria-hidden
@@ -491,7 +509,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
               <p className="text-[11px] font-bold tracking-[0.22em] text-teal-300 uppercase">
                 {eyebrow}
               </p>
-              <h2 className="font-display mt-4 max-w-md text-[clamp(2.2rem,4.2vw,3.6rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance">
+              <h2 className="font-display mt-4 max-w-md text-[clamp(2.2rem,4.2vw,3.6rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-white">
                 {heading}
               </h2>
 
@@ -515,7 +533,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                               ? 'border-cyan-300 bg-teal-500/30 text-white shadow-[0_0_28px_rgba(13,148,136,0.55)]'
                               : done
                                 ? 'border-teal-400/60 bg-teal-500/20 text-teal-200'
-                                : 'border-white/15 bg-white/5 text-slate-500',
+                                : 'border-white/20 bg-white/5 text-slate-400',
                           )}
                         >
                           {String(i + 1).padStart(2, '0')}
@@ -527,7 +545,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                               ? 'text-white'
                               : done
                                 ? 'text-teal-200/80'
-                                : 'text-slate-500',
+                                : 'text-slate-400',
                           )}
                         >
                           {ch.title.split(' ').slice(0, 3).join(' ')}…
@@ -568,7 +586,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                     </span>
                   </div>
 
-                  <h3 className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.1] font-semibold tracking-[-0.035em] text-balance">
+                  <h3 className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.1] font-semibold tracking-[-0.035em] text-balance text-white">
                     {current?.title}
                   </h3>
                   {current?.body ? (

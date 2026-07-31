@@ -1,12 +1,22 @@
 /* Xelarvis Website Service Worker */
-const CACHE = 'xelarvis-site-v1'
-const PRECACHE = ['/', '/icons/site-192.png', '/icons/site-512.png', '/icons/icon.svg']
+const CACHE = 'xelarvis-site-v2'
+const PRECACHE = [
+  '/',
+  '/manifest.webmanifest',
+  '/icons/site-192.png',
+  '/icons/site-512.png',
+  '/icons/site-maskable-512.png',
+  '/icons/apple-touch-180.png',
+  '/icons/icon.svg',
+  '/icons/favicon-32.png',
+  '/offline',
+]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE)
-      .then((cache) => cache.addAll(PRECACHE))
+      .then((cache) => Promise.all(PRECACHE.map((url) => cache.add(url).catch(() => undefined))))
       .then(() => self.skipWaiting()),
   )
 })
@@ -22,6 +32,12 @@ self.addEventListener('activate', (event) => {
   )
 })
 
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') {
+    self.skipWaiting()
+  }
+})
+
 self.addEventListener('fetch', (event) => {
   const { request } = event
   if (request.method !== 'GET') return
@@ -30,7 +46,7 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return
   if (url.pathname.startsWith('/admin') || url.pathname.startsWith('/api')) return
 
-  // Network-first for navigations, cache-first for static assets
+  // Network-first for navigations, offline fallback
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
@@ -39,20 +55,26 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE).then((cache) => cache.put(request, copy))
           return response
         })
-        .catch(() => caches.match(request).then((cached) => cached || caches.match('/'))),
+        .catch(() =>
+          caches
+            .match(request)
+            .then((cached) => cached || caches.match('/') || caches.match('/offline')),
+        ),
     )
     return
   }
 
   if (
     url.pathname.startsWith('/icons/') ||
-    url.pathname.match(/\.(?:js|css|png|jpg|jpeg|svg|webp|woff2)$/)
+    url.pathname.endsWith('.webmanifest') ||
+    url.pathname.match(/\.(?:js|css|png|jpg|jpeg|svg|webp|woff2|ico)$/)
   ) {
     event.respondWith(
       caches.match(request).then(
         (cached) =>
           cached ||
           fetch(request).then((response) => {
+            if (!response || response.status !== 200) return response
             const copy = response.clone()
             caches.open(CACHE).then((cache) => cache.put(request, copy))
             return response

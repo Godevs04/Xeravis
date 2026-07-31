@@ -19,6 +19,10 @@ type OrbitDiagramProps = {
 
 const RINGS = [28, 42, 56]
 
+function roundPct(n: number) {
+  return Math.round(n * 1000) / 1000
+}
+
 export function OrbitDiagram({ nodes, className, centerLabel = 'XELARVIS' }: OrbitDiagramProps) {
   const reduce = useReducedMotion()
   const [active, setActive] = useState<string | null>(null)
@@ -62,8 +66,8 @@ export function OrbitDiagram({ nodes, className, centerLabel = 'XELARVIS' }: Orb
       {placed.map((node, index) => {
         const ring = RINGS[index % RINGS.length]
         const angle = (index / placed.length) * Math.PI * 2 - Math.PI / 2
-        const x = 50 + Math.cos(angle) * ring
-        const y = 50 + Math.sin(angle) * ring
+        const x = roundPct(50 + Math.cos(angle) * ring)
+        const y = roundPct(50 + Math.sin(angle) * ring)
         const isActive = active === node.id
 
         return (
@@ -77,9 +81,8 @@ export function OrbitDiagram({ nodes, className, centerLabel = 'XELARVIS' }: Orb
                 : 'border-white/15 bg-white/5 text-slate-200 hover:border-teal-400/50 hover:bg-teal-500/20',
             )}
             style={{ left: `${x}%`, top: `${y}%` }}
-            initial={reduce ? false : { opacity: 0, scale: 0.7 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            initial={false}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             whileHover={reduce ? undefined : { scale: 1.08 }}
             onHoverStart={() => setActive(node.id)}

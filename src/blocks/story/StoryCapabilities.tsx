@@ -51,35 +51,42 @@ export function StoryCapabilities({
         </div>
       </Container>
 
-      <div className="mt-14 [scrollbar-width:none] overflow-x-auto pb-6 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-        <ul className="flex w-max gap-6 px-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))]">
-          {items.map((item, index) => (
-            <motion.li
-              key={item.id}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="w-[min(82vw,22rem)] shrink-0"
-            >
-              <Link
-                href={item.href}
-                className="group block h-full border-l-2 border-teal-500/40 pl-6 transition-[border-color,padding] hover:border-cyan-500 hover:pl-8"
+      <div className="mt-10 sm:mt-14">
+        <p className="container-x mb-3 text-[10px] font-semibold tracking-[0.14em] text-slate-400 uppercase lg:hidden">
+          Swipe to explore →
+        </p>
+        <div className="[scrollbar-width:none] overflow-x-auto pb-6 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <ul className="flex w-max gap-5 px-[max(1.25rem,calc((100vw-var(--grid-container))/2+1.25rem))] sm:gap-6 sm:px-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))]">
+            {items.map((item, index) => (
+              <motion.li
+                key={item.id}
+                initial={reduce ? false : { opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                className="w-[min(78vw,22rem)] shrink-0 sm:w-[min(82vw,22rem)]"
               >
-                <span className="font-display text-xs tracking-[0.16em] text-slate-400">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <h3 className="font-display mt-4 text-2xl font-semibold tracking-[-0.03em] text-[color:var(--color-navy)] group-hover:text-teal-700">
-                  {item.title}
-                </h3>
-                <p className="mt-4 text-sm leading-relaxed text-slate-600">{item.summary}</p>
-                <span className="mt-8 inline-block text-sm font-semibold text-teal-700 opacity-0 transition-opacity group-hover:opacity-100">
-                  Explore →
-                </span>
-              </Link>
-            </motion.li>
-          ))}
-        </ul>
+                <Link
+                  href={item.href}
+                  className="group block h-full border-l-2 border-teal-500/40 pl-5 transition-[border-color,padding] hover:border-cyan-500 hover:pl-8 sm:pl-6"
+                >
+                  <span className="font-display text-xs tracking-[0.16em] text-slate-400">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="font-display mt-4 text-xl font-semibold tracking-[-0.03em] text-[color:var(--color-navy)] group-hover:text-teal-700 sm:text-2xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:mt-4">
+                    {item.summary}
+                  </p>
+                  <span className="mt-6 inline-block text-sm font-semibold text-teal-700 sm:mt-8 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
+                    Explore →
+                  </span>
+                </Link>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   )

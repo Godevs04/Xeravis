@@ -47,7 +47,9 @@ export function MeshBackdrop({
     <div
       className={cn(
         'relative overflow-hidden',
-        isNavy ? 'bg-[color:var(--color-navy)] text-white' : 'bg-[color:var(--color-neutral)]',
+        isNavy
+          ? 'surface-navy bg-[color:var(--color-navy)] text-white'
+          : 'bg-[color:var(--color-neutral)]',
         className,
       )}
     >

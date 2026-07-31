@@ -41,7 +41,7 @@ export function StorySolution({ eyebrow = 'The solution', heading, chapters }: S
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
 
   return (
-    <section ref={ref} className="relative bg-[color:var(--color-navy)] text-white">
+    <section ref={ref} className="surface-navy relative bg-[color:var(--color-navy)] text-white">
       <div className="pointer-events-none absolute inset-0 opacity-40">
         <ConstellationCanvas />
       </div>

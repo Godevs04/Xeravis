@@ -20,7 +20,10 @@ export function ThemeToggle({ className }: { className?: string }) {
         size="icon"
         aria-label="Toggle theme"
         disabled
-        className={cn('text-[#0F172A]', className)}
+        className={cn(
+          'text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)]',
+          className,
+        )}
       />
     )
   }
@@ -32,7 +35,10 @@ export function ThemeToggle({ className }: { className?: string }) {
       type="button"
       variant="ghost"
       size="icon"
-      className={cn('text-[#0F172A] hover:bg-slate-100 hover:text-[#0F172A]', className)}
+      className={cn(
+        'text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)]',
+        className,
+      )}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >

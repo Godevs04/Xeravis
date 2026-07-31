@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import { WhyJoinSection } from '@/components/careers/WhyJoinSection'
+import { HiringProcessSection } from '@/components/careers/HiringProcessSection'
 import { JobCard } from '@/components/domain/JobCard'
 import { CareersPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
@@ -54,63 +56,32 @@ export default async function CareersPage() {
         subtitle="Join XELARVIS and work on innovative projects in Artificial Intelligence, Clinical Data Science, Healthcare Analytics, Enterprise Software, and Cloud Technologies."
       />
 
-      <Section>
-        <Container>
-          <h2 className="font-display text-3xl font-bold tracking-tight text-[#0F172A]">
-            Why Join XELARVIS
-          </h2>
-          <ul className="mt-10 divide-y divide-slate-200 border-y border-slate-200">
-            {WHY_JOIN.map((item) => (
-              <li key={item} className="py-5 text-base font-medium text-[#0F172A]">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
+      <WhyJoinSection benefits={WHY_JOIN} />
 
-      <Section surface>
-        <Container>
-          <h2 className="font-display text-3xl font-bold tracking-tight text-[#0F172A]">
-            Hiring Process
-          </h2>
-          <p className="mt-3 max-w-2xl text-slate-600">
-            A clear path from application to onboarding so you always know what to expect.
-          </p>
-          <ol className="mt-10 space-y-8">
-            {HIRING_STEPS.map((step, index) => (
-              <li
-                key={step.title}
-                className="grid gap-2 border-l-2 border-teal-500 pl-6 md:grid-cols-[6rem_1fr]"
-              >
-                <p className="font-display text-xs font-bold tracking-[0.14em] text-[#0D9488] uppercase">
-                  Step {index + 1}
-                </p>
-                <div>
-                  <h3 className="font-semibold text-[#0F172A]">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Container>
-      </Section>
+      <HiringProcessSection steps={HIRING_STEPS} />
 
       <Section id="open-roles">
         <Container>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h2 className="font-display text-3xl font-bold tracking-tight text-[#0F172A]">
+              <h2 className="font-display text-3xl font-bold tracking-tight text-[color:var(--color-primary)]">
                 Open Positions
               </h2>
-              <p className="mt-2 text-slate-600">Roles managed by HR from the admin dashboard.</p>
+              <p className="mt-2 text-[color:var(--color-secondary)]">
+                Roles managed by HR from the admin dashboard.
+              </p>
             </div>
-            <Button asChild className="rounded-full bg-[#0D9488] text-white hover:bg-[#06B6D4]">
+            <Button
+              asChild
+              className="rounded-full bg-[color:var(--color-accent)] text-white hover:bg-[color:var(--color-accent-hover)]"
+            >
               <Link href="/contact?intent=careers">Apply Now</Link>
             </Button>
           </div>
           {items.length === 0 ? (
-            <p className="text-slate-600">No open roles at the moment. Check back soon.</p>
+            <p className="text-[color:var(--color-secondary)]">
+              No open roles at the moment. Check back soon.
+            </p>
           ) : (
             <div className="grid gap-3">
               {items.map((job, index) => (
@@ -150,10 +121,14 @@ export default async function CareersPage() {
           ].map((card) => (
             <div
               key={card.title}
-              className="border-t border-slate-200 pt-8 first:border-t-0 first:pt-0"
+              className="border-t border-[color:var(--color-border)] pt-8 first:border-t-0 first:pt-0"
             >
-              <h3 className="font-display text-xl font-semibold text-[#0F172A]">{card.title}</h3>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">{card.body}</p>
+              <h3 className="font-display text-xl font-semibold text-[color:var(--color-primary)]">
+                {card.title}
+              </h3>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--color-secondary)]">
+                {card.body}
+              </p>
             </div>
           ))}
         </Container>

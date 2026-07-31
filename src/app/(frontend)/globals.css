@@ -3,28 +3,24 @@
 @import '../../components/pwa/pwa-install.css';
 
 @theme inline {
-  --color-primary: var(--color-primary);
-  --color-secondary: var(--color-secondary);
-  --color-accent: var(--color-accent);
-  --color-accent-hover: var(--color-accent-hover);
-  --color-success: var(--color-success);
-  --color-warning: var(--color-warning);
-  --color-danger: var(--color-danger);
-  --color-background: var(--color-background);
-  --color-surface: var(--color-surface);
-  --color-dark: var(--color-dark);
-  --color-border: var(--color-border);
-  --color-muted: var(--color-muted);
-  --color-muted-line: var(--color-muted-line);
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --shadow-light: var(--shadow-light);
-  --shadow-medium: var(--shadow-medium);
-  --shadow-large: var(--shadow-large);
-  --shadow-floating: var(--shadow-floating);
-  --shadow-hover: var(--shadow-hover);
+  /* Reference --ds-* sources — never var(--color-*) / self-refs (circular overwrite) */
+  --color-primary: var(--ds-primary);
+  --color-secondary: var(--ds-secondary);
+  --color-accent: var(--ds-accent);
+  --color-accent-hover: var(--ds-accent-hover);
+  --color-success: var(--ds-success);
+  --color-warning: var(--ds-warning);
+  --color-danger: var(--ds-danger);
+  --color-background: var(--ds-background);
+  --color-surface: var(--ds-surface);
+  --color-dark: var(--ds-dark);
+  --color-border: var(--ds-border);
+  --color-muted: var(--ds-muted);
+  --color-muted-line: var(--ds-muted-line);
+  --font-sans: var(--font-body), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* --font-display comes from next/font on <html>; do not redeclare here */
+  --radius-sm: 12px;
+  --radius-md: 20px;
 }
 
 @layer base {
@@ -80,6 +76,13 @@
   @media (display-mode: standalone) {
     body {
       min-height: 100dvh;
+      /* PWA safe areas for notch / home indicator */
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    header {
+      padding-top: env(safe-area-inset-top, 0px);
     }
   }
 
@@ -93,7 +96,8 @@
     letter-spacing: -0.04em;
     line-height: 1.1;
     font-weight: 700;
-    color: var(--color-primary);
+    /* Inherit section color so navy/cinematic surfaces stay readable in both themes */
+    color: inherit;
   }
 
   h1 {
@@ -137,7 +141,11 @@
   }
 
   .font-display {
-    font-family: var(--font-display);
+    font-family: var(--font-display), 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .surface-navy {
+    color: #f8fafc;
   }
 
   .container-x {

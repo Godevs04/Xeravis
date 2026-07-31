@@ -456,35 +456,47 @@ async function seed() {
     {
       blockType: 'storyCases' as const,
       eyebrow: 'Success stories',
-      heading: 'Outcomes, one story at a time.',
+      heading: 'Engineering solutions that deliver measurable outcomes.',
     },
     {
       blockType: 'storyProcess' as const,
-      eyebrow: 'Process',
-      heading: 'How intelligence becomes delivery.',
+      eyebrow: 'The Engineering Journey',
+      heading: 'From business problem to measurable results.',
       steps: [
         {
-          title: 'Discover',
-          description: 'Map constraints, data reality, and the decision that must improve.',
+          title: 'Business Problem',
+          description:
+            'Every engagement starts with a real constraint — not a technology preference.',
         },
         {
-          title: 'Design',
-          description: 'Architect the stack, compliance path, and measurable success criteria.',
+          title: 'Discovery',
+          description: 'Workshops and research turn the problem into a shared, actionable frame.',
         },
         {
-          title: 'Build',
-          description: 'Ship in slices — models, pipelines, and interfaces that operators trust.',
+          title: 'Solution Architecture',
+          description:
+            'The blueprint assembles — AI, cloud, and APIs designed to survive production.',
         },
         {
-          title: 'Scale',
-          description: 'Harden, observe, and expand into the next surface of the business.',
+          title: 'Development',
+          description: 'Code appears. Components connect. Tests run. Operators stay in the loop.',
+        },
+        {
+          title: 'Cloud Infrastructure',
+          description:
+            'Secure, observable infrastructure — Kubernetes, monitoring, and hardened controls.',
+        },
+        {
+          title: 'Business Results',
+          description:
+            'The system pays for itself — measurable ROI, performance, cost, and growth.',
         },
       ],
     },
     {
       blockType: 'storyPresence' as const,
-      eyebrow: 'Presence',
-      heading: 'Voices from the work.',
+      eyebrow: 'Client stories',
+      heading: 'Trusted by leaders building the future.',
     },
     {
       blockType: 'storyCta' as const,

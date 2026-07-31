@@ -48,12 +48,13 @@ export function buildMetadata({
         { url: '/icons/favicon-32.png', sizes: '32x32', type: 'image/png' },
         { url: '/icons/icon.svg', type: 'image/svg+xml' },
       ],
-      apple: [{ url: '/icons/site-192.png', sizes: '192x192', type: 'image/png' }],
+      apple: [{ url: '/icons/apple-touch-180.png', sizes: '180x180', type: 'image/png' }],
       shortcut: ['/icons/site-192.png'],
     },
     manifest: '/manifest.webmanifest',
     other: {
       'mobile-web-app-capable': 'yes',
+      'apple-mobile-web-app-capable': 'yes',
     },
     alternates: { canonical: url },
     openGraph: {
@@ -80,7 +81,7 @@ export function organizationJsonLd() {
     '@type': 'Organization',
     name: SITE_NAME,
     url: absoluteUrl('/'),
-    logo: absoluteUrl('/favicon.ico'),
+    logo: absoluteUrl('/icons/site-192.png'),
     description: DEFAULT_DESCRIPTION,
     sameAs: [],
   }

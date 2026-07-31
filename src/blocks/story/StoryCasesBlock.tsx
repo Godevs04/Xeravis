@@ -8,11 +8,29 @@ type CaseStudyDoc = {
   slug: string
   client: string
   outcome: string
+  challenge?: string | null
+  industry?: { title?: string | null } | string | null
+  metrics?: { label: string; value: string }[] | null
+  services?: { title?: string | null }[] | (string | number)[] | null
 }
 
 type StoryCasesBlockProps = {
   eyebrow?: string | null
   heading: string
+}
+
+function industryLabel(industry: CaseStudyDoc['industry']) {
+  if (!industry) return null
+  if (typeof industry === 'string') return industry
+  return industry.title || null
+}
+
+function serviceTitles(services: CaseStudyDoc['services']) {
+  if (!Array.isArray(services)) return null
+  const titles = services
+    .map((s) => (typeof s === 'object' && s && 'title' in s ? s.title : null))
+    .filter((t): t is string => Boolean(t))
+  return titles.length ? titles : null
 }
 
 export async function StoryCasesBlock({ eyebrow, heading }: StoryCasesBlockProps) {
@@ -23,6 +41,10 @@ export async function StoryCasesBlock({ eyebrow, heading }: StoryCasesBlockProps
     title: s.title,
     client: s.client,
     outcome: s.outcome,
+    challenge: 'challenge' in s ? s.challenge : undefined,
+    industry: 'industry' in s ? industryLabel(s.industry) : undefined,
+    metrics: 'metrics' in s ? s.metrics : undefined,
+    technologies: 'services' in s ? serviceTitles(s.services) : undefined,
     href: `/case-studies/${s.slug}`,
   }))
 

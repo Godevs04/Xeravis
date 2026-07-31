@@ -409,7 +409,7 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[color:var(--color-navy)] py-24 text-white lg:py-32"
+      className="surface-navy relative overflow-hidden bg-[color:var(--color-navy)] py-24 text-white lg:py-32"
       aria-label={eyebrow || 'Proof'}
     >
       <div
