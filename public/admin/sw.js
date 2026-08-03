@@ -1,5 +1,5 @@
 /* Xelarvis CMS Service Worker — scope /admin/ */
-const CACHE = 'xelarvis-admin-v2'
+const CACHE = 'xelarvis-admin-v3'
 const PRECACHE = [
   '/admin',
   '/admin/manifest.webmanifest',
@@ -9,11 +9,11 @@ const PRECACHE = [
 ]
 
 self.addEventListener('install', (event) => {
+  // Wait for explicit SKIP_WAITING from the client update UX.
   event.waitUntil(
     caches
       .open(CACHE)
-      .then((cache) => Promise.all(PRECACHE.map((url) => cache.add(url).catch(() => undefined))))
-      .then(() => self.skipWaiting()),
+      .then((cache) => Promise.all(PRECACHE.map((url) => cache.add(url).catch(() => undefined)))),
   )
 })
 
@@ -34,6 +34,26 @@ self.addEventListener('message', (event) => {
   }
 })
 
+function networkFirst(request, fallbackUrls) {
+  return fetch(request)
+    .then((response) => {
+      if (response && response.status === 200) {
+        const copy = response.clone()
+        caches.open(CACHE).then((cache) => cache.put(request, copy))
+      }
+      return response
+    })
+    .catch(async () => {
+      const cached = await caches.match(request)
+      if (cached) return cached
+      for (const url of fallbackUrls || []) {
+        const fallback = await caches.match(url)
+        if (fallback) return fallback
+      }
+      return Response.error()
+    })
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event
   if (request.method !== 'GET') return
@@ -43,23 +63,16 @@ self.addEventListener('fetch', (event) => {
   if (!url.pathname.startsWith('/admin')) return
   if (url.pathname.startsWith('/api')) return
 
+  // Admin is API-heavy — only cache navigations lightly; never treat as full offline CMS.
   if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const copy = response.clone()
-          caches.open(CACHE).then((cache) => cache.put(request, copy))
-          return response
-        })
-        .catch(() => caches.match(request).then((cached) => cached || caches.match('/admin'))),
-    )
+    event.respondWith(networkFirst(request, ['/admin']))
     return
   }
 
   if (
     url.pathname.startsWith('/icons/') ||
     url.pathname.endsWith('.webmanifest') ||
-    url.pathname.match(/\.(?:js|css|png|jpg|jpeg|svg|webp|woff2|ico)$/)
+    url.pathname.match(/\.(?:png|jpg|jpeg|svg|webp|ico)$/)
   ) {
     event.respondWith(
       caches.match(request).then(

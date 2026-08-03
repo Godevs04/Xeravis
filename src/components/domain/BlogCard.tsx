@@ -11,6 +11,7 @@ type BlogCardProps = {
   publishedAt?: string | null
   className?: string
   featured?: boolean
+  ctaLabel?: string
 }
 
 export function BlogCard({
@@ -20,6 +21,7 @@ export function BlogCard({
   publishedAt,
   className,
   featured = false,
+  ctaLabel = 'Read article',
 }: BlogCardProps) {
   const dateLabel = publishedAt
     ? new Date(publishedAt).toLocaleDateString('en-US', {
@@ -53,7 +55,7 @@ export function BlogCard({
           {title}
         </h3>
         <p className="text-secondary mt-3 flex-1 text-sm leading-relaxed">{excerpt}</p>
-        <span className="text-accent mt-6 text-sm font-semibold">Read article</span>
+        <span className="text-accent mt-6 text-sm font-semibold">{ctaLabel}</span>
       </SpotlightCard>
     </Link>
   )

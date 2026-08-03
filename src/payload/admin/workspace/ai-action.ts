@@ -125,9 +125,20 @@ export async function runAiAssist(
   _prev: AiAssistState,
   formData: FormData,
 ): Promise<AiAssistState> {
-  const mode = String(formData.get('mode') || 'blog-outline')
-  const topic = String(formData.get('topic') || '').trim()
-  const brief = String(formData.get('brief') || '').trim()
+  const payload = await getPayload()
+  const { headers: getHeaders } = await import('next/headers')
+  const { user } = await payload.auth({ headers: await getHeaders() })
+  if (!user) {
+    return { ok: false, message: 'Sign in to the CMS to use AI assist.' }
+  }
+
+  const mode = String(formData.get('mode') || 'blog-outline').slice(0, 40)
+  const topic = String(formData.get('topic') || '')
+    .trim()
+    .slice(0, 200)
+  const brief = String(formData.get('brief') || '')
+    .trim()
+    .slice(0, 2000)
   const writeBack = String(formData.get('writeBack') || '') === 'on'
 
   if (!topic) {
@@ -145,8 +156,6 @@ export async function runAiAssist(
   }
 
   try {
-    const payload = await getPayload()
-
     if (mode === 'job-post') {
       const created = await payload.create({
         collection: 'careers',

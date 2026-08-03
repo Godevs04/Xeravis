@@ -9,7 +9,6 @@ const SEARCH_TARGETS = [
   { collection: 'services', titleField: 'title' },
   { collection: 'technologies', titleField: 'title' },
   { collection: 'careers', titleField: 'title' },
-  { collection: 'research', titleField: 'title' },
   { collection: 'media', titleField: 'filename' },
   { collection: 'job-applications', titleField: 'name' },
   { collection: 'contact-messages', titleField: 'name' },
@@ -24,7 +23,7 @@ export async function GET(request: Request) {
     }
 
     const q = new URL(request.url).searchParams.get('q')?.trim() || ''
-    if (q.length < 2) {
+    if (q.length < 2 || q.length > 80) {
       return NextResponse.json({ results: [] })
     }
 
@@ -34,7 +33,7 @@ export async function GET(request: Request) {
           const result = await payload.find({
             collection: target.collection as 'blogs',
             depth: 0,
-            limit: 5,
+            limit: 4,
             overrideAccess: true,
             where: {
               [target.titleField]: {
@@ -61,7 +60,7 @@ export async function GET(request: Request) {
       }),
     )
 
-    return NextResponse.json({ results: batches.flat().slice(0, 40) })
+    return NextResponse.json({ results: batches.flat().slice(0, 32) })
   } catch {
     return NextResponse.json({ error: 'Search failed' }, { status: 500 })
   }

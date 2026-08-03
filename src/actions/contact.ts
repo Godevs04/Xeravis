@@ -1,17 +1,19 @@
 'use server'
 
+import { headers } from 'next/headers'
 import { Resend } from 'resend'
 import { z } from 'zod'
 
+import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
 import { getPayload } from '@/lib/payload'
 
 const contactSchema = z.object({
-  name: z.string().min(2, 'Name is required'),
-  email: z.string().email('Valid email is required'),
-  company: z.string().optional(),
-  phone: z.string().optional(),
-  message: z.string().min(10, 'Please provide a brief message'),
-  intent: z.string().optional(),
+  name: z.string().min(2, 'Name is required').max(120),
+  email: z.string().email('Valid email is required').max(200),
+  company: z.string().max(160).optional(),
+  phone: z.string().max(40).optional(),
+  message: z.string().min(10, 'Please provide a brief message').max(5000),
+  intent: z.string().max(40).optional(),
   website: z.string().optional(), // honeypot
 })
 
@@ -25,6 +27,18 @@ export async function submitContact(
   _prev: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
+  const headerList = await headers()
+  const limited = rateLimit(clientKeyFromHeaders(headerList, 'contact'), {
+    limit: 8,
+    windowMs: 15 * 60_000,
+  })
+  if (!limited.ok) {
+    return {
+      ok: false,
+      message: 'Too many messages from this network. Please try again later.',
+    }
+  }
+
   const parsed = contactSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),

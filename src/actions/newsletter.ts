@@ -1,11 +1,13 @@
 'use server'
 
+import { headers } from 'next/headers'
 import { z } from 'zod'
 
+import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
 import { getPayload } from '@/lib/payload'
 
 const schema = z.object({
-  email: z.string().email('Valid email is required'),
+  email: z.string().email('Valid email is required').max(200),
   website: z.string().optional(),
 })
 
@@ -18,6 +20,15 @@ export async function submitNewsletter(
   _prev: NewsletterFormState,
   formData: FormData,
 ): Promise<NewsletterFormState> {
+  const headerList = await headers()
+  const limited = rateLimit(clientKeyFromHeaders(headerList, 'newsletter'), {
+    limit: 10,
+    windowMs: 15 * 60_000,
+  })
+  if (!limited.ok) {
+    return { ok: false, message: 'Too many subscription attempts. Please try again later.' }
+  }
+
   const parsed = schema.safeParse({
     email: formData.get('email'),
     website: formData.get('website') || undefined,

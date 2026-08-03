@@ -93,6 +93,13 @@ const STATIC_PAGES: SiteSearchResult[] = [
     excerpt: 'Talk to our team about a project or partnership.',
   },
   {
+    id: 'page-api-docs',
+    title: 'API documentation',
+    href: '/docs/api',
+    kind: 'pages',
+    excerpt: 'OpenAPI / Swagger docs for website and admin helper APIs.',
+  },
+  {
     id: 'page-insights',
     title: 'Insights',
     href: '/insights',
@@ -372,8 +379,10 @@ export async function siteSearch(query: string): Promise<SiteSearchResult[]> {
   const q = query.trim()
   if (q.length < 2) return []
 
-  const [indexed, collections] = await Promise.all([searchIndexed(q), searchCollections(q)])
+  // Prefer the search index first; only fan out to live collections when the index is thin.
+  const indexed = await searchIndexed(q)
+  const collections = indexed.length >= 8 ? [] : await searchCollections(q)
   const merged = dedupeResults([...indexed, ...collections, ...staticMatches(q)])
 
-  return merged.sort((a, b) => scoreTitle(b.title, q) - scoreTitle(a.title, q)).slice(0, 30)
+  return merged.sort((a, b) => scoreTitle(b.title, q) - scoreTitle(a.title, q)).slice(0, 24)
 }

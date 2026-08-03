@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 
+import { boundMeta } from '@/lib/rate-limit'
 import { getPayload } from '@/lib/payload'
 
 export async function POST(request: Request) {
@@ -26,7 +27,7 @@ export async function POST(request: Request) {
         type: type as 'pageview' | 'lead' | 'application' | 'download' | 'newsletter',
         path,
         referrer: typeof body.referrer === 'string' ? body.referrer.slice(0, 500) : undefined,
-        meta: body.meta,
+        meta: boundMeta(body.meta),
       },
     })
 

@@ -16,6 +16,29 @@ type PwaInstallPromptProps = {
   tone?: 'site' | 'admin'
 }
 
+const REPROMPT_MS = 14 * 24 * 60 * 60 * 1000
+
+function canShowPrompt(storageKey: string) {
+  const raw = localStorage.getItem(storageKey)
+  if (!raw) return true
+  if (raw === 'installed') return false
+  if (raw === 'dismissed') return false
+  try {
+    const data = JSON.parse(raw) as { status?: string; at?: number }
+    if (data.status === 'installed') return false
+    if (data.status === 'dismissed' && typeof data.at === 'number') {
+      return Date.now() - data.at > REPROMPT_MS
+    }
+  } catch {
+    return false
+  }
+  return true
+}
+
+function persist(storageKey: string, status: 'dismissed' | 'installed') {
+  localStorage.setItem(storageKey, JSON.stringify({ status, at: Date.now() }))
+}
+
 export function PwaInstallPrompt({
   appName,
   description,
@@ -30,7 +53,7 @@ export function PwaInstallPrompt({
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (window.matchMedia('(display-mode: standalone)').matches) return
-    if (localStorage.getItem(storageKey) === 'dismissed') return
+    if (!canShowPrompt(storageKey)) return
 
     const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent)
     const isSafari = Boolean(navigator.userAgent.match(/Version\/[\d.]+.*Safari/))
@@ -50,7 +73,7 @@ export function PwaInstallPrompt({
   }, [storageKey])
 
   const dismiss = () => {
-    localStorage.setItem(storageKey, 'dismissed')
+    persist(storageKey, 'dismissed')
     setOpen(false)
     setIosHint(false)
     setDeferred(null)
@@ -61,9 +84,9 @@ export function PwaInstallPrompt({
     await deferred.prompt()
     const choice = await deferred.userChoice
     if (choice.outcome === 'accepted') {
-      localStorage.setItem(storageKey, 'installed')
+      persist(storageKey, 'installed')
     } else {
-      localStorage.setItem(storageKey, 'dismissed')
+      persist(storageKey, 'dismissed')
     }
     setOpen(false)
     setDeferred(null)

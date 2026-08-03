@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import type { Payload, Where } from 'payload'
 
 import { getPayload, resetPayloadCache } from '@/lib/payload'
@@ -37,12 +38,12 @@ export async function safePayload<T>(fn: (payload: Payload) => Promise<T>): Prom
   return null
 }
 
-export async function getGlobal<T>(slug: string): Promise<T | null> {
+export const getGlobal = cache(async <T>(slug: string): Promise<T | null> => {
   return safePayload(async (payload) => {
     const doc = await payload.findGlobal({ slug: slug as 'site-settings' })
     return doc as T
   })
-}
+})
 
 export async function getPublishedDoc<T>(collection: string, id: string): Promise<T | null> {
   return safePayload(async (payload) => {
@@ -55,24 +56,26 @@ export async function getPublishedDoc<T>(collection: string, id: string): Promis
   })
 }
 
-export async function getPublishedBySlug<T>(collection: string, slug: string): Promise<T | null> {
-  return safePayload(async (payload) => {
-    const result = await payload.find({
-      collection: collection as 'pages',
-      where: {
-        slug: { equals: slug },
-      },
-      limit: 1,
-      depth: 2,
-      draft: false,
-      overrideAccess: true,
+export const getPublishedBySlug = cache(
+  async <T>(collection: string, slug: string): Promise<T | null> => {
+    return safePayload(async (payload) => {
+      const result = await payload.find({
+        collection: collection as 'pages',
+        where: {
+          slug: { equals: slug },
+        },
+        limit: 1,
+        depth: 2,
+        draft: false,
+        overrideAccess: true,
+      })
+      const doc = result.docs[0] as unknown as (T & { _status?: string }) | undefined
+      if (!doc) return null
+      if (doc._status && doc._status !== 'published') return null
+      return doc
     })
-    const doc = result.docs[0] as unknown as (T & { _status?: string }) | undefined
-    if (!doc) return null
-    if (doc._status && doc._status !== 'published') return null
-    return doc
-  })
-}
+  },
+)
 
 export async function listPublished<T>(
   collection: string,
@@ -81,6 +84,7 @@ export async function listPublished<T>(
     sort?: string
     where?: Where
     drafts?: boolean
+    depth?: number
   } = {},
 ): Promise<T[]> {
   const useDrafts = options.drafts !== false
@@ -88,9 +92,9 @@ export async function listPublished<T>(
     return payload.find({
       collection: collection as 'pages',
       where: options.where ?? {},
-      limit: options.limit ?? 100,
+      limit: options.limit ?? 48,
       sort: options.sort ?? '-updatedAt',
-      depth: 2,
+      depth: options.depth ?? 1,
       draft: useDrafts ? false : undefined,
       overrideAccess: true,
     })
@@ -106,6 +110,7 @@ export async function listDocs<T>(
     limit?: number
     sort?: string
     where?: Where
+    depth?: number
   } = {},
 ): Promise<T[]> {
   return listPublished<T>(collection, { ...options, drafts: false })

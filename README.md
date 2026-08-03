@@ -37,6 +37,9 @@ npm run dev
 
 - Site: [http://localhost:3000](http://localhost:3000)
 - Admin: [http://localhost:3000/admin](http://localhost:3000/admin)
+- API docs (Swagger): [http://localhost:3000/docs/api](http://localhost:3000/docs/api)
+- OpenAPI JSON: [http://localhost:3000/api/openapi](http://localhost:3000/api/openapi)
+- GraphQL Playground: [http://localhost:3000/api/graphql-playground](http://localhost:3000/api/graphql-playground)
 
 3. Seed CMS content (requires MongoDB):
 

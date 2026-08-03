@@ -76,13 +76,8 @@
   @media (display-mode: standalone) {
     body {
       min-height: 100dvh;
-      /* PWA safe areas for notch / home indicator */
-      padding-top: env(safe-area-inset-top, 0px);
+      /* Bottom inset only — fixed header already applies safe-area-inset-top */
       padding-bottom: env(safe-area-inset-bottom, 0px);
-    }
-
-    header {
-      padding-top: env(safe-area-inset-top, 0px);
     }
   }
 

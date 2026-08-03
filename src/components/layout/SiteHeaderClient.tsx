@@ -101,10 +101,10 @@ export function SiteHeaderClient({
         onMouseEnter={cancelMegaClose}
         onMouseLeave={scheduleMegaClose}
       >
-        <div className="relative mx-auto max-w-[1180px]">
+        <div className="relative mx-auto max-w-[1280px]">
           <div
             className={cn(
-              'flex items-center gap-3 rounded-full border px-3 sm:gap-4 sm:px-4',
+              'flex items-center gap-2 rounded-full border p-1.5 pl-3 sm:gap-3 sm:pl-4',
               'border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] shadow-[var(--shadow-medium)] backdrop-blur-xl',
               'transition-[height,box-shadow,max-width,background-color,border-color] duration-300',
               solid ? 'h-14 shadow-[var(--shadow-large)]' : 'h-[3.75rem]',
@@ -112,7 +112,7 @@ export function SiteHeaderClient({
           >
             <Link
               href="/"
-              className="font-display flex shrink-0 items-center gap-2.5 pl-1 text-[1.05rem] font-bold tracking-tight text-[color:var(--color-primary)]"
+              className="font-display flex shrink-0 items-center gap-2.5 pl-0.5 text-[1.05rem] font-bold tracking-tight text-[color:var(--color-primary)]"
             >
               <span className="grid h-8 w-8 place-items-center rounded-full bg-[color:var(--color-navy)] text-[11px] font-bold text-white shadow-[0_0_20px_var(--color-accent-soft)] dark:bg-gradient-to-br dark:from-teal-500 dark:to-cyan-500">
                 X
@@ -121,7 +121,7 @@ export function SiteHeaderClient({
             </Link>
 
             <nav
-              className="ml-auto hidden items-center justify-center gap-0.5 xl:flex"
+              className="ml-auto hidden min-w-0 items-center justify-end gap-0.5 lg:flex"
               aria-label="Primary"
             >
               {links.map((link) => {
@@ -149,7 +149,7 @@ export function SiteHeaderClient({
                     <Link
                       href={link.href}
                       className={cn(
-                        'inline-flex h-9 items-center gap-1 rounded-full px-3 text-[13px] font-semibold tracking-[-0.01em] whitespace-nowrap transition-colors',
+                        'inline-flex h-9 items-center gap-0.5 rounded-full px-1.5 text-[12px] font-semibold tracking-[-0.01em] whitespace-nowrap transition-colors xl:gap-1 xl:px-2.5 xl:text-[13px]',
                         'text-[color:var(--color-primary)]/85 hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)]',
                         (active || open) &&
                           'bg-[color:var(--color-hover)] text-[color:var(--color-accent)]',
@@ -161,7 +161,14 @@ export function SiteHeaderClient({
                         if (megaKey && megaItems?.length) openMegaMenu(megaKey)
                       }}
                     >
-                      {link.label}
+                      {link.label === 'Research & Innovation' ? (
+                        <>
+                          <span className="xl:hidden">Research</span>
+                          <span className="hidden xl:inline">Research & Innovation</span>
+                        </>
+                      ) : (
+                        link.label
+                      )}
                       {megaItems?.length ? (
                         <ChevronDown
                           className={cn(
@@ -176,13 +183,13 @@ export function SiteHeaderClient({
               })}
             </nav>
 
-            <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5 xl:ml-0">
+            <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1 lg:ml-1">
               <ThemeToggle className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)]" />
               <Button
                 asChild
                 variant="ghost"
                 size="icon"
-                className="hidden text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)] md:inline-flex"
+                className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)]"
                 aria-label="Search"
               >
                 <Link href="/search">
@@ -192,7 +199,7 @@ export function SiteHeaderClient({
               <Button
                 asChild
                 size="sm"
-                className="inline-flex rounded-full bg-[color:var(--color-accent)] px-3 font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:px-4"
+                className="inline-flex h-9 shrink-0 rounded-full bg-[color:var(--color-accent)] px-3.5 font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:px-4"
               >
                 <Link href={ctaHref}>
                   <span className="sm:hidden">Contact</span>
@@ -205,7 +212,7 @@ export function SiteHeaderClient({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] xl:hidden"
+                    className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] lg:hidden"
                     aria-label="Open menu"
                   >
                     <Menu className="h-5 w-5" />
@@ -269,7 +276,7 @@ export function SiteHeaderClient({
 
         <AnimatePresence>
           {openItems?.length && openMega ? (
-            <div className="pointer-events-auto absolute top-full right-0 left-0 z-50 hidden pt-3 xl:block">
+            <div className="pointer-events-auto absolute top-full right-0 left-0 z-50 hidden pt-3 lg:block">
               {/* Extends upward into the pill so the cursor never hits empty space */}
               <div aria-hidden className="absolute inset-x-0 -top-6 h-6" />
               <MegaMenu key={openMega} id="xe-mega-menu" items={openItems} category={openMega} />

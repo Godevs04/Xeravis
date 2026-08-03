@@ -62,7 +62,7 @@ export function StoryCapabilities({
         <p className="container-x mb-3 text-[10px] font-semibold tracking-[0.14em] text-[color:var(--color-muted)] uppercase lg:hidden">
           Swipe to explore →
         </p>
-        <div className="[scrollbar-width:none] overflow-x-auto pb-6 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="snap-x snap-mandatory [scrollbar-width:none] overflow-x-auto pb-6 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           <ul className="flex w-max gap-5 px-[max(1.25rem,calc((100vw-var(--grid-container))/2+1.25rem))] sm:gap-6 sm:px-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))]">
             {items.map((item, index) => (
               <motion.li
@@ -71,7 +71,7 @@ export function StoryCapabilities({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="w-[min(78vw,22rem)] shrink-0 sm:w-[min(82vw,22rem)]"
+                className="w-[min(78vw,22rem)] shrink-0 snap-start sm:w-[min(82vw,22rem)]"
               >
                 <Link
                   href={item.href}

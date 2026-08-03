@@ -15,7 +15,7 @@ async function notifyStaff(
     const users = await payload.find({
       collection: 'users',
       depth: 0,
-      limit: 50,
+      limit: 20,
       overrideAccess: true,
       where: {
         roles: {

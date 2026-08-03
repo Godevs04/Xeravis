@@ -83,7 +83,7 @@ export function PageHero({
   if (isProduct) {
     return (
       <section
-        className="relative isolate min-h-[min(100svh,940px)] overflow-hidden text-white"
+        className="relative isolate min-h-[min(100svh,720px)] overflow-hidden text-white sm:min-h-[min(100svh,840px)] lg:min-h-[min(100svh,940px)]"
         style={{
           background:
             'radial-gradient(ellipse 70% 60% at 85% 35%, rgba(6,182,212,0.22), transparent 55%), radial-gradient(ellipse 55% 50% at 10% 20%, rgba(13,148,136,0.2), transparent 50%), linear-gradient(165deg, #0F172A 0%, #0B1224 45%, #0F172A 100%)',
@@ -226,7 +226,7 @@ export function PageHero({
   return (
     <section
       className={cn(
-        'relative overflow-hidden border-b border-slate-200 bg-white',
+        'relative overflow-hidden border-b border-[color:var(--color-border)] bg-[color:var(--color-background)]',
         image ? 'min-h-[min(100svh,720px)]' : 'pt-24 lg:pt-28',
         size === 'default' ? 'pb-16 lg:pb-20' : 'pb-12 lg:pb-16',
       )}
@@ -250,7 +250,7 @@ export function PageHero({
             {...fade(0.02)}
             className={cn(
               'mb-4 text-[11px] font-bold tracking-[0.16em] uppercase',
-              image ? 'text-cyan-200' : 'text-[#0D9488]',
+              image ? 'text-cyan-200' : 'text-[color:var(--color-accent)]',
             )}
           >
             {eyebrow}
@@ -260,7 +260,7 @@ export function PageHero({
           {...fade(0.08)}
           className={cn(
             'font-display max-w-[18ch] text-[clamp(2.25rem,4.5vw,3.75rem)] font-bold tracking-[-0.045em] text-balance',
-            image ? 'text-white' : 'text-[#0F172A]',
+            image ? 'text-white' : 'text-[color:var(--color-primary)]',
           )}
         >
           {title}
@@ -270,7 +270,7 @@ export function PageHero({
             {...fade(0.16)}
             className={cn(
               'mt-5 max-w-[48ch] text-base leading-relaxed sm:text-lg',
-              image ? 'text-slate-200' : 'text-slate-600',
+              image ? 'text-slate-200' : 'text-[color:var(--color-secondary)]',
             )}
           >
             {subtitle}
@@ -287,8 +287,8 @@ export function PageHero({
                   size="lg"
                   className={
                     isOutline
-                      ? 'rounded-full border-2 border-slate-300 bg-transparent font-semibold text-[#0F172A] hover:bg-slate-50'
-                      : 'rounded-full bg-[#0D9488] font-semibold text-white hover:bg-[#06B6D4]'
+                      ? 'rounded-full border-2 border-[color:var(--color-border)] bg-transparent font-semibold text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)]'
+                      : 'rounded-full bg-[color:var(--color-accent)] font-semibold text-white hover:bg-[color:var(--color-accent-hover)]'
                   }
                 >
                   <Link href={cta.href}>{cta.label}</Link>

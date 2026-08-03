@@ -1,35 +1,37 @@
 'use server'
 
+import { headers } from 'next/headers'
 import { z } from 'zod'
 
+import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
 import { getPayload } from '@/lib/payload'
 
 const careerSchema = z.object({
-  careerId: z.string().min(1, 'Job reference is required'),
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Valid email is required'),
-  phone: z.string().min(7, 'Mobile number is required'),
-  country: z.string().min(1, 'Country is required'),
-  city: z.string().min(1, 'Current city is required'),
-  linkedin: z.string().optional(),
-  portfolio: z.string().optional(),
-  currentCompany: z.string().optional(),
-  currentDesignation: z.string().optional(),
-  totalExperience: z.string().optional(),
-  relevantExperience: z.string().optional(),
-  currentSalary: z.string().optional(),
-  expectedSalary: z.string().optional(),
-  noticePeriod: z.string().optional(),
-  workAuthorization: z.string().optional(),
-  highestQualification: z.string().optional(),
-  university: z.string().optional(),
-  graduationYear: z.string().optional(),
-  skills: z.string().optional(),
-  coverLetter: z.string().optional(),
-  whyJoin: z.string().optional(),
+  careerId: z.string().min(1, 'Job reference is required').max(80),
+  firstName: z.string().min(1, 'First name is required').max(80),
+  lastName: z.string().min(1, 'Last name is required').max(80),
+  email: z.string().email('Valid email is required').max(200),
+  phone: z.string().min(7, 'Mobile number is required').max(40),
+  country: z.string().min(1, 'Country is required').max(80),
+  city: z.string().min(1, 'Current city is required').max(80),
+  linkedin: z.string().max(300).optional(),
+  portfolio: z.string().max(300).optional(),
+  currentCompany: z.string().max(160).optional(),
+  currentDesignation: z.string().max(160).optional(),
+  totalExperience: z.string().max(40).optional(),
+  relevantExperience: z.string().max(40).optional(),
+  currentSalary: z.string().max(40).optional(),
+  expectedSalary: z.string().max(40).optional(),
+  noticePeriod: z.string().max(40).optional(),
+  workAuthorization: z.string().max(80).optional(),
+  highestQualification: z.string().max(120).optional(),
+  university: z.string().max(160).optional(),
+  graduationYear: z.string().max(10).optional(),
+  skills: z.string().max(1000).optional(),
+  coverLetter: z.string().max(5000).optional(),
+  whyJoin: z.string().max(2000).optional(),
   willingToRelocate: z.enum(['yes', 'no', 'maybe']).optional(),
-  earliestJoinDate: z.string().optional(),
+  earliestJoinDate: z.string().max(40).optional(),
   healthcareExperience: z.enum(['yes', 'no']).optional(),
   consent: z
     .string({ required_error: 'Consent is required' })
@@ -49,15 +51,28 @@ const ALLOWED_RESUME = new Set([
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ])
 
-function nextApplicationId(seq: number) {
+function nextApplicationId() {
   const year = new Date().getFullYear()
-  return `XEL-${year}-${String(seq).padStart(6, '0')}`
+  const rand = crypto.randomUUID().replace(/-/g, '').slice(0, 8).toUpperCase()
+  return `XEL-${year}-${rand}`
 }
 
 export async function submitCareerApplication(
   _prev: CareerFormState,
   formData: FormData,
 ): Promise<CareerFormState> {
+  const headerList = await headers()
+  const limited = rateLimit(clientKeyFromHeaders(headerList, 'career'), {
+    limit: 5,
+    windowMs: 30 * 60_000,
+  })
+  if (!limited.ok) {
+    return {
+      ok: false,
+      message: 'Too many applications from this network. Please try again later.',
+    }
+  }
+
   const resume = formData.get('resume')
   const parsed = careerSchema.safeParse({
     careerId: formData.get('careerId'),
@@ -126,6 +141,7 @@ export async function submitCareerApplication(
     const payload = await getPayload()
     const buffer = Buffer.from(await resume.arrayBuffer())
     const fullName = `${parsed.data.firstName} ${parsed.data.lastName}`.trim()
+    const applicationId = nextApplicationId()
 
     const media = await payload.create({
       collection: 'media',
@@ -134,24 +150,16 @@ export async function submitCareerApplication(
       file: {
         data: buffer,
         mimetype: mime,
-        name: resume.name,
+        name: resume.name.replace(/[^\w.\-()+ ]+/g, '_').slice(0, 120),
         size: resume.size,
       },
     })
-
-    const existing = await payload.find({
-      collection: 'job-applications',
-      limit: 1,
-      sort: '-createdAt',
-      overrideAccess: true,
-    })
-    const seq = (existing.totalDocs || 0) + 1
-    const applicationId = nextApplicationId(seq)
 
     const skills = (parsed.data.skills || '')
       .split(',')
       .map((s) => s.trim())
       .filter(Boolean)
+      .slice(0, 40)
       .map((item) => ({ item }))
 
     await payload.create({

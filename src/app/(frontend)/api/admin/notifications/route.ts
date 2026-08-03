@@ -75,6 +75,20 @@ export async function POST(request: Request) {
     }
 
     if (body.id) {
+      const existing = await payload.findByID({
+        collection: 'notifications',
+        id: body.id,
+        depth: 0,
+        overrideAccess: true,
+      })
+      const owner =
+        typeof (existing as { user?: string | { id?: string } }).user === 'object'
+          ? (existing as { user?: { id?: string } }).user?.id
+          : (existing as { user?: string }).user
+      if (String(owner) !== String(user.id)) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      }
+
       await payload.update({
         collection: 'notifications',
         id: body.id,
