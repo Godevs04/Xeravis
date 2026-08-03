@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 
 const initialState: CareerFormState = { ok: false, message: '' }
 
@@ -16,9 +17,16 @@ type CareerApplicationFormProps = {
   jobTitle: string
 }
 
+const selectClass = cn(
+  'flex h-11 w-full rounded-[14px] border border-[color:var(--glass-border-soft)]',
+  'bg-[color:var(--glass-bg)] px-3 text-sm text-[color:var(--color-primary)]',
+  'shadow-[var(--shadow-light)] backdrop-blur-md',
+  'focus-visible:border-accent/40 focus-visible:ring-accent/30 focus-visible:ring-2 focus-visible:outline-none',
+)
+
 function FieldError({ errors }: { errors?: string[] }) {
   if (!errors?.length) return null
-  return <p className="text-sm text-red-600">{errors[0]}</p>
+  return <p className="text-sm text-red-500">{errors[0]}</p>
 }
 
 export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationFormProps) {
@@ -26,10 +34,10 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
 
   if (state.ok) {
     return (
-      <div className="space-y-4 rounded-[24px] border border-teal-200 bg-teal-50/60 p-6">
-        <p className="text-sm leading-relaxed text-[#0F172A]">{state.message}</p>
+      <div className="space-y-4 rounded-[24px] border border-[color:var(--color-accent)]/30 bg-[color:var(--color-accent)]/10 p-6">
+        <p className="text-sm leading-relaxed text-[color:var(--color-primary)]">{state.message}</p>
         {state.applicationId ? (
-          <p className="font-display text-lg font-semibold text-[#0D9488]">
+          <p className="font-display text-lg font-semibold text-[color:var(--color-accent)]">
             Application ID: {state.applicationId}
           </p>
         ) : null}
@@ -43,12 +51,13 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
   return (
     <form action={action} className="space-y-8" noValidate>
       <input type="hidden" name="careerId" value={careerId} />
-      <p className="text-sm text-slate-600">
-        Applying for <span className="font-semibold text-[#0F172A]">{jobTitle}</span>
+      <p className="text-sm text-[color:var(--color-secondary)]">
+        Applying for{' '}
+        <span className="font-semibold text-[color:var(--color-primary)]">{jobTitle}</span>
       </p>
 
       <fieldset className="space-y-4">
-        <legend className="font-display text-base font-semibold text-[#0F172A]">
+        <legend className="font-display text-base font-semibold text-[color:var(--color-primary)]">
           Personal information
         </legend>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -86,7 +95,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
       </fieldset>
 
       <fieldset className="space-y-4">
-        <legend className="font-display text-base font-semibold text-[#0F172A]">
+        <legend className="font-display text-base font-semibold text-[color:var(--color-primary)]">
           Professional information
         </legend>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -134,7 +143,9 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
       </fieldset>
 
       <fieldset className="space-y-4">
-        <legend className="font-display text-base font-semibold text-[#0F172A]">Education</legend>
+        <legend className="font-display text-base font-semibold text-[color:var(--color-primary)]">
+          Education
+        </legend>
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-2">
             <Label htmlFor="highestQualification">Highest qualification</Label>
@@ -174,7 +185,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
       </div>
 
       <fieldset className="space-y-4">
-        <legend className="font-display text-base font-semibold text-[#0F172A]">
+        <legend className="font-display text-base font-semibold text-[color:var(--color-primary)]">
           Additional questions
         </legend>
         <div className="space-y-2">
@@ -187,7 +198,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
             <select
               id="willingToRelocate"
               name="willingToRelocate"
-              className="flex h-11 w-full rounded-[14px] border border-slate-200 bg-white px-3 text-sm"
+              className={selectClass}
               defaultValue=""
             >
               <option value="">Select</option>
@@ -205,7 +216,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
             <select
               id="healthcareExperience"
               name="healthcareExperience"
-              className="flex h-11 w-full rounded-[14px] border border-slate-200 bg-white px-3 text-sm"
+              className={selectClass}
               defaultValue=""
             >
               <option value="">Select</option>
@@ -216,11 +227,14 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
         </div>
       </fieldset>
 
-      <label className="flex items-start gap-3 text-sm text-slate-700">
-        <input type="checkbox" name="consent" className="mt-1" required />
+      <label className="flex items-start gap-3 text-sm text-[color:var(--color-secondary)]">
+        <input type="checkbox" name="consent" className="mt-1 accent-teal-500" required />
         <span>
           I agree to the processing of my application data according to the{' '}
-          <Link href="/privacy-policy" className="font-semibold text-[#0D9488] hover:underline">
+          <Link
+            href="/privacy-policy"
+            className="font-semibold text-[color:var(--color-accent)] hover:underline"
+          >
             Privacy Policy
           </Link>
           .
@@ -229,7 +243,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
       <FieldError errors={state.fieldErrors?.consent} />
 
       {state.message ? (
-        <p className="text-sm text-red-600" role="status">
+        <p className="text-sm text-red-500" role="status">
           {state.message}
         </p>
       ) : null}
@@ -237,7 +251,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
       <Button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-[#0D9488] px-6 font-semibold text-white hover:bg-[#06B6D4]"
+        className="w-full rounded-full bg-[color:var(--color-accent)] px-6 font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:w-auto"
       >
         {pending ? 'Submitting…' : 'Submit Application'}
       </Button>

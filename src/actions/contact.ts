@@ -58,7 +58,25 @@ export async function submitContact(
         company: parsed.data.company,
         phone: parsed.data.phone,
         message: parsed.data.message,
-        intent: parsed.data.intent === 'project' ? 'project' : 'general',
+        intent: (() => {
+          type Intent = 'business' | 'research' | 'career' | 'general' | 'project' | 'partnership'
+          const raw = parsed.data.intent || 'general'
+          const legacy: Record<string, Intent> = {
+            project: 'business',
+            partnership: 'research',
+            careers: 'career',
+          }
+          const mapped = legacy[raw] || raw
+          const allowed: Intent[] = [
+            'business',
+            'research',
+            'career',
+            'general',
+            'project',
+            'partnership',
+          ]
+          return (allowed.includes(mapped as Intent) ? mapped : 'general') as Intent
+        })(),
         subject: parsed.data.intent || 'Website enquiry',
         status: 'new',
       },

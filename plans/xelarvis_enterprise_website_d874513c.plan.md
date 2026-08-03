@@ -1,31 +1,33 @@
 ---
 name: Xelarvis Enterprise Website
-overview: Greenfield production build of the Xelarvis Technologies corporate site on Next.js 15 + Payload CMS 3 + MongoDB Atlas + Vercel, with a complete IA, design system, CMS model, and env contract — Option A full scope in one implementation after plan approval.
+overview: 'ARCHIVED / SUPERSEDED — The greenfield build described here is largely complete. Live IA and content sync are tracked in plans/Mainplan.md (Consolidated Live IA). Brand tagline is “Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation” (not the older “Engineering Digital Excellence”). Prefer Mainplan.md for navigation and copy; defer full HR ATS to Phase 2.'
 todos:
   - id: scaffold
     content: Scaffold Next.js 15 + Payload 3 + Tailwind + shadcn + tokens + .env.example
-    status: pending
+    status: completed
   - id: cms-model
     content: Implement collections, globals, roles, SEO/search/Cloudinary plugins
-    status: pending
+    status: completed
   - id: seed
-    content: "Seed script: nav, home, services, industries, legal, sample content"
-    status: pending
+    content: 'Seed script: nav, home, services, industries, legal, sample content'
+    status: completed
   - id: frontend-shell
     content: Header/footer, design system, block renderer, all marketing routes
-    status: pending
+    status: completed
   - id: forms-search-seo
     content: Contact/career/newsletter actions, search page, sitemap/robots/JSON-LD
-    status: pending
+    status: completed
   - id: polish-deploy
     content: Motion/a11y/Lighthouse pass + Vercel env and production deploy
-    status: pending
+    status: completed
 isProject: false
 ---
 
 # Xelarvis Technologies — Enterprise Website Architecture
 
-**Brand:** Xelarvis Technologies · **Tagline:** Engineering Digital Excellence. · **Domain:** [xelarvis.in](https://xelarvis.in)  
+> **Status:** Superseded by [plans/Mainplan.md](Mainplan.md) consolidated Live IA. Historical architecture notes below are retained for reference only.
+
+**Brand:** Xelarvis Technologies · **Tagline:** Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation · **Domain:** [xelarvis.in](https://xelarvis.in)
 **Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind · shadcn/ui · Framer Motion · Payload CMS 3 · MongoDB Atlas · Vercel · Cloudinary (prod media)
 
 **Default locked for this build:** Single Next.js app with Payload embedded at `/admin` (not a monorepo). Local media in development; Cloudinary via `@payloadcms/plugin-cloud-storage` when `CLOUDINARY_*` is set. Typography uses **Inter** as specified (swap later via CSS variables). No finalized logo — wordmark + SVG mark slot in header/footer, replaceable without layout changes.
@@ -59,39 +61,39 @@ flowchart TB
   Contact --> Enquiry[Contact Form]
 ```
 
-| Audience need | Primary path | Business outcome |
-|---|---|---|
+| Audience need       | Primary path                       | Business outcome  |
+| ------------------- | ---------------------------------- | ----------------- |
 | Trust / credibility | About, Team, Clients, Case Studies | Shortlist for RFP |
-| Buy services | Services → detail → Contact | Enquiry |
-| Industry fit | Industries → detail → CTA | Qualified lead |
-| Thought leadership | Insights / Blog | SEO + authority |
-| Hire / join | Careers → apply | Talent pipeline |
-| Legal / ops | Privacy, Terms | Compliance |
+| Buy services        | Services → detail → Contact        | Enquiry           |
+| Industry fit        | Industries → detail → CTA          | Qualified lead    |
+| Thought leadership  | Insights / Blog                    | SEO + authority   |
+| Hire / join         | Careers → apply                    | Talent pipeline   |
+| Legal / ops         | Privacy, Terms                     | Compliance        |
 
 ---
 
 ## 2. Sitemap (routes)
 
-| Route | Purpose | CMS source |
-|---|---|---|
-| `/` | Conversion hero + proof + services strip + industries + case studies + testimonials + CTA | Pages + globals |
-| `/about` | Story, values, leadership, stats, clients | Pages + Team + Clients |
-| `/services` | Service index | Services |
-| `/services/[slug]` | Deep service page | Services |
-| `/industries` | Industry index | Industries |
-| `/industries/[slug]` | Industry page | Industries |
-| `/solutions` | Solution themes (e.g. Cloud Modernization, AI Ops) | Solutions (or Pages blocks) |
-| `/solutions/[slug]` | Solution detail | Solutions |
-| `/case-studies` / `/case-studies/[slug]` | Proof of delivery | Case Studies |
-| `/insights` | Hub (featured + categories) | Blogs |
-| `/blog` · `/blog/[slug]` | Listing + article | Blogs + Categories + Authors |
-| `/careers` · `/careers/[slug]` | Jobs + apply | Careers |
-| `/contact` | Enquiry form + offices | Contact Details + Offices + Form |
-| `/search` | Site search UI | `@payloadcms/plugin-search` |
-| `/privacy-policy` · `/terms` | Legal | Pages |
-| `/sitemap.xml` · `/robots.txt` | SEO | Next Metadata / route handlers |
-| `/404` | Branded not found | Static + nav |
-| `/admin` | Payload admin | Payload |
+| Route                                    | Purpose                                                                                   | CMS source                       |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------- |
+| `/`                                      | Conversion hero + proof + services strip + industries + case studies + testimonials + CTA | Pages + globals                  |
+| `/about`                                 | Story, values, leadership, stats, clients                                                 | Pages + Team + Clients           |
+| `/services`                              | Service index                                                                             | Services                         |
+| `/services/[slug]`                       | Deep service page                                                                         | Services                         |
+| `/industries`                            | Industry index                                                                            | Industries                       |
+| `/industries/[slug]`                     | Industry page                                                                             | Industries                       |
+| `/solutions`                             | Solution themes (e.g. Cloud Modernization, AI Ops)                                        | Solutions (or Pages blocks)      |
+| `/solutions/[slug]`                      | Solution detail                                                                           | Solutions                        |
+| `/case-studies` / `/case-studies/[slug]` | Proof of delivery                                                                         | Case Studies                     |
+| `/insights`                              | Hub (featured + categories)                                                               | Blogs                            |
+| `/blog` · `/blog/[slug]`                 | Listing + article                                                                         | Blogs + Categories + Authors     |
+| `/careers` · `/careers/[slug]`           | Jobs + apply                                                                              | Careers                          |
+| `/contact`                               | Enquiry form + offices                                                                    | Contact Details + Offices + Form |
+| `/search`                                | Site search UI                                                                            | `@payloadcms/plugin-search`      |
+| `/privacy-policy` · `/terms`             | Legal                                                                                     | Pages                            |
+| `/sitemap.xml` · `/robots.txt`           | SEO                                                                                       | Next Metadata / route handlers   |
+| `/404`                                   | Branded not found                                                                         | Static + nav                     |
+| `/admin`                                 | Payload admin                                                                             | Payload                          |
 
 ---
 
@@ -155,36 +157,36 @@ No duplicate section components — blocks map 1:1 from Payload `blocks` field o
 
 ### Collections
 
-| Collection | Key fields |
-|---|---|
-| **users** | email, roles: `admin` \| `editor` \| `content-manager` |
-| **media** | alt, caption, focal; local or Cloudinary |
-| **pages** | title, slug, layout blocks[], SEO, status, versions |
-| **services** | title, slug, summary, icon (Lucide name), body, benefits, FAQs, related industries, SEO |
-| **industries** | title, slug, summary, challenges, solutions, related services, SEO |
-| **solutions** | title, slug, summary, body, related services, SEO |
-| **case-studies** | title, slug, client, industry, challenge, outcome, metrics, media, SEO |
-| **blogs** | title, slug, excerpt, content (Lexical), cover, author, categories, publishedAt, SEO |
-| **categories** | title, slug |
-| **authors** | name, role, bio, avatar, social |
-| **careers** | title, slug, department, location, type, description, requirements, active |
-| **testimonials** | quote, author, role, company, logo, featured |
-| **team-members** | name, role, bio, photo, order, linkedIn |
-| **clients** | name, logo, url, featured |
-| **faqs** | question, answer, group (service/page) |
-| **form-submissions** | type (contact/career/newsletter), payload JSON, file?, status |
-| **job-applications** | career relation, name, email, phone, resume, coverLetter |
+| Collection           | Key fields                                                                              |
+| -------------------- | --------------------------------------------------------------------------------------- |
+| **users**            | email, roles: `admin` \| `editor` \| `content-manager`                                  |
+| **media**            | alt, caption, focal; local or Cloudinary                                                |
+| **pages**            | title, slug, layout blocks[], SEO, status, versions                                     |
+| **services**         | title, slug, summary, icon (Lucide name), body, benefits, FAQs, related industries, SEO |
+| **industries**       | title, slug, summary, challenges, solutions, related services, SEO                      |
+| **solutions**        | title, slug, summary, body, related services, SEO                                       |
+| **case-studies**     | title, slug, client, industry, challenge, outcome, metrics, media, SEO                  |
+| **blogs**            | title, slug, excerpt, content (Lexical), cover, author, categories, publishedAt, SEO    |
+| **categories**       | title, slug                                                                             |
+| **authors**          | name, role, bio, avatar, social                                                         |
+| **careers**          | title, slug, department, location, type, description, requirements, active              |
+| **testimonials**     | quote, author, role, company, logo, featured                                            |
+| **team-members**     | name, role, bio, photo, order, linkedIn                                                 |
+| **clients**          | name, logo, url, featured                                                               |
+| **faqs**             | question, answer, group (service/page)                                                  |
+| **form-submissions** | type (contact/career/newsletter), payload JSON, file?, status                           |
+| **job-applications** | career relation, name, email, phone, resume, coverLetter                                |
 
 ### Globals
 
-| Global | Purpose |
-|---|---|
-| **site-settings** | site name, tagline, logo, favicon, social, analytics IDs |
-| **navigation** | primary + CTA links |
-| **footer** | columns, legal links, newsletter toggle |
-| **contact-details** | emails, phones, WhatsApp, map embed |
-| **office-locations** | address, city, country, lat/lng, hours |
-| **seo-defaults** | default title template, OG image, twitter |
+| Global               | Purpose                                                  |
+| -------------------- | -------------------------------------------------------- |
+| **site-settings**    | site name, tagline, logo, favicon, social, analytics IDs |
+| **navigation**       | primary + CTA links                                      |
+| **footer**           | columns, legal links, newsletter toggle                  |
+| **contact-details**  | emails, phones, WhatsApp, map embed                      |
+| **office-locations** | address, city, country, lat/lng, hours                   |
+| **seo-defaults**     | default title template, OG image, twitter                |
 
 ### Plugins & CMS features
 
@@ -253,32 +255,32 @@ erDiagram
 
 ## 9. Animation strategy
 
-| Motion | Where | Intent |
-|---|---|---|
-| Fade + slight Y | Section enter (once) | Hierarchy, not decoration |
-| Underline / color | Nav active & hover | Wayfinding |
-| Opacity / translate | Button hover | CTA affordance |
-| Crossfade | Testimonial / logo strip | Quiet continuity |
-| None on scroll hijack | — | Avoid “AI template” feel |
+| Motion                | Where                    | Intent                    |
+| --------------------- | ------------------------ | ------------------------- |
+| Fade + slight Y       | Section enter (once)     | Hierarchy, not decoration |
+| Underline / color     | Nav active & hover       | Wayfinding                |
+| Opacity / translate   | Button hover             | CTA affordance            |
+| Crossfade             | Testimonial / logo strip | Quiet continuity          |
+| None on scroll hijack | —                        | Avoid “AI template” feel  |
 
 ---
 
 ## 10. Feature parity vs enterprise references
 
-*(Specific client video/URL not in repo — matrix below is against Stripe / Vercel / IBM / Nagarro / Accenture / Publicis Sapient patterns you named. Share the client reference later to adjust.)*
+_(Specific client video/URL not in repo — matrix below is against Stripe / Vercel / IBM / Nagarro / Accenture / Publicis Sapient patterns you named. Share the client reference later to adjust.)_
 
-| Area | Reference-class feature | Xelarvis plan | Upgrade beyond typical agency sites |
-|---|---|---|---|
-| Nav | Sparse primary + strong CTA | 8 items + “Get in touch” | Prefill contact from context |
-| Home | Hero, proof, services, CTA | Same + case metrics + industries | CMS block composer |
-| Services | Deep pages | Full collection + FAQs | Related industry cross-links |
-| Careers | Job board + apply | Payload + file upload | JobPosting schema |
-| Blog | SEO articles | Lexical + authors + categories | Search plugin + related |
-| Trust | Logos, case studies | Clients + Case Studies + Team | Draft/preview workflow |
-| Forms | Contact | Contact + Career + Newsletter | Stored submissions in CMS |
-| SEO | Meta, sitemap | Full Metadata + sitemap/robots + JSON-LD | Per-doc SEO plugin |
-| A11y | Often weak | WCAG-oriented primitives | Skip, focus, reduced motion |
-| Perf | Mixed | RSC + ISR + image pipeline | Lighthouse gated |
+| Area     | Reference-class feature     | Xelarvis plan                            | Upgrade beyond typical agency sites |
+| -------- | --------------------------- | ---------------------------------------- | ----------------------------------- |
+| Nav      | Sparse primary + strong CTA | 8 items + “Get in touch”                 | Prefill contact from context        |
+| Home     | Hero, proof, services, CTA  | Same + case metrics + industries         | CMS block composer                  |
+| Services | Deep pages                  | Full collection + FAQs                   | Related industry cross-links        |
+| Careers  | Job board + apply           | Payload + file upload                    | JobPosting schema                   |
+| Blog     | SEO articles                | Lexical + authors + categories           | Search plugin + related             |
+| Trust    | Logos, case studies         | Clients + Case Studies + Team            | Draft/preview workflow              |
+| Forms    | Contact                     | Contact + Career + Newsletter            | Stored submissions in CMS           |
+| SEO      | Meta, sitemap               | Full Metadata + sitemap/robots + JSON-LD | Per-doc SEO plugin                  |
+| A11y     | Often weak                  | WCAG-oriented primitives                 | Skip, focus, reduced motion         |
+| Perf     | Mixed                       | RSC + ISR + image pipeline               | Lighthouse gated                    |
 
 ---
 

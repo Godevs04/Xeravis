@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 import { submitContact, type ContactFormState } from '@/actions/contact'
@@ -8,24 +8,72 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { CONTACT_INTENTS } from '@/lib/site-ia'
 
 const initialState: ContactFormState = { ok: false, message: '' }
+
+const LEGACY_INTENT_MAP: Record<string, string> = {
+  project: 'business',
+  partnership: 'research',
+  careers: 'career',
+}
 
 export function ContactForm() {
   const [state, action, pending] = useActionState(submitContact, initialState)
   const searchParams = useSearchParams()
-  const intent = searchParams.get('intent') || ''
+  const rawIntent = searchParams.get('intent') || 'general'
+  const mapped = LEGACY_INTENT_MAP[rawIntent] || rawIntent
+  const defaultIntent = CONTACT_INTENTS.some((i) => i.value === mapped) ? mapped : 'general'
+  const [intent, setIntent] = useState(defaultIntent)
+
+  useEffect(() => {
+    setIntent(defaultIntent)
+  }, [defaultIntent])
 
   return (
     <form action={action} className="space-y-6" noValidate>
-      <input type="hidden" name="intent" value={intent} />
-      <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden
+      />
+
+      <div className="space-y-2">
+        <Label htmlFor="intent">Enquiry type</Label>
+        <select
+          id="intent"
+          name="intent"
+          value={intent}
+          onChange={(e) => setIntent(e.target.value)}
+          className="border-border bg-background text-primary focus-visible:ring-accent w-full rounded-xl border px-3 py-2.5 text-sm outline-none focus-visible:ring-2"
+        >
+          {CONTACT_INTENTS.map((item) => (
+            <option key={item.value} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+        <p className="text-muted text-xs">
+          {CONTACT_INTENTS.find((i) => i.value === intent)?.description}
+        </p>
+      </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Full name</Label>
-          <Input id="name" name="name" autoComplete="name" required aria-invalid={Boolean(state.fieldErrors?.name)} />
-          {state.fieldErrors?.name && <p className="text-sm text-danger">{state.fieldErrors.name[0]}</p>}
+          <Input
+            id="name"
+            name="name"
+            autoComplete="name"
+            required
+            aria-invalid={Boolean(state.fieldErrors?.name)}
+          />
+          {state.fieldErrors?.name && (
+            <p className="text-danger text-sm">{state.fieldErrors.name[0]}</p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Work email</Label>
@@ -37,7 +85,9 @@ export function ContactForm() {
             required
             aria-invalid={Boolean(state.fieldErrors?.email)}
           />
-          {state.fieldErrors?.email && <p className="text-sm text-danger">{state.fieldErrors.email[0]}</p>}
+          {state.fieldErrors?.email && (
+            <p className="text-danger text-sm">{state.fieldErrors.email[0]}</p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="company">Company</Label>
@@ -57,7 +107,9 @@ export function ContactForm() {
           required
           aria-invalid={Boolean(state.fieldErrors?.message)}
         />
-        {state.fieldErrors?.message && <p className="text-sm text-danger">{state.fieldErrors.message[0]}</p>}
+        {state.fieldErrors?.message && (
+          <p className="text-danger text-sm">{state.fieldErrors.message[0]}</p>
+        )}
       </div>
       {state.message && (
         <p className={`text-sm ${state.ok ? 'text-success' : 'text-danger'}`} role="status">

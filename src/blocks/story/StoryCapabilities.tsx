@@ -28,31 +28,38 @@ export function StoryCapabilities({
   const reduce = useReducedMotion()
 
   return (
-    <section className="overflow-hidden bg-white py-24 lg:py-32">
-      <Container>
+    <section className="relative overflow-hidden bg-[color:var(--color-background)] py-24 lg:py-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_65%_45%_at_0%_0%,rgba(13,148,136,0.1),transparent_55%),radial-gradient(ellipse_50%_40%_at_100%_100%,rgba(6,182,212,0.08),transparent_50%)]"
+      />
+
+      <Container className="relative z-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="text-[11px] font-bold tracking-[0.2em] text-teal-700 uppercase">
+            <p className="text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
               {eyebrow}
             </p>
-            <h2 className="font-display mt-4 text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-[-0.04em] text-[color:var(--color-navy)]">
+            <h2 className="font-display mt-4 text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-[-0.04em] text-[color:var(--color-primary)]">
               {heading}
             </h2>
             {subheading ? (
-              <p className="mt-4 max-w-xl text-base text-slate-600">{subheading}</p>
+              <p className="mt-4 max-w-xl text-base text-[color:var(--color-secondary)]">
+                {subheading}
+              </p>
             ) : null}
           </div>
           <Link
             href="/services"
-            className="text-sm font-semibold text-teal-700 underline-offset-4 hover:underline"
+            className="text-sm font-semibold text-[color:var(--color-accent)] underline-offset-4 hover:underline"
           >
             All services →
           </Link>
         </div>
       </Container>
 
-      <div className="mt-10 sm:mt-14">
-        <p className="container-x mb-3 text-[10px] font-semibold tracking-[0.14em] text-slate-400 uppercase lg:hidden">
+      <div className="relative z-10 mt-10 sm:mt-14">
+        <p className="container-x mb-3 text-[10px] font-semibold tracking-[0.14em] text-[color:var(--color-muted)] uppercase lg:hidden">
           Swipe to explore →
         </p>
         <div className="[scrollbar-width:none] overflow-x-auto pb-6 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
@@ -68,18 +75,18 @@ export function StoryCapabilities({
               >
                 <Link
                   href={item.href}
-                  className="group block h-full border-l-2 border-teal-500/40 pl-5 transition-[border-color,padding] hover:border-cyan-500 hover:pl-8 sm:pl-6"
+                  className="group block h-full rounded-r-[20px] border-l-2 border-[color:var(--color-accent)]/40 py-2 pl-5 transition-[border-color,padding,background] hover:border-[color:var(--color-accent)] hover:bg-[color:var(--color-hover)] hover:pl-8 sm:pl-6"
                 >
-                  <span className="font-display text-xs tracking-[0.16em] text-slate-400">
+                  <span className="font-display text-xs tracking-[0.16em] text-[color:var(--color-accent)]">
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <h3 className="font-display mt-4 text-xl font-semibold tracking-[-0.03em] text-[color:var(--color-navy)] group-hover:text-teal-700 sm:text-2xl">
+                  <h3 className="font-display mt-4 text-xl font-semibold tracking-[-0.03em] text-[color:var(--color-primary)] transition-colors group-hover:text-[color:var(--color-accent)] sm:text-2xl">
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:mt-4">
+                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-secondary)] sm:mt-4">
                     {item.summary}
                   </p>
-                  <span className="mt-6 inline-block text-sm font-semibold text-teal-700 sm:mt-8 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
+                  <span className="mt-6 inline-block text-sm font-semibold text-[color:var(--color-accent)] sm:mt-8 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
                     Explore →
                   </span>
                 </Link>

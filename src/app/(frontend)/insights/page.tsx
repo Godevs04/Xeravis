@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { BlogCard } from '@/components/domain/BlogCard'
+import { InsightsIndexSection } from '@/components/insights/InsightsIndexSection'
 import { InsightsPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
@@ -37,39 +38,21 @@ export default async function InsightsPage() {
         title="Knowledge for intelligent organizations."
         subtitle="Perspective on AI research, clinical data science, analytics, and enterprise technology."
       />
+      <InsightsIndexSection items={INSIGHTS_MEGA} />
       <Section>
         <Container>
-          <ul className="divide-y divide-slate-200 border-y border-slate-200">
-            {INSIGHTS_MEGA.filter((i) => i.href !== '/insights').map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="group flex flex-col gap-2 py-8 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
-                >
-                  <h2 className="font-display text-xl font-semibold text-[#0F172A] group-hover:text-teal-700">
-                    {item.label}
-                  </h2>
-                  <p className="max-w-md text-sm text-slate-600 sm:text-right">
-                    {item.description}
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-      <Section surface>
-        <Container>
           <div className="mb-10 flex items-end justify-between gap-4">
-            <h2 className="font-display text-2xl font-bold text-[#0F172A]">Latest articles</h2>
+            <h2 className="font-display text-2xl font-bold text-[color:var(--color-primary)]">
+              Latest articles
+            </h2>
             <Link
               href="/insights/blogs"
-              className="text-sm font-semibold text-[#0D9488] hover:underline"
+              className="text-sm font-semibold text-[color:var(--color-accent)] hover:underline"
             >
               View all blogs
             </Link>
           </div>
-          <div>
+          <div className="grid gap-4 sm:grid-cols-2">
             {featured.map((post, index) => (
               <AnimateIn key={post.id} delay={index * 0.03}>
                 <BlogCard

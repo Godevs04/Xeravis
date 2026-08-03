@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { ChevronDown, Menu, Search } from 'lucide-react'
 
@@ -27,6 +27,8 @@ type SiteHeaderClientProps = {
   megaMenus: Record<string, MegaMenuItem[]>
 }
 
+const MEGA_CLOSE_DELAY_MS = 380
+
 export function SiteHeaderClient({
   links,
   ctaLabel,
@@ -38,20 +40,51 @@ export function SiteHeaderClient({
   const pathname = usePathname()
   const [openMega, setOpenMega] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const brand = brandName.split(' ')[0]
   const ctaText =
     ctaLabel === "Let's Talk" || ctaLabel === 'Talk to us' || !ctaLabel ? 'Contact Us' : ctaLabel
 
   const openItems = openMega ? megaMenus[openMega] : null
 
+  const cancelMegaClose = useCallback(() => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+  }, [])
+
+  const scheduleMegaClose = useCallback(() => {
+    cancelMegaClose()
+    closeTimerRef.current = setTimeout(() => {
+      setOpenMega(null)
+      closeTimerRef.current = null
+    }, MEGA_CLOSE_DELAY_MS)
+  }, [cancelMegaClose])
+
+  const openMegaMenu = useCallback(
+    (key: string | null) => {
+      cancelMegaClose()
+      setOpenMega(key)
+    },
+    [cancelMegaClose],
+  )
+
+  useEffect(() => {
+    return () => cancelMegaClose()
+  }, [cancelMegaClose])
+
   useEffect(() => {
     if (!openMega) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpenMega(null)
+      if (e.key === 'Escape') {
+        cancelMegaClose()
+        setOpenMega(null)
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [openMega])
+  }, [openMega, cancelMegaClose])
 
   return (
     <header
@@ -63,8 +96,12 @@ export function SiteHeaderClient({
           : 'pt-[max(0.75rem,env(safe-area-inset-top))]',
       )}
     >
-      <div className="container-x">
-        <div className="relative mx-auto max-w-[1180px]" onMouseLeave={() => setOpenMega(null)}>
+      <div
+        className="container-x relative"
+        onMouseEnter={cancelMegaClose}
+        onMouseLeave={scheduleMegaClose}
+      >
+        <div className="relative mx-auto max-w-[1180px]">
           <div
             className={cn(
               'flex items-center gap-3 rounded-full border px-3 sm:gap-4 sm:px-4',
@@ -103,7 +140,11 @@ export function SiteHeaderClient({
                   <div
                     key={link.href}
                     className="relative"
-                    onMouseEnter={() => setOpenMega(megaKey)}
+                    onMouseEnter={() => {
+                      // Only switch/open when the link has a mega; otherwise keep the
+                      // panel open while the cursor travels diagonally through the bar.
+                      if (megaKey && megaItems?.length) openMegaMenu(megaKey)
+                    }}
                   >
                     <Link
                       href={link.href}
@@ -117,7 +158,7 @@ export function SiteHeaderClient({
                       aria-haspopup={megaItems?.length ? 'menu' : undefined}
                       aria-controls={megaItems?.length && open ? 'xe-mega-menu' : undefined}
                       onFocus={() => {
-                        if (megaKey && megaItems?.length) setOpenMega(megaKey)
+                        if (megaKey && megaItems?.length) openMegaMenu(megaKey)
                       }}
                     >
                       {link.label}
@@ -224,15 +265,17 @@ export function SiteHeaderClient({
               </Sheet>
             </div>
           </div>
-
-          <AnimatePresence mode="wait">
-            {openItems?.length && openMega ? (
-              <div className="hidden xl:block">
-                <MegaMenu key={openMega} id="xe-mega-menu" items={openItems} category={openMega} />
-              </div>
-            ) : null}
-          </AnimatePresence>
         </div>
+
+        <AnimatePresence>
+          {openItems?.length && openMega ? (
+            <div className="pointer-events-auto absolute top-full right-0 left-0 z-50 hidden pt-3 xl:block">
+              {/* Extends upward into the pill so the cursor never hits empty space */}
+              <div aria-hidden className="absolute inset-x-0 -top-6 h-6" />
+              <MegaMenu key={openMega} id="xe-mega-menu" items={openItems} category={openMega} />
+            </div>
+          ) : null}
+        </AnimatePresence>
       </div>
     </header>
   )

@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 
 import { MeshBackdrop } from '@/components/marketing/MeshBackdrop'
 import { ConstellationCanvas } from '@/components/marketing/ConstellationCanvas'
 import { OrbitDiagram } from '@/components/marketing/OrbitDiagram'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -17,35 +17,72 @@ type BaseHero = {
   subtitle?: string
 }
 
-/** Services — horizontal capability ribbon + split type */
+/** Services — capability masthead + glass ribbon */
 export function ServicesPageHero({ title, subtitle }: BaseHero) {
   const reduce = useReducedMotion()
   const ribbon = ['AI Research', 'Data Science', 'IT Consulting', 'Clinical', 'Cloud']
 
   return (
-    <section className="relative overflow-hidden bg-[color:var(--color-neutral)] pt-28 pb-16 lg:pt-36 lg:pb-20">
+    <MeshBackdrop className="pt-28 pb-0 lg:pt-36" interactive={false}>
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+        <div className="grid items-end gap-10 pb-16 lg:grid-cols-[1.2fr_0.8fr] lg:pb-20">
           <div>
-            <p className="font-display text-2xl font-bold tracking-[-0.03em] text-teal-700">
+            <motion.p
+              className="font-display text-2xl font-bold tracking-[-0.03em] text-teal-300 sm:text-3xl"
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE }}
+            >
               Xelarvis
-            </p>
+            </motion.p>
             <motion.h1
-              className="font-display mt-4 text-[clamp(2.4rem,5vw,4.2rem)] leading-[1.02] font-bold tracking-[-0.045em] text-[color:var(--color-navy)]"
+              className="font-display mt-4 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-white"
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE }}
+              transition={{ duration: 0.7, delay: 0.06, ease: EASE }}
             >
               {title}
             </motion.h1>
-            {subtitle ? <p className="mt-5 max-w-xl text-base text-slate-600">{subtitle}</p> : null}
+            {subtitle ? (
+              <motion.p
+                className="mt-5 max-w-xl text-base leading-relaxed text-slate-300"
+                initial={reduce ? false : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: 0.12, ease: EASE }}
+              >
+                {subtitle}
+              </motion.p>
+            ) : null}
+            <motion.div
+              className="mt-8 flex flex-wrap gap-3"
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.18, ease: EASE }}
+            >
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-7 font-semibold text-white shadow-[0_0_32px_rgba(13,148,136,0.4)] hover:from-teal-400 hover:to-cyan-400"
+              >
+                <Link href="#services-catalog">Browse services</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full border-white/20 bg-white/5 px-7 font-semibold text-white backdrop-blur hover:border-cyan-400/50 hover:bg-white/10"
+              >
+                <Link href="/contact?intent=services">Talk to an expert</Link>
+              </Button>
+            </motion.div>
           </div>
-          <p className="text-right text-[11px] font-bold tracking-[0.2em] text-slate-400 uppercase">
+          <p className="text-[11px] font-bold tracking-[0.22em] text-teal-300/80 uppercase lg:text-right">
             Services
           </p>
         </div>
       </Container>
-      <div className="mt-12 overflow-hidden border-y border-[color:var(--color-navy)]/10 bg-white/60 py-4 backdrop-blur">
+
+      <div className="overflow-hidden border-y border-white/10 bg-white/[0.04] py-4 backdrop-blur-xl">
         <motion.ul
           className="flex w-max gap-10 px-6 whitespace-nowrap"
           animate={reduce ? undefined : { x: ['0%', '-50%'] }}
@@ -54,15 +91,15 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
           {[...ribbon, ...ribbon].map((label, i) => (
             <li
               key={`${label}-${i}`}
-              className="font-display text-sm font-semibold tracking-wide text-[color:var(--color-navy)]/70"
+              className="font-display text-sm font-semibold tracking-wide text-slate-200/90"
             >
               {label}
-              <span className="ml-10 text-teal-500">·</span>
+              <span className="ml-10 text-cyan-400">·</span>
             </li>
           ))}
         </motion.ul>
       </div>
-    </section>
+    </MeshBackdrop>
   )
 }
 
@@ -175,61 +212,162 @@ export function CareersPageHero({ title, subtitle }: BaseHero) {
   )
 }
 
-/** About — mission typography void */
+/** About — brand masthead with mesh atmosphere */
 export function AboutPageHero({ title, subtitle }: BaseHero) {
   const reduce = useReducedMotion()
+  const domains = ['Healthcare AI', 'Clinical Data', 'Machine Learning', 'Enterprise Software']
+
   return (
-    <section className="bg-[color:var(--color-neutral)] pt-32 pb-24 lg:pt-40 lg:pb-32">
+    <MeshBackdrop className="pt-28 pb-20 lg:pt-36 lg:pb-28" interactive={false}>
       <Container>
-        <p className="text-[11px] font-bold tracking-[0.22em] text-teal-700 uppercase">About</p>
-        <motion.h1
-          className="font-display mt-8 max-w-5xl text-[clamp(2.8rem,7vw,6rem)] leading-[0.92] font-bold tracking-[-0.055em] text-[color:var(--color-navy)]"
-          initial={reduce ? false : { opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: EASE }}
-        >
-          {title}
-        </motion.h1>
-        {subtitle ? (
-          <p className="mt-10 max-w-2xl border-l-2 border-teal-500 pl-6 text-lg leading-relaxed text-slate-600">
-            {subtitle}
-          </p>
-        ) : null}
+        <div className="grid items-end gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+          <div>
+            <motion.p
+              className="font-display text-2xl font-bold tracking-[-0.03em] text-teal-300 sm:text-3xl"
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE }}
+            >
+              Xelarvis
+            </motion.p>
+            <motion.p
+              className="mt-3 text-[11px] font-bold tracking-[0.22em] text-teal-300/80 uppercase"
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.04, ease: EASE }}
+            >
+              About
+            </motion.p>
+            <motion.h1
+              className="font-display mt-5 max-w-3xl text-[clamp(2.2rem,5vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-white"
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.08, ease: EASE }}
+            >
+              {title}
+            </motion.h1>
+            {subtitle ? (
+              <motion.p
+                className="mt-6 max-w-xl border-l-2 border-teal-400/60 pl-5 text-base leading-relaxed text-slate-300 sm:text-lg"
+                initial={reduce ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: 0.14, ease: EASE }}
+              >
+                {subtitle}
+              </motion.p>
+            ) : null}
+            <motion.div
+              className="mt-8 flex flex-wrap gap-3"
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
+            >
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-7 font-semibold text-white shadow-[0_0_32px_rgba(13,148,136,0.4)] hover:from-teal-400 hover:to-cyan-400"
+              >
+                <Link href="/contact">
+                  Talk to us
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full border-white/20 bg-white/5 px-7 font-semibold text-white backdrop-blur hover:border-cyan-400/40 hover:bg-white/10"
+              >
+                <Link href="/about/why-xelarvis">Why XELARVIS</Link>
+              </Button>
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="relative overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.06] p-6 backdrop-blur-xl sm:p-7"
+            initial={reduce ? false : { opacity: 0, y: 20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.65, delay: 0.18, ease: EASE }}
+          >
+            <p className="text-[10px] font-bold tracking-[0.16em] text-teal-300 uppercase">
+              Focus domains
+            </p>
+            <ul className="mt-5 space-y-3">
+              {domains.map((d, i) => (
+                <motion.li
+                  key={d}
+                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-medium text-slate-200"
+                  initial={reduce ? false : { opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.28 + i * 0.06, duration: 0.4, ease: EASE }}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.8)]" />
+                  {d}
+                </motion.li>
+              ))}
+            </ul>
+            <div className="mt-6 grid grid-cols-3 gap-2 border-t border-white/10 pt-5">
+              {[
+                { v: '10+', l: 'Years' },
+                { v: '120+', l: 'Projects' },
+                { v: '40+', l: 'Clients' },
+              ].map((s) => (
+                <div key={s.l} className="text-center">
+                  <p className="font-display text-lg font-bold text-white">{s.v}</p>
+                  <p className="text-[10px] tracking-wide text-slate-400 uppercase">{s.l}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </Container>
-    </section>
+    </MeshBackdrop>
   )
 }
 
-/** Insights — magazine masthead */
+/** Insights — magazine masthead on navy mesh */
 export function InsightsPageHero({ title, subtitle }: BaseHero) {
+  const reduce = useReducedMotion()
+
   return (
-    <section className="border-b border-[color:var(--color-navy)]/10 bg-white pt-28 pb-16 lg:pt-36">
+    <MeshBackdrop className="pt-28 pb-16 lg:pt-36 lg:pb-20" interactive={false}>
       <Container>
         <div className="flex flex-wrap items-start justify-between gap-8">
           <div className="max-w-3xl">
-            <p className="font-display text-sm font-bold tracking-[0.08em] text-teal-700">
+            <motion.p
+              className="font-display text-sm font-bold tracking-[0.08em] text-teal-300"
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: EASE }}
+            >
               INSIGHTS · XELARVIS
-            </p>
-            <h1
-              className={cn(
-                'font-display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-[1] font-bold tracking-[-0.05em] text-[color:var(--color-navy)]',
-              )}
+            </motion.p>
+            <motion.h1
+              className="font-display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-[1] font-bold tracking-[-0.05em] text-balance text-white"
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.06, ease: EASE }}
             >
               {title}
-            </h1>
+            </motion.h1>
           </div>
           {subtitle ? (
-            <p className="mt-2 max-w-xs text-sm leading-relaxed text-slate-500 lg:mt-12">
+            <motion.p
+              className="mt-2 max-w-xs text-sm leading-relaxed text-slate-300 lg:mt-12"
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.12, ease: EASE }}
+            >
               {subtitle}
-            </p>
+            </motion.p>
           ) : null}
         </div>
-        <div className="mt-12 h-px w-full bg-[color:var(--color-navy)]" />
+        <div className="mt-12 h-px w-full bg-white/15" />
         <div className="mt-4 flex justify-between text-[10px] tracking-[0.16em] text-slate-400 uppercase">
           <span>Perspective</span>
           <span>AI · Clinical · Enterprise</span>
         </div>
       </Container>
-    </section>
+    </MeshBackdrop>
   )
 }

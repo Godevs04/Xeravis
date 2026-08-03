@@ -320,52 +320,52 @@ export const SEED_SERVICES = [
 
 export const SEED_SOLUTIONS = [
   {
-    title: 'Healthcare Solutions',
-    slug: 'healthcare-solutions',
-    summary: 'Clinical and healthcare platforms that improve research and care outcomes.',
-    techLabels: ['Python', 'SAS', 'CDISC Standards', 'Power BI'],
-  },
-  {
     title: 'Enterprise AI Solutions',
     slug: 'enterprise-ai-solutions',
     summary: 'Production AI systems aligned to business workflows and governance.',
     techLabels: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'LangChain'],
   },
   {
-    title: 'Business Intelligence',
-    slug: 'business-intelligence',
-    summary: 'Executive dashboards and reporting that turn data into decisions.',
-    techLabels: ['Power BI', 'Tableau', 'Python', 'Apache Spark'],
+    title: 'AI Agents & Intelligent Automation',
+    slug: 'ai-agents-intelligent-automation',
+    summary: 'Autonomous and assisted agents plus AI-powered process automation.',
+    techLabels: ['LangChain', 'OpenAI', 'Python', 'Apache Kafka'],
   },
   {
-    title: 'Predictive Analytics',
-    slug: 'predictive-analytics',
+    title: 'Healthcare AI Platforms',
+    slug: 'healthcare-ai-platforms',
+    summary: 'Clinical and healthcare platforms that improve research and care outcomes.',
+    techLabels: ['Python', 'SAS', 'CDISC Standards', 'Power BI'],
+  },
+  {
+    title: 'Predictive Analytics Solutions',
+    slug: 'predictive-analytics-solutions',
     summary: 'Forecasting and risk models that anticipate outcomes.',
     techLabels: ['Python', 'TensorFlow', 'Apache Spark', 'Power BI'],
   },
   {
-    title: 'Intelligent Automation',
-    slug: 'intelligent-automation',
-    summary: 'Automate processes with AI-assisted workflows and integrations.',
-    techLabels: ['Python', 'LangChain', 'OpenAI', 'Apache Kafka'],
-  },
-  {
-    title: 'AI Agents',
-    slug: 'ai-agents',
-    summary: 'Autonomous and assisted agents for research, support, and operations.',
-    techLabels: ['LangChain', 'OpenAI', 'Python', 'Hugging Face'],
-  },
-  {
-    title: 'Clinical Research Solutions',
-    slug: 'clinical-research-solutions',
-    summary: 'CDISC-aligned programming, TLFs, and research analytics.',
-    techLabels: ['SAS', 'CDISC Standards', 'Pinnacle 21', 'Python'],
+    title: 'Business Intelligence Solutions',
+    slug: 'business-intelligence-solutions',
+    summary: 'Executive dashboards and reporting that turn data into decisions.',
+    techLabels: ['Power BI', 'Tableau', 'Python', 'Apache Spark'],
   },
   {
     title: 'Custom Software Solutions',
     slug: 'custom-software-solutions',
     summary: 'Enterprise applications engineered for security, scale, and longevity.',
     techLabels: ['Python', 'Apache Kafka', 'Apache Spark', 'Power BI'],
+  },
+  {
+    title: 'AI-Powered Digital Products',
+    slug: 'ai-powered-digital-products',
+    summary: 'Productized AI experiences for customer, research, and operations workflows.',
+    techLabels: ['Python', 'OpenAI', 'LangChain', 'Hugging Face'],
+  },
+  {
+    title: 'Clinical Research Solutions',
+    slug: 'clinical-research-solutions',
+    summary: 'CDISC-aligned programming, TLFs, and research analytics.',
+    techLabels: ['SAS', 'CDISC Standards', 'Pinnacle 21', 'Python'],
   },
 ] as const
 
@@ -386,7 +386,7 @@ export const SEED_INDUSTRIES = [
     summary: 'Data platforms and AI for discovery, trials, and translational research.',
   },
   {
-    title: 'Banking & Finance',
+    title: 'Banking & Financial Services',
     slug: 'banking-finance',
     summary: 'Risk analytics, fraud detection, and intelligent automation.',
   },
@@ -396,15 +396,21 @@ export const SEED_INDUSTRIES = [
     summary: 'Predictive maintenance, quality analytics, and connected operations.',
   },
   {
-    title: 'Retail',
+    title: 'Retail & E-Commerce',
     slug: 'retail',
     summary: 'Customer intelligence, forecasting, and recommendation systems.',
   },
   { title: 'Logistics', slug: 'logistics', summary: 'Supply chain analytics and optimization.' },
   {
-    title: 'Education',
+    title: 'Education Technology',
     slug: 'education',
     summary: 'Learning platforms, analytics, and digital transformation for institutions.',
+  },
+  {
+    title: 'Enterprise Technology',
+    slug: 'enterprise-technology',
+    summary:
+      'Platform modernization, AI adoption, and digital transformation for technology organizations.',
   },
 ] as const
 

@@ -10,7 +10,7 @@ import { AnimateIn } from '@/components/motion/AnimateIn'
 import { Button } from '@/components/ui/button'
 import { listPublished } from '@/lib/cms'
 import { FALLBACK_JOBS } from '@/lib/fallback-data'
-import { HIRING_STEPS, WHY_JOIN } from '@/lib/site-ia'
+import { GRADUATE_PROGRAMS, HIRING_STEPS, LIFE_AT_XELARVIS, WHY_JOIN } from '@/lib/site-ia'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -26,6 +26,8 @@ type CareerDoc = {
   workMode?: string | null
   experienceRequired?: string | null
   openings?: number | null
+  postedAt?: string | null
+  applicationDeadline?: string | null
   active?: boolean | null
 }
 
@@ -58,6 +60,25 @@ export default async function CareersPage() {
 
       <WhyJoinSection benefits={WHY_JOIN} />
 
+      <Section id="life-at-xelarvis" surface>
+        <Container className="max-w-3xl">
+          <h2 className="font-display text-3xl font-bold tracking-tight text-[color:var(--color-primary)]">
+            {LIFE_AT_XELARVIS.title}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-[color:var(--color-secondary)]">
+            {LIFE_AT_XELARVIS.body}
+          </p>
+          <ul className="mt-6 space-y-2 text-sm text-[color:var(--color-secondary)]">
+            {LIFE_AT_XELARVIS.bullets.map((item) => (
+              <li key={item} className="flex gap-2">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--color-accent)]" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
       <HiringProcessSection steps={HIRING_STEPS} />
 
       <Section id="open-roles">
@@ -75,7 +96,7 @@ export default async function CareersPage() {
               asChild
               className="rounded-full bg-[color:var(--color-accent)] text-white hover:bg-[color:var(--color-accent-hover)]"
             >
-              <Link href="/contact?intent=careers">Apply Now</Link>
+              <Link href="/contact?intent=career">Apply Now</Link>
             </Button>
           </div>
           {items.length === 0 ? (
@@ -94,6 +115,10 @@ export default async function CareersPage() {
                     workMode={job.workMode}
                     experienceRequired={job.experienceRequired}
                     openings={job.openings}
+                    postedAt={'postedAt' in job ? job.postedAt : null}
+                    applicationDeadline={
+                      'applicationDeadline' in job ? job.applicationDeadline : null
+                    }
                     href={`/careers/${job.slug}`}
                   />
                 </AnimateIn>
@@ -109,6 +134,10 @@ export default async function CareersPage() {
             {
               title: 'Internship Program',
               body: 'Hands-on experience across AI, analytics, and software engineering with mentorship.',
+            },
+            {
+              title: GRADUATE_PROGRAMS.title,
+              body: GRADUATE_PROGRAMS.body,
             },
             {
               title: 'Research Opportunities',

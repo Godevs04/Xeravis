@@ -235,10 +235,10 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.65, ease: EASE }}
       className={cn(
-        'relative mb-8 overflow-hidden rounded-[28px] border p-6 shadow-[0_28px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl last:mb-0 sm:p-8',
+        'relative mb-8 overflow-hidden rounded-[28px] border p-6 shadow-[var(--shadow-medium)] backdrop-blur-xl last:mb-0 sm:p-8',
         open
-          ? 'border-teal-400/40 bg-white shadow-[0_32px_100px_rgba(13,148,136,0.15)]'
-          : 'border-slate-200/90 bg-white/90',
+          ? 'border-[color:var(--color-accent)]/50 bg-[color:var(--glass-bg-strong)] shadow-[var(--shadow-hover)]'
+          : 'border-[color:var(--glass-border)] bg-[color:var(--glass-bg)]',
       )}
     >
       <div
@@ -258,14 +258,16 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-teal-500/30 bg-teal-500/10 px-2.5 py-0.5 text-[10px] font-bold tracking-[0.14em] text-teal-800 uppercase">
+            <span className="rounded-full border border-[color:var(--color-accent)]/30 bg-[color:var(--color-accent)]/10 px-2.5 py-0.5 text-[10px] font-bold tracking-[0.14em] text-[color:var(--color-accent)] uppercase">
               {voice.industry}
             </span>
-            <span className="text-[10px] tracking-wide text-slate-400 uppercase">
+            <span className="text-[10px] tracking-wide text-[color:var(--color-muted)] uppercase">
               {voice.year} · {voice.duration}
             </span>
           </div>
-          <p className="mt-1 text-sm font-semibold text-slate-800">{voice.company}</p>
+          <p className="mt-1 text-sm font-semibold text-[color:var(--color-primary)]">
+            {voice.company}
+          </p>
         </div>
         <div className="flex gap-0.5" aria-label="5 star rating">
           {Array.from({ length: voice.rating }).map((_, i) => (
@@ -285,21 +287,21 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
       <div className="relative mt-6">
         <motion.span
           aria-hidden
-          className="font-display absolute -top-4 -left-1 text-5xl text-teal-500/25"
+          className="font-display absolute -top-4 -left-1 text-5xl text-[color:var(--color-accent)]/25"
           initial={reduce ? false : { opacity: 0, pathLength: 0 }}
           animate={inView ? { opacity: 1 } : {}}
         >
           “
         </motion.span>
-        <blockquote className="font-display pl-2 text-[clamp(1.15rem,2.2vw,1.55rem)] leading-snug font-medium tracking-[-0.025em] text-[color:var(--color-navy)]">
+        <blockquote className="font-display pl-2 text-[clamp(1.15rem,2.2vw,1.55rem)] leading-snug font-medium tracking-[-0.025em] text-[color:var(--color-primary)]">
           {voice.quote}
         </blockquote>
       </div>
 
-      <footer className="relative mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500">
-        <span className="font-semibold text-slate-800">{voice.authorName}</span>
+      <footer className="relative mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[color:var(--color-secondary)]">
+        <span className="font-semibold text-[color:var(--color-primary)]">{voice.authorName}</span>
         {voice.authorRole ? <span>· {voice.authorRole}</span> : null}
-        <span className="ml-auto rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold tracking-wide text-emerald-700 uppercase">
+        <span className="ml-auto rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold tracking-wide text-emerald-500 uppercase">
           Verified delivery
         </span>
       </footer>
@@ -314,18 +316,18 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
         transition={{ duration: 0.4, ease: EASE }}
         className="relative overflow-hidden"
       >
-        <div className="grid gap-4 border-t border-slate-100 pt-5 sm:grid-cols-2">
+        <div className="grid gap-4 border-t border-[color:var(--glass-border)] pt-5 sm:grid-cols-2">
           <div>
-            <p className="text-[10px] font-bold tracking-[0.16em] text-slate-400 uppercase">
+            <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-muted)] uppercase">
               Challenge
             </p>
-            <p className="mt-1.5 text-sm text-slate-700">{voice.challenge}</p>
+            <p className="mt-1.5 text-sm text-[color:var(--color-secondary)]">{voice.challenge}</p>
           </div>
           <div>
-            <p className="text-[10px] font-bold tracking-[0.16em] text-slate-400 uppercase">
+            <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-muted)] uppercase">
               Solution
             </p>
-            <p className="mt-1.5 text-sm text-slate-700">{voice.solution}</p>
+            <p className="mt-1.5 text-sm text-[color:var(--color-secondary)]">{voice.solution}</p>
           </div>
         </div>
 
@@ -333,12 +335,12 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
           {voice.metrics.map((m) => (
             <div
               key={m.label}
-              className="rounded-2xl border border-slate-200 bg-slate-50/80 px-3 py-3"
+              className="rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--color-hover)] px-3 py-3"
             >
-              <p className="font-display text-xl font-bold tracking-[-0.03em] text-[color:var(--color-navy)]">
+              <p className="font-display text-xl font-bold tracking-[-0.03em] text-[color:var(--color-primary)]">
                 {m.value}
               </p>
-              <p className="mt-0.5 text-[11px] text-slate-500">{m.label}</p>
+              <p className="mt-0.5 text-[11px] text-[color:var(--color-muted)]">{m.label}</p>
             </div>
           ))}
         </div>
@@ -347,7 +349,7 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
           {voice.technologies.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-teal-500/20 bg-teal-500/10 px-2.5 py-1 text-[11px] font-semibold text-teal-800"
+              className="rounded-full border border-[color:var(--color-accent)]/25 bg-[color:var(--color-accent)]/10 px-2.5 py-1 text-[11px] font-semibold text-[color:var(--color-accent)]"
             >
               {tech}
             </span>
@@ -356,7 +358,7 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
       </motion.div>
 
       {!open && !reduce ? (
-        <p className="relative mt-5 text-[11px] tracking-wide text-slate-400">
+        <p className="relative mt-5 text-[11px] tracking-wide text-[color:var(--color-muted)]">
           Hover to expand outcomes →
         </p>
       ) : null}
@@ -373,12 +375,22 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-white py-24 lg:py-32"
+      className="relative overflow-hidden bg-[color:var(--color-background)] py-24 lg:py-32"
       aria-label={eyebrow || 'Client stories'}
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_65%_45%_at_10%_15%,rgba(13,148,136,0.09),transparent_55%),radial-gradient(ellipse_55%_40%_at_90%_80%,rgba(6,182,212,0.08),transparent_50%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_65%_45%_at_10%_15%,rgba(13,148,136,0.12),transparent_55%),radial-gradient(ellipse_55%_40%_at_90%_80%,rgba(6,182,212,0.1),transparent_50%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
+          backgroundSize: '56px 56px',
+          maskImage: 'radial-gradient(ellipse 70% 55% at 50% 30%, black, transparent)',
+        }}
       />
       <motion.div
         aria-hidden
@@ -391,7 +403,7 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
             <motion.span
               key={i}
               aria-hidden
-              className="pointer-events-none absolute h-1 w-1 rounded-full bg-teal-500/30"
+              className="pointer-events-none absolute h-1 w-1 rounded-full bg-[color:var(--color-accent)]/30"
               style={{
                 left: `${15 + ((i * 23) % 70)}%`,
                 top: `${20 + ((i * 31) % 60)}%`,
@@ -406,11 +418,11 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)] lg:gap-14 xl:gap-16">
           {/* LEFT sticky */}
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <p className="text-[11px] font-bold tracking-[0.22em] text-teal-700 uppercase">
+            <p className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase">
               {eyebrow || 'Client stories'}
             </p>
             <motion.h2
-              className="font-display mt-5 max-w-md text-[clamp(2rem,4vw,3.3rem)] leading-[1.05] font-bold tracking-[-0.045em] text-[color:var(--color-navy)]"
+              className="font-display mt-5 max-w-md text-[clamp(2rem,4vw,3.3rem)] leading-[1.05] font-bold tracking-[-0.045em] text-[color:var(--color-primary)]"
               initial={reduce ? false : { opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -418,7 +430,7 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
             >
               {heading || 'Trusted by leaders building the future.'}
             </motion.h2>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-slate-600">
+            <p className="mt-5 max-w-md text-base leading-relaxed text-[color:var(--color-secondary)]">
               Enterprise teams choose Xelarvis when clinical rigor, AI craft, and production
               delivery have to live in the same system.
             </p>
@@ -427,12 +439,12 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
               {TRUST_METRICS.map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-2xl border border-slate-200 bg-white/80 px-4 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.04)]"
+                  className="rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-4 py-4 shadow-[var(--shadow-light)] backdrop-blur-xl"
                 >
-                  <p className="font-display text-2xl font-bold tracking-[-0.04em] text-[color:var(--color-navy)]">
+                  <p className="font-display text-2xl font-bold tracking-[-0.04em] text-[color:var(--color-primary)]">
                     <CountUp value={m.value} suffix={m.suffix} active={inView} />
                   </p>
-                  <p className="mt-1 text-[11px] tracking-wide text-slate-500 uppercase">
+                  <p className="mt-1 text-[11px] tracking-wide text-[color:var(--color-muted)] uppercase">
                     {m.label}
                   </p>
                 </div>
@@ -440,14 +452,14 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
             </div>
 
             <div className="mt-8">
-              <p className="text-[10px] font-bold tracking-[0.16em] text-slate-400 uppercase">
+              <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-muted)] uppercase">
                 Industries served
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {TRUST_INDUSTRIES.map((ind, i) => (
                   <motion.span
                     key={ind}
-                    className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-500 transition-colors hover:border-teal-400/40 hover:bg-teal-500/10 hover:text-teal-800"
+                    className="rounded-full border border-[color:var(--glass-border)] bg-[color:var(--color-hover)] px-3 py-1.5 text-xs font-medium text-[color:var(--color-secondary)] transition-colors hover:border-[color:var(--color-accent)]/40 hover:bg-[color:var(--color-accent)]/10 hover:text-[color:var(--color-accent)]"
                     initial={reduce ? false : { opacity: 0, y: 6 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -461,7 +473,7 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
 
             <Link
               href="/case-studies"
-              className="mt-10 inline-flex items-center gap-2 rounded-full border border-teal-500/40 bg-teal-500/10 px-5 py-2.5 text-sm font-semibold text-teal-800 transition-colors hover:bg-teal-500/20"
+              className="mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--color-accent)]/40 bg-[color:var(--color-accent)]/10 px-5 py-2.5 text-sm font-semibold text-[color:var(--color-accent)] transition-colors hover:bg-[color:var(--color-accent)]/20"
             >
               Explore case studies
               <span aria-hidden>→</span>

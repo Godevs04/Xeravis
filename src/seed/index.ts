@@ -127,9 +127,10 @@ async function seed() {
         { label: 'Solutions', href: '/solutions', mega: 'solutions' },
         { label: 'Technologies', href: '/technologies', mega: 'none' },
         { label: 'Industries', href: '/industries', mega: 'industries' },
+        { label: 'Research & Innovation', href: '/ai-research-lab', mega: 'research' },
         { label: 'Insights', href: '/insights', mega: 'insights' },
         { label: 'Careers', href: '/careers', mega: 'none' },
-        { label: 'Company', href: '/about', mega: 'company' },
+        { label: 'About', href: '/about', mega: 'about' },
       ],
       cta: { label: 'Contact Us', href: '/contact' },
       ctaLabel: 'Contact Us',
@@ -143,10 +144,11 @@ async function seed() {
     data: {
       columns: [
         {
-          title: 'Company',
+          title: 'About',
           links: [
             { label: 'About', href: '/about' },
-            { label: 'AI Research Lab', href: '/ai-research-lab' },
+            { label: 'Research & Innovation', href: '/ai-research-lab' },
+            { label: 'Collaborations', href: '/ai-research-lab/collaborations' },
             { label: 'Careers', href: '/careers' },
             { label: 'Contact', href: '/contact' },
           ],
@@ -166,6 +168,7 @@ async function seed() {
           links: [
             { label: 'Insights Hub', href: '/insights' },
             { label: 'Blogs', href: '/insights/blogs' },
+            { label: 'Reports', href: '/insights/reports' },
             { label: 'White Papers', href: '/insights/white-papers' },
           ],
         },

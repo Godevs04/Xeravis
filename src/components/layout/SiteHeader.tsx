@@ -1,8 +1,14 @@
 import { SiteHeaderClient } from '@/components/layout/SiteHeaderClient'
 import type { MegaMenuItem } from '@/components/layout/MegaMenu'
 import { getGlobal, listPublished } from '@/lib/cms'
-import { BRAND, DEFAULT_NAV } from '@/lib/fallback-data'
-import { ABOUT_MEGA, INSIGHTS_MEGA } from '@/lib/site-ia'
+import {
+  BRAND,
+  DEFAULT_NAV,
+  FALLBACK_INDUSTRIES,
+  FALLBACK_SERVICES,
+  FALLBACK_SOLUTIONS,
+} from '@/lib/fallback-data'
+import { ABOUT_MEGA, INSIGHTS_MEGA, RESEARCH_MEGA } from '@/lib/site-ia'
 
 type NavigationGlobal = {
   primaryLinks?: { label: string; href: string; mega?: string | null }[]
@@ -35,29 +41,27 @@ function toMegaItems(docs: CmsNavDoc[], basePath: string, overview: MegaMenuItem
   return [overview, ...items]
 }
 
-const COMPANY_MEGA: MegaMenuItem[] = [
+const ABOUT_MENU: MegaMenuItem[] = [
   {
     label: 'About XELARVIS',
     href: '/about',
     description: 'Company story, mission, and values.',
   },
   ...ABOUT_MEGA,
-  {
-    label: 'AI Research Lab',
-    href: '/ai-research-lab',
-    description: 'Research that ships to production.',
-  },
-  {
-    label: 'Technologies',
-    href: '/technologies',
-    description: 'AI, clinical, cloud, and data stack.',
-  },
-  {
-    label: 'Case Studies',
-    href: '/case-studies',
-    description: 'Selected delivery outcomes.',
-  },
 ]
+
+/** CMS nav is used only when it matches Mainplan IA (About + Research; not stale Company). */
+function isMainplanAlignedNav(
+  links: { label: string; href: string; mega?: string | null }[],
+): boolean {
+  if (links.length === 0 || links.length > 9) return false
+  const megas = new Set(links.map((l) => l.mega).filter(Boolean))
+  const hasResearch = megas.has('research')
+  const hasAbout = megas.has('about') || links.some((l) => /^about$/i.test(l.label.trim()))
+  const hasTechnologies = links.some((l) => l.href === '/technologies')
+  const hasStaleCompany = links.some((l) => /^company$/i.test(l.label.trim()))
+  return hasResearch && hasAbout && hasTechnologies && !hasStaleCompany
+}
 
 export async function SiteHeader() {
   const [navigation, solutions, services, industries] = await Promise.all([
@@ -67,26 +71,26 @@ export async function SiteHeader() {
     listPublished<CmsNavDoc>('industries', { limit: 8, sort: 'order' }),
   ])
 
-  // Keep the desktop bar slim — overcrowded CMS menus fall back to the designed nav.
   const cmsLinks = navigation?.primaryLinks ?? []
-  const links = cmsLinks.length > 0 && cmsLinks.length <= 8 ? cmsLinks : DEFAULT_NAV.primaryLinks
+  const links = isMainplanAlignedNav(cmsLinks) ? cmsLinks : DEFAULT_NAV.primaryLinks
   const ctaLabel = navigation?.cta?.label || navigation?.ctaLabel || DEFAULT_NAV.ctaLabel
   const ctaHref = navigation?.cta?.href || navigation?.ctaHref || DEFAULT_NAV.ctaHref
 
   const megaMenus: Record<string, MegaMenuItem[]> = {
-    about: COMPANY_MEGA,
-    company: COMPANY_MEGA,
-    solutions: toMegaItems(solutions, '/solutions', {
+    about: ABOUT_MENU,
+    company: ABOUT_MENU,
+    research: RESEARCH_MEGA,
+    solutions: toMegaItems(solutions.length ? solutions : FALLBACK_SOLUTIONS, '/solutions', {
       label: 'All solutions',
       href: '/solutions',
       description: 'Browse solution catalog.',
     }),
-    services: toMegaItems(services, '/services', {
+    services: toMegaItems(services.length ? services : FALLBACK_SERVICES, '/services', {
       label: 'All services',
       href: '/services',
       description: 'Full capability catalog.',
     }),
-    industries: toMegaItems(industries, '/industries', {
+    industries: toMegaItems(industries.length ? industries : FALLBACK_INDUSTRIES, '/industries', {
       label: 'All industries',
       href: '/industries',
       description: 'Sector experience.',

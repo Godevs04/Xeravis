@@ -2,7 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { useMounted } from '@/hooks/useMediaQuery'
+
 export function useScrollHeader(threshold = 48) {
+  const mounted = useMounted()
   const [solid, setSolid] = useState(false)
   const [hidden, setHidden] = useState(false)
   const lastY = useRef(0)
@@ -16,11 +19,16 @@ export function useScrollHeader(threshold = 48) {
   }, [threshold])
 
   useEffect(() => {
+    if (!mounted) return
     lastY.current = window.scrollY
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [onScroll])
+  }, [mounted, onScroll])
 
-  return { solid, hidden }
+  // Keep SSR and first client paint identical — only apply scroll state after mount.
+  return {
+    solid: mounted ? solid : false,
+    hidden: mounted ? hidden : false,
+  }
 }

@@ -69,13 +69,18 @@ const CATEGORY_META: Record<string, { title: string; blurb: string; featuredLabe
     featuredLabel: 'Featured industry',
   },
   company: {
-    title: 'Company',
+    title: 'About',
     blurb: 'Who we are, how we work, and where to go deeper.',
     featuredLabel: 'Featured',
   },
   about: {
-    title: 'Company',
+    title: 'About',
     blurb: 'Who we are, how we work, and where to go deeper.',
+    featuredLabel: 'Featured',
+  },
+  research: {
+    title: 'Research & Innovation',
+    blurb: 'AI research, collaborations, and the technology stack behind delivery.',
     featuredLabel: 'Featured',
   },
   insights: {
@@ -87,8 +92,8 @@ const CATEGORY_META: Record<string, { title: string; blurb: string; featuredLabe
 
 const QUICK_ACTIONS = [
   { label: 'Case studies', href: '/case-studies', icon: FileText },
-  { label: 'Talk to expert', href: '/contact', icon: Sparkles },
-  { label: 'Schedule consult', href: '/contact?intent=project', icon: Calendar },
+  { label: 'Talk to expert', href: '/contact?intent=business', icon: Sparkles },
+  { label: 'Schedule consult', href: '/contact?intent=business', icon: Calendar },
   { label: 'Company profile', href: '/about', icon: Download },
   { label: 'Success stories', href: '/case-studies', icon: Activity },
 ]
@@ -381,14 +386,13 @@ export function MegaMenu({ items, category, className, id }: MegaMenuProps) {
       role="menu"
       aria-label={`${meta.title} menu`}
       onPointerMove={onPointerMove}
-      initial={reduce ? false : { opacity: 0, y: -12, scale: 0.96, filter: 'blur(8px)' }}
-      animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-      exit={reduce ? undefined : { opacity: 0, y: -8, scale: 0.98, filter: 'blur(4px)' }}
-      transition={
-        reduce ? { duration: 0.15 } : { type: 'spring', stiffness: 380, damping: 28, mass: 0.8 }
-      }
+      initial={reduce ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={reduce ? undefined : { opacity: 0 }}
+      transition={reduce ? { duration: 0.12 } : { duration: 0.18, ease: EASE }}
       className={cn(
-        'absolute top-full left-1/2 z-50 mt-4 w-[min(1220px,calc(100vw-1.5rem))] -translate-x-1/2',
+        // In-flow under the header bridge — parent owns placement
+        'relative mx-auto w-full max-w-[1220px]',
         className,
       )}
     >

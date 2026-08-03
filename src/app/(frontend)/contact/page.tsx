@@ -6,6 +6,7 @@ import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { getGlobal } from '@/lib/cms'
+import { CONTACT_INTENTS } from '@/lib/site-ia'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -91,6 +92,22 @@ export default async function ContactPage() {
             </div>
           </Suspense>
           <aside className="space-y-6">
+            <div className="rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--card-bg)] p-6 shadow-[var(--shadow-medium)] backdrop-blur-xl">
+              <h2 className="text-lg font-semibold">Enquiry types</h2>
+              <ul className="mt-4 space-y-3">
+                {CONTACT_INTENTS.map((item) => (
+                  <li key={item.value}>
+                    <a
+                      href={`/contact?intent=${item.value}`}
+                      className="text-secondary hover:text-accent block text-sm transition-colors"
+                    >
+                      <span className="text-primary font-medium">{item.label}</span>
+                      <span className="text-muted mt-0.5 block text-xs">{item.description}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div className="rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--card-bg)] p-6 shadow-[var(--shadow-medium)] backdrop-blur-xl">
               <h2 className="text-lg font-semibold">Direct</h2>
               <ul className="text-secondary mt-4 space-y-2 text-sm">

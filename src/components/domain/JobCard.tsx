@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowUpRight, Briefcase, MapPin } from 'lucide-react'
+import { ArrowUpRight, Briefcase, CalendarDays, MapPin } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
@@ -12,7 +12,16 @@ type JobCardProps = {
   experienceRequired?: string | null
   workMode?: string | null
   openings?: number | null
+  postedAt?: string | null
+  applicationDeadline?: string | null
   className?: string
+}
+
+function formatDate(value?: string | null) {
+  if (!value) return null
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return null
+  return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 export function JobCard({
@@ -24,8 +33,13 @@ export function JobCard({
   experienceRequired,
   workMode,
   openings,
+  postedAt,
+  applicationDeadline,
   className,
 }: JobCardProps) {
+  const posted = formatDate(postedAt)
+  const deadline = formatDate(applicationDeadline)
+
   return (
     <Link
       href={href}
@@ -66,6 +80,13 @@ export function JobCard({
               {experienceRequired}
             </span>
           ) : null}
+          {posted ? (
+            <span className="inline-flex items-center gap-1.5">
+              <CalendarDays className="h-3.5 w-3.5 text-[color:var(--color-accent)]" />
+              Posted {posted}
+            </span>
+          ) : null}
+          {deadline ? <span>Deadline {deadline}</span> : null}
           {openings ? (
             <span className="rounded-full border border-[color:var(--glass-border)] bg-[color:var(--color-hover)] px-2.5 py-0.5 text-xs font-medium text-[color:var(--color-primary)]">
               {openings} opening{openings > 1 ? 's' : ''}

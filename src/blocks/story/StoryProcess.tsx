@@ -111,18 +111,22 @@ function StageVisual({
 }) {
   return (
     <div className="relative mx-auto aspect-square w-full max-w-[24rem]">
-      <div className="absolute inset-[6%] rounded-[28px] border border-slate-200/90 bg-white/80 shadow-[0_28px_80px_rgba(15,23,42,0.1)] backdrop-blur-xl" />
+      <div className="absolute inset-[6%] rounded-[28px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] shadow-[var(--shadow-medium)] backdrop-blur-xl" />
       <div
         aria-hidden
         className="absolute inset-[6%] rounded-[28px] opacity-50"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(13,148,136,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(13,148,136,0.07) 1px, transparent 1px)',
+            'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '26px 26px',
         }}
       />
 
-      <svg viewBox="0 0 400 400" className="relative z-10 h-full w-full p-6" aria-hidden>
+      <svg
+        viewBox="0 0 400 400"
+        className="relative z-10 h-full w-full p-6 text-[color:var(--color-primary)]"
+        aria-hidden
+      >
         <defs>
           <linearGradient id="xe-journey-line" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#0D9488" />
@@ -151,9 +155,9 @@ function StageVisual({
                 width="160"
                 height="100"
                 rx="18"
-                fill="rgba(15,23,42,0.06)"
-                stroke="#0F172A"
-                strokeOpacity={0.25}
+                fill="color-mix(in srgb, var(--color-primary) 8%, transparent)"
+                stroke="currentColor"
+                strokeOpacity={0.28}
                 animate={reduce ? undefined : { y: [150, 146, 150] }}
                 transition={{ duration: 3, repeat: Infinity }}
               />
@@ -161,7 +165,7 @@ function StageVisual({
                 x="200"
                 y="208"
                 textAnchor="middle"
-                fill="#0F172A"
+                fill="currentColor"
                 fontSize="14"
                 fontFamily="var(--font-display), system-ui"
                 fontWeight="600"
@@ -197,7 +201,7 @@ function StageVisual({
                     width="260"
                     height="58"
                     rx="14"
-                    fill="rgba(13,148,136,0.08)"
+                    fill="rgba(13,148,136,0.12)"
                     stroke="#0D9488"
                     strokeOpacity={0.45}
                     initial={{ x: 40, opacity: 0 }}
@@ -208,7 +212,7 @@ function StageVisual({
                     x="200"
                     y={115 + i * 85}
                     textAnchor="middle"
-                    fill="#0F172A"
+                    fill="currentColor"
                     fontSize="13"
                     fontFamily="var(--font-sans), system-ui"
                     fontWeight="600"
@@ -253,7 +257,7 @@ function StageVisual({
                     cx={n.x}
                     cy={n.y}
                     r="36"
-                    fill="rgba(6,182,212,0.1)"
+                    fill="rgba(6,182,212,0.12)"
                     stroke="#06B6D4"
                     initial={{ scale: 0.6, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -263,7 +267,7 @@ function StageVisual({
                     x={n.x}
                     y={n.y + 4}
                     textAnchor="middle"
-                    fill="#0F172A"
+                    fill="currentColor"
                     fontSize="11"
                     fontWeight="600"
                   >
@@ -290,8 +294,16 @@ function StageVisual({
                     width="40"
                     height="40"
                     rx="8"
-                    fill={row === 1 && col === 2 ? '#0D9488' : 'rgba(15,23,42,0.05)'}
-                    stroke={row === 1 && col === 2 ? '#06B6D4' : 'rgba(15,23,42,0.12)'}
+                    fill={
+                      row === 1 && col === 2
+                        ? '#0D9488'
+                        : 'color-mix(in srgb, var(--color-primary) 8%, transparent)'
+                    }
+                    stroke={
+                      row === 1 && col === 2
+                        ? '#06B6D4'
+                        : 'color-mix(in srgb, var(--color-primary) 18%, transparent)'
+                    }
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: (row * 5 + col) * 0.03, duration: 0.35 }}
@@ -330,7 +342,7 @@ function StageVisual({
                       width="240"
                       height="52"
                       rx="12"
-                      fill="rgba(13,148,136,0.08)"
+                      fill="rgba(13,148,136,0.12)"
                       stroke="#0D9488"
                       strokeOpacity={0.5}
                       initial={{ scaleX: 0.6, opacity: 0 }}
@@ -342,7 +354,7 @@ function StageVisual({
                       x="200"
                       y={y + 32}
                       textAnchor="middle"
-                      fill="#0F172A"
+                      fill="currentColor"
                       fontSize="13"
                       fontWeight="600"
                     >
@@ -392,7 +404,7 @@ function StageVisual({
                     width="110"
                     height="80"
                     rx="16"
-                    fill="rgba(16,185,129,0.08)"
+                    fill="rgba(16,185,129,0.1)"
                     stroke="#10B981"
                     strokeOpacity={0.45}
                   />
@@ -400,7 +412,7 @@ function StageVisual({
                     x={m.x}
                     y={m.y - 5}
                     textAnchor="middle"
-                    fill="#0F172A"
+                    fill="currentColor"
                     fontSize="12"
                     fontWeight="600"
                   >
@@ -456,30 +468,30 @@ export function StoryProcess({
 
   if (!sticky) {
     return (
-      <section className="bg-[#F8FAFC] py-20 sm:py-24 lg:py-32 dark:bg-[color:var(--color-neutral)]">
+      <section className="bg-[color:var(--color-background)] py-20 sm:py-24 lg:py-32">
         <Container>
-          <p className="text-[11px] font-bold tracking-[0.2em] text-teal-700 uppercase dark:text-teal-300">
+          <p className="text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
             {eyebrow}
           </p>
-          <h2 className="font-display mt-4 max-w-2xl text-[clamp(1.85rem,6vw,3.4rem)] font-bold tracking-[-0.04em] text-[color:var(--color-navy)] dark:text-[color:var(--color-primary)]">
+          <h2 className="font-display mt-4 max-w-2xl text-[clamp(1.85rem,6vw,3.4rem)] font-bold tracking-[-0.04em] text-[color:var(--color-primary)]">
             {heading}
           </h2>
           <ol className="mt-10 space-y-8 sm:mt-14">
             {stages.map((stage, i) => (
               <li
                 key={stage.title}
-                className="border-l-2 border-teal-500 pl-5 sm:pl-6 dark:border-teal-400"
+                className="border-l-2 border-[color:var(--color-accent)] pl-5 sm:pl-6"
               >
-                <p className="font-display text-xs tracking-[0.14em] text-teal-600 dark:text-teal-300">
+                <p className="font-display text-xs tracking-[0.14em] text-[color:var(--color-accent)]">
                   {String(i + 1).padStart(2, '0')}
                 </p>
-                <h3 className="font-display mt-1 text-lg font-semibold sm:text-xl">
+                <h3 className="font-display mt-1 text-lg font-semibold text-[color:var(--color-primary)] sm:text-xl">
                   {stage.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base dark:text-slate-300">
+                <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-secondary)] sm:text-base">
                   {stage.description}
                 </p>
-                <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                <p className="mt-2 text-sm text-[color:var(--color-muted)]">
                   {stage.items.join(' · ')}
                 </p>
               </li>
@@ -493,21 +505,21 @@ export function StoryProcess({
   return (
     <section
       ref={containerRef}
-      className="relative bg-white"
+      className="relative bg-[color:var(--color-background)]"
       style={{ height: `${count * 100}vh` }}
       aria-label={eyebrow || 'Engineering journey'}
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_15%_10%,rgba(13,148,136,0.09),transparent_55%),radial-gradient(ellipse_55%_40%_at_90%_85%,rgba(6,182,212,0.07),transparent_50%),linear-gradient(180deg,#FFFFFF_0%,#F8FAFC_55%,#FFFFFF_100%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_15%_10%,rgba(13,148,136,0.12),transparent_55%),radial-gradient(ellipse_55%_40%_at_90%_85%,rgba(6,182,212,0.1),transparent_50%)]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-40"
+          className="pointer-events-none absolute inset-0 opacity-[0.045]"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(15,23,42,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.035) 1px, transparent 1px)',
+              'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
             backgroundSize: '52px 52px',
             maskImage: 'radial-gradient(ellipse at center, black 28%, transparent 78%)',
           }}
@@ -515,10 +527,10 @@ export function StoryProcess({
 
         <Container className="relative z-10 flex h-full flex-col justify-center py-12 lg:py-14">
           <div className="mb-6 max-w-2xl lg:mb-8">
-            <p className="text-[11px] font-bold tracking-[0.2em] text-teal-700 uppercase">
+            <p className="text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
               {eyebrow}
             </p>
-            <h2 className="font-display mt-3 text-[clamp(1.75rem,3.4vw,2.85rem)] font-bold tracking-[-0.04em] text-[color:var(--color-navy)]">
+            <h2 className="font-display mt-3 text-[clamp(1.75rem,3.4vw,2.85rem)] font-bold tracking-[-0.04em] text-[color:var(--color-primary)]">
               {heading}
             </h2>
           </div>
@@ -527,7 +539,7 @@ export function StoryProcess({
             {/* LEFT — vertical pipeline timeline */}
             <div className="relative">
               <div className="flex gap-4">
-                <div className="relative hidden h-[22rem] w-px overflow-hidden bg-slate-200 sm:block">
+                <div className="relative hidden h-[22rem] w-px overflow-hidden bg-[color:var(--glass-border)] sm:block">
                   <motion.div
                     className="absolute top-0 left-0 w-full origin-top bg-gradient-to-b from-teal-500 to-cyan-400"
                     style={{ height: progressHeight }}
@@ -542,17 +554,17 @@ export function StoryProcess({
                         <div
                           className={cn(
                             'flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors',
-                            currentStep && 'bg-teal-500/10',
+                            currentStep && 'bg-[color:var(--color-hover)]',
                           )}
                         >
                           <span
                             className={cn(
                               'font-display grid h-8 w-8 place-items-center rounded-full border text-[10px] font-bold',
                               currentStep
-                                ? 'border-cyan-400 bg-teal-500 text-white shadow-[0_0_22px_rgba(13,148,136,0.4)]'
+                                ? 'border-cyan-400 bg-teal-500 text-white shadow-[0_0_22px_var(--color-accent-glow)]'
                                 : done
-                                  ? 'border-teal-500/50 bg-teal-500/15 text-teal-700'
-                                  : 'border-slate-200 bg-white text-slate-400',
+                                  ? 'border-teal-500/50 bg-teal-500/15 text-[color:var(--color-accent)]'
+                                  : 'border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] text-[color:var(--color-muted)]',
                             )}
                           >
                             {String(i + 1).padStart(2, '0')}
@@ -562,16 +574,16 @@ export function StoryProcess({
                               className={cn(
                                 'truncate text-sm font-semibold',
                                 currentStep
-                                  ? 'text-[color:var(--color-navy)]'
+                                  ? 'text-[color:var(--color-primary)]'
                                   : done
-                                    ? 'text-teal-800/80'
-                                    : 'text-slate-400',
+                                    ? 'text-[color:var(--color-accent)]'
+                                    : 'text-[color:var(--color-muted)]',
                               )}
                             >
                               {stage.title}
                             </p>
                             {currentStep ? (
-                              <p className="mt-0.5 text-[10px] tracking-wide text-cyan-700/80 uppercase">
+                              <p className="mt-0.5 text-[10px] tracking-wide text-[color:var(--color-accent)] uppercase">
                                 {stage.transitionLabel}
                               </p>
                             ) : null}
@@ -589,7 +601,7 @@ export function StoryProcess({
               <StageVisual visual={current.visual} active reduce={reduce} />
               <motion.p
                 key={current.transitionLabel}
-                className="mt-4 text-center text-[11px] font-semibold tracking-[0.16em] text-teal-700/80 uppercase"
+                className="mt-4 text-center text-[11px] font-semibold tracking-[0.16em] text-[color:var(--color-accent)] uppercase"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
               >
@@ -606,41 +618,43 @@ export function StoryProcess({
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   exit={{ opacity: 0, y: -14, filter: 'blur(4px)' }}
                   transition={{ duration: 0.5, ease: EASE }}
-                  className="overflow-hidden rounded-[28px] border border-slate-200/90 bg-white/85 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-7"
+                  className="overflow-hidden rounded-[28px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] p-6 shadow-[var(--shadow-medium)] backdrop-blur-xl sm:p-7"
                 >
-                  <p className="font-display text-[clamp(2.4rem,5vw,3.6rem)] leading-none font-bold tracking-[-0.06em] text-[color:var(--color-navy)]/10">
+                  <p className="font-display text-[clamp(2.4rem,5vw,3.6rem)] leading-none font-bold tracking-[-0.06em] text-[color:var(--color-primary)]/10">
                     {String(active + 1).padStart(2, '0')}
                   </p>
-                  <h3 className="font-display -mt-3 text-[clamp(1.5rem,2.8vw,2.1rem)] font-semibold tracking-[-0.03em] text-[color:var(--color-navy)]">
+                  <h3 className="font-display -mt-3 text-[clamp(1.5rem,2.8vw,2.1rem)] font-semibold tracking-[-0.03em] text-[color:var(--color-primary)]">
                     {current.title}
                   </h3>
-                  <p className="mt-4 text-base leading-relaxed text-slate-600">
+                  <p className="mt-4 text-base leading-relaxed text-[color:var(--color-secondary)]">
                     {current.description}
                   </p>
 
-                  <div className="mt-6 space-y-0 overflow-hidden rounded-2xl border border-slate-200">
+                  <div className="mt-6 space-y-0 overflow-hidden rounded-2xl border border-[color:var(--glass-border)]">
                     {current.items.map((item, i) => (
                       <motion.div
                         key={item}
                         initial={{ opacity: 0, x: 10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.08 + i * 0.06, duration: 0.35 }}
-                        className="flex items-center justify-between border-b border-slate-100 bg-slate-50/80 px-4 py-3 last:border-b-0"
+                        className="flex items-center justify-between border-b border-[color:var(--glass-border)] bg-[color:var(--color-hover)] px-4 py-3 last:border-b-0"
                       >
-                        <span className="text-sm font-medium text-slate-800">{item}</span>
+                        <span className="text-sm font-medium text-[color:var(--color-primary)]">
+                          {item}
+                        </span>
                         {current.metrics?.[i] ? (
                           <span
                             className={cn(
                               'font-display text-lg font-bold',
                               current.metrics[i].trend === 'up'
-                                ? 'text-emerald-600'
-                                : 'text-teal-600',
+                                ? 'text-emerald-500'
+                                : 'text-[color:var(--color-accent)]',
                             )}
                           >
                             {current.metrics[i].trend === 'up' ? '↑' : '↓'}
                           </span>
                         ) : (
-                          <span className="grid h-5 w-5 place-items-center rounded-full bg-emerald-500/15 text-[10px] font-bold text-emerald-600">
+                          <span className="grid h-5 w-5 place-items-center rounded-full bg-emerald-500/15 text-[10px] font-bold text-emerald-500">
                             ✓
                           </span>
                         )}
@@ -649,7 +663,7 @@ export function StoryProcess({
                   </div>
 
                   {active < count - 1 ? (
-                    <p className="mt-6 text-[11px] tracking-[0.14em] text-slate-400 uppercase">
+                    <p className="mt-6 text-[11px] tracking-[0.14em] text-[color:var(--color-muted)] uppercase">
                       Scroll → {stages[active + 1]?.title}
                       <motion.span
                         className="ml-2 inline-block"
@@ -660,7 +674,7 @@ export function StoryProcess({
                       </motion.span>
                     </p>
                   ) : (
-                    <p className="mt-6 text-[11px] font-semibold tracking-[0.14em] text-teal-700 uppercase">
+                    <p className="mt-6 text-[11px] font-semibold tracking-[0.14em] text-[color:var(--color-accent)] uppercase">
                       Journey complete
                     </p>
                   )}

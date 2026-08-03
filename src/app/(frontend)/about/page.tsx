@@ -1,4 +1,5 @@
 import { RenderBlocks, type PageBlock } from '@/blocks/RenderBlocks'
+import { AboutExploreStrip } from '@/components/about/AboutExploreStrip'
 import { AboutPageHero } from '@/components/marketing/PageHeroes'
 import { safePayload } from '@/lib/cms'
 import { FALLBACK_ABOUT_BLOCKS } from '@/lib/fallback-data'
@@ -74,6 +75,7 @@ export default async function AboutPage() {
         title="Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation"
         subtitle="XELARVIS PRIVATE LIMITED specializes in Healthcare AI, Clinical Data Science, Machine Learning, Advanced Analytics, and Enterprise Software Solutions."
       />
+      <AboutExploreStrip />
       <RenderBlocks blocks={withoutHeroBlocks(raw)} />
     </>
   )

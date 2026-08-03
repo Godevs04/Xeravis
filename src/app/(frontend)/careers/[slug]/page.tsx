@@ -1,11 +1,7 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import { Container } from '@/components/layout/Container'
-import { PageHero } from '@/components/layout/PageHero'
-import { Section } from '@/components/layout/Section'
+import { JobDetailView } from '@/components/careers/JobDetailView'
 import { RichText } from '@/components/RichText'
-import { CareerApplicationForm } from '@/components/forms/CareerApplicationForm'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { FALLBACK_JOBS } from '@/lib/fallback-data'
 import { buildMetadata } from '@/lib/seo'
@@ -55,24 +51,6 @@ export async function generateMetadata({ params }: Props) {
       `Apply for ${job?.title || fallback?.title} at XELARVIS.`,
     path: `/careers/${slug}`,
   })
-}
-
-function BulletList({ title, items }: { title: string; items?: { item?: string }[] | null }) {
-  const values = (items || []).map((i) => i.item).filter(Boolean) as string[]
-  if (!values.length) return null
-  return (
-    <div>
-      <h2 className="font-display text-2xl font-bold text-[#0F172A]">{title}</h2>
-      <ul className="mt-4 space-y-2">
-        {values.map((item) => (
-          <li key={item} className="flex gap-3 text-slate-700">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
 }
 
 export default async function CareerDetailPage({ params }: Props) {
@@ -146,74 +124,34 @@ export default async function CareerDetailPage({ params }: Props) {
     ],
   }
 
-  const metaLine = [doc.location, doc.type?.replace('-', ' '), doc.workMode, doc.experienceRequired]
-    .filter(Boolean)
-    .join(' · ')
-
   return (
-    <>
-      <PageHero
-        brand="Xelarvis"
-        eyebrow={doc.department || 'Careers'}
-        title={doc.title}
-        subtitle={metaLine}
-        size="compact"
-        variant="default"
-        ctas={[{ label: 'Apply for this Position', href: '#apply', variant: 'accent' }]}
-      />
-      <Section>
-        <Container className="grid gap-16 lg:grid-cols-[1fr_26rem]">
-          <div className="space-y-10">
-            <div>
-              <h2 className="font-display text-2xl font-bold text-[#0F172A]">About the Role</h2>
-              {doc.aboutRole ? (
-                <p className="mt-4 leading-relaxed text-slate-600">{doc.aboutRole}</p>
-              ) : (
-                <div className="mt-4">
-                  <RichText
-                    content={doc.description as Parameters<typeof RichText>[0]['content']}
-                  />
-                </div>
-              )}
-            </div>
-            <BulletList title="Responsibilities" items={doc.responsibilities} />
-            <BulletList title="Required Skills" items={doc.requiredSkills} />
-            <BulletList title="Preferred Skills" items={doc.preferredSkills} />
-            {doc.qualifications ? (
-              <div>
-                <h2 className="font-display text-2xl font-bold text-[#0F172A]">Qualifications</h2>
-                <p className="mt-4 leading-relaxed text-slate-600">{doc.qualifications}</p>
-              </div>
-            ) : null}
-            <BulletList title="Benefits" items={doc.benefits} />
-            {!doc.responsibilities?.length ? (
-              <div>
-                <h2 className="font-display text-2xl font-bold text-[#0F172A]">Requirements</h2>
-                <div className="mt-4">
-                  <RichText
-                    content={doc.requirements as Parameters<typeof RichText>[0]['content']}
-                  />
-                </div>
-              </div>
-            ) : null}
-          </div>
-          <aside id="apply" className="lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
-              <h2 className="font-display text-lg font-semibold text-[#0F172A]">
-                Apply for this Position
-              </h2>
-              <div className="mt-6">
-                <CareerApplicationForm careerId={String(doc.id)} jobTitle={doc.title} />
-              </div>
-            </div>
-          </aside>
-        </Container>
-      </Section>
-      <div className="container-x pb-12">
-        <Link href="/careers" className="text-sm font-semibold text-[#0D9488] hover:underline">
-          ← All openings
-        </Link>
-      </div>
-    </>
+    <JobDetailView
+      job={{
+        id: String(doc.id),
+        title: doc.title,
+        department: doc.department,
+        location: doc.location,
+        type: doc.type,
+        workMode: doc.workMode,
+        experienceRequired: doc.experienceRequired,
+        openings: doc.openings,
+        aboutRole: doc.aboutRole,
+        qualifications: doc.qualifications,
+        responsibilities: doc.responsibilities,
+        requiredSkills: doc.requiredSkills,
+        preferredSkills: doc.preferredSkills,
+        benefits: doc.benefits,
+      }}
+      descriptionSlot={
+        doc.description ? (
+          <RichText content={doc.description as Parameters<typeof RichText>[0]['content']} />
+        ) : null
+      }
+      requirementsSlot={
+        doc.requirements ? (
+          <RichText content={doc.requirements as Parameters<typeof RichText>[0]['content']} />
+        ) : null
+      }
+    />
   )
 }

@@ -18,9 +18,10 @@ export const DEFAULT_NAV = {
     { label: 'Solutions', href: '/solutions', mega: 'solutions' },
     { label: 'Technologies', href: '/technologies', mega: 'none' },
     { label: 'Industries', href: '/industries', mega: 'industries' },
+    { label: 'Research & Innovation', href: '/ai-research-lab', mega: 'research' },
     { label: 'Insights', href: '/insights', mega: 'insights' },
     { label: 'Careers', href: '/careers', mega: 'none' },
-    { label: 'Company', href: '/about', mega: 'company' },
+    { label: 'About', href: '/about', mega: 'about' },
   ],
   ctaLabel: 'Contact Us',
   ctaHref: '/contact',
@@ -29,12 +30,13 @@ export const DEFAULT_NAV = {
 export const DEFAULT_FOOTER = {
   columns: [
     {
-      title: 'Company',
+      title: 'About',
       links: [
         { label: 'About', href: '/about' },
+        { label: 'Research & Innovation', href: '/ai-research-lab' },
+        { label: 'Collaborations', href: '/ai-research-lab/collaborations' },
         { label: 'Careers', href: '/careers' },
         { label: 'Contact', href: '/contact' },
-        { label: 'CMS Login', href: '/admin' },
       ],
     },
     {
@@ -43,14 +45,16 @@ export const DEFAULT_FOOTER = {
         { label: 'All services', href: '/services' },
         { label: 'Industries', href: '/industries' },
         { label: 'Solutions', href: '/solutions' },
+        { label: 'Technologies', href: '/technologies' },
       ],
     },
     {
-      title: 'Resources',
+      title: 'Insights',
       links: [
-        { label: 'Insights', href: '/insights' },
-        { label: 'Blog', href: '/blog' },
+        { label: 'Insights Hub', href: '/insights' },
         { label: 'Case studies', href: '/case-studies' },
+        { label: 'Blogs', href: '/insights/blogs' },
+        { label: 'Reports', href: '/insights/reports' },
       ],
     },
     {
@@ -129,7 +133,7 @@ export const FALLBACK_INDUSTRIES = [
   },
   {
     id: '4',
-    title: 'Banking & Finance',
+    title: 'Banking & Financial Services',
     slug: 'banking-finance',
     summary: 'Risk analytics, fraud detection, and intelligent automation.',
   },
@@ -141,7 +145,7 @@ export const FALLBACK_INDUSTRIES = [
   },
   {
     id: '6',
-    title: 'Retail',
+    title: 'Retail & E-Commerce',
     slug: 'retail',
     summary: 'Customer intelligence, forecasting, and recommendation systems.',
   },
@@ -153,60 +157,67 @@ export const FALLBACK_INDUSTRIES = [
   },
   {
     id: '8',
-    title: 'Education',
+    title: 'Education Technology',
     slug: 'education',
     summary: 'Learning platforms, analytics, and digital transformation for institutions.',
+  },
+  {
+    id: '9',
+    title: 'Enterprise Technology',
+    slug: 'enterprise-technology',
+    summary:
+      'Platform modernization, AI adoption, and digital transformation for technology organizations.',
   },
 ]
 
 export const FALLBACK_SOLUTIONS = [
   {
     id: '1',
-    title: 'Healthcare Solutions',
-    slug: 'healthcare-solutions',
-    summary: 'Clinical and healthcare platforms that improve research and care outcomes.',
-  },
-  {
-    id: '2',
     title: 'Enterprise AI Solutions',
     slug: 'enterprise-ai-solutions',
     summary: 'Production AI systems aligned to business workflows and governance.',
   },
   {
+    id: '2',
+    title: 'AI Agents & Intelligent Automation',
+    slug: 'ai-agents-intelligent-automation',
+    summary: 'Autonomous and assisted agents plus AI-powered process automation.',
+  },
+  {
     id: '3',
-    title: 'Business Intelligence',
-    slug: 'business-intelligence',
-    summary: 'Executive dashboards and reporting that turn data into decisions.',
+    title: 'Healthcare AI Platforms',
+    slug: 'healthcare-ai-platforms',
+    summary: 'Clinical and healthcare platforms that improve research and care outcomes.',
   },
   {
     id: '4',
-    title: 'Predictive Analytics',
-    slug: 'predictive-analytics',
+    title: 'Predictive Analytics Solutions',
+    slug: 'predictive-analytics-solutions',
     summary: 'Forecasting and risk models that anticipate outcomes.',
   },
   {
     id: '5',
-    title: 'Intelligent Automation',
-    slug: 'intelligent-automation',
-    summary: 'Automate processes with AI-assisted workflows and integrations.',
+    title: 'Business Intelligence Solutions',
+    slug: 'business-intelligence-solutions',
+    summary: 'Executive dashboards and reporting that turn data into decisions.',
   },
   {
     id: '6',
-    title: 'AI Agents',
-    slug: 'ai-agents',
-    summary: 'Autonomous and assisted agents for research, support, and operations.',
-  },
-  {
-    id: '7',
-    title: 'Clinical Research Solutions',
-    slug: 'clinical-research-solutions',
-    summary: 'CDISC-aligned programming, TLFs, and research analytics.',
-  },
-  {
-    id: '8',
     title: 'Custom Software Solutions',
     slug: 'custom-software-solutions',
     summary: 'Enterprise applications engineered for security, scale, and longevity.',
+  },
+  {
+    id: '7',
+    title: 'AI-Powered Digital Products',
+    slug: 'ai-powered-digital-products',
+    summary: 'Productized AI experiences for customer, research, and operations workflows.',
+  },
+  {
+    id: '8',
+    title: 'Clinical Research Solutions',
+    slug: 'clinical-research-solutions',
+    summary: 'CDISC-aligned programming, TLFs, and research analytics.',
   },
 ]
 

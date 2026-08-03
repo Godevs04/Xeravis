@@ -34,9 +34,12 @@ export const ContactMessages: CollectionConfig = {
       name: 'intent',
       type: 'select',
       options: [
-        { label: 'Project', value: 'project' },
-        { label: 'General', value: 'general' },
-        { label: 'Partnership', value: 'partnership' },
+        { label: 'Business Enquiry', value: 'business' },
+        { label: 'Research Collaboration', value: 'research' },
+        { label: 'Career Enquiry', value: 'career' },
+        { label: 'General Contact', value: 'general' },
+        { label: 'Project (legacy)', value: 'project' },
+        { label: 'Partnership (legacy)', value: 'partnership' },
       ],
     },
     {

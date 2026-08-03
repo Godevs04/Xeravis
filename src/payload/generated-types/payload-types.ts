@@ -1459,7 +1459,7 @@ export interface ContactMessage {
   phone?: string | null
   subject?: string | null
   message: string
-  intent?: ('project' | 'general' | 'partnership') | null
+  intent?: ('business' | 'research' | 'career' | 'general' | 'project' | 'partnership') | null
   status: 'new' | 'assigned' | 'meeting' | 'proposal' | 'won' | 'lost' | 'in-progress' | 'closed'
   assignee?: (string | null) | User
   meetingAt?: string | null

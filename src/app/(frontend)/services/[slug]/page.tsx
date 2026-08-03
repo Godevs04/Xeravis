@@ -7,9 +7,11 @@ import { TechnologyCard } from '@/components/domain/TechnologyCard'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
+import { ServiceDetailNarrative } from '@/components/services/ServiceDetailNarrative'
 import { RichText } from '@/components/RichText'
 import { getMediaUrl } from '@/lib/media'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
+import { SERVICE_CAPABILITIES } from '@/lib/site-ia'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -73,6 +75,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   const heroUrl = getMediaUrl(service.heroImage as Parameters<typeof getMediaUrl>[0])
   const technologies = asRelatedDocs(service.technologies)
   const hasFaqs = asRelatedDocs(service.relatedFaqs).length > 0
+  const capabilities = SERVICE_CAPABILITIES[service.slug] ?? []
 
   return (
     <>
@@ -82,36 +85,35 @@ export default async function ServiceDetailPage({ params }: Props) {
         subtitle={service.summary}
         image={heroUrl || undefined}
         size="compact"
-        ctas={[{ label: 'Discuss this service', href: '/contact', variant: 'accent' }]}
+        ctas={[
+          { label: 'Discuss this service', href: '/contact?intent=business', variant: 'accent' },
+        ]}
       />
-      {service.challenges ? (
+
+      {capabilities.length > 0 ? (
         <Section>
-          <Container className="max-w-3xl">
-            <h2 className="text-2xl font-bold">Challenges we solve</h2>
-            <p className="text-secondary mt-4 leading-relaxed">{service.challenges}</p>
-          </Container>
-        </Section>
-      ) : null}
-      <Section surface={!service.challenges}>
-        <Container className="max-w-3xl">
-          <RichText content={service.body as Parameters<typeof RichText>[0]['content']} />
-        </Container>
-      </Section>
-      {service.benefits && service.benefits.length > 0 ? (
-        <Section surface>
           <Container>
-            <h2 className="text-2xl font-bold">Key benefits</h2>
-            <ul className="mt-8 space-y-6">
-              {service.benefits.map((benefit) => (
-                <li key={benefit.title} className="border-border border-b pb-6">
-                  <h3 className="text-primary font-semibold">{benefit.title}</h3>
-                  <p className="text-secondary mt-2">{benefit.description}</p>
+            <h2 className="text-2xl font-bold">Capabilities</h2>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {capabilities.map((cap) => (
+                <li
+                  key={cap}
+                  className="rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-3.5 py-1.5 text-sm text-[color:var(--color-primary)]"
+                >
+                  {cap}
                 </li>
               ))}
             </ul>
           </Container>
         </Section>
       ) : null}
+
+      <ServiceDetailNarrative challenges={service.challenges} benefits={service.benefits}>
+        {service.body ? (
+          <RichText content={service.body as Parameters<typeof RichText>[0]['content']} />
+        ) : null}
+      </ServiceDetailNarrative>
+
       {service.process && service.process.length > 0 ? (
         <Section>
           <Container>
