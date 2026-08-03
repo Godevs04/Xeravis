@@ -1,17 +1,11 @@
 import React from 'react'
 
-const Mark = () => (
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M5 17.5L12 4.5L19 17.5H5Z" stroke="white" strokeWidth="1.8" strokeLinejoin="round" />
-    <path d="M9.2 14.2H14.8" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-  </svg>
-)
-
 export const Logo = () => {
   return (
     <div className="xe-logo" aria-label="Xelarvis">
       <span className="xe-logo__mark">
-        <Mark />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/xel-mark.png" alt="" width={28} height={28} />
       </span>
       <span className="xe-logo__text">
         <span className="xe-logo__title">Xelarvis</span>

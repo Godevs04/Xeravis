@@ -39,9 +39,9 @@ function departmentLabel(job: CareerDoc) {
 }
 
 export const metadata = buildMetadata({
-  title: 'AI & Healthcare Careers',
+  title: 'Data Science, AI & Healthcare Careers',
   description:
-    'Join Xelarvis to build Healthcare AI, clinical data science, enterprise software, and cloud platforms. Open roles and talent network.',
+    'Join Xelarvis to build data science, AI, Healthcare AI, clinical data science, and enterprise platforms. Open roles and talent network.',
   path: '/careers',
 })
 

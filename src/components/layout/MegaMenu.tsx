@@ -60,7 +60,7 @@ const CATEGORY_META: Record<string, { title: string; blurb: string; featuredLabe
   },
   services: {
     title: 'Services',
-    blurb: 'Capabilities that move research into production systems.',
+    blurb: 'Data science, AI, and Healthcare AI—capabilities that move research into production.',
     featuredLabel: 'Featured service',
   },
   industries: {
@@ -160,15 +160,25 @@ function FeaturedPreview({ accent, variant }: { accent: string; variant: string 
   const isAi = /ai|intelligent|predict/i.test(variant)
 
   return (
-    <div className="relative mt-4 aspect-[16/10] overflow-hidden rounded-2xl border border-white/15 bg-[rgba(15,23,42,0.55)]">
+    <div className="relative mt-4 aspect-[16/10] overflow-hidden rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--color-neutral)] shadow-[var(--shadow-light)] dark:border-white/15 dark:bg-[rgba(15,23,42,0.55)] dark:shadow-none">
       <motion.div
         aria-hidden
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(ellipse 70% 60% at 30% 20%, ${accent}55, transparent 55%), radial-gradient(ellipse 50% 50% at 80% 80%, rgba(6,182,212,0.35), transparent 50%)`,
+          background: `radial-gradient(ellipse 70% 60% at 30% 20%, ${accent}28, transparent 55%), radial-gradient(ellipse 50% 50% at 80% 80%, rgba(6,182,212,0.16), transparent 50%)`,
         }}
         animate={reduce ? undefined : { opacity: [0.75, 1, 0.75] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-40 dark:opacity-0"
+        style={{
+          backgroundImage:
+            'linear-gradient(var(--hero-grid) 1px, transparent 1px), linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+          maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)',
+        }}
       />
       <svg viewBox="0 0 320 200" className="relative z-10 h-full w-full p-4" aria-hidden>
         <defs>
@@ -624,7 +634,7 @@ export function MegaMenu({ items, category, className, id }: MegaMenuProps) {
               </div>
             </div>
 
-            {/* RIGHT — featured panel (always cinematic navy for brand continuity) */}
+            {/* RIGHT — featured panel */}
             <aside className="border-t border-[color:var(--glass-border)] bg-[color:var(--color-neutral)] p-5 text-[color:var(--color-primary)] lg:border-t-0 lg:border-l lg:border-[color:var(--glass-border)] dark:bg-gradient-to-b dark:from-[#0F172A] dark:to-[#0B1224] dark:text-white dark:lg:border-white/10">
               <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--color-accent)] uppercase">
                 {meta.featuredLabel}

@@ -108,7 +108,7 @@ async function seed() {
     slug: 'site-settings',
     data: {
       siteName: 'Xelarvis Technologies',
-      tagline: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
+      tagline: 'Data Science, AI, and Healthcare AI for enterprise and life sciences',
       social: {
         linkedin: 'https://linkedin.com/company/xelarvis',
         twitter: 'https://x.com/xelarvis',
@@ -382,10 +382,10 @@ async function seed() {
     {
       blockType: 'storyHero' as const,
       brand: 'Xelarvis',
-      eyebrow: 'Healthcare · AI · Digital Transformation',
+      eyebrow: 'Data Science · AI · Healthcare',
       heading: 'Intelligence that survives the real world.',
       subheading:
-        'We engineer AI, clinical data science, and enterprise platforms that operators trust — not demos that fade.',
+        'We lead with data science, AI, and Healthcare AI — clinical intelligence and enterprise platforms that operators trust, not demos that fade.',
       ctaLabel: "Let's Talk",
       ctaHref: '/contact',
       secondaryCtaLabel: 'Explore solutions',
@@ -531,10 +531,9 @@ async function seed() {
       heading: 'Vision & Mission',
       missionTitle: 'Mission',
       missionBody:
-        'Bridge healthcare, artificial intelligence, and enterprise technology by delivering reliable, secure, and future-ready solutions.',
+        'Advance data science, AI, and healthcare technology by delivering reliable, secure, and future-ready solutions.',
       visionTitle: 'Vision',
-      visionBody:
-        'Be a trusted global partner for intelligent healthcare, AI research, and digital transformation.',
+      visionBody: 'Be a trusted global partner for data science, AI research, and Healthcare AI.',
     },
     {
       blockType: 'valuesGrid' as const,
@@ -542,8 +541,8 @@ async function seed() {
       subheading: 'What makes our partnership different.',
       values: [
         {
-          title: 'Healthcare + AI depth',
-          description: 'Clinical data science and healthcare AI alongside enterprise engineering.',
+          title: 'Data Science + AI + Healthcare',
+          description: 'Clinical data science and Healthcare AI alongside applied AI research.',
         },
         {
           title: 'Research-driven',

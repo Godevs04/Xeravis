@@ -72,8 +72,8 @@ export default async function AboutPage() {
   return (
     <>
       <AboutPageHero
-        title="Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation"
-        subtitle="XELARVIS PRIVATE LIMITED specializes in Healthcare AI, Clinical Data Science, Machine Learning, Advanced Analytics, and Enterprise Software Solutions."
+        title="Data Science, AI, and Healthcare AI for enterprise and life sciences"
+        subtitle="XELARVIS PRIVATE LIMITED specializes in Data Science, Artificial Intelligence, Healthcare AI, Clinical Data Science, and Advanced Analytics—backed by IT consulting and enterprise platforms."
       />
       <AboutExploreStrip />
       <RenderBlocks blocks={withoutHeroBlocks(raw)} />

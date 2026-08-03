@@ -11,36 +11,37 @@ export const SITE_DOMAIN = BRAND.domain
 export const TWITTER_HANDLE = '@xelarvis'
 
 export const DEFAULT_DESCRIPTION =
-  'Xelarvis builds Healthcare AI, clinical intelligence, enterprise AI, cloud platforms, and data engineering for hospitals, life sciences, and regulated enterprises.'
+  'Xelarvis leads with data science, AI, and Healthcare AI—delivering clinical intelligence, advanced analytics, and enterprise platforms for hospitals, life sciences, and regulated enterprises.'
 
 /** Entity phrases for GEO / knowledge-graph consistency. */
 export const ENTITY_ALIASES = [
-  'Artificial Intelligence Company',
+  'Data Science Company',
+  'AI Research Company',
   'Healthcare AI Company',
   'Clinical Intelligence Company',
-  'Healthcare Technology Company',
-  'Enterprise Software Company',
-  'Cloud Engineering Company',
+  'Artificial Intelligence Company',
+  'Clinical Data Science Company',
+  'IT Consulting Company',
   'Enterprise AI Consulting Company',
-  'Data Engineering Company',
-  'Medical AI Company',
-  'Digital Transformation Partner',
+  'Healthcare Technology Consulting Company',
+  'Cloud Engineering Company',
 ] as const
 
 export const KNOWNS_FOR = [
-  'Artificial Intelligence',
-  'Healthcare AI',
-  'Clinical Intelligence',
-  'Enterprise AI',
-  'Cloud Engineering',
-  'Enterprise Software Development',
-  'Data Engineering',
-  'Healthcare Analytics',
-  'Digital Transformation',
-  'DevOps',
-  'Cybersecurity',
+  'Data Science',
   'AI Research',
+  'Healthcare AI',
+  'Clinical Data Science',
+  'Clinical Intelligence',
+  'Machine Learning',
+  'Advanced Analytics',
+  'Healthcare Analytics',
+  'Enterprise AI',
+  'IT Consulting',
   'Healthcare Technology Consulting',
+  'Cloud Engineering',
+  'Data Engineering',
+  'Enterprise Software Platforms',
 ] as const
 
 export const SOCIAL_PROFILES = [
@@ -73,7 +74,7 @@ function clampDescription(text: string, max = 158) {
 /** Prefer CMS titles that already include brand; otherwise append `| Xelarvis`. */
 export function formatPageTitle(title?: string | null) {
   if (!title?.trim()) {
-    return `${SITE_NAME_SHORT} | Healthcare AI & Enterprise Engineering`
+    return `${SITE_NAME_SHORT} | Data Science, AI & Healthcare`
   }
   const t = title.trim()
   if (/xelarvis/i.test(t)) return t
@@ -129,9 +130,11 @@ export function buildMetadata({
         { url: '/icons/favicon-16.png', sizes: '16x16', type: 'image/png' },
         { url: '/icons/favicon-32.png', sizes: '32x32', type: 'image/png' },
         { url: '/icons/icon.svg', type: 'image/svg+xml' },
+        { url: '/icons/site-192.png', sizes: '192x192', type: 'image/png' },
+        { url: '/icons/site-512.png', sizes: '512x512', type: 'image/png' },
       ],
       apple: [{ url: '/icons/apple-touch-180.png', sizes: '180x180', type: 'image/png' }],
-      shortcut: ['/icons/site-192.png'],
+      shortcut: ['/icons/favicon-32.png'],
     },
     manifest: '/manifest.webmanifest',
     other: {
@@ -411,7 +414,7 @@ export function jobPostingJsonLd(input: {
       '@type': 'Organization',
       name: SITE_NAME,
       sameAs: absoluteUrl('/'),
-      logo: absoluteUrl('/icons/site-192.png'),
+      logo: absoluteUrl('/brand/xel-mark.png'),
     },
     jobLocation: {
       '@type': 'Place',

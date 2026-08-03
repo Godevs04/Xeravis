@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { ChevronDown, Menu, Search } from 'lucide-react'
 
+import { BrandLogo } from '@/components/brand/BrandLogo'
 import { MegaMenu, type MegaMenuItem } from '@/components/layout/MegaMenu'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
@@ -104,21 +105,19 @@ export function SiteHeaderClient({
         <div className="relative mx-auto max-w-[1280px]">
           <div
             className={cn(
-              'flex items-center gap-2 rounded-full border p-1.5 pl-3 sm:gap-3 sm:pl-4',
+              'flex items-center gap-2 rounded-full border py-1.5 pr-1.5 pl-2.5 sm:gap-3 sm:pl-3.5',
               'border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] shadow-[var(--shadow-medium)] backdrop-blur-xl',
               'transition-[height,box-shadow,max-width,background-color,border-color] duration-300',
               solid ? 'h-14 shadow-[var(--shadow-large)]' : 'h-[3.75rem]',
             )}
           >
-            <Link
-              href="/"
-              className="font-display flex shrink-0 items-center gap-2.5 pl-0.5 text-[1.05rem] font-bold tracking-tight text-[color:var(--color-primary)]"
-            >
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 text-[11px] font-bold text-white shadow-[0_0_20px_var(--color-accent-soft)]">
-                X
-              </span>
-              <span className="hidden sm:inline">{brand}</span>
-            </Link>
+            <BrandLogo
+              variant="header"
+              wordmark="Xelarvis"
+              size={42}
+              priority
+              wordmarkClassName="hidden min-[380px]:inline"
+            />
 
             <nav
               className="ml-auto hidden min-w-0 items-center justify-end gap-0.5 lg:flex"
@@ -222,8 +221,16 @@ export function SiteHeaderClient({
                   side="right"
                   className="flex w-[min(100%,360px)] flex-col border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] pb-[max(1.25rem,env(safe-area-inset-bottom))]"
                 >
-                  <SheetHeader>
-                    <SheetTitle className="text-[color:var(--color-primary)]">{brand}</SheetTitle>
+                  <SheetHeader className="border-b border-[color:var(--glass-border-soft)] pb-4 text-left">
+                    <SheetTitle className="sr-only">{brand}</SheetTitle>
+                    <BrandLogo
+                      variant="header"
+                      wordmark="Xelarvis Technologies"
+                      size={44}
+                      href="/"
+                      onClick={() => setDrawerOpen(false)}
+                      wordmarkClassName="text-[1.05rem]"
+                    />
                   </SheetHeader>
                   <nav
                     className="mt-6 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain"

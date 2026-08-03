@@ -33,10 +33,10 @@ export default function OpenGraphImage() {
             maxWidth: 900,
           }}
         >
-          Engineering Digital Excellence.
+          Data Science, AI & Healthcare.
         </div>
         <div style={{ fontSize: 24, color: '#94A3B8', maxWidth: 720 }}>
-          Enterprise consulting, product engineering, and cloud platforms.
+          Clinical intelligence and enterprise platforms for regulated industries.
         </div>
       </div>
       <div style={{ display: 'flex', fontSize: 20, color: '#64748B' }}>xelarvis.in</div>

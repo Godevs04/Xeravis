@@ -1,6 +1,6 @@
 export const BRAND = {
   name: 'Xelarvis Technologies',
-  tagline: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
+  tagline: 'Data Science, AI, and Healthcare AI for enterprise and life sciences',
   domain: 'xelarvis.in',
 } as const
 
@@ -72,14 +72,6 @@ export const DEFAULT_FOOTER = {
 export const FALLBACK_SERVICES = [
   {
     id: '1',
-    title: 'Artificial Intelligence & AI Research',
-    slug: 'artificial-intelligence-ai-research',
-    summary:
-      'Develop intelligent systems using machine learning, generative AI, computer vision, NLP, and AI agents.',
-    icon: 'Sparkles',
-  },
-  {
-    id: '2',
     title: 'Data Science & Advanced Analytics',
     slug: 'data-science-advanced-analytics',
     summary:
@@ -87,20 +79,28 @@ export const FALLBACK_SERVICES = [
     icon: 'BarChart3',
   },
   {
+    id: '2',
+    title: 'Artificial Intelligence & AI Research',
+    slug: 'artificial-intelligence-ai-research',
+    summary:
+      'Develop intelligent systems using machine learning, generative AI, computer vision, NLP, and AI agents.',
+    icon: 'Sparkles',
+  },
+  {
     id: '3',
+    title: 'Clinical Data Science & Healthcare AI',
+    slug: 'clinical-data-science-healthcare-ai',
+    summary:
+      'Clinical SAS, CDISC standards, healthcare analytics, and AI-powered research solutions for regulated care.',
+    icon: 'HeartPulse',
+  },
+  {
+    id: '4',
     title: 'IT Consulting & Digital Transformation',
     slug: 'it-consulting-digital-transformation',
     summary:
       'Modernize operations through technology consulting, software engineering, cloud adoption, and automation.',
     icon: 'Briefcase',
-  },
-  {
-    id: '4',
-    title: 'Clinical Data Science & Healthcare AI',
-    slug: 'clinical-data-science-healthcare-ai',
-    summary:
-      'Clinical SAS, CDISC standards, healthcare analytics, and AI-powered research solutions.',
-    icon: 'HeartPulse',
   },
   {
     id: '5',
@@ -312,10 +312,9 @@ export const FALLBACK_ABOUT_BLOCKS = [
     heading: 'Vision & Mission',
     missionTitle: 'Mission',
     missionBody:
-      'Bridge healthcare, artificial intelligence, and enterprise technology by delivering reliable, secure, and future-ready solutions.',
+      'Advance data science, AI, and healthcare technology by delivering reliable, secure, and future-ready solutions.',
     visionTitle: 'Vision',
-    visionBody:
-      'Be a trusted global partner for intelligent healthcare, AI research, and digital transformation.',
+    visionBody: 'Be a trusted global partner for data science, AI research, and Healthcare AI.',
   },
   {
     blockType: 'valuesGrid',
@@ -323,8 +322,8 @@ export const FALLBACK_ABOUT_BLOCKS = [
     subheading: 'What makes our partnership different.',
     values: [
       {
-        title: 'Healthcare + AI depth',
-        description: 'Clinical data science and healthcare AI alongside enterprise engineering.',
+        title: 'Data Science + AI + Healthcare',
+        description: 'Clinical data science and Healthcare AI alongside applied AI research.',
       },
       {
         title: 'Research-driven',
