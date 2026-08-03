@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
+import posthog from 'posthog-js'
 
 import { submitNewsletter, type NewsletterFormState } from '@/actions/newsletter'
 import { Button } from '@/components/ui/button'
@@ -15,7 +16,18 @@ type NewsletterFormProps = {
 }
 
 export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
-  const [state, action, pending] = useActionState(submitNewsletter, initialState)
+  const [state, action, pending] = useActionState(
+    async (previousState: NewsletterFormState, formData: FormData) => {
+      const result = await submitNewsletter(previousState, formData)
+
+      if (result.ok) {
+        posthog.capture('newsletter_subscribed')
+      }
+
+      return result
+    },
+    initialState,
+  )
   const dark = variant === 'dark'
 
   return (
@@ -34,7 +46,14 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
           className={cn(dark && 'border-white/20 bg-white/5 text-white placeholder:text-white/40')}
         />
         {/* Honeypot */}
-        <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
+        <input
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          aria-hidden
+        />
         <Button
           type="submit"
           variant={dark ? 'outline' : 'primary'}
@@ -46,7 +65,13 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
         </Button>
       </div>
       {state.message && (
-        <p className={cn('text-sm', state.ok ? (dark ? 'text-green-300' : 'text-success') : 'text-danger')} role="status">
+        <p
+          className={cn(
+            'text-sm',
+            state.ok ? (dark ? 'text-green-300' : 'text-success') : 'text-danger',
+          )}
+          role="status"
+        >
           {state.message}
         </p>
       )}

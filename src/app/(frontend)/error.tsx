@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import posthog from 'posthog-js'
 
 import { Container } from '@/components/layout/Container'
 import { ErrorState } from '@/components/ui/error-state'
@@ -16,6 +17,7 @@ const log = logger.child('frontend')
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   useEffect(() => {
     log.error(error)
+    posthog.captureException(error)
   }, [error])
 
   return (

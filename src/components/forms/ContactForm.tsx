@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import posthog from 'posthog-js'
 
 import { submitContact, type ContactFormState } from '@/actions/contact'
 import { Button } from '@/components/ui/button'
@@ -19,7 +20,20 @@ const LEGACY_INTENT_MAP: Record<string, string> = {
 }
 
 export function ContactForm() {
-  const [state, action, pending] = useActionState(submitContact, initialState)
+  const [state, action, pending] = useActionState(
+    async (previousState: ContactFormState, formData: FormData) => {
+      const result = await submitContact(previousState, formData)
+
+      if (result.ok) {
+        posthog.capture('contact_form_submitted', {
+          enquiry_intent: String(formData.get('intent') || 'general'),
+        })
+      }
+
+      return result
+    },
+    initialState,
+  )
   const searchParams = useSearchParams()
   const rawIntent = searchParams.get('intent') || 'general'
   const mapped = LEGACY_INTENT_MAP[rawIntent] || rawIntent

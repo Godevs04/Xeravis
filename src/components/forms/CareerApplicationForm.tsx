@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useActionState } from 'react'
+import posthog from 'posthog-js'
 
 import { submitCareerApplication, type CareerFormState } from '@/actions/career'
 import { Button } from '@/components/ui/button'
@@ -30,7 +31,20 @@ function FieldError({ errors }: { errors?: string[] }) {
 }
 
 export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationFormProps) {
-  const [state, action, pending] = useActionState(submitCareerApplication, initialState)
+  const [state, action, pending] = useActionState(
+    async (previousState: CareerFormState, formData: FormData) => {
+      const result = await submitCareerApplication(previousState, formData)
+
+      if (result.ok) {
+        posthog.capture('career_application_submitted', {
+          career_id: careerId,
+        })
+      }
+
+      return result
+    },
+    initialState,
+  )
 
   if (state.ok) {
     return (

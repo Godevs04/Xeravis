@@ -3,7 +3,8 @@
 import { useAuth } from '@payloadcms/ui'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import posthog from 'posthog-js'
+import React, { useEffect, useState } from 'react'
 
 import { useWorkspaceOptional } from '@/payload/admin/workspace/WorkspaceContext'
 
@@ -33,8 +34,23 @@ export const ProfileCard = () => {
       : 'Account'
   const roles =
     user && typeof user === 'object' && 'roles' in user ? (user as { roles?: unknown }).roles : []
+  const userId =
+    user && typeof user === 'object' && 'id' in user && typeof user.id === 'string' ? user.id : null
   const role = roleLabel(roles)
   const name = email.includes('@') ? email.split('@')[0] : email
+
+  useEffect(() => {
+    if (!userId) return
+
+    posthog.identify(userId, {
+      email,
+      role,
+    })
+  }, [email, role, userId])
+
+  const handleLogout = () => {
+    posthog.reset()
+  }
   const initials = name.slice(0, 2).toUpperCase()
   const workspace = ctx?.workspace.label || 'Website'
 
@@ -101,7 +117,7 @@ export const ProfileCard = () => {
             <a href="/" target="_blank" rel="noreferrer" role="menuitem">
               View website
             </a>
-            <Link href="/admin/logout" role="menuitem" className="is-danger">
+            <Link href="/admin/logout" role="menuitem" className="is-danger" onClick={handleLogout}>
               Log out
             </Link>
           </motion.div>
