@@ -464,7 +464,7 @@ export function StoryCases({ eyebrow = 'Success stories', heading, items }: Stor
   if (!stories.length) return null
 
   return (
-    <section className="surface-navy relative overflow-hidden bg-[color:var(--color-navy)] py-24 text-white lg:py-32">
+    <section className="surface-navy relative overflow-hidden bg-[color:var(--hero-bg)] py-24 text-[color:var(--hero-text)] lg:py-32">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_15%_20%,rgba(13,148,136,0.22),transparent_55%),radial-gradient(ellipse_60%_45%_at_90%_70%,rgba(6,182,212,0.18),transparent_50%)]"

@@ -34,24 +34,24 @@ export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackg
   const uid = useId()
   const sx = useSpring(cursorX, { stiffness: 36, damping: 24, mass: 0.7 })
   const sy = useSpring(cursorY, { stiffness: 36, damping: 24, mass: 0.7 })
-  const cursorGlow = useMotionTemplate`radial-gradient(ellipse 42% 36% at ${sx}% ${sy}%, rgba(6,182,212,0.22), transparent 62%)`
+  const cursorGlow = useMotionTemplate`radial-gradient(ellipse 42% 36% at ${sx}% ${sy}%, var(--hero-glow-2), transparent 62%)`
   const gridX = useSpring(cursorX, { stiffness: 28, damping: 28 })
   const gridY = useSpring(cursorY, { stiffness: 28, damping: 28 })
   const gridTransform = useMotionTemplate`translate3d(calc((${gridX} - 50) * 0.18px), calc((${gridY} - 40) * 0.14px), 0)`
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-[#0F172A]" />
+      <div className="absolute inset-0 bg-[color:var(--hero-bg)]" />
 
       <div
         className="aurora-mesh absolute inset-0 opacity-90"
         style={{
           backgroundImage: `
-            radial-gradient(ellipse 55% 45% at 12% 18%, rgba(13,148,136,0.38), transparent 58%),
-            radial-gradient(ellipse 48% 42% at 88% 22%, rgba(6,182,212,0.28), transparent 55%),
-            radial-gradient(ellipse 40% 36% at 62% 78%, rgba(13,148,136,0.18), transparent 60%),
-            radial-gradient(ellipse 70% 50% at 40% 110%, rgba(2,6,23,0.95), transparent 55%),
-            linear-gradient(165deg, #0F172A 0%, #0B1224 42%, #07101f 100%)
+            radial-gradient(ellipse 55% 45% at 12% 18%, var(--hero-glow), transparent 58%),
+            radial-gradient(ellipse 48% 42% at 88% 22%, var(--hero-glow-2), transparent 55%),
+            radial-gradient(ellipse 40% 36% at 62% 78%, var(--hero-glow), transparent 60%),
+            radial-gradient(ellipse 70% 50% at 40% 110%, var(--hero-vignette), transparent 55%),
+            linear-gradient(165deg, var(--hero-bg) 0%, var(--color-neutral) 42%, var(--hero-bg) 100%)
           `,
         }}
       />
@@ -59,35 +59,33 @@ export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackg
       {!reduce ? (
         <>
           <motion.div
-            className="absolute top-[-12%] left-[-8%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgba(13,148,136,0.4),transparent_68%)] blur-3xl"
+            className="absolute top-[-12%] left-[-8%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,var(--hero-glow),transparent_68%)] blur-3xl"
             animate={{ x: [0, 48, 0], y: [0, 32, 0], opacity: [0.4, 0.7, 0.4] }}
             transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.div
-            className="absolute right-[-10%] bottom-[-8%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.32),transparent_70%)] blur-3xl"
+            className="absolute right-[-10%] bottom-[-8%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,var(--hero-glow-2),transparent_70%)] blur-3xl"
             animate={{ x: [0, -40, 0], y: [0, -28, 0], opacity: [0.3, 0.58, 0.3] }}
             transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.div
-            className="absolute top-[38%] left-[42%] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.22),transparent_70%)] blur-2xl"
+            className="absolute top-[38%] left-[42%] h-64 w-64 rounded-full bg-[radial-gradient(circle,var(--hero-glow-2),transparent_70%)] blur-2xl"
             animate={{ scale: [1, 1.18, 1], opacity: [0.25, 0.5, 0.25] }}
             transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.div
-            className="absolute inset-y-[8%] left-[16%] w-px bg-gradient-to-b from-transparent via-cyan-300/30 to-transparent"
+            className="absolute inset-y-[8%] left-[16%] w-px bg-gradient-to-b from-transparent via-[color:var(--color-cyan)]/30 to-transparent"
             animate={{ opacity: [0.12, 0.42, 0.12], x: [0, 22, 0] }}
             transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
           />
         </>
-      ) : (
-        <div className="absolute top-[-10%] left-[-6%] h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(13,148,136,0.28),transparent_68%)] blur-3xl" />
-      )}
+      ) : null}
 
       <motion.div
-        className="absolute inset-[-8%] opacity-[0.13]"
+        className="absolute inset-[-8%] opacity-40"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(148,163,184,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.35) 1px, transparent 1px)',
+            'linear-gradient(var(--hero-grid) 1px, transparent 1px), linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px)',
           backgroundSize: '68px 68px',
           maskImage: 'radial-gradient(ellipse 72% 62% at 50% 42%, black, transparent)',
           transform: reduce ? undefined : gridTransform,
@@ -133,7 +131,7 @@ export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackg
         ? PARTICLES.map((p) => (
             <motion.span
               key={p.id}
-              className="absolute rounded-full bg-cyan-300/70 shadow-[0_0_10px_rgba(6,182,212,0.45)]"
+              className="absolute rounded-full bg-[color:var(--color-cyan)]/70 shadow-[0_0_10px_rgba(6,182,212,0.45)]"
               style={{ left: p.left, top: p.top, width: p.size, height: p.size }}
               animate={{ y: [0, -14, 0], opacity: [0.15, 0.7, 0.15], scale: [1, 1.3, 1] }}
               transition={{
@@ -153,7 +151,12 @@ export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackg
         />
       ) : null}
 
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_70%_at_50%_40%,transparent_35%,rgba(2,6,23,0.72)_100%)]" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse 75% 70% at 50% 40%, transparent 35%, var(--hero-vignette) 100%)`,
+        }}
+      />
       <div className="noise-overlay opacity-[0.045]" />
     </div>
   )

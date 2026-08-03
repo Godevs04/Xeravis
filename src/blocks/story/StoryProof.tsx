@@ -409,12 +409,12 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
   return (
     <section
       ref={sectionRef}
-      className="surface-navy relative overflow-hidden bg-[color:var(--color-navy)] py-24 text-white lg:py-32"
+      className="surface-navy relative overflow-hidden bg-[color:var(--hero-bg)] py-24 text-[color:var(--hero-text)] lg:py-32"
       aria-label={eyebrow || 'Proof'}
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_10%_15%,rgba(13,148,136,0.26),transparent_55%),radial-gradient(ellipse_65%_50%_at_90%_85%,rgba(6,182,212,0.2),transparent_50%),linear-gradient(180deg,#0F172A_0%,#0B1224_45%,#0F172A_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_10%_15%,var(--hero-glow),transparent_55%),radial-gradient(ellipse_65%_50%_at_90%_85%,var(--hero-glow-2),transparent_50%)]"
       />
       {!reduce ? (
         <motion.div

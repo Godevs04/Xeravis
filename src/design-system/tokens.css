@@ -67,10 +67,16 @@
   --grid-line: rgba(15, 23, 42, 0.05);
   --aurora-spot: rgba(6, 182, 212, 0.16);
 
-  --hero-bg: #0f172a;
-  --hero-text: #ffffff;
-  --hero-muted: #94a3b8;
-  --footer-bg: #0f172a;
+  --hero-bg: #f8fafc;
+  --hero-text: #0f172a;
+  --hero-muted: #475569;
+  --footer-bg: #ffffff;
+  --hero-glow: rgba(13, 148, 136, 0.16);
+  --hero-glow-2: rgba(6, 182, 212, 0.12);
+  --hero-vignette: rgba(248, 250, 252, 0.85);
+  --hero-grid: rgba(15, 23, 42, 0.06);
+  --hero-panel: rgba(255, 255, 255, 0.92);
+  --hero-panel-border: rgba(15, 23, 42, 0.08);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -184,6 +190,12 @@
   --hero-text: #f8fafc;
   --hero-muted: #94a3b8;
   --footer-bg: #020617;
+  --hero-glow: rgba(13, 148, 136, 0.28);
+  --hero-glow-2: rgba(6, 182, 212, 0.22);
+  --hero-vignette: rgba(2, 6, 23, 0.72);
+  --hero-grid: rgba(148, 163, 184, 0.14);
+  --hero-panel: rgba(11, 18, 36, 0.88);
+  --hero-panel-border: rgba(255, 255, 255, 0.15);
 
   --shadow-light: 0 4px 16px rgba(0, 0, 0, 0.35);
   --shadow-medium: 0 12px 32px rgba(0, 0, 0, 0.45);
@@ -194,10 +206,21 @@
 }
 
 /**
- * Cinematic navy surfaces stay readable in both light and dark site themes.
- * Remaps semantic text tokens so text-primary / inherited headings stay light.
+ * Cinematic sections follow the active site theme.
+ * Dark theme keeps navy + light text; light theme uses soft slate surfaces.
  */
 .surface-navy {
+  --ds-primary: #0f172a;
+  --ds-secondary: #475569;
+  --ds-muted: #64748b;
+  --color-primary: #0f172a;
+  --color-secondary: #475569;
+  --color-muted: #64748b;
+  color: var(--hero-text);
+  background-color: var(--hero-bg);
+}
+
+.dark .surface-navy {
   --ds-primary: #f8fafc;
   --ds-secondary: #cbd5e1;
   --ds-muted: #94a3b8;
@@ -205,6 +228,36 @@
   --color-secondary: #cbd5e1;
   --color-muted: #94a3b8;
   color: #f8fafc;
+}
+
+/* Remap hardcoded dark-hero utilities so light theme stays readable.
+   Leave filled CTAs alone (teal / gradient buttons keep white label text). */
+html:not(.dark) .surface-navy :is(h1, h2, h3, h4, h5, h6, p, li, span, label, small).text-white,
+html:not(.dark)
+  .surface-navy
+  :is(h1, h2, h3, h4, h5, h6, p, li, span, label, small)[class*='text-white/'] {
+  color: var(--hero-text) !important;
+}
+
+html:not(.dark) .surface-navy [class*='text-slate-'],
+html:not(.dark) .surface-navy [class*='text-cyan-'],
+html:not(.dark) .surface-navy [class*='text-teal-'] {
+  color: var(--hero-muted) !important;
+}
+
+html:not(.dark) .surface-navy :is(h1, h2, h3, h4, h5, h6)[class*='text-teal-'],
+html:not(.dark) .surface-navy :is(h1, h2, h3, h4, h5, h6)[class*='text-cyan-'],
+html:not(.dark) .surface-navy .font-display[class*='text-teal-'],
+html:not(.dark) .surface-navy .font-display[class*='text-cyan-'] {
+  color: var(--color-accent) !important;
+}
+
+html:not(.dark) .surface-navy [class*='border-white'] {
+  border-color: var(--hero-panel-border) !important;
+}
+
+html:not(.dark) .surface-navy [class*='bg-white/'] {
+  background-color: var(--hero-panel) !important;
 }
 
 @media (max-width: 1023px) {

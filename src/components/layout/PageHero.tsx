@@ -185,7 +185,7 @@ function MagneticCTA({ href, label, outline }: { href: string; label: string; ou
         className={cn(
           'group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full px-6 text-sm font-semibold transition-[box-shadow,background,border-color,color] duration-300',
           outline
-            ? 'border border-white/25 bg-white/[0.04] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md hover:border-cyan-300/50 hover:bg-white/[0.1]'
+            ? 'border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] text-[color:var(--hero-text)] shadow-[var(--shadow-light)] backdrop-blur-md hover:border-[color:var(--color-accent)]/50 hover:bg-[color:var(--color-hover)]'
             : 'bg-gradient-to-r from-[#0D9488] via-[#0F9F96] to-[#06B6D4] text-white shadow-[0_14px_40px_rgba(13,148,136,0.45),inset_0_1px_0_rgba(255,255,255,0.28)] hover:shadow-[0_18px_48px_rgba(6,182,212,0.5)]',
         )}
       >
@@ -272,7 +272,7 @@ export function PageHero({
     return (
       <section
         ref={sectionRef}
-        className="relative isolate min-h-[min(100svh,760px)] overflow-hidden text-white sm:min-h-[min(100svh,880px)] lg:min-h-[min(100svh,980px)]"
+        className="surface-navy relative isolate min-h-[min(100svh,760px)] overflow-hidden text-[color:var(--hero-text)] sm:min-h-[min(100svh,880px)] lg:min-h-[min(100svh,980px)]"
         onMouseMove={(e) => {
           if (reduce) return
           const rect = sectionRef.current?.getBoundingClientRect()
@@ -289,15 +289,15 @@ export function PageHero({
           <motion.div className="relative z-10" style={{ opacity: contentOpacity, y: contentY }}>
             <motion.div
               {...fade(0.04)}
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md"
+              className="mb-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-1.5 shadow-[var(--shadow-light)] backdrop-blur-md"
             >
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#22D3EE] shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
-              <span className="text-[11px] font-bold tracking-[0.16em] text-cyan-200 uppercase">
+              <span className="text-[11px] font-bold tracking-[0.16em] text-[color:var(--color-accent)] uppercase">
                 {eyebrow && eyebrow.toLowerCase() !== brand.toLowerCase() ? eyebrow : brand}
               </span>
             </motion.div>
 
-            <h1 className="font-display max-w-[22ch] text-[clamp(2.4rem,5.2vw,4.5rem)] leading-[0.98] font-bold tracking-[-0.05em] text-balance text-white">
+            <h1 className="font-display max-w-[22ch] text-[clamp(2.4rem,5.2vw,4.5rem)] leading-[0.98] font-bold tracking-[-0.05em] text-balance text-[color:var(--hero-text)]">
               {titleLines.map((line, lineIndex) => (
                 <span key={line} className="block overflow-hidden pb-1">
                   <motion.span
@@ -314,7 +314,7 @@ export function PageHero({
             </h1>
 
             {subtitle ? (
-              <p className="mt-5 max-w-[42ch] text-base leading-relaxed text-slate-200 sm:text-lg">
+              <p className="mt-5 max-w-[42ch] text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg">
                 {subtitleWords.map((word, i) => (
                   <motion.span
                     key={`${word}-${i}`}
@@ -346,16 +346,16 @@ export function PageHero({
             ) : null}
 
             <motion.div {...fade(0.5)} className="mt-10">
-              <p className="mb-3 text-[10px] font-bold tracking-[0.18em] text-slate-400 uppercase">
+              <p className="mb-3 text-[10px] font-bold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase">
                 Trusted by
               </p>
               <div className="flex flex-wrap gap-2.5 sm:gap-3">
                 {TRUST_LOGOS.map((logo) => (
                   <div
                     key={logo.name}
-                    className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-slate-500 grayscale transition-[filter,color,border-color,background] duration-300 hover:border-teal-400/30 hover:bg-white/[0.08] hover:text-slate-200 hover:grayscale-0"
+                    className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-1.5 text-[color:var(--hero-muted)] grayscale transition-[filter,color,border-color,background] duration-300 hover:border-[color:var(--color-accent)]/40 hover:text-[color:var(--hero-text)] hover:grayscale-0"
                   >
-                    <span className="grid h-5 w-5 place-items-center rounded-md bg-white/10 text-[9px] font-bold tracking-wide text-slate-400 transition-colors group-hover:bg-teal-500/20 group-hover:text-cyan-200">
+                    <span className="grid h-5 w-5 place-items-center rounded-md bg-[color:var(--color-hover)] text-[9px] font-bold tracking-wide text-[color:var(--hero-muted)] transition-colors group-hover:bg-teal-500/20 group-hover:text-[color:var(--color-accent)]">
                       {logo.mark}
                     </span>
                     <span className="text-[11px] font-semibold tracking-wide">{logo.name}</span>
@@ -367,14 +367,14 @@ export function PageHero({
             <motion.div
               ref={metricsRef}
               {...fade(0.58)}
-              className="mt-8 grid max-w-xl grid-cols-2 gap-3 border-t border-white/12 pt-7 sm:grid-cols-4"
+              className="mt-8 grid max-w-xl grid-cols-2 gap-3 border-t border-[color:var(--hero-panel-border)] pt-7 sm:grid-cols-4"
             >
               {LIVE_METRICS.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-white/12 bg-white/[0.06] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md"
+                  className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-3 shadow-[var(--shadow-light)] backdrop-blur-md"
                 >
-                  <p className="font-display text-xl font-bold tracking-tight text-white sm:text-2xl">
+                  <p className="font-display text-xl font-bold tracking-tight text-[color:var(--hero-text)] sm:text-2xl">
                     <MetricCounter
                       value={item.value}
                       suffix={item.suffix}
@@ -382,7 +382,7 @@ export function PageHero({
                       active={metricsInView}
                     />
                   </p>
-                  <p className="mt-1 text-[10px] leading-snug text-slate-300 sm:text-xs">
+                  <p className="mt-1 text-[10px] leading-snug text-[color:var(--hero-muted)] sm:text-xs">
                     {item.label}
                   </p>
                 </div>
@@ -397,7 +397,7 @@ export function PageHero({
 
         {!reduce ? (
           <motion.div
-            className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.18em] text-slate-400 uppercase"
+            className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase"
             animate={{ y: [0, 6, 0], opacity: [0.45, 0.9, 0.45] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
             aria-hidden
@@ -421,7 +421,7 @@ export function PageHero({
       {image ? (
         <>
           <Image src={image} alt={imageAlt} fill priority className="object-cover" sizes="100vw" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/50 via-[#0F172A]/75 to-[#0F172A]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/55 via-[#0F172A]/78 to-[#0F172A]" />
         </>
       ) : null}
 

@@ -50,8 +50,8 @@ function listItems(items?: { item?: string }[] | null) {
 
 function MetaChip({ icon: Icon, label }: { icon: typeof MapPin; label: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-200 backdrop-blur-md">
-      <Icon className="h-3.5 w-3.5 text-cyan-300" strokeWidth={1.75} />
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-1.5 text-xs font-medium text-[color:var(--hero-muted)] backdrop-blur-md">
+      <Icon className="h-3.5 w-3.5 text-[color:var(--color-accent)]" strokeWidth={1.75} />
       {label}
     </span>
   )
@@ -155,22 +155,15 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
 
   return (
     <>
-      {/* Hero — full-bleed navy composition */}
-      <section className="relative overflow-hidden pt-28 pb-28 lg:pt-36 lg:pb-36">
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(ellipse 70% 55% at 85% 20%, rgba(6,182,212,0.22), transparent 55%), radial-gradient(ellipse 55% 45% at 10% 80%, rgba(13,148,136,0.2), transparent 50%), linear-gradient(165deg, #0F172A 0%, #0B1224 50%, #0F172A 100%)',
-          }}
-        />
+      {/* Hero — theme-aware cinematic composition */}
+      <section className="surface-navy relative overflow-hidden pt-28 pb-28 text-[color:var(--hero-text)] lg:pt-36 lg:pb-36">
+        <div aria-hidden className="hero-navy absolute inset-0" />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-30"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(148,163,184,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.1) 1px, transparent 1px)',
+              'linear-gradient(var(--hero-grid) 1px, transparent 1px), linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px)',
             backgroundSize: '64px 64px',
             maskImage: 'radial-gradient(ellipse 70% 60% at 40% 40%, black, transparent)',
           }}
@@ -178,7 +171,7 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
         {!reduce ? (
           <motion.div
             aria-hidden
-            className="pointer-events-none absolute top-24 right-[12%] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.25),transparent_70%)] blur-3xl"
+            className="pointer-events-none absolute top-24 right-[12%] h-72 w-72 rounded-full bg-[radial-gradient(circle,var(--hero-glow-2),transparent_70%)] blur-3xl"
             animate={{ opacity: [0.4, 0.75, 0.4], scale: [1, 1.08, 1] }}
             transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
           />
@@ -192,7 +185,7 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
           >
             <Link
               href="/careers"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition-colors hover:text-cyan-300"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--hero-muted)] transition-colors hover:text-[color:var(--color-accent)]"
             >
               <ArrowLeft className="h-4 w-4" />
               All openings
@@ -202,7 +195,7 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
           <div className="mt-8 grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
               <motion.p
-                className="text-[11px] font-bold tracking-[0.22em] text-teal-300 uppercase"
+                className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase"
                 initial={reduce ? false : { opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
@@ -210,7 +203,7 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
                 {job.department || 'Careers'}
               </motion.p>
               <motion.h1
-                className="font-display mt-4 max-w-3xl text-[clamp(2.4rem,5.5vw,4.25rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-white"
+                className="font-display mt-4 max-w-3xl text-[clamp(2.4rem,5.5vw,4.25rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
                 initial={reduce ? false : { opacity: 0, y: 22 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
@@ -258,7 +251,7 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
                   asChild
                   size="lg"
                   variant="outline"
-                  className="rounded-full border-white/20 bg-white/5 px-7 font-semibold text-white backdrop-blur hover:border-cyan-400/40 hover:bg-white/10"
+                  className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-7 font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/40 hover:bg-[color:var(--color-hover)]"
                 >
                   <Link href="/contact?intent=careers">Talk to recruiting</Link>
                 </Button>
@@ -266,21 +259,24 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
             </div>
 
             <motion.aside
-              className="relative hidden overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.06] p-6 backdrop-blur-xl lg:block"
+              className="relative hidden overflow-hidden rounded-[28px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-6 backdrop-blur-xl lg:block"
               initial={reduce ? false : { opacity: 0, y: 20, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.65, delay: 0.2, ease: EASE }}
             >
-              <p className="text-[10px] font-bold tracking-[0.16em] text-teal-300 uppercase">
+              <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-accent)] uppercase">
                 Hiring path
               </p>
-              <p className="font-display mt-2 text-lg font-semibold text-white">
+              <p className="font-display mt-2 text-lg font-semibold text-[color:var(--hero-text)]">
                 Clear steps from application to onboarding
               </p>
               <ol className="mt-5 space-y-3">
                 {['Apply', 'Screen', 'Interview', 'Offer'].map((step, i) => (
-                  <li key={step} className="flex items-center gap-3 text-sm text-slate-300">
-                    <span className="font-display grid h-7 w-7 place-items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 text-[10px] font-bold text-cyan-300">
+                  <li
+                    key={step}
+                    className="flex items-center gap-3 text-sm text-[color:var(--hero-muted)]"
+                  >
+                    <span className="font-display grid h-7 w-7 place-items-center rounded-full border border-[color:var(--color-accent)]/30 bg-[color:var(--color-accent-soft)] text-[10px] font-bold text-[color:var(--color-accent)]">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     {step}
@@ -289,7 +285,7 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
               </ol>
               <Link
                 href="/careers"
-                className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-300 hover:text-cyan-200"
+                className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-[color:var(--color-accent)] hover:text-[color:var(--color-accent-hover)]"
               >
                 View hiring process
                 <ArrowRight className="h-3.5 w-3.5" />

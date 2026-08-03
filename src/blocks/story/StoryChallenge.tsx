@@ -403,7 +403,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
   // Mobile / reduced motion / pre-hydration: stacked chapters — no sticky pin
   if (!sticky) {
     return (
-      <section className="surface-navy relative overflow-hidden bg-[color:var(--color-navy)] py-20 text-white sm:py-24 lg:py-32">
+      <section className="surface-navy relative overflow-hidden bg-[color:var(--hero-bg)] py-20 text-[color:var(--hero-text)] sm:py-24 lg:py-32">
         <Container>
           <p className="text-[11px] font-bold tracking-[0.22em] text-teal-300 uppercase">
             {eyebrow}
@@ -447,11 +447,11 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
       style={{ height: `${count * 100}vh` }}
       aria-label={eyebrow || 'The challenge'}
     >
-      <div className="surface-navy sticky top-0 h-[100svh] overflow-hidden bg-[color:var(--color-navy)] text-white">
+      <div className="surface-navy sticky top-0 h-[100svh] overflow-hidden bg-[color:var(--hero-bg)] text-[color:var(--hero-text)]">
         {/* Background atmosphere */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_15%_20%,rgba(13,148,136,0.28),transparent_55%),radial-gradient(ellipse_70%_50%_at_90%_80%,rgba(6,182,212,0.2),transparent_50%),linear-gradient(180deg,#0F172A_0%,#0B1224_50%,#0F172A_100%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_15%_20%,var(--hero-glow),transparent_55%),radial-gradient(ellipse_70%_50%_at_90%_80%,var(--hero-glow-2),transparent_50%)]"
         />
         <motion.div
           aria-hidden
