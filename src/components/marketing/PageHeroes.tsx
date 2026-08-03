@@ -28,7 +28,7 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
         <div className="grid items-end gap-10 pb-16 lg:grid-cols-[1.2fr_0.8fr] lg:pb-20">
           <div>
             <motion.p
-              className="font-display text-2xl font-bold tracking-[-0.03em] text-teal-300 sm:text-3xl"
+              className="font-display text-2xl font-bold tracking-[-0.03em] text-[color:var(--color-accent)] sm:text-3xl"
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE }}
@@ -36,7 +36,7 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
               Xelarvis
             </motion.p>
             <motion.h1
-              className="font-display mt-4 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-white"
+              className="font-display mt-4 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.06, ease: EASE }}
@@ -45,7 +45,7 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
             </motion.h1>
             {subtitle ? (
               <motion.p
-                className="mt-5 max-w-xl text-base leading-relaxed text-slate-300"
+                className="mt-5 max-w-xl text-base leading-relaxed text-[color:var(--hero-muted)]"
                 initial={reduce ? false : { opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 0.12, ease: EASE }}
@@ -70,19 +70,19 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
                 asChild
                 size="lg"
                 variant="outline"
-                className="rounded-full border-white/20 bg-white/5 px-7 font-semibold text-white backdrop-blur hover:border-cyan-400/50 hover:bg-white/10"
+                className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-7 font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/50 hover:bg-[color:var(--color-hover)]"
               >
                 <Link href="/contact?intent=services">Talk to an expert</Link>
               </Button>
             </motion.div>
           </div>
-          <p className="text-[11px] font-bold tracking-[0.22em] text-teal-300/80 uppercase lg:text-right">
+          <p className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)]/80 uppercase lg:text-right">
             Services
           </p>
         </div>
       </Container>
 
-      <div className="overflow-hidden border-y border-white/10 bg-white/[0.04] py-4 backdrop-blur-xl">
+      <div className="overflow-hidden border-y border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] py-4 backdrop-blur-xl">
         <motion.ul
           className="flex w-max gap-10 px-6 whitespace-nowrap"
           animate={reduce ? undefined : { x: ['0%', '-50%'] }}
@@ -91,10 +91,10 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
           {[...ribbon, ...ribbon].map((label, i) => (
             <li
               key={`${label}-${i}`}
-              className="font-display text-sm font-semibold tracking-wide text-slate-200/90"
+              className="font-display text-sm font-semibold tracking-wide text-[color:var(--hero-muted)]"
             >
               {label}
-              <span className="ml-10 text-cyan-400">·</span>
+              <span className="ml-10 text-[color:var(--color-accent)]">·</span>
             </li>
           ))}
         </motion.ul>
@@ -107,9 +107,11 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
 export function SolutionsPageHero({ title, subtitle }: BaseHero) {
   const reduce = useReducedMotion()
   return (
-    <section className="bg-[color:var(--color-navy)] pt-28 pb-20 text-white lg:pt-36 lg:pb-28">
+    <section className="surface-navy bg-[color:var(--hero-bg)] pt-28 pb-20 text-[color:var(--hero-text)] lg:pt-36 lg:pb-28">
       <Container>
-        <p className="text-[11px] font-bold tracking-[0.22em] text-teal-300 uppercase">Solutions</p>
+        <p className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase">
+          Solutions
+        </p>
         <motion.h1
           className="font-display mt-6 max-w-5xl text-[clamp(2.6rem,7vw,5.5rem)] leading-[0.95] font-bold tracking-[-0.05em]"
           initial={reduce ? false : { opacity: 0, y: 28 }}
@@ -118,7 +120,9 @@ export function SolutionsPageHero({ title, subtitle }: BaseHero) {
         >
           {title}
         </motion.h1>
-        {subtitle ? <p className="mt-8 max-w-2xl text-lg text-slate-300">{subtitle}</p> : null}
+        {subtitle ? (
+          <p className="mt-8 max-w-2xl text-lg text-[color:var(--hero-muted)]">{subtitle}</p>
+        ) : null}
       </Container>
     </section>
   )
@@ -131,15 +135,17 @@ export function IndustriesPageHero({ title, subtitle }: BaseHero) {
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div>
-            <p className="text-[11px] font-bold tracking-[0.2em] text-teal-300 uppercase">
+            <p className="text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
               Industries
             </p>
-            <h1 className="font-display mt-4 text-[clamp(2.2rem,4.5vw,3.8rem)] font-bold tracking-[-0.04em] text-balance text-white">
+            <h1 className="font-display mt-4 text-[clamp(2.2rem,4.5vw,3.8rem)] font-bold tracking-[-0.04em] text-balance text-[color:var(--hero-text)]">
               {title}
             </h1>
-            {subtitle ? <p className="mt-5 max-w-md text-base text-slate-300">{subtitle}</p> : null}
+            {subtitle ? (
+              <p className="mt-5 max-w-md text-base text-[color:var(--hero-muted)]">{subtitle}</p>
+            ) : null}
           </div>
-          <div className="relative h-64 overflow-hidden rounded-3xl border border-white/10 sm:h-80">
+          <div className="relative h-64 overflow-hidden rounded-3xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] sm:h-80">
             <ConstellationCanvas className="opacity-90" />
           </div>
         </div>
@@ -162,13 +168,15 @@ export function TechnologiesPageHero({ title, subtitle }: BaseHero) {
     <MeshBackdrop className="pt-24 pb-16 lg:pt-32 lg:pb-20" interactive>
       <Container>
         <div className="text-center">
-          <p className="text-[11px] font-bold tracking-[0.2em] text-cyan-300 uppercase">
+          <p className="text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
             Technologies
           </p>
-          <h1 className="font-display mx-auto mt-4 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] font-bold tracking-[-0.045em] text-white">
+          <h1 className="font-display mx-auto mt-4 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] font-bold tracking-[-0.045em] text-[color:var(--hero-text)]">
             {title}
           </h1>
-          {subtitle ? <p className="mx-auto mt-5 max-w-xl text-slate-300">{subtitle}</p> : null}
+          {subtitle ? (
+            <p className="mx-auto mt-5 max-w-xl text-[color:var(--hero-muted)]">{subtitle}</p>
+          ) : null}
         </div>
         <div className="mt-10">
           <OrbitDiagram nodes={nodes} className="max-w-md" />
@@ -182,13 +190,15 @@ export function TechnologiesPageHero({ title, subtitle }: BaseHero) {
 export function CareersPageHero({ title, subtitle }: BaseHero) {
   const reduce = useReducedMotion()
   return (
-    <section className="relative min-h-[70svh] overflow-hidden bg-[color:var(--color-navy)] text-white">
+    <section className="surface-navy relative min-h-[70svh] overflow-hidden bg-[color:var(--hero-bg)] text-[color:var(--hero-text)]">
       <div
         aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_70%_40%,rgba(13,148,136,0.35),transparent_55%),radial-gradient(ellipse_50%_40%_at_20%_80%,rgba(6,182,212,0.2),transparent)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_70%_40%,var(--hero-glow),transparent_55%),radial-gradient(ellipse_50%_40%_at_20%_80%,var(--hero-glow-2),transparent)]"
       />
       <Container className="relative flex min-h-[70svh] flex-col justify-end pt-32 pb-16 lg:pb-24">
-        <p className="text-[11px] font-bold tracking-[0.2em] text-teal-300 uppercase">Careers</p>
+        <p className="text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
+          Careers
+        </p>
         <motion.h1
           className="font-display mt-4 max-w-3xl text-[clamp(2.6rem,6vw,5rem)] leading-[0.98] font-bold tracking-[-0.05em]"
           initial={reduce ? false : { opacity: 0, y: 24 }}
@@ -197,7 +207,9 @@ export function CareersPageHero({ title, subtitle }: BaseHero) {
         >
           {title}
         </motion.h1>
-        {subtitle ? <p className="mt-6 max-w-xl text-lg text-slate-300">{subtitle}</p> : null}
+        {subtitle ? (
+          <p className="mt-6 max-w-xl text-lg text-[color:var(--hero-muted)]">{subtitle}</p>
+        ) : null}
         <div className="mt-10">
           <Button
             asChild
@@ -223,7 +235,7 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
         <div className="grid items-end gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
           <div>
             <motion.p
-              className="font-display text-2xl font-bold tracking-[-0.03em] text-teal-300 sm:text-3xl"
+              className="font-display text-2xl font-bold tracking-[-0.03em] text-[color:var(--color-accent)] sm:text-3xl"
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE }}
@@ -231,7 +243,7 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
               Xelarvis
             </motion.p>
             <motion.p
-              className="mt-3 text-[11px] font-bold tracking-[0.22em] text-teal-300/80 uppercase"
+              className="mt-3 text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)]/80 uppercase"
               initial={reduce ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.04, ease: EASE }}
@@ -239,7 +251,7 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
               About
             </motion.p>
             <motion.h1
-              className="font-display mt-5 max-w-3xl text-[clamp(2.2rem,5vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-white"
+              className="font-display mt-5 max-w-3xl text-[clamp(2.2rem,5vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
               initial={reduce ? false : { opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.08, ease: EASE }}
@@ -248,7 +260,7 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
             </motion.h1>
             {subtitle ? (
               <motion.p
-                className="mt-6 max-w-xl border-l-2 border-teal-400/60 pl-5 text-base leading-relaxed text-slate-300 sm:text-lg"
+                className="mt-6 max-w-xl border-l-2 border-teal-400/60 pl-5 text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg"
                 initial={reduce ? false : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 0.14, ease: EASE }}
@@ -276,7 +288,7 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
                 asChild
                 size="lg"
                 variant="outline"
-                className="rounded-full border-white/20 bg-white/5 px-7 font-semibold text-white backdrop-blur hover:border-cyan-400/40 hover:bg-white/10"
+                className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-7 font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/40 hover:bg-[color:var(--color-hover)]"
               >
                 <Link href="/about/why-xelarvis">Why XELARVIS</Link>
               </Button>
@@ -284,19 +296,19 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
           </div>
 
           <motion.div
-            className="relative overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.06] p-6 backdrop-blur-xl sm:p-7"
+            className="relative overflow-hidden rounded-[28px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-6 backdrop-blur-xl sm:p-7"
             initial={reduce ? false : { opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.65, delay: 0.18, ease: EASE }}
           >
-            <p className="text-[10px] font-bold tracking-[0.16em] text-teal-300 uppercase">
+            <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-accent)] uppercase">
               Focus domains
             </p>
             <ul className="mt-5 space-y-3">
               {domains.map((d, i) => (
                 <motion.li
                   key={d}
-                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-medium text-slate-200"
+                  className="flex items-center gap-3 rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--color-hover)] px-4 py-3 text-sm font-medium text-[color:var(--hero-text)]"
                   initial={reduce ? false : { opacity: 0, x: 12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.28 + i * 0.06, duration: 0.4, ease: EASE }}
@@ -306,15 +318,19 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
                 </motion.li>
               ))}
             </ul>
-            <div className="mt-6 grid grid-cols-3 gap-2 border-t border-white/10 pt-5">
+            <div className="mt-6 grid grid-cols-3 gap-2 border-t border-[color:var(--hero-panel-border)] pt-5">
               {[
                 { v: '10+', l: 'Years' },
                 { v: '120+', l: 'Projects' },
                 { v: '40+', l: 'Clients' },
               ].map((s) => (
                 <div key={s.l} className="text-center">
-                  <p className="font-display text-lg font-bold text-white">{s.v}</p>
-                  <p className="text-[10px] tracking-wide text-slate-400 uppercase">{s.l}</p>
+                  <p className="font-display text-lg font-bold text-[color:var(--hero-text)]">
+                    {s.v}
+                  </p>
+                  <p className="text-[10px] tracking-wide text-[color:var(--hero-muted)] uppercase">
+                    {s.l}
+                  </p>
                 </div>
               ))}
             </div>
@@ -335,7 +351,7 @@ export function InsightsPageHero({ title, subtitle }: BaseHero) {
         <div className="flex flex-wrap items-start justify-between gap-8">
           <div className="max-w-3xl">
             <motion.p
-              className="font-display text-sm font-bold tracking-[0.08em] text-teal-300"
+              className="font-display text-sm font-bold tracking-[0.08em] text-[color:var(--color-accent)]"
               initial={reduce ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, ease: EASE }}
@@ -343,7 +359,7 @@ export function InsightsPageHero({ title, subtitle }: BaseHero) {
               INSIGHTS · XELARVIS
             </motion.p>
             <motion.h1
-              className="font-display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-[1] font-bold tracking-[-0.05em] text-balance text-white"
+              className="font-display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-[1] font-bold tracking-[-0.05em] text-balance text-[color:var(--hero-text)]"
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.06, ease: EASE }}
@@ -353,7 +369,7 @@ export function InsightsPageHero({ title, subtitle }: BaseHero) {
           </div>
           {subtitle ? (
             <motion.p
-              className="mt-2 max-w-xs text-sm leading-relaxed text-slate-300 lg:mt-12"
+              className="mt-2 max-w-xs text-sm leading-relaxed text-[color:var(--hero-muted)] lg:mt-12"
               initial={reduce ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.12, ease: EASE }}
@@ -362,8 +378,8 @@ export function InsightsPageHero({ title, subtitle }: BaseHero) {
             </motion.p>
           ) : null}
         </div>
-        <div className="mt-12 h-px w-full bg-white/15" />
-        <div className="mt-4 flex justify-between text-[10px] tracking-[0.16em] text-slate-400 uppercase">
+        <div className="mt-12 h-px w-full bg-[color:var(--hero-panel-border)]" />
+        <div className="mt-4 flex justify-between text-[10px] tracking-[0.16em] text-[color:var(--hero-muted)] uppercase">
           <span>Perspective</span>
           <span>AI · Clinical · Enterprise</span>
         </div>

@@ -24,18 +24,20 @@ export function StoryTechOrbit({
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
           <div>
-            <p className="text-[11px] font-bold tracking-[0.2em] text-teal-300 uppercase">
+            <p className="text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
               {eyebrow}
             </p>
-            <h2 className="font-display mt-4 text-[clamp(2rem,4vw,3.4rem)] font-bold tracking-[-0.04em] text-balance text-white">
+            <h2 className="font-display mt-4 text-[clamp(2rem,4vw,3.4rem)] font-bold tracking-[-0.04em] text-balance text-[color:var(--hero-text)]">
               {heading}
             </h2>
             {subheading ? (
-              <p className="mt-5 max-w-md text-base leading-relaxed text-slate-300">{subheading}</p>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-[color:var(--hero-muted)]">
+                {subheading}
+              </p>
             ) : null}
             <Link
               href="/technologies"
-              className="mt-8 inline-flex text-sm font-semibold text-cyan-300 underline-offset-4 hover:underline"
+              className="mt-8 inline-flex text-sm font-semibold text-[color:var(--color-accent)] underline-offset-4 hover:underline"
             >
               Full technology map →
             </Link>

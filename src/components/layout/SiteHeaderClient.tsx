@@ -114,7 +114,7 @@ export function SiteHeaderClient({
               href="/"
               className="font-display flex shrink-0 items-center gap-2.5 pl-0.5 text-[1.05rem] font-bold tracking-tight text-[color:var(--color-primary)]"
             >
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-[color:var(--color-navy)] text-[11px] font-bold text-white shadow-[0_0_20px_var(--color-accent-soft)] dark:bg-gradient-to-br dark:from-teal-500 dark:to-cyan-500">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 text-[11px] font-bold text-white shadow-[0_0_20px_var(--color-accent-soft)]">
                 X
               </span>
               <span className="hidden sm:inline">{brand}</span>

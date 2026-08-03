@@ -20,37 +20,39 @@ export function CTABand({ heading, subheading, ctaLabel, ctaHref }: CTABandProps
   return (
     <Section>
       <Container>
-        <div className="relative overflow-hidden rounded-[36px] border border-white/10 px-8 py-16 shadow-[var(--shadow-floating)] sm:px-12 lg:px-16 lg:py-24">
+        <div className="surface-navy relative overflow-hidden rounded-[36px] border border-[color:var(--hero-panel-border)] px-8 py-16 text-[color:var(--hero-text)] shadow-[var(--shadow-floating)] sm:px-12 lg:px-16 lg:py-24">
           <div
             aria-hidden
-            className="absolute inset-0 bg-[linear-gradient(135deg,#0F172A_0%,#0B1224_45%,#0F172A_100%)]"
+            className="absolute inset-0 bg-[linear-gradient(135deg,var(--hero-bg)_0%,var(--color-neutral)_45%,var(--hero-bg)_100%)] dark:bg-[linear-gradient(135deg,#0F172A_0%,#0B1224_45%,#0F172A_100%)]"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_20%,rgba(13,148,136,0.35),transparent_55%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_20%,var(--hero-glow),transparent_55%)]"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_60%_at_90%_80%,rgba(6,182,212,0.28),transparent_50%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_60%_at_90%_80%,var(--hero-glow-2),transparent_50%)]"
           />
           {!reduce ? (
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute top-10 right-16 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.35),transparent_70%)] blur-2xl"
+              className="pointer-events-none absolute top-10 right-16 h-40 w-40 rounded-full bg-[radial-gradient(circle,var(--hero-glow-2),transparent_70%)] blur-2xl"
               animate={{ opacity: [0.35, 0.7, 0.35], y: [0, -16, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             />
           ) : null}
 
           <div className="relative mx-auto max-w-3xl text-center">
-            <p className="mb-4 text-[11px] font-bold tracking-[0.2em] text-cyan-300 uppercase">
+            <p className="mb-4 text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
               Next step
             </p>
-            <h2 className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold tracking-[-0.04em] text-balance text-white">
+            <h2 className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold tracking-[-0.04em] text-balance text-[color:var(--hero-text)]">
               {heading}
             </h2>
             {subheading ? (
-              <p className="mx-auto mt-5 max-w-xl text-lg text-slate-300">{subheading}</p>
+              <p className="mx-auto mt-5 max-w-xl text-lg text-[color:var(--hero-muted)]">
+                {subheading}
+              </p>
             ) : null}
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Button
@@ -65,7 +67,7 @@ export function CTABand({ heading, subheading, ctaLabel, ctaHref }: CTABandProps
                 asChild
                 variant="outline"
                 size="lg"
-                className="rounded-full border-cyan-400/50 bg-white/5 text-white backdrop-blur-md hover:bg-white/10"
+                className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] text-[color:var(--hero-text)] backdrop-blur-md hover:bg-[color:var(--color-hover)]"
               >
                 <Link href="/services">Browse capabilities</Link>
               </Button>

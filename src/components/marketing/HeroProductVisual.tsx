@@ -210,33 +210,33 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
           }}
           className="relative z-10 h-full w-full overflow-visible will-change-transform"
         >
-          {/* Main glass dashboard */}
-          <div className="absolute inset-y-3 right-6 left-6 overflow-hidden rounded-[28px] border border-white/15 bg-[#0B1224]/88 shadow-[0_28px_90px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl sm:inset-y-4 sm:right-10 sm:left-10 lg:right-12 lg:left-12">
+          {/* Main glass dashboard — theme-aware product chrome */}
+          <div className="absolute inset-y-3 right-6 left-6 overflow-hidden rounded-[28px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] shadow-[var(--shadow-floating)] backdrop-blur-xl sm:inset-y-4 sm:right-10 sm:left-10 lg:right-12 lg:left-12 dark:border-white/15 dark:bg-[#0B1224]/88 dark:shadow-[0_28px_90px_rgba(0,0,0,0.55)]">
             {/* Moving light sheen */}
             {!reduce ? (
               <motion.div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.08)_42%,transparent_65%)]"
+                className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(15,23,42,0.04)_42%,transparent_65%)] dark:bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.08)_42%,transparent_65%)]"
                 animate={{ x: ['-40%', '60%'] }}
                 transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', repeatDelay: 3 }}
               />
             ) : null}
 
-            <div className="relative flex items-center gap-2 border-b border-white/10 bg-[#0F172A]/90 px-4 py-3.5">
+            <div className="relative flex items-center gap-2 border-b border-[color:var(--hero-panel-border)] bg-[color:var(--color-neutral)]/80 px-4 py-3.5 dark:border-white/10 dark:bg-[#0F172A]/90">
               <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              <span className="ml-3 text-[11px] font-semibold tracking-[0.12em] text-slate-400 uppercase">
+              <span className="ml-3 text-[11px] font-semibold tracking-[0.12em] text-[color:var(--hero-muted)] uppercase">
                 Xelarvis Control
               </span>
-              <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-[#0D9488]/15 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[#5EEAD4]">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+              <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-[color:var(--color-accent-soft)] px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[color:var(--color-accent)] dark:text-[#5EEAD4]">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500 dark:bg-emerald-400" />
                 LIVE
               </span>
             </div>
 
             <div className="grid h-[calc(100%-50px)] grid-cols-[64px_1fr] sm:grid-cols-[78px_1fr]">
-              <aside className="space-y-1.5 border-r border-white/10 bg-[#0F172A]/80 p-2.5 sm:p-3">
+              <aside className="space-y-1.5 border-r border-[color:var(--hero-panel-border)] bg-[color:var(--color-neutral)]/70 p-2.5 sm:p-3 dark:border-white/10 dark:bg-[#0F172A]/80">
                 {['Ops', 'AI', 'Cloud', 'Data', 'Sec'].map((item, i) => (
                   <motion.div
                     key={item}
@@ -246,7 +246,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                     className={`rounded-xl px-1.5 py-2 text-center text-[9px] font-bold tracking-wide sm:text-[10px] ${
                       i === 1
                         ? 'bg-gradient-to-br from-[#0D9488] to-[#06B6D4] text-white shadow-[0_8px_20px_rgba(13,148,136,0.45)]'
-                        : 'bg-white/5 text-slate-400'
+                        : 'bg-[color:var(--color-hover)] text-[color:var(--hero-muted)] dark:bg-white/5 dark:text-slate-400'
                     }`}
                   >
                     {item}
@@ -254,7 +254,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                 ))}
               </aside>
 
-              <div className="space-y-2.5 overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#0B1224] to-[#020617] p-2.5 sm:space-y-3 sm:p-3.5">
+              <div className="space-y-2.5 overflow-hidden bg-[color:var(--hero-bg)] p-2.5 sm:space-y-3 sm:p-3.5 dark:bg-gradient-to-br dark:from-[#0F172A] dark:via-[#0B1224] dark:to-[#020617]">
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { label: 'Accuracy', value: 99.2, suffix: '%', decimals: 1 },
@@ -266,12 +266,12 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                       initial={reduce ? false : { opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.38 + i * 0.08, duration: 0.5, ease: EASE }}
-                      className="rounded-2xl border border-white/10 bg-white/[0.06] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-3"
+                      className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-2.5 shadow-[var(--shadow-light)] sm:p-3 dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
                     >
-                      <p className="text-[9px] font-semibold tracking-[0.12em] text-slate-400 uppercase sm:text-[10px]">
+                      <p className="text-[9px] font-semibold tracking-[0.12em] text-[color:var(--hero-muted)] uppercase sm:text-[10px]">
                         {metric.label}
                       </p>
-                      <p className="font-display mt-1 text-base font-bold tracking-tight text-white tabular-nums sm:text-xl">
+                      <p className="font-display mt-1 text-base font-bold tracking-tight text-[color:var(--hero-text)] tabular-nums sm:text-xl">
                         <CountUp
                           value={metric.value}
                           delay={0.5 + i * 0.08}
@@ -279,7 +279,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                           decimals={metric.decimals}
                         />
                       </p>
-                      <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
+                      <div className="mt-2 h-1 overflow-hidden rounded-full bg-[color:var(--hero-panel-border)] dark:bg-white/10">
                         <motion.div
                           className="h-full rounded-full bg-gradient-to-r from-[#0D9488] to-[#22D3EE]"
                           initial={{ width: 0 }}
@@ -300,13 +300,13 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                     initial={reduce ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.55, duration: 0.5, ease: EASE }}
-                    className="rounded-2xl border border-white/10 bg-white/[0.05] p-2.5 sm:p-3"
+                    className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-2.5 sm:p-3 dark:border-white/10 dark:bg-white/[0.05]"
                   >
                     <div className="mb-2 flex items-center justify-between">
-                      <p className="text-[10px] font-semibold text-slate-200 sm:text-xs">
+                      <p className="text-[10px] font-semibold text-[color:var(--hero-text)] sm:text-xs">
                         Prediction chart
                       </p>
-                      <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[9px] font-bold text-emerald-400">
+                      <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[9px] font-bold text-emerald-600 dark:text-emerald-400">
                         +38% QoQ
                       </span>
                     </div>
@@ -327,11 +327,13 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                     initial={reduce ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.62, duration: 0.5, ease: EASE }}
-                    className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-2.5 sm:p-3"
+                    className="relative overflow-hidden rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-2.5 sm:p-3 dark:border-white/10 dark:bg-white/[0.05]"
                   >
                     <div className="mb-1.5 flex items-center gap-1.5">
-                      <Activity className="h-3 w-3 text-cyan-300" />
-                      <p className="text-[10px] font-semibold text-slate-200">Network</p>
+                      <Activity className="h-3 w-3 text-[color:var(--color-accent)]" />
+                      <p className="text-[10px] font-semibold text-[color:var(--hero-text)]">
+                        Network
+                      </p>
                     </div>
                     <div className="h-[4.5rem] sm:h-[5.25rem]">
                       <ConstellationCanvas className="opacity-95" />
@@ -343,13 +345,13 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                   initial={reduce ? false : { opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7, duration: 0.45, ease: EASE }}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2"
+                  className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"
                 >
                   <div className="mb-1.5 flex items-center justify-between">
-                    <p className="text-[10px] font-semibold text-slate-300">
+                    <p className="text-[10px] font-semibold text-[color:var(--hero-muted)]">
                       Cloud deployment timeline
                     </p>
-                    <Sparkles className="h-3 w-3 text-teal-300" />
+                    <Sparkles className="h-3 w-3 text-[color:var(--color-accent)]" />
                   </div>
                   <svg viewBox="0 0 200 28" className="h-7 w-full" aria-hidden>
                     <path
@@ -409,19 +411,23 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                 whileHover={reduce ? undefined : { scale: 1.04 }}
                 className="relative"
               >
-                <div className="rounded-2xl border border-white/25 bg-[#0B1224] px-3 py-2.5 shadow-[0_18px_44px_rgba(0,0,0,0.55)] ring-1 ring-cyan-400/15 backdrop-blur-xl transition-shadow hover:shadow-[0_18px_48px_rgba(13,148,136,0.32)] hover:ring-cyan-300/30">
+                <div className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-2.5 shadow-[var(--shadow-medium)] ring-1 ring-[color:var(--color-accent-soft)] backdrop-blur-xl transition-shadow hover:shadow-[var(--shadow-hover)] hover:ring-[color:var(--color-accent-glow)] dark:border-white/25 dark:bg-[#0B1224] dark:shadow-[0_18px_44px_rgba(0,0,0,0.55)] dark:ring-cyan-400/15 dark:hover:shadow-[0_18px_48px_rgba(13,148,136,0.32)] dark:hover:ring-cyan-300/30">
                   <div className="flex items-center gap-2">
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-teal-500/30 to-cyan-500/25 text-cyan-200">
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-teal-500/20 to-cyan-500/15 text-[color:var(--color-accent)] dark:from-teal-500/30 dark:to-cyan-500/25 dark:text-cyan-200">
                       <Icon className="h-3.5 w-3.5" aria-hidden />
                     </span>
                     <div className="min-w-0">
-                      <p className="truncate text-[9px] font-bold tracking-[0.12em] text-slate-400 uppercase">
+                      <p className="truncate text-[9px] font-bold tracking-[0.12em] text-[color:var(--hero-muted)] uppercase">
                         {w.label}
                       </p>
-                      <p className="font-display text-sm font-bold text-white">{w.value}</p>
+                      <p className="font-display text-sm font-bold text-[color:var(--hero-text)]">
+                        {w.value}
+                      </p>
                     </div>
                   </div>
-                  <p className="mt-1 truncate pl-9 text-[10px] text-slate-400">{w.sub}</p>
+                  <p className="mt-1 truncate pl-9 text-[10px] text-[color:var(--hero-muted)]">
+                    {w.sub}
+                  </p>
                 </div>
               </motion.div>
             </motion.div>

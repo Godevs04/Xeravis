@@ -625,20 +625,20 @@ export function MegaMenu({ items, category, className, id }: MegaMenuProps) {
             </div>
 
             {/* RIGHT — featured panel (always cinematic navy for brand continuity) */}
-            <aside className="border-t border-[color:var(--glass-border)] bg-gradient-to-b from-[#0F172A] to-[#0B1224] p-5 text-white lg:border-t-0 lg:border-l lg:border-white/10">
-              <p className="text-[10px] font-bold tracking-[0.18em] text-teal-300 uppercase">
+            <aside className="border-t border-[color:var(--glass-border)] bg-[color:var(--color-neutral)] p-5 text-[color:var(--color-primary)] lg:border-t-0 lg:border-l lg:border-[color:var(--glass-border)] dark:bg-gradient-to-b dark:from-[#0F172A] dark:to-[#0B1224] dark:text-white dark:lg:border-white/10">
+              <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--color-accent)] uppercase">
                 {meta.featuredLabel}
               </p>
               <div className="mt-3 flex items-start gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 bg-white/10 text-cyan-300 shadow-[0_0_24px_rgba(6,182,212,0.2)]">
+                <span className="grid h-10 w-10 place-items-center rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--color-hover)] text-[color:var(--color-accent)] shadow-[0_0_24px_var(--color-accent-soft)] dark:border-white/15 dark:bg-white/10 dark:text-cyan-300">
                   <ActiveIcon className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="font-display text-lg leading-snug font-semibold tracking-tight text-white">
+                  <p className="font-display text-lg leading-snug font-semibold tracking-tight text-[color:var(--color-primary)] dark:text-white">
                     {activeItem?.label}
                   </p>
                   {activeItem?.description ? (
-                    <p className="mt-1 text-xs leading-relaxed text-slate-300">
+                    <p className="mt-1 text-xs leading-relaxed text-[color:var(--color-secondary)] dark:text-slate-300">
                       {activeItem.description}
                     </p>
                   ) : null}
@@ -654,10 +654,14 @@ export function MegaMenu({ items, category, className, id }: MegaMenuProps) {
                 {featuredMetrics.map((m) => (
                   <div
                     key={m.l}
-                    className="rounded-xl border border-white/10 bg-white/5 px-2 py-2 text-center backdrop-blur-sm"
+                    className="rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-2 py-2 text-center backdrop-blur-sm dark:border-white/10 dark:bg-white/5"
                   >
-                    <p className="font-display text-sm font-bold text-white">{m.v}</p>
-                    <p className="text-[9px] tracking-wide text-slate-400 uppercase">{m.l}</p>
+                    <p className="font-display text-sm font-bold text-[color:var(--color-primary)] dark:text-white">
+                      {m.v}
+                    </p>
+                    <p className="text-[9px] tracking-wide text-[color:var(--color-muted)] uppercase dark:text-slate-400">
+                      {m.l}
+                    </p>
                   </div>
                 ))}
               </div>

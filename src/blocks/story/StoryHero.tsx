@@ -177,7 +177,7 @@ function MagneticCTA({ href, label, outline }: { href: string; label: string; ou
         className={cn(
           'group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full px-6 text-sm font-semibold transition-[box-shadow,background,border-color,color] duration-300',
           outline
-            ? 'border border-white/25 bg-white/[0.04] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md hover:border-cyan-300/50 hover:bg-white/[0.1]'
+            ? 'border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] text-[color:var(--hero-text)] shadow-[var(--shadow-light)] backdrop-blur-md hover:border-[color:var(--color-accent)]/50 hover:bg-[color:var(--color-hover)]'
             : 'bg-gradient-to-r from-[#0D9488] via-[#0F9F96] to-[#06B6D4] text-white shadow-[0_14px_40px_rgba(13,148,136,0.45),inset_0_1px_0_rgba(255,255,255,0.28)] hover:shadow-[0_18px_48px_rgba(6,182,212,0.5)]',
         )}
       >
@@ -250,7 +250,7 @@ export function StoryHero({
   return (
     <section
       ref={sectionRef}
-      className="relative isolate min-h-[100svh] overflow-hidden text-white"
+      className="surface-navy relative isolate min-h-[100svh] overflow-hidden text-[color:var(--hero-text)]"
       onMouseMove={(e) => {
         if (reduce) return
         const rect = sectionRef.current?.getBoundingClientRect()
@@ -267,7 +267,7 @@ export function StoryHero({
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 xl:gap-10">
           <motion.div style={{ opacity: contentOpacity, y: contentY }}>
             <motion.p
-              className="font-display text-2xl font-bold tracking-[-0.04em] text-teal-300 sm:text-3xl"
+              className="font-display text-2xl font-bold tracking-[-0.04em] text-[color:var(--color-accent)] sm:text-3xl"
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: EASE }}
@@ -277,7 +277,7 @@ export function StoryHero({
 
             {eyebrow ? (
               <motion.p
-                className="mt-3 text-[11px] font-semibold tracking-[0.22em] text-cyan-300/80 uppercase"
+                className="mt-3 text-[11px] font-semibold tracking-[0.22em] text-[color:var(--color-accent)]/80 uppercase"
                 initial={reduce ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.12, duration: 0.6 }}
@@ -287,7 +287,7 @@ export function StoryHero({
             ) : null}
 
             <h1
-              className="font-display mt-3 max-w-2xl text-[clamp(2.15rem,4.8vw,4.1rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-white"
+              className="font-display mt-3 max-w-2xl text-[clamp(2.15rem,4.8vw,4.1rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
               aria-label={heading}
             >
               {titleLines.map((line, lineIndex) => (
@@ -306,7 +306,7 @@ export function StoryHero({
             </h1>
 
             {subheading ? (
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg">
                 {subtitleWords.map((word, i) => (
                   <motion.span
                     key={`${word}-${i}`}
@@ -339,16 +339,16 @@ export function StoryHero({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.56, duration: 0.55, ease: EASE }}
             >
-              <p className="mb-2.5 text-[10px] font-bold tracking-[0.18em] text-slate-400 uppercase">
+              <p className="mb-2.5 text-[10px] font-bold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase">
                 Trusted by
               </p>
               <div className="flex flex-wrap gap-2 sm:gap-2.5">
                 {TRUST_LOGOS.map((logo) => (
                   <div
                     key={logo.name}
-                    className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-slate-500 grayscale transition-[filter,color,border-color,background] duration-300 hover:border-teal-400/30 hover:bg-white/[0.08] hover:text-slate-200 hover:grayscale-0"
+                    className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-2.5 py-1 text-[color:var(--hero-muted)] grayscale transition-[filter,color,border-color,background] duration-300 hover:border-[color:var(--color-accent)]/40 hover:text-[color:var(--hero-text)] hover:grayscale-0"
                   >
-                    <span className="grid h-5 w-5 place-items-center rounded-md bg-white/10 text-[9px] font-bold tracking-wide text-slate-400 transition-colors group-hover:bg-teal-500/20 group-hover:text-cyan-200">
+                    <span className="grid h-5 w-5 place-items-center rounded-md bg-[color:var(--color-hover)] text-[9px] font-bold tracking-wide text-[color:var(--hero-muted)] transition-colors group-hover:bg-teal-500/20 group-hover:text-[color:var(--color-accent)]">
                       {logo.mark}
                     </span>
                     <span className="text-[11px] font-semibold tracking-wide">{logo.name}</span>
@@ -359,7 +359,7 @@ export function StoryHero({
 
             <motion.div
               ref={metricsRef}
-              className="mt-6 grid max-w-xl grid-cols-2 gap-2.5 border-t border-white/12 pt-5 sm:grid-cols-4"
+              className="mt-6 grid max-w-xl grid-cols-2 gap-2.5 border-t border-[color:var(--hero-panel-border)] pt-5 sm:grid-cols-4"
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.64, duration: 0.55, ease: EASE }}
@@ -367,9 +367,9 @@ export function StoryHero({
               {LIVE_METRICS.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-white/12 bg-white/[0.06] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md"
+                  className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-3 shadow-[var(--shadow-light)] backdrop-blur-md"
                 >
-                  <p className="font-display text-xl font-bold tracking-tight text-white sm:text-2xl">
+                  <p className="font-display text-xl font-bold tracking-tight text-[color:var(--hero-text)] sm:text-2xl">
                     <MetricCounter
                       value={item.value}
                       suffix={item.suffix}
@@ -377,7 +377,7 @@ export function StoryHero({
                       active={metricsInView}
                     />
                   </p>
-                  <p className="mt-1 text-[10px] leading-snug text-slate-300 sm:text-xs">
+                  <p className="mt-1 text-[10px] leading-snug text-[color:var(--hero-muted)] sm:text-xs">
                     {item.label}
                   </p>
                 </div>
@@ -393,7 +393,7 @@ export function StoryHero({
 
       {!reduce ? (
         <motion.div
-          className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.18em] text-slate-400 uppercase"
+          className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase"
           animate={{ y: [0, 6, 0], opacity: [0.45, 0.9, 0.45] }}
           transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
           aria-hidden

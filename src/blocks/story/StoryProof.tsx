@@ -253,7 +253,7 @@ function ProofEcosystem({
     <div className="relative mx-auto aspect-square w-full max-w-[26rem]">
       <div
         aria-hidden
-        className="absolute inset-[6%] rounded-full border border-white/10 bg-white/[0.03] shadow-[inset_0_0_100px_rgba(13,148,136,0.12)] backdrop-blur-xl"
+        className="absolute inset-[6%] rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] shadow-[inset_0_0_100px_var(--hero-glow)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.03] dark:shadow-[inset_0_0_100px_rgba(13,148,136,0.12)]"
       />
       <motion.div
         aria-hidden
@@ -346,7 +346,7 @@ function ProofEcosystem({
       </svg>
 
       {/* Pipeline ribbon */}
-      <div className="absolute inset-x-2 bottom-2 overflow-hidden rounded-2xl border border-white/10 bg-[rgba(15,23,42,0.72)] px-2 py-2 backdrop-blur-xl">
+      <div className="absolute inset-x-2 bottom-2 overflow-hidden rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-2 py-2 shadow-[var(--shadow-light)] backdrop-blur-xl dark:border-white/10 dark:bg-[rgba(15,23,42,0.72)]">
         <div className="flex items-center justify-between gap-1">
           {PIPELINE.map((stage, i) => (
             <motion.div
@@ -356,7 +356,7 @@ function ProofEcosystem({
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.35 + i * 0.07, duration: 0.45, ease: EASE }}
             >
-              <span className="block truncate text-[8px] font-semibold tracking-wide text-cyan-200/90 uppercase sm:text-[9px]">
+              <span className="block truncate text-[8px] font-semibold tracking-wide text-[color:var(--color-accent)] uppercase sm:text-[9px] dark:text-cyan-200/90">
                 {stage}
               </span>
               {i < PIPELINE.length - 1 ? (
@@ -409,12 +409,12 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
   return (
     <section
       ref={sectionRef}
-      className="surface-navy relative overflow-hidden bg-[color:var(--color-navy)] py-24 text-white lg:py-32"
+      className="surface-navy relative overflow-hidden bg-[color:var(--hero-bg)] py-24 text-[color:var(--hero-text)] lg:py-32"
       aria-label={eyebrow || 'Proof'}
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_10%_15%,rgba(13,148,136,0.26),transparent_55%),radial-gradient(ellipse_65%_50%_at_90%_85%,rgba(6,182,212,0.2),transparent_50%),linear-gradient(180deg,#0F172A_0%,#0B1224_45%,#0F172A_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_10%_15%,var(--hero-glow),transparent_55%),radial-gradient(ellipse_65%_50%_at_90%_85%,var(--hero-glow-2),transparent_50%)]"
       />
       {!reduce ? (
         <motion.div
@@ -469,34 +469,34 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.75, ease: EASE }}
           >
-            <p className="font-display text-[clamp(3rem,8vw,5.5rem)] leading-none font-bold tracking-[-0.06em] text-teal-300/90">
+            <p className="font-display text-[clamp(3rem,8vw,5.5rem)] leading-none font-bold tracking-[-0.06em] text-[color:var(--color-accent)]">
               {eyebrow?.toUpperCase() || 'PROOF'}
             </p>
-            <p className="mt-4 text-sm tracking-[0.14em] text-cyan-200/70 uppercase">
+            <p className="mt-4 text-sm tracking-[0.14em] text-[color:var(--hero-muted)] uppercase">
               Engineering metrics that matter
             </p>
-            <h2 className="font-display mt-6 max-w-md text-[clamp(1.5rem,2.8vw,2.1rem)] leading-snug font-semibold tracking-[-0.03em] text-white/95">
+            <h2 className="font-display mt-6 max-w-md text-[clamp(1.5rem,2.8vw,2.1rem)] leading-snug font-semibold tracking-[-0.03em] text-[color:var(--hero-text)]">
               {heading}
             </h2>
 
             <div className="mt-10">
-              <p className="font-display text-[clamp(3.5rem,8vw,5.5rem)] leading-none font-bold tracking-[-0.06em]">
+              <p className="font-display text-[clamp(3.5rem,8vw,5.5rem)] leading-none font-bold tracking-[-0.06em] text-[color:var(--hero-text)]">
                 <CountNumber value={heroValue} active={inView} />
-                <span className="text-teal-300">+</span>
+                <span className="text-[color:var(--color-accent)]">+</span>
               </p>
-              <p className="mt-3 text-sm font-medium tracking-wide text-slate-300 uppercase">
+              <p className="mt-3 text-sm font-medium tracking-wide text-[color:var(--hero-muted)] uppercase">
                 Projects delivered
               </p>
             </div>
 
-            <p className="mt-8 max-w-sm text-base leading-relaxed text-slate-300">
+            <p className="mt-8 max-w-sm text-base leading-relaxed text-[color:var(--hero-muted)]">
               Fortune-facing teams trust Xelarvis when research, regulated delivery, and production
               craft have to live in the same system — not in three different vendors.
             </p>
 
             <Link
               href="/case-studies"
-              className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition-colors hover:text-white"
+              className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--color-accent)] transition-colors hover:text-[color:var(--color-accent-hover)]"
             >
               Explore our work
               <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -537,8 +537,8 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
                   className={cn(
                     'relative overflow-hidden rounded-[22px] border px-4 py-3.5 text-left backdrop-blur-xl transition-[border-color,box-shadow] duration-300',
                     open
-                      ? 'border-cyan-300/40 bg-white/[0.1] shadow-[0_20px_60px_rgba(0,0,0,0.35),0_0_40px_rgba(13,148,136,0.2)]'
-                      : 'border-white/10 bg-white/[0.05] hover:border-teal-400/30',
+                      ? 'border-[color:var(--color-accent)]/40 bg-[color:var(--hero-panel)] shadow-[var(--shadow-hover)] dark:border-cyan-300/40 dark:bg-white/[0.1] dark:shadow-[0_20px_60px_rgba(0,0,0,0.35),0_0_40px_rgba(13,148,136,0.2)]'
+                      : 'border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] hover:border-[color:var(--color-accent)]/30 dark:border-white/10 dark:bg-white/[0.05] dark:hover:border-teal-400/30',
                   )}
                 >
                   <div
@@ -550,10 +550,10 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
                   />
                   <div className="relative flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="text-[10px] font-semibold tracking-[0.16em] text-slate-400 uppercase">
+                      <p className="text-[10px] font-semibold tracking-[0.16em] text-[color:var(--hero-muted)] uppercase">
                         {metric.label}
                       </p>
-                      <p className="font-display mt-1 text-2xl font-bold tracking-[-0.04em] text-white">
+                      <p className="font-display mt-1 text-2xl font-bold tracking-[-0.04em] text-[color:var(--hero-text)]">
                         <CountNumber value={metric.value} decimals={decimals} active={inView} />
                         {metric.suffix}
                       </p>

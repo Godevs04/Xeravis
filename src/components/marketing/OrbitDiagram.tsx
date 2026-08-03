@@ -56,8 +56,8 @@ export function OrbitDiagram({ nodes, className, centerLabel = 'XELARVIS' }: Orb
         : null}
 
       <div className="absolute inset-0 grid place-items-center">
-        <div className="relative z-10 grid h-28 w-28 place-items-center rounded-full border border-teal-400/40 bg-[rgba(15,23,42,0.85)] shadow-[0_0_60px_rgba(13,148,136,0.35)] backdrop-blur-xl sm:h-32 sm:w-32">
-          <span className="font-display text-center text-[10px] font-bold tracking-[0.2em] text-cyan-200 uppercase sm:text-xs">
+        <div className="relative z-10 grid h-28 w-28 place-items-center rounded-full border border-[color:var(--color-accent)]/40 bg-[color:var(--hero-panel)] shadow-[0_0_60px_var(--color-accent-soft)] backdrop-blur-xl sm:h-32 sm:w-32 dark:border-teal-400/40 dark:bg-[rgba(15,23,42,0.85)] dark:shadow-[0_0_60px_rgba(13,148,136,0.35)]">
+          <span className="font-display text-center text-[10px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase sm:text-xs dark:text-cyan-200">
             {centerLabel}
           </span>
         </div>
@@ -77,8 +77,8 @@ export function OrbitDiagram({ nodes, className, centerLabel = 'XELARVIS' }: Orb
             className={cn(
               'absolute z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border px-3 py-1.5 text-left backdrop-blur-md transition-colors',
               isActive
-                ? 'border-cyan-300/70 bg-teal-500/30 text-white'
-                : 'border-white/15 bg-white/5 text-slate-200 hover:border-teal-400/50 hover:bg-teal-500/20',
+                ? 'border-[color:var(--color-accent)]/70 bg-[color:var(--color-accent)] text-white shadow-[var(--shadow-hover)]'
+                : 'border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] text-[color:var(--hero-text)] shadow-[var(--shadow-light)] hover:border-[color:var(--color-accent)]/50 hover:bg-[color:var(--color-hover)] dark:border-white/15 dark:bg-white/5 dark:text-slate-200 dark:shadow-none dark:hover:border-teal-400/50 dark:hover:bg-teal-500/20',
             )}
             style={{ left: `${x}%`, top: `${y}%` }}
             initial={false}
@@ -94,7 +94,7 @@ export function OrbitDiagram({ nodes, className, centerLabel = 'XELARVIS' }: Orb
               {node.label}
             </span>
             {node.category ? (
-              <span className="mt-0.5 block text-[9px] tracking-wide text-slate-400 uppercase">
+              <span className="mt-0.5 block text-[9px] tracking-wide text-[color:var(--hero-muted)] uppercase dark:text-slate-400">
                 {node.category}
               </span>
             ) : null}
