@@ -4,15 +4,20 @@ import { notFound } from 'next/navigation'
 import { CTABand } from '@/blocks/CTABand'
 import { FAQAccordion } from '@/blocks/FAQAccordion'
 import { TechnologyCard } from '@/components/domain/TechnologyCard'
+import { Breadcrumb } from '@/components/layout/Breadcrumb'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
+import { RelatedLinks } from '@/components/seo/RelatedLinks'
+import { ServiceAnswerBlock } from '@/components/seo/ServiceAnswerBlock'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { ServiceDetailNarrative } from '@/components/services/ServiceDetailNarrative'
 import { RichText } from '@/components/RichText'
 import { getMediaUrl } from '@/lib/media'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { SERVICE_CAPABILITIES } from '@/lib/site-ia'
-import { buildMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, buildMetadata, graphJsonLd, serviceJsonLd } from '@/lib/seo'
+import { relatedLinksForService, serviceFaqsFor } from '@/lib/seo-content'
 
 export const revalidate = 60
 
@@ -53,11 +58,24 @@ export async function generateMetadata({ params }: Props) {
 
   if (!service) return buildMetadata({ title: 'Service', path: `/services/${slug}` })
 
+  const title = service.meta?.title || service.title
+  const description =
+    service.meta?.description ||
+    `${service.summary} Delivered by Xelarvis for healthcare and enterprise teams.`
+
   return buildMetadata({
-    title: service.meta?.title || service.title,
-    description: service.meta?.description || service.summary,
+    title,
+    description,
     image: service.meta?.image || service.heroImage,
     path: `/services/${slug}`,
+    keywords: [
+      service.title,
+      'Healthcare AI',
+      'Enterprise AI',
+      'Xelarvis',
+      'Clinical Intelligence',
+      'Cloud Engineering',
+    ],
   })
 }
 
@@ -74,11 +92,28 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   const heroUrl = getMediaUrl(service.heroImage as Parameters<typeof getMediaUrl>[0])
   const technologies = asRelatedDocs(service.technologies)
-  const hasFaqs = asRelatedDocs(service.relatedFaqs).length > 0
+  const hasCmsFaqs = asRelatedDocs(service.relatedFaqs).length > 0
   const capabilities = SERVICE_CAPABILITIES[service.slug] ?? []
+  const seedFaqs = serviceFaqsFor(service.title, service.summary)
+
+  const jsonLd = graphJsonLd(
+    serviceJsonLd({
+      name: service.title,
+      description: service.summary,
+      path: `/services/${slug}`,
+      image: service.meta?.image || service.heroImage,
+      serviceType: service.title,
+    }),
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Services', path: '/services' },
+      { name: service.title, path: `/services/${slug}` },
+    ]),
+  )
 
   return (
     <>
+      <JsonLd id="service-jsonld" data={jsonLd} />
       <PageHero
         eyebrow="Service"
         title={service.title}
@@ -89,6 +124,17 @@ export default async function ServiceDetailPage({ params }: Props) {
           { label: 'Discuss this service', href: '/contact?intent=business', variant: 'accent' },
         ]}
       />
+      <Container className="pt-4">
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Services', href: '/services' },
+            { label: service.title },
+          ]}
+        />
+      </Container>
+
+      <ServiceAnswerBlock title={service.title} summary={service.summary} />
 
       {capabilities.length > 0 ? (
         <Section>
@@ -135,7 +181,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       {technologies.length > 0 ? (
         <Section surface>
           <Container>
-            <h2 className="text-2xl font-bold">Technologies</h2>
+            <h2 className="text-2xl font-bold">Technology stack</h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {technologies.map((tech) => (
                 <TechnologyCard
@@ -149,7 +195,14 @@ export default async function ServiceDetailPage({ params }: Props) {
           </Container>
         </Section>
       ) : null}
-      {hasFaqs ? <FAQAccordion heading="Frequently asked questions" /> : null}
+
+      <FAQAccordion
+        heading="Frequently asked questions"
+        seedFaqs={hasCmsFaqs ? seedFaqs.slice(0, 3) : seedFaqs}
+      />
+
+      <RelatedLinks links={relatedLinksForService(service.slug)} />
+
       <CTABand
         heading="Plan your next initiative"
         subheading="Our architects can assess fit, scope, and delivery approach in an introductory session."

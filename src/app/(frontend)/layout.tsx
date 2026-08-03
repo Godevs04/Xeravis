@@ -1,12 +1,14 @@
 import { Inter, Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 
+import { TrackingScripts } from '@/components/analytics/TrackingScripts'
 import { AmbientBackground } from '@/components/layout/AmbientBackground'
 import { SkipLink } from '@/components/layout/SkipLink'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
 import { PageviewBeacon } from '@/components/analytics/PageviewBeacon'
-import { buildMetadata, organizationJsonLd } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildMetadata, graphJsonLd, organizationJsonLd, websiteJsonLd } from '@/lib/seo'
 import { AppProviders } from '@/providers'
 
 import './globals.css'
@@ -16,6 +18,7 @@ const display = Space_Grotesk({
   variable: '--font-display',
   display: 'swap',
   weight: ['500', '600', '700'],
+  preload: true,
 })
 
 const body = Plus_Jakarta_Sans({
@@ -23,6 +26,7 @@ const body = Plus_Jakarta_Sans({
   variable: '--font-body',
   display: 'swap',
   weight: ['400', '500', '600', '700'],
+  preload: true,
 })
 
 const inter = Inter({
@@ -30,9 +34,20 @@ const inter = Inter({
   variable: '--font-inter',
   display: 'swap',
   weight: ['400', '500', '600', '700'],
+  preload: false,
 })
 
-export const metadata: Metadata = buildMetadata({})
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: 'Healthcare AI & Enterprise Engineering',
+    description:
+      'Xelarvis delivers Healthcare AI, clinical intelligence, enterprise AI, cloud engineering, and data platforms for hospitals, life sciences, and regulated enterprises.',
+    path: '/',
+  }),
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+  },
+}
 
 export const viewport: Viewport = {
   themeColor: [
@@ -47,7 +62,7 @@ export const viewport: Viewport = {
 }
 
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
-  const jsonLd = organizationJsonLd()
+  const jsonLd = graphJsonLd(organizationJsonLd(), websiteJsonLd())
 
   return (
     <html
@@ -55,6 +70,11 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
       className={`${display.variable} ${body.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+      </head>
       <body className="text-primary relative min-h-screen bg-transparent font-sans antialiased">
         <AppProviders>
           <AmbientBackground />
@@ -65,10 +85,8 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
           </main>
           <SiteFooter />
           <PageviewBeacon />
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          />
+          <TrackingScripts />
+          <JsonLd id="site-graph-jsonld" data={jsonLd} />
         </AppProviders>
       </body>
     </html>

@@ -5,9 +5,16 @@ import { buildMetadata } from '@/lib/seo'
 const page = LAB_PAGES.find((p) => p.slug === 'overview')!
 
 export const metadata = buildMetadata({
-  title: page.title,
+  title: 'AI Research Lab',
   description: page.subtitle,
   path: page.path,
+  keywords: [
+    'AI Research',
+    'Healthcare AI Research',
+    'Clinical Intelligence',
+    'Machine Learning Research',
+    'Xelarvis Research Lab',
+  ],
 })
 
 export default function Page() {

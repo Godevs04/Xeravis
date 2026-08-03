@@ -5,9 +5,12 @@ import { CTABand } from '@/blocks/CTABand'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { RelatedLinks } from '@/components/seo/RelatedLinks'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { FALLBACK_CASE_STUDIES } from '@/lib/fallback-data'
-import { buildMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, buildMetadata, caseStudyJsonLd, graphJsonLd } from '@/lib/seo'
+import { relatedLinksForCaseStudy } from '@/lib/seo-content'
 
 export const revalidate = 60
 
@@ -40,6 +43,7 @@ export async function generateMetadata({ params }: Props) {
     description: study?.meta?.description || study?.outcome || fallback?.outcome,
     image: study?.meta?.image,
     path: `/case-studies/${slug}`,
+    type: 'article',
   })
 }
 
@@ -56,31 +60,55 @@ export default async function CaseStudyDetailPage({ params }: Props) {
     metrics: [],
   }
 
+  const jsonLd = graphJsonLd(
+    caseStudyJsonLd({
+      title: doc.title,
+      description: doc.outcome,
+      path: `/case-studies/${slug}`,
+      client: doc.client,
+      image: study?.meta?.image,
+    }),
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Case studies', path: '/case-studies' },
+      { name: doc.title, path: `/case-studies/${slug}` },
+    ]),
+  )
+
   return (
     <>
+      <JsonLd id="case-study-jsonld" data={jsonLd} />
       <PageHero eyebrow={doc.client} title={doc.title} subtitle={doc.outcome} size="compact" />
       <Section>
         <Container className="max-w-3xl space-y-10">
           <div>
             <h2 className="text-2xl font-bold">Challenge</h2>
-            <p className="mt-4 text-secondary leading-relaxed">{doc.challenge}</p>
+            <p className="text-secondary mt-4 leading-relaxed">{doc.challenge}</p>
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Outcome</h2>
-            <p className="mt-4 text-secondary leading-relaxed">{doc.outcome}</p>
+            <h2 className="text-2xl font-bold">Solution & outcome</h2>
+            <p className="text-secondary mt-4 leading-relaxed">{doc.outcome}</p>
           </div>
           {doc.metrics && doc.metrics.length > 0 && (
-            <div className="grid gap-6 sm:grid-cols-3">
-              {doc.metrics.map((metric) => (
-                <div key={metric.label} className="border-l-2 border-accent pl-4">
-                  <p className="text-2xl font-bold">{metric.value}</p>
-                  <p className="text-sm text-muted">{metric.label}</p>
-                </div>
-              ))}
+            <div>
+              <h2 className="text-2xl font-bold">Results</h2>
+              <div className="mt-6 grid gap-6 sm:grid-cols-3">
+                {doc.metrics.map((metric) => (
+                  <div key={metric.label} className="border-accent border-l-2 pl-4">
+                    <p className="text-2xl font-bold">{metric.value}</p>
+                    <p className="text-muted text-sm">{metric.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
+          <div>
+            <h2 className="text-2xl font-bold">Industry</h2>
+            <p className="text-secondary mt-4 leading-relaxed">{doc.client}</p>
+          </div>
         </Container>
       </Section>
+      <RelatedLinks links={relatedLinksForCaseStudy()} />
       <CTABand
         heading="Discuss a similar initiative"
         subheading="Our teams can share relevant patterns and delivery models."
@@ -88,7 +116,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
         ctaHref="/contact"
       />
       <div className="container-x pb-12">
-        <Link href="/case-studies" className="text-sm font-semibold text-accent hover:underline">
+        <Link href="/case-studies" className="text-accent text-sm font-semibold hover:underline">
           ← All case studies
         </Link>
       </div>

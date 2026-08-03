@@ -18,9 +18,9 @@ type SolutionDoc = {
 }
 
 export const metadata = buildMetadata({
-  title: 'Solutions',
+  title: 'Enterprise AI & Cloud Solutions',
   description:
-    'Solution themes for cloud modernization, AI operations, and enterprise transformation.',
+    'Packaged solution themes for healthcare AI, cloud modernization, clinical analytics, and enterprise digital transformation from Xelarvis.',
   path: '/solutions',
 })
 

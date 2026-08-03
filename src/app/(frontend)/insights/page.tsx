@@ -22,9 +22,9 @@ type BlogDoc = {
 }
 
 export const metadata = buildMetadata({
-  title: 'Insights',
+  title: 'Healthcare AI Insights & Research',
   description:
-    'Blogs, white papers, news, and resources from XELARVIS on AI, healthcare, and digital transformation.',
+    'Blogs, white papers, news, and resources from Xelarvis on Healthcare AI, clinical intelligence, enterprise AI, and digital transformation.',
   path: '/insights',
 })
 

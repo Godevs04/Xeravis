@@ -14,8 +14,9 @@ type IndustryDoc = {
 }
 
 export const metadata = buildMetadata({
-  title: 'Industries',
-  description: 'Industry-specific engineering solutions from Xelarvis Technologies.',
+  title: 'Healthcare & Enterprise Industries',
+  description:
+    'Industry engineering for healthcare, life sciences, finance, and manufacturing — AI, cloud, and clinical data platforms from Xelarvis.',
   path: '/industries',
 })
 

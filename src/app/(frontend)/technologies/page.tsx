@@ -90,9 +90,9 @@ const FALLBACK_TECH: TechDoc[] = [
 ]
 
 export const metadata = buildMetadata({
-  title: 'Technologies',
+  title: 'AI Cloud & Clinical Tech Stack',
   description:
-    'AI, clinical, cloud, and data technologies used by XELARVIS to deliver intelligent solutions.',
+    'AI, clinical, cloud, and data technologies Xelarvis uses to deliver healthcare and enterprise production systems.',
   path: '/technologies',
 })
 
