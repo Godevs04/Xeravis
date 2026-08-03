@@ -345,11 +345,36 @@
     animation: blob-drift 26s var(--ease-standard) infinite reverse;
   }
 
+  .hero-emphasis-text {
+    background-image: linear-gradient(90deg, #2dd4bf, #22d3ee, #5eead4, #2dd4bf);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+
+  @keyframes hero-ripple {
+    0% {
+      transform: translate(-50%, -50%) scale(0.4);
+      opacity: 0.55;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(28);
+      opacity: 0;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .aurora-mesh,
     .animate-blob,
-    .animate-blob-slow {
+    .animate-blob-slow,
+    .hero-emphasis-text {
       animation: none !important;
+    }
+
+    .hero-emphasis-text {
+      background-position: 0% 50%;
     }
   }
 }

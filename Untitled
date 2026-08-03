@@ -1,0 +1,6 @@
+# Local development — replace DATABASE_URI and PAYLOAD_SECRET before running CMS/seed.
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+PAYLOAD_SECRET=71163495713285732072605170340073207260517034007320726051703400
+DATABASE_URI=mongodb+srv://Kavin_14:1421Kavin@godevs.cfgexon.mongodb.net/xelarvis?retryWrites=true&w=majority
+PAYLOAD_ADMIN_EMAIL=admin@xelarvis.in
+PAYLOAD_ADMIN_PASSWORD=ChangeMeNow123!

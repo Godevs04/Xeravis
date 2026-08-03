@@ -1,5 +1,6 @@
 'use client'
 
+import { ConstellationCanvas } from '@/components/marketing/ConstellationCanvas'
 import {
   motion,
   useMotionTemplate,
@@ -7,27 +8,69 @@ import {
   useReducedMotion,
   useSpring,
   useTransform,
+  type MotionValue,
 } from 'framer-motion'
+import { Activity, Cpu, Lock, Radio, Sparkles, Stethoscope } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-const METRICS = [
-  { label: 'Uptime', value: 99, suffix: '.9%' },
-  { label: 'Delivery', value: 94, suffix: '%' },
-  { label: 'NPS', value: 72, suffix: '' },
-]
-
 const BARS = [42, 58, 36, 74, 52, 88, 64, 92, 70, 80, 55, 96]
+const SPARK = [28, 36, 32, 48, 44, 62, 58, 74, 68, 82, 78, 90, 84, 96]
+
+const WIDGETS = [
+  {
+    id: 'clinical',
+    label: 'Clinical AI',
+    value: '94.2%',
+    sub: 'Precision',
+    icon: Stethoscope,
+    className: 'top-[4%] left-0 sm:-left-1',
+    delay: 0.85,
+    float: 7,
+  },
+  {
+    id: 'cloud',
+    label: 'Cloud Status',
+    value: 'Healthy',
+    sub: '12 regions',
+    icon: Radio,
+    className: 'top-0 right-0 sm:-right-1',
+    delay: 1,
+    float: 8.5,
+  },
+  {
+    id: 'security',
+    label: 'Security',
+    value: 'SOC 2',
+    sub: 'Zero critical',
+    icon: Lock,
+    className: 'bottom-[10%] left-0 sm:-left-1',
+    delay: 1.1,
+    float: 9,
+  },
+  {
+    id: 'gpu',
+    label: 'GPU / Inference',
+    value: '12ms',
+    sub: 'p99 latency',
+    icon: Cpu,
+    className: 'right-0 bottom-[6%] sm:-right-1',
+    delay: 1.2,
+    float: 6.5,
+  },
+] as const
 
 function CountUp({
   value,
   delay = 0,
-  suffix = '%',
+  suffix = '',
+  decimals = 0,
 }: {
   value: number
   delay?: number
   suffix?: string
+  decimals?: number
 }) {
   const reduce = useReducedMotion()
   const [n, setN] = useState(reduce ? value : 0)
@@ -37,52 +80,78 @@ function CountUp({
       setN(value)
       return
     }
-
     let frame = 0
     const timeout = window.setTimeout(() => {
-      const duration = 1000
+      const duration = 1100
       const start = performance.now()
       const tick = (now: number) => {
         const t = Math.min(1, (now - start) / duration)
         const eased = 1 - Math.pow(1 - t, 3)
-        setN(Math.round(value * eased))
+        const next = value * eased
+        setN(decimals > 0 ? Number(next.toFixed(decimals)) : Math.round(next))
         if (t < 1) frame = requestAnimationFrame(tick)
       }
       frame = requestAnimationFrame(tick)
     }, delay * 1000)
-
     return () => {
       clearTimeout(timeout)
       cancelAnimationFrame(frame)
     }
-  }, [value, delay, reduce])
+  }, [value, delay, reduce, decimals])
 
   return (
     <>
-      {n}
+      {decimals > 0 ? n.toFixed(decimals) : n}
       {suffix}
     </>
   )
 }
 
-/** High-contrast floating product canvas for the hero */
-export function HeroProductVisual() {
+type HeroProductVisualProps = {
+  scrollProgress?: MotionValue<number>
+}
+
+/** Premium floating AI control surface for the hero */
+export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
   const reduce = useReducedMotion()
   const ref = useRef<HTMLDivElement>(null)
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
+  const fallbackScroll = useMotionValue(0)
+  const progress = scrollProgress ?? fallbackScroll
   const sx = useSpring(mx, { stiffness: 90, damping: 20, mass: 0.55 })
   const sy = useSpring(my, { stiffness: 90, damping: 20, mass: 0.55 })
+
+  const scrollTilt = useTransform(progress, [0, 1], [0, reduce ? 0 : -5])
+  const scrollY = useTransform(progress, [0, 1], [0, reduce ? 0 : 28])
   const rotateX = useTransform(sy, [-30, 30], reduce ? [0, 0] : [5, -5])
-  const rotateY = useTransform(sx, [-30, 30], reduce ? [0, 0] : [-6, 6])
-  const glowX = useTransform(sx, [-30, 30], [38, 62])
-  const glowY = useTransform(sy, [-30, 30], [28, 52])
-  const glowBg = useMotionTemplate`radial-gradient(circle at ${glowX}% ${glowY}%, rgba(13,148,136,0.65), rgba(6,182,212,0.25) 42%, transparent 68%)`
+  const rotateY = useTransform(sx, [-30, 30], reduce ? [0, 0] : [-5, 5])
+  const combinedRotateX = useTransform([rotateX, scrollTilt], ([rx, st]) => Number(rx) + Number(st))
+  const glowX = useTransform(sx, [-30, 30], [36, 64])
+  const glowY = useTransform(sy, [-30, 30], [26, 54])
+  const glowBg = useMotionTemplate`radial-gradient(circle at ${glowX}% ${glowY}%, rgba(13,148,136,0.55), rgba(6,182,212,0.2) 42%, transparent 70%)`
+
+  const widgetShiftX = useTransform(sx, [-30, 30], reduce ? [0, 0] : [-4, 4])
+  const widgetShiftY = useTransform(sy, [-30, 30], reduce ? [0, 0] : [3, -3])
+
+  // Live bar pulse heights
+  const [liveBars, setLiveBars] = useState(BARS)
+  useEffect(() => {
+    if (reduce) return
+    const id = window.setInterval(() => {
+      setLiveBars((prev) =>
+        prev.map((v, i) =>
+          Math.max(28, Math.min(98, v + ((i % 3) - 1) * 4 + (Math.random() * 8 - 4))),
+        ),
+      )
+    }, 2400)
+    return () => clearInterval(id)
+  }, [reduce])
 
   return (
     <div
       ref={ref}
-      className="relative mx-auto aspect-[5/4] w-full max-w-2xl overflow-visible [perspective:1400px] lg:max-w-none"
+      className="relative mx-auto aspect-[5/4] w-full max-w-2xl overflow-visible [perspective:1600px] lg:max-w-none"
       onMouseMove={(e) => {
         if (reduce) return
         const rect = ref.current?.getBoundingClientRect()
@@ -95,180 +164,278 @@ export function HeroProductVisual() {
         my.set(0)
       }}
     >
+      {/* Soft reflection plane */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-8 -bottom-6 h-16 rounded-[100%] bg-cyan-400/10 blur-2xl"
+        animate={reduce ? undefined : { opacity: [0.25, 0.5, 0.25] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
       <motion.div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[48px] blur-3xl"
         style={{ background: glowBg }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: reduce ? 0.7 : [0.55, 0.85, 0.55] }}
+        animate={{ opacity: reduce ? 0.65 : [0.5, 0.82, 0.5] }}
         transition={
-          reduce ? { duration: 0.6 } : { duration: 7, repeat: Infinity, ease: 'easeInOut' }
+          reduce ? { duration: 0.6 } : { duration: 8, repeat: Infinity, ease: 'easeInOut' }
         }
       />
 
+      {/* Orbit ring */}
+      {!reduce ? (
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute top-1/2 left-1/2 h-[118%] w-[118%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/15"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 48, repeat: Infinity, ease: 'linear' }}
+        >
+          <span className="absolute top-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.8)]" />
+        </motion.div>
+      ) : null}
+
       <motion.div
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        initial={reduce ? false : { opacity: 0, y: 32, scale: 0.96 }}
+        initial={reduce ? false : { opacity: 0, y: 36, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.85, ease: EASE, delay: 0.12 }}
-        className="relative h-full w-full overflow-visible will-change-transform"
+        transition={{ duration: 0.9, ease: EASE, delay: 0.12 }}
+        className="relative h-full w-full overflow-visible"
       >
-        <div className="absolute inset-x-3 inset-y-2 overflow-hidden rounded-[28px] border border-[#0D9488]/25 border-white/15 bg-[#0B1224] shadow-[0_28px_80px_rgba(0,0,0,0.55)] sm:inset-x-5 sm:inset-y-3">
-          <div className="flex items-center gap-2 border-b border-white/10 bg-[#0F172A] px-4 py-3.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-            <span className="ml-3 text-[11px] font-semibold tracking-[0.12em] text-slate-400 uppercase">
-              Xelarvis Control
-            </span>
-            <span className="ml-auto rounded-full bg-[#0D9488]/12 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[#0D9488]">
-              LIVE
-            </span>
-          </div>
+        <motion.div
+          style={{
+            rotateX: combinedRotateX,
+            rotateY,
+            y: scrollY,
+            transformStyle: 'preserve-3d',
+          }}
+          className="relative z-10 h-full w-full overflow-visible will-change-transform"
+        >
+          {/* Main glass dashboard */}
+          <div className="absolute inset-y-3 right-6 left-6 overflow-hidden rounded-[28px] border border-white/15 bg-[#0B1224]/88 shadow-[0_28px_90px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl sm:inset-y-4 sm:right-10 sm:left-10 lg:right-12 lg:left-12">
+            {/* Moving light sheen */}
+            {!reduce ? (
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.08)_42%,transparent_65%)]"
+                animate={{ x: ['-40%', '60%'] }}
+                transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', repeatDelay: 3 }}
+              />
+            ) : null}
 
-          <div className="grid h-[calc(100%-50px)] grid-cols-[72px_1fr] sm:grid-cols-[84px_1fr]">
-            <aside className="space-y-2 border-r border-white/10 bg-[#0F172A] p-3">
-              {['Ops', 'Build', 'Ship', 'Data', 'AI'].map((item, i) => (
-                <motion.div
-                  key={item}
-                  initial={reduce ? false : { opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + i * 0.05, duration: 0.4, ease: EASE }}
-                  className={`rounded-xl px-2 py-2 text-center text-[10px] font-bold tracking-wide ${
-                    i === 0
-                      ? 'bg-[#0D9488] text-white shadow-[0_8px_20px_rgba(13,148,136,0.45)]'
-                      : 'bg-white/5 text-slate-400'
-                  }`}
-                >
-                  {item}
-                </motion.div>
-              ))}
-            </aside>
+            <div className="relative flex items-center gap-2 border-b border-white/10 bg-[#0F172A]/90 px-4 py-3.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+              <span className="ml-3 text-[11px] font-semibold tracking-[0.12em] text-slate-400 uppercase">
+                Xelarvis Control
+              </span>
+              <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-[#0D9488]/15 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[#5EEAD4]">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                LIVE
+              </span>
+            </div>
 
-            <div className="space-y-3 bg-gradient-to-br from-[#0F172A] via-[#0B1224] to-[#020617] p-3 sm:p-4">
-              <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                {METRICS.map((metric, i) => (
+            <div className="grid h-[calc(100%-50px)] grid-cols-[64px_1fr] sm:grid-cols-[78px_1fr]">
+              <aside className="space-y-1.5 border-r border-white/10 bg-[#0F172A]/80 p-2.5 sm:p-3">
+                {['Ops', 'AI', 'Cloud', 'Data', 'Sec'].map((item, i) => (
                   <motion.div
-                    key={metric.label}
-                    initial={reduce ? false : { opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.38 + i * 0.08, duration: 0.5, ease: EASE }}
-                    className="rounded-2xl border border-white/10 bg-white/5 p-3 shadow-[0_10px_28px_rgba(0,0,0,0.25)]"
+                    key={item}
+                    initial={reduce ? false : { opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + i * 0.05, duration: 0.4, ease: EASE }}
+                    className={`rounded-xl px-1.5 py-2 text-center text-[9px] font-bold tracking-wide sm:text-[10px] ${
+                      i === 1
+                        ? 'bg-gradient-to-br from-[#0D9488] to-[#06B6D4] text-white shadow-[0_8px_20px_rgba(13,148,136,0.45)]'
+                        : 'bg-white/5 text-slate-400'
+                    }`}
                   >
-                    <p className="text-[10px] font-semibold tracking-[0.12em] text-[#8b8b96] uppercase">
-                      {metric.label}
-                    </p>
-                    <p className="font-display mt-1.5 text-xl font-bold tracking-tight text-white tabular-nums sm:text-2xl">
-                      <CountUp value={metric.value} delay={0.5 + i * 0.08} suffix={metric.suffix} />
-                    </p>
-                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
-                      <motion.div
-                        className="h-full rounded-full bg-gradient-to-r from-[#0D9488] to-[#22D3EE]"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${Math.min(100, metric.value)}%` }}
-                        transition={{
-                          delay: reduce ? 0 : 0.7 + i * 0.1,
-                          duration: 0.9,
-                          ease: EASE,
-                        }}
-                      />
-                    </div>
+                    {item}
                   </motion.div>
                 ))}
-              </div>
+              </aside>
 
-              <motion.div
-                initial={reduce ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.55, duration: 0.5, ease: EASE }}
-                className="rounded-2xl border border-white/10 bg-white/5 p-3 shadow-[0_12px_32px_rgba(0,0,0,0.25)]"
-              >
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="text-xs font-semibold text-[#1f1f21] dark:text-white">
-                    Release velocity
-                  </p>
-                  <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-600">
-                    +38% QoQ
-                  </span>
-                </div>
-                <div className="flex h-24 items-end gap-1.5 sm:h-28">
-                  {BARS.map((v, i) => (
+              <div className="space-y-2.5 overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#0B1224] to-[#020617] p-2.5 sm:space-y-3 sm:p-3.5">
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { label: 'Accuracy', value: 99.2, suffix: '%', decimals: 1 },
+                    { label: 'Uptime', value: 99.98, suffix: '%', decimals: 2 },
+                    { label: 'Deploys', value: 120, suffix: '+', decimals: 0 },
+                  ].map((metric, i) => (
                     <motion.div
-                      key={i}
-                      className="flex-1 origin-bottom rounded-t-md bg-gradient-to-t from-[#0D9488] to-[#99F6E4]"
-                      initial={{ scaleY: 0, opacity: 0.35 }}
-                      animate={{ scaleY: 1, opacity: 1 }}
-                      transition={{
-                        delay: reduce ? 0 : 0.72 + i * 0.03,
-                        duration: 0.65,
-                        ease: EASE,
-                      }}
-                      style={{ height: `${v}%` }}
-                    />
+                      key={metric.label}
+                      initial={reduce ? false : { opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.38 + i * 0.08, duration: 0.5, ease: EASE }}
+                      className="rounded-2xl border border-white/10 bg-white/[0.06] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-3"
+                    >
+                      <p className="text-[9px] font-semibold tracking-[0.12em] text-slate-400 uppercase sm:text-[10px]">
+                        {metric.label}
+                      </p>
+                      <p className="font-display mt-1 text-base font-bold tracking-tight text-white tabular-nums sm:text-xl">
+                        <CountUp
+                          value={metric.value}
+                          delay={0.5 + i * 0.08}
+                          suffix={metric.suffix}
+                          decimals={metric.decimals}
+                        />
+                      </p>
+                      <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
+                        <motion.div
+                          className="h-full rounded-full bg-gradient-to-r from-[#0D9488] to-[#22D3EE]"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${Math.min(100, metric.value)}%` }}
+                          transition={{
+                            delay: reduce ? 0 : 0.7 + i * 0.1,
+                            duration: 0.9,
+                            ease: EASE,
+                          }}
+                        />
+                      </div>
+                    </motion.div>
                   ))}
                 </div>
-              </motion.div>
+
+                <div className="grid grid-cols-[1.15fr_0.85fr] gap-2 sm:gap-2.5">
+                  <motion.div
+                    initial={reduce ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.55, duration: 0.5, ease: EASE }}
+                    className="rounded-2xl border border-white/10 bg-white/[0.05] p-2.5 sm:p-3"
+                  >
+                    <div className="mb-2 flex items-center justify-between">
+                      <p className="text-[10px] font-semibold text-slate-200 sm:text-xs">
+                        Prediction chart
+                      </p>
+                      <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[9px] font-bold text-emerald-400">
+                        +38% QoQ
+                      </span>
+                    </div>
+                    <div className="flex h-16 items-end gap-1 sm:h-20 sm:gap-1.5">
+                      {liveBars.map((v, i) => (
+                        <motion.div
+                          key={i}
+                          className="flex-1 origin-bottom rounded-t-md bg-gradient-to-t from-[#0D9488] to-[#99F6E4]"
+                          animate={{ height: `${v}%` }}
+                          transition={{ duration: 0.8, ease: EASE }}
+                          style={{ minHeight: 4 }}
+                        />
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={reduce ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.62, duration: 0.5, ease: EASE }}
+                    className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-2.5 sm:p-3"
+                  >
+                    <div className="mb-1.5 flex items-center gap-1.5">
+                      <Activity className="h-3 w-3 text-cyan-300" />
+                      <p className="text-[10px] font-semibold text-slate-200">Network</p>
+                    </div>
+                    <div className="h-[4.5rem] sm:h-[5.25rem]">
+                      <ConstellationCanvas className="opacity-95" />
+                    </div>
+                  </motion.div>
+                </div>
+
+                <motion.div
+                  initial={reduce ? false : { opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.45, ease: EASE }}
+                  className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2"
+                >
+                  <div className="mb-1.5 flex items-center justify-between">
+                    <p className="text-[10px] font-semibold text-slate-300">
+                      Cloud deployment timeline
+                    </p>
+                    <Sparkles className="h-3 w-3 text-teal-300" />
+                  </div>
+                  <svg viewBox="0 0 200 28" className="h-7 w-full" aria-hidden>
+                    <path
+                      d={`M0,22 ${SPARK.map((y, i) => `L${(i / (SPARK.length - 1)) * 200},${28 - y * 0.22}`).join(' ')}`}
+                      fill="none"
+                      stroke="url(#hero-spark)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <defs>
+                      <linearGradient id="hero-spark" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#0D9488" />
+                        <stop offset="100%" stopColor="#06B6D4" />
+                      </linearGradient>
+                    </defs>
+                    {!reduce ? (
+                      <motion.circle
+                        cx="200"
+                        cy="6"
+                        r="2.5"
+                        fill="#67E8F9"
+                        animate={{ cx: [0, 200], cy: [22, 6, 18, 8, 6], opacity: [0.4, 1, 0.7, 1] }}
+                        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                      />
+                    ) : null}
+                  </svg>
+                </motion.div>
+              </div>
             </div>
           </div>
-        </div>
-
-        <motion.div
-          className="pointer-events-none absolute top-[16%] -left-1 z-20 hidden sm:block"
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          animate={reduce ? { opacity: 1, y: 0 } : { opacity: 1, y: [0, -8, 0] }}
-          transition={
-            reduce
-              ? { delay: 0.8, duration: 0.5 }
-              : {
-                  opacity: { delay: 0.85, duration: 0.5, ease: EASE },
-                  y: { delay: 1.3, duration: 6.5, repeat: Infinity, ease: 'easeInOut' },
-                }
-          }
-        >
-          <div className="rounded-2xl border border-white/15 bg-[#0F172A] px-3.5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
-            <p className="text-[10px] font-bold tracking-[0.14em] text-[#8b8b96] uppercase">
-              Latency
-            </p>
-            <p className="font-display text-sm font-bold text-emerald-600">12ms p99</p>
-          </div>
         </motion.div>
 
-        <motion.div
-          className="pointer-events-none absolute right-0 bottom-[18%] z-20 hidden sm:block"
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          animate={reduce ? { opacity: 1, y: 0 } : { opacity: 1, y: [0, 7, 0] }}
-          transition={
-            reduce
-              ? { delay: 1, duration: 0.5 }
-              : {
-                  opacity: { delay: 1, duration: 0.5, ease: EASE },
-                  y: { delay: 1.6, duration: 7.5, repeat: Infinity, ease: 'easeInOut' },
+        {/* Floating widgets sit above the 3D panel so they never tuck behind it */}
+        {WIDGETS.map((w) => {
+          const Icon = w.icon
+          return (
+            <motion.div
+              key={w.id}
+              className={`pointer-events-auto absolute z-30 hidden max-w-[148px] sm:block ${w.className}`}
+              style={{ x: widgetShiftX, y: widgetShiftY }}
+              initial={reduce ? false : { opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: w.delay, duration: 0.5, ease: EASE }}
+            >
+              <motion.div
+                animate={reduce ? undefined : { y: [0, -w.float, 0] }}
+                transition={
+                  reduce
+                    ? undefined
+                    : {
+                        delay: w.delay + 0.4,
+                        duration: w.float + 1.5,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      }
                 }
-          }
-        >
-          <div className="rounded-2xl border border-white/15 bg-[#0F172A] px-3.5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
-            <p className="text-[10px] font-bold tracking-[0.14em] text-[#8b8b96] uppercase">
-              Active builds
-            </p>
-            <p className="font-display text-sm font-bold text-[#0D9488]">24 pipelines</p>
-          </div>
-        </motion.div>
+                whileHover={reduce ? undefined : { scale: 1.04 }}
+                className="relative"
+              >
+                <div className="rounded-2xl border border-white/25 bg-[#0B1224] px-3 py-2.5 shadow-[0_18px_44px_rgba(0,0,0,0.55)] ring-1 ring-cyan-400/15 backdrop-blur-xl transition-shadow hover:shadow-[0_18px_48px_rgba(13,148,136,0.32)] hover:ring-cyan-300/30">
+                  <div className="flex items-center gap-2">
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-teal-500/30 to-cyan-500/25 text-cyan-200">
+                      <Icon className="h-3.5 w-3.5" aria-hidden />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate text-[9px] font-bold tracking-[0.12em] text-slate-400 uppercase">
+                        {w.label}
+                      </p>
+                      <p className="font-display text-sm font-bold text-white">{w.value}</p>
+                    </div>
+                  </div>
+                  <p className="mt-1 truncate pl-9 text-[10px] text-slate-400">{w.sub}</p>
+                </div>
+              </motion.div>
+            </motion.div>
+          )
+        })}
 
         <motion.div
-          className="pointer-events-none absolute top-[6%] right-[4%] z-20"
-          initial={reduce ? false : { opacity: 0, scale: 0.9 }}
-          animate={reduce ? { opacity: 1, scale: 1 } : { opacity: 1, scale: [1, 1.05, 1] }}
-          transition={
-            reduce
-              ? { delay: 1.05, duration: 0.45 }
-              : {
-                  opacity: { delay: 1.05, duration: 0.45 },
-                  scale: { delay: 1.5, duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
-                }
-          }
+          className="pointer-events-none absolute top-[42%] right-[2%] z-30 sm:hidden"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.45 }}
         >
-          <div className="rounded-full bg-gradient-to-r from-[#0D9488] to-[#22D3EE] px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_12px_32px_rgba(13,148,136,0.5)]">
-            Deploy live
+          <div className="rounded-full bg-gradient-to-r from-[#0D9488] to-[#06B6D4] px-3 py-1 text-[10px] font-bold text-white shadow-[0_10px_28px_rgba(13,148,136,0.45)]">
+            AI live
           </div>
         </motion.div>
       </motion.div>
