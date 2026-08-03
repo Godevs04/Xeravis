@@ -12,7 +12,6 @@ import {
 import { useEffect, useRef, useState, type MouseEvent } from 'react'
 
 import { Container } from '@/components/layout/Container'
-import { cn } from '@/lib/utils'
 
 export type CaseMetric = { label: string; value: string }
 
@@ -145,12 +144,12 @@ function CaseVisual({ variant, accent }: { variant: number; accent: string }) {
   const mode = variant % 4
 
   return (
-    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[24px] border border-white/12 bg-[rgba(15,23,42,0.65)]">
+    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[24px] border border-[color:var(--hero-panel-border)] bg-[color:var(--color-neutral)] dark:border-white/12 dark:bg-[rgba(15,23,42,0.65)]">
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(ellipse 70% 60% at 30% 20%, ${accent}40, transparent 55%), radial-gradient(ellipse 50% 50% at 80% 80%, rgba(6,182,212,0.25), transparent 50%)`,
+          background: `radial-gradient(ellipse 70% 60% at 30% 20%, ${accent}28, transparent 55%), radial-gradient(ellipse 50% 50% at 80% 80%, rgba(6,182,212,0.16), transparent 50%)`,
         }}
       />
       <svg viewBox="0 0 640 400" className="relative z-10 h-full w-full" aria-hidden>
@@ -170,8 +169,8 @@ function CaseVisual({ variant, accent }: { variant: number; accent: string }) {
               width="560"
               height="320"
               rx="20"
-              fill="rgba(255,255,255,0.04)"
-              stroke="rgba(255,255,255,0.1)"
+              className="fill-white/70 stroke-[color:var(--hero-panel-border)] dark:fill-white/[0.04] dark:stroke-white/10"
+              strokeWidth="1"
             />
             {[0, 1, 2].map((i) => (
               <motion.rect
@@ -181,7 +180,7 @@ function CaseVisual({ variant, accent }: { variant: number; accent: string }) {
                 width="150"
                 height="70"
                 rx="14"
-                fill="rgba(255,255,255,0.05)"
+                className="fill-white dark:fill-white/[0.05]"
                 stroke={accent}
                 strokeOpacity={0.35}
                 animate={reduce ? undefined : { y: [70, 66, 70] }}
@@ -236,7 +235,8 @@ function CaseVisual({ variant, accent }: { variant: number; accent: string }) {
                     cx={x}
                     cy={y}
                     r="14"
-                    fill="#0F172A"
+                    fill="var(--hero-panel)"
+                    className="dark:fill-[#0F172A]"
                     stroke={accent}
                     animate={reduce ? undefined : { opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity, delay: i * 0.15 }}
@@ -296,7 +296,8 @@ function CaseVisual({ variant, accent }: { variant: number; accent: string }) {
                 width="110"
                 height="120"
                 rx="18"
-                fill="rgba(255,255,255,0.05)"
+                fill="rgba(255,255,255,0.85)"
+                className="dark:fill-white/[0.05]"
                 stroke={accent}
                 strokeOpacity={0.4}
                 initial={{ y: 160, opacity: 0 }}
@@ -354,7 +355,7 @@ function ProjectPanel({ item, index }: { item: ReturnType<typeof enrichCase>; in
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.7, ease: EASE }}
-      className="relative mb-10 overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.04] p-5 shadow-[0_30px_100px_rgba(0,0,0,0.35)] backdrop-blur-xl last:mb-0 sm:p-7 lg:min-h-[85vh] lg:p-8"
+      className="relative mb-10 overflow-hidden rounded-[28px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-5 shadow-[var(--shadow-floating)] backdrop-blur-xl last:mb-0 sm:p-7 lg:min-h-[85vh] lg:p-8 dark:border-white/12 dark:bg-white/[0.04] dark:shadow-[0_30px_100px_rgba(0,0,0,0.35)]"
     >
       <div
         aria-hidden
@@ -365,18 +366,18 @@ function ProjectPanel({ item, index }: { item: ReturnType<typeof enrichCase>; in
       />
 
       <div className="relative flex flex-wrap items-center gap-3">
-        <span className="rounded-full border border-teal-400/40 bg-teal-500/15 px-3 py-1 text-[10px] font-bold tracking-[0.16em] text-teal-200 uppercase">
+        <span className="rounded-full border border-[color:var(--color-accent)]/40 bg-[color:var(--color-accent-soft)] px-3 py-1 text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-accent)] uppercase">
           {item.industry}
         </span>
-        <span className="text-sm text-slate-400">{item.client}</span>
+        <span className="text-sm text-[color:var(--hero-muted)]">{item.client}</span>
         {item.timeline ? (
-          <span className="ml-auto text-[11px] tracking-wide text-cyan-300/80 uppercase">
+          <span className="ml-auto text-[11px] tracking-wide text-[color:var(--color-accent)]/80 uppercase">
             {item.timeline}
           </span>
         ) : null}
       </div>
 
-      <h3 className="font-display relative mt-5 text-[clamp(1.6rem,3vw,2.5rem)] font-semibold tracking-[-0.035em] text-balance text-white">
+      <h3 className="font-display relative mt-5 text-[clamp(1.6rem,3vw,2.5rem)] font-semibold tracking-[-0.035em] text-balance text-[color:var(--hero-text)]">
         {item.title}
       </h3>
 
@@ -386,56 +387,60 @@ function ProjectPanel({ item, index }: { item: ReturnType<typeof enrichCase>; in
 
       <div className="relative mt-8 grid gap-6 lg:grid-cols-2">
         <div>
-          <p className="text-[10px] font-bold tracking-[0.18em] text-teal-300 uppercase">
+          <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--color-accent)] uppercase">
             Challenge
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-300">{item.challenge}</p>
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--hero-muted)]">
+            {item.challenge}
+          </p>
         </div>
         <div>
-          <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300 uppercase">
+          <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--color-accent)] uppercase">
             Our solution
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-300">{item.solution}</p>
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--hero-muted)]">
+            {item.solution}
+          </p>
         </div>
       </div>
 
       <div className="relative mt-8">
-        <p className="text-[10px] font-bold tracking-[0.18em] text-slate-400 uppercase">
+        <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase">
           Business impact
         </p>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           {item.metrics.slice(0, 3).map((m) => (
             <div
               key={`${m.label}-${m.value}`}
-              className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-4"
+              className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--color-hover)] px-4 py-4 dark:border-white/10 dark:bg-white/[0.05]"
             >
-              <p className="font-display text-2xl font-bold tracking-[-0.04em] text-white sm:text-3xl">
+              <p className="font-display text-2xl font-bold tracking-[-0.04em] text-[color:var(--hero-text)] sm:text-3xl">
                 <CountMetric value={m.value} active={inView} />
               </p>
-              <p className="mt-1 text-xs text-slate-400">{m.label}</p>
+              <p className="mt-1 text-xs text-[color:var(--hero-muted)]">{m.label}</p>
             </div>
           ))}
         </div>
       </div>
 
       <div className="relative mt-8 flex flex-wrap items-center gap-2">
-        <p className="mr-2 text-[10px] font-bold tracking-[0.16em] text-slate-500 uppercase">
+        <p className="mr-2 text-[10px] font-bold tracking-[0.16em] text-[color:var(--hero-muted)] uppercase">
           Technology
         </p>
         {(item.technologies.length ? item.technologies : DEFAULT_TECH).map((tech, i) => (
           <motion.span
             key={tech}
-            className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-xs font-medium text-slate-200"
+            className="rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-1 text-xs font-medium text-[color:var(--hero-text)] dark:border-white/15 dark:bg-white/[0.06] dark:text-slate-200"
             animate={
               reduce
                 ? undefined
                 : inView
                   ? {
-                      opacity: [0.55, 1, 0.55],
+                      opacity: [0.7, 1, 0.7],
                       borderColor: [
-                        'rgba(255,255,255,0.15)',
+                        'var(--hero-panel-border)',
                         `${accent}66`,
-                        'rgba(255,255,255,0.15)',
+                        'var(--hero-panel-border)',
                       ],
                     }
                   : {}
@@ -449,7 +454,7 @@ function ProjectPanel({ item, index }: { item: ReturnType<typeof enrichCase>; in
 
       <Link
         href={item.href}
-        className="relative mt-8 inline-flex text-sm font-semibold text-cyan-300 underline-offset-4 hover:text-white hover:underline"
+        className="relative mt-8 inline-flex text-sm font-semibold text-[color:var(--color-accent)] underline-offset-4 hover:underline"
       >
         Read the full story →
       </Link>
@@ -490,11 +495,11 @@ export function StoryCases({ eyebrow = 'Success stories', heading, items }: Stor
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.25fr)] lg:gap-14 xl:gap-16">
           {/* LEFT sticky */}
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <p className="text-[11px] font-bold tracking-[0.22em] text-teal-300 uppercase">
+            <p className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase">
               {eyebrow}
             </p>
             <motion.h2
-              className="font-display mt-5 max-w-md text-[clamp(2rem,4vw,3.4rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance"
+              className="font-display mt-5 max-w-md text-[clamp(2rem,4vw,3.4rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
               initial={reduce ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -502,7 +507,7 @@ export function StoryCases({ eyebrow = 'Success stories', heading, items }: Stor
             >
               {heading || 'Engineering solutions that deliver measurable outcomes.'}
             </motion.h2>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-slate-300">
+            <p className="mt-5 max-w-md text-base leading-relaxed text-[color:var(--hero-muted)]">
               Complex transformation programs across healthcare, AI, and enterprise platforms —
               designed for regulated reality, not demos.
             </p>
@@ -511,7 +516,7 @@ export function StoryCases({ eyebrow = 'Success stories', heading, items }: Stor
               {KPI_BADGES.map((badge, i) => (
                 <motion.span
                   key={badge}
-                  className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-[11px] font-medium text-slate-200"
+                  className="rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-1.5 text-[11px] font-medium text-[color:var(--hero-text)] shadow-[var(--shadow-light)] dark:border-white/12 dark:bg-white/[0.05] dark:text-slate-200 dark:shadow-none"
                   initial={reduce ? false : { opacity: 0, y: 8 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -524,7 +529,7 @@ export function StoryCases({ eyebrow = 'Success stories', heading, items }: Stor
 
             <Link
               href="/case-studies"
-              className="mt-10 inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-400/10 px-5 py-2.5 text-sm font-semibold text-cyan-200 transition-colors hover:bg-cyan-400/20 hover:text-white"
+              className="mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--color-accent)]/40 bg-[color:var(--color-accent-soft)] px-5 py-2.5 text-sm font-semibold text-[color:var(--color-accent)] transition-colors hover:bg-[color:var(--color-hover)] dark:border-cyan-400/40 dark:bg-cyan-400/10 dark:text-cyan-200 dark:hover:bg-cyan-400/20 dark:hover:text-white"
             >
               View all case studies
               <span aria-hidden>→</span>
@@ -534,12 +539,14 @@ export function StoryCases({ eyebrow = 'Success stories', heading, items }: Stor
               {stories.map((s, i) => (
                 <li
                   key={s.id}
-                  className={cn('border-l-2 pl-3 text-sm', 'border-white/15 text-slate-500')}
+                  className="border-l-2 border-[color:var(--hero-panel-border)] pl-3 text-sm text-[color:var(--hero-muted)]"
                 >
-                  <span className="font-display text-xs tracking-wide text-teal-400/80">
+                  <span className="font-display text-xs tracking-wide text-[color:var(--color-accent)]/80">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="mt-0.5 block truncate text-slate-400">{s.title}</span>
+                  <span className="mt-0.5 block truncate text-[color:var(--hero-muted)]">
+                    {s.title}
+                  </span>
                 </li>
               ))}
             </ol>

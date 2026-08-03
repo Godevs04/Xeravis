@@ -114,7 +114,7 @@ function ChallengeVisual({
       {/* Glass orb */}
       <div
         aria-hidden
-        className="absolute inset-[8%] rounded-full border border-white/10 bg-white/[0.03] shadow-[inset_0_0_80px_rgba(13,148,136,0.12)] backdrop-blur-xl"
+        className="absolute inset-[8%] rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] shadow-[inset_0_0_80px_var(--hero-glow)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.03] dark:shadow-[inset_0_0_80px_rgba(13,148,136,0.12)]"
       />
       <motion.div
         aria-hidden
@@ -161,7 +161,8 @@ function ChallengeVisual({
                     cx={cluster.cx}
                     cy={cluster.cy}
                     r={38}
-                    fill="rgba(15,23,42,0.65)"
+                    fill="var(--hero-panel)"
+                    className="dark:fill-[rgba(15,23,42,0.65)]"
                     stroke={accent}
                     strokeWidth={1.5}
                     strokeOpacity={0.55}
@@ -340,12 +341,14 @@ function ChallengeVisual({
 
       {/* Floating glass chip */}
       <motion.div
-        className="absolute top-[12%] right-[4%] rounded-2xl border border-white/15 bg-white/[0.07] px-3 py-2 backdrop-blur-xl"
+        className="absolute top-[12%] right-[4%] rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-2 shadow-[var(--shadow-light)] backdrop-blur-xl dark:border-white/15 dark:bg-white/[0.07] dark:shadow-none"
         animate={reduce ? undefined : { y: [0, -8, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <p className="text-[9px] tracking-[0.16em] text-cyan-200/80 uppercase">Signal</p>
-        <p className="font-display text-sm font-semibold text-white">Live</p>
+        <p className="text-[9px] tracking-[0.16em] text-[color:var(--color-accent)]/80 uppercase dark:text-cyan-200/80">
+          Signal
+        </p>
+        <p className="font-display text-sm font-semibold text-[color:var(--hero-text)]">Live</p>
       </motion.div>
     </div>
   )
@@ -506,15 +509,15 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-8 xl:gap-12">
             {/* LEFT — title + progress */}
             <div className="relative">
-              <p className="text-[11px] font-bold tracking-[0.22em] text-teal-300 uppercase">
+              <p className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase">
                 {eyebrow}
               </p>
-              <h2 className="font-display mt-4 max-w-md text-[clamp(2.2rem,4.2vw,3.6rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-white">
+              <h2 className="font-display mt-4 max-w-md text-[clamp(2.2rem,4.2vw,3.6rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]">
                 {heading}
               </h2>
 
               <div className="mt-12 flex gap-6">
-                <div className="relative hidden h-48 w-px overflow-hidden bg-white/10 sm:block">
+                <div className="relative hidden h-48 w-px overflow-hidden bg-[color:var(--hero-panel-border)] sm:block dark:bg-white/10">
                   <motion.div
                     className="absolute top-0 left-0 w-full origin-top bg-gradient-to-b from-teal-400 to-cyan-400"
                     style={{ height: progressHeight }}
@@ -530,10 +533,10 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                           className={cn(
                             'font-display grid h-9 w-9 place-items-center rounded-full border text-xs font-bold transition-colors duration-500',
                             currentStep
-                              ? 'border-cyan-300 bg-teal-500/30 text-white shadow-[0_0_28px_rgba(13,148,136,0.55)]'
+                              ? 'border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-white shadow-[0_0_28px_var(--color-accent-glow)]'
                               : done
-                                ? 'border-teal-400/60 bg-teal-500/20 text-teal-200'
-                                : 'border-white/20 bg-white/5 text-slate-400',
+                                ? 'border-[color:var(--color-accent)]/60 bg-[color:var(--color-accent-soft)] text-[color:var(--color-accent)]'
+                                : 'border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] text-[color:var(--hero-muted)]',
                           )}
                         >
                           {String(i + 1).padStart(2, '0')}
@@ -542,10 +545,10 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                           className={cn(
                             'hidden max-w-[10rem] truncate text-sm sm:block',
                             currentStep
-                              ? 'text-white'
+                              ? 'font-semibold text-[color:var(--hero-text)]'
                               : done
-                                ? 'text-teal-200/80'
-                                : 'text-slate-400',
+                                ? 'text-[color:var(--color-accent)]'
+                                : 'text-[color:var(--hero-muted)]',
                           )}
                         >
                           {ch.title.split(' ').slice(0, 3).join(' ')}…
@@ -573,7 +576,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                   transition={{ duration: 0.55, ease: EASE }}
                   className="relative"
                 >
-                  <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 backdrop-blur-md">
+                  <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-4 py-2 shadow-[var(--shadow-light)] backdrop-blur-md dark:border-white/15 dark:bg-white/[0.06] dark:shadow-none">
                     <span
                       className="h-2 w-2 rounded-full"
                       style={{
@@ -581,21 +584,21 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                         boxShadow: `0 0 16px ${current?.accent}`,
                       }}
                     />
-                    <span className="font-display text-xs tracking-[0.18em] text-cyan-200/90 uppercase">
+                    <span className="font-display text-xs tracking-[0.18em] text-[color:var(--color-accent)] uppercase dark:text-cyan-200/90">
                       Challenge {String(active + 1).padStart(2, '0')}
                     </span>
                   </div>
 
-                  <h3 className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.1] font-semibold tracking-[-0.035em] text-balance text-white">
+                  <h3 className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.1] font-semibold tracking-[-0.035em] text-balance text-[color:var(--hero-text)]">
                     {current?.title}
                   </h3>
                   {current?.body ? (
-                    <p className="mt-5 max-w-md text-base leading-relaxed text-slate-300 sm:text-lg">
+                    <p className="mt-5 max-w-md text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg">
                       {current.body}
                     </p>
                   ) : null}
 
-                  <div className="relative mt-10 overflow-hidden rounded-[24px] border border-white/12 bg-gradient-to-br from-white/[0.09] to-white/[0.02] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+                  <div className="relative mt-10 overflow-hidden rounded-[24px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-5 shadow-[var(--shadow-medium)] backdrop-blur-xl dark:border-white/12 dark:bg-gradient-to-br dark:from-white/[0.09] dark:to-white/[0.02] dark:shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
                     <div
                       aria-hidden
                       className="pointer-events-none absolute inset-0 rounded-[24px]"
@@ -603,19 +606,19 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                         background: `linear-gradient(135deg, ${current?.accent}33, transparent 40%)`,
                       }}
                     />
-                    <p className="font-display relative text-[clamp(2.4rem,5vw,3.5rem)] font-bold tracking-[-0.05em] text-white">
+                    <p className="font-display relative text-[clamp(2.4rem,5vw,3.5rem)] font-bold tracking-[-0.05em] text-[color:var(--hero-text)]">
                       <CountUp
                         value={current?.statValue ?? 0}
                         suffix={current?.statSuffix ?? ''}
                         active
                       />
                     </p>
-                    <p className="relative mt-2 text-sm tracking-wide text-slate-400">
+                    <p className="relative mt-2 text-sm tracking-wide text-[color:var(--hero-muted)]">
                       {current?.statLabel}
                     </p>
                   </div>
 
-                  <p className="mt-8 text-[11px] tracking-[0.16em] text-slate-500 uppercase">
+                  <p className="mt-8 text-[11px] tracking-[0.16em] text-[color:var(--hero-muted)] uppercase">
                     Scroll to continue
                     <motion.span
                       className="ml-2 inline-block"

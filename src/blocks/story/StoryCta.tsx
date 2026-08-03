@@ -26,7 +26,7 @@ export function StoryCta({
     <MeshBackdrop className="py-28 lg:py-40" interactive>
       <Container className="relative text-center">
         <motion.p
-          className="text-[11px] font-bold tracking-[0.22em] text-cyan-300 uppercase"
+          className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase"
           initial={reduce ? false : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -34,7 +34,7 @@ export function StoryCta({
           Next chapter
         </motion.p>
         <motion.h2
-          className="font-display mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,7vw,5.5rem)] leading-[0.95] font-bold tracking-[-0.05em] text-balance text-white"
+          className="font-display mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,7vw,5.5rem)] leading-[0.95] font-bold tracking-[-0.05em] text-balance text-[color:var(--hero-text)]"
           initial={reduce ? false : { opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -43,7 +43,9 @@ export function StoryCta({
           {heading}
         </motion.h2>
         {subheading ? (
-          <p className="mx-auto mt-8 max-w-xl text-lg text-slate-300">{subheading}</p>
+          <p className="mx-auto mt-8 max-w-xl text-lg text-[color:var(--hero-muted)]">
+            {subheading}
+          </p>
         ) : null}
         <motion.div
           className="mt-12"
