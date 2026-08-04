@@ -133,17 +133,17 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     slug: 'company-overview',
     path: '/about/company-overview',
     eyebrow: 'About Us',
-    title: 'Engineering Intelligent Solutions for Healthcare, AI, and Digital Transformation',
+    title: 'Data Science, AI, and Healthcare AI—global research and consulting',
     subtitle:
-      'XELARVIS PRIVATE LIMITED is an IT Consulting and Artificial Intelligence Research company delivering innovative solutions in AI, Machine Learning, Data Science, Healthcare Analytics, Clinical Data Science, Cloud Technologies, and Enterprise Software Development.',
+      'XELARVIS PRIVATE LIMITED leads with data science, AI, and Healthcare AI—delivering clinical data science, machine learning, advanced analytics, IT consulting, and enterprise platforms for regulated industries.',
     sections: [
       {
         heading: 'About the Company',
-        body: 'XELARVIS PRIVATE LIMITED is an IT Consulting and Artificial Intelligence Research Company specializing in Healthcare AI, Clinical Data Science, Machine Learning, Data Science, Advanced Analytics, and Enterprise Software Solutions. We help organizations transform complex data into intelligent solutions through innovative technologies, research-driven methodologies, and scalable digital platforms.',
+        body: 'XELARVIS PRIVATE LIMITED is positioned as a data science, AI research, and Healthcare AI company—with IT consulting depth—closer in craft to enterprise consulting and applied research organizations than to a typical software agency. We specialize in Data Science, Artificial Intelligence, Healthcare AI, Clinical Data Science, and Advanced Analytics, and ship platforms that survive audits, scale in production, and move real clinical and business decisions.',
       },
       {
         heading: 'Our Mission',
-        body: 'Our mission is to bridge the gap between healthcare, artificial intelligence, and enterprise technology by delivering reliable, secure, and future-ready solutions.',
+        body: 'Our mission is to advance data science, AI, and healthcare technology by delivering reliable, secure, and future-ready solutions for hospitals, life sciences, and regulated enterprises.',
       },
     ],
   },

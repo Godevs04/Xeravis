@@ -11,7 +11,7 @@ export const DEFAULT_SERVICE_FAQS: FaqItem[] = [
   {
     question: 'What does Xelarvis specialize in?',
     answer:
-      'Xelarvis specializes in Healthcare AI, clinical intelligence, enterprise AI systems, cloud engineering, data engineering, healthcare analytics, and digital transformation for regulated organizations.',
+      'Xelarvis specializes in data science, AI research, Healthcare AI, clinical data science, advanced analytics, and enterprise platforms for regulated organizations—with IT consulting and cloud engineering as supporting capabilities.',
   },
   {
     question: 'Who should choose Xelarvis?',

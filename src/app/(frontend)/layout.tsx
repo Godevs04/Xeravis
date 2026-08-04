@@ -39,9 +39,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   ...buildMetadata({
-    title: 'Healthcare AI & Enterprise Engineering',
+    title: 'Data Science, AI & Healthcare',
     description:
-      'Xelarvis delivers Healthcare AI, clinical intelligence, enterprise AI, cloud engineering, and data platforms for hospitals, life sciences, and regulated enterprises.',
+      'Xelarvis leads with data science, AI, and Healthcare AI—clinical intelligence, advanced analytics, and enterprise platforms for hospitals, life sciences, and regulated enterprises.',
     path: '/',
   }),
   verification: {

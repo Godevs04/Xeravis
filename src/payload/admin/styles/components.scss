@@ -17,16 +17,21 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: linear-gradient(145deg, #06B6D4, #0D9488);
+  background: #ffffff;
   display: grid;
   place-items: center;
-  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.08),
+    0 8px 24px rgba(13, 148, 136, 0.28);
   flex-shrink: 0;
+  overflow: hidden;
 }
 
-.xe-logo__mark svg {
-  width: 18px;
-  height: 18px;
+.xe-logo__mark svg,
+.xe-logo__mark img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .xe-logo__text {
@@ -62,9 +67,11 @@
   box-shadow: none !important;
 }
 
-.xe-logo--icon .xe-logo__mark svg {
-  width: 10px !important;
-  height: 10px !important;
+.xe-logo--icon .xe-logo__mark svg,
+.xe-logo--icon .xe-logo__mark img {
+  width: 14px !important;
+  height: 14px !important;
+  object-fit: contain;
 }
 
 .xe-workspace {

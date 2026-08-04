@@ -111,26 +111,42 @@ function StageVisual({
 }) {
   return (
     <div className="relative mx-auto aspect-square w-full max-w-[24rem]">
-      <div className="absolute inset-[6%] rounded-[28px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] shadow-[var(--shadow-medium)] backdrop-blur-xl" />
+      {/* Premium frame — soft glass, teal edge light, theme-safe */}
       <div
         aria-hidden
-        className="absolute inset-[6%] rounded-[28px] opacity-50"
-        style={{
-          backgroundImage:
-            'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
-          backgroundSize: '26px 26px',
-        }}
-      />
+        className="absolute inset-[5%] rounded-[32px] bg-gradient-to-br from-[color:var(--color-accent)]/25 via-transparent to-[color:var(--color-accent-light)]/20 p-px"
+      >
+        <div className="relative h-full w-full overflow-hidden rounded-[31px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] shadow-[var(--shadow-large)] backdrop-blur-2xl">
+          <div
+            className="absolute inset-0 opacity-[0.35]"
+            style={{
+              backgroundImage:
+                'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
+              backgroundSize: '28px 28px',
+              maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 85%)',
+            }}
+          />
+          <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--color-accent)]/50 to-transparent" />
+          <div className="absolute top-5 left-5 h-2.5 w-2.5 rounded-full border border-[color:var(--color-accent)]/40" />
+          <div className="absolute top-5 right-5 h-2.5 w-2.5 rounded-full border border-[color:var(--color-accent)]/40" />
+          <div className="absolute bottom-5 left-5 h-2.5 w-2.5 rounded-full border border-[color:var(--color-accent)]/40" />
+          <div className="absolute right-5 bottom-5 h-2.5 w-2.5 rounded-full border border-[color:var(--color-accent)]/40" />
+        </div>
+      </div>
 
       <svg
         viewBox="0 0 400 400"
-        className="relative z-10 h-full w-full p-6 text-[color:var(--color-primary)]"
+        className="relative z-10 h-full w-full p-7 text-[color:var(--color-primary)]"
         aria-hidden
       >
         <defs>
-          <linearGradient id="xe-journey-line" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id="xe-journey-line" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#0D9488" />
             <stop offset="100%" stopColor="#06B6D4" />
+          </linearGradient>
+          <linearGradient id="xe-journey-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#0D9488" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.06" />
           </linearGradient>
           <filter id="xe-journey-glow">
             <feGaussianBlur stdDeviation="2.2" result="b" />
@@ -146,42 +162,92 @@ function StageVisual({
             <motion.g
               key="problem"
               initial={{ opacity: 0 }}
-              animate={{ opacity: active ? 1 : 0.4 }}
+              animate={{ opacity: active ? 1 : 0.45 }}
               exit={{ opacity: 0 }}
             >
-              <motion.rect
-                x="120"
-                y="150"
-                width="160"
-                height="100"
-                rx="18"
-                fill="color-mix(in srgb, var(--color-primary) 8%, transparent)"
-                stroke="currentColor"
-                strokeOpacity={0.28}
-                animate={reduce ? undefined : { y: [150, 146, 150] }}
-                transition={{ duration: 3, repeat: Infinity }}
+              {/* Constraint pulse rings */}
+              {[0, 1, 2].map((i) => (
+                <motion.circle
+                  key={`ring-${i}`}
+                  cx="200"
+                  cy="175"
+                  r={48 + i * 28}
+                  fill="none"
+                  stroke="url(#xe-journey-line)"
+                  strokeWidth={1}
+                  strokeOpacity={0.28 - i * 0.06}
+                  animate={
+                    reduce
+                      ? undefined
+                      : { r: [48 + i * 28, 56 + i * 28, 48 + i * 28], opacity: [0.2, 0.55, 0.2] }
+                  }
+                  transition={{ duration: 3.2 + i * 0.4, repeat: Infinity, ease: 'easeInOut' }}
+                />
+              ))}
+              <motion.circle
+                cx="200"
+                cy="175"
+                r="34"
+                fill="url(#xe-journey-fill)"
+                stroke="#0D9488"
+                strokeWidth={1.6}
+                animate={reduce ? undefined : { scale: [1, 1.04, 1] }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ originX: '200px', originY: '175px' }}
               />
               <text
                 x="200"
-                y="208"
+                y="180"
                 textAnchor="middle"
                 fill="currentColor"
-                fontSize="14"
+                fontSize="13"
                 fontFamily="var(--font-display), system-ui"
-                fontWeight="600"
+                fontWeight="700"
               >
                 Problem
               </text>
-              {[0, 1, 2].map((i) => (
-                <motion.circle
-                  key={i}
-                  cx={90 + i * 110}
-                  cy={100}
-                  r="6"
-                  fill="#94A3B8"
-                  animate={reduce ? undefined : { opacity: [0.3, 0.8, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                />
+              {/* Friction nodes around the core */}
+              {[
+                { x: 110, y: 100, label: 'Stake' },
+                { x: 290, y: 100, label: 'Data' },
+                { x: 200, y: 290, label: 'Gap' },
+              ].map((n, i) => (
+                <g key={n.label}>
+                  <motion.line
+                    x1="200"
+                    y1="175"
+                    x2={n.x}
+                    y2={n.y}
+                    stroke="url(#xe-journey-line)"
+                    strokeWidth={1.2}
+                    strokeDasharray="4 6"
+                    opacity={0.45}
+                    animate={reduce ? undefined : { strokeDashoffset: [0, -20] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: 'linear', delay: i * 0.2 }}
+                  />
+                  <motion.circle
+                    cx={n.x}
+                    cy={n.y}
+                    r="18"
+                    fill="var(--glass-bg-strong, #fff)"
+                    stroke="#0D9488"
+                    strokeWidth={1.4}
+                    strokeOpacity={0.55}
+                    animate={reduce ? undefined : { opacity: [0.65, 1, 0.65] }}
+                    transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.25 }}
+                  />
+                  <text
+                    x={n.x}
+                    y={n.y + 4}
+                    textAnchor="middle"
+                    fill="currentColor"
+                    fontSize="9"
+                    fontWeight="600"
+                    opacity={0.8}
+                  >
+                    {n.label}
+                  </text>
+                </g>
               ))}
             </motion.g>
           ) : null}
@@ -193,37 +259,86 @@ function StageVisual({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              {['Stakeholders', 'Research', 'Workshops'].map((label, i) => (
-                <motion.g key={label}>
-                  <motion.rect
-                    x="70"
-                    y={80 + i * 85}
-                    width="260"
-                    height="58"
-                    rx="14"
-                    fill="rgba(13,148,136,0.12)"
-                    stroke="#0D9488"
-                    strokeOpacity={0.45}
-                    initial={{ x: 40, opacity: 0 }}
-                    animate={{ x: 70, opacity: 1 }}
-                    transition={{ delay: i * 0.12, duration: 0.5, ease: EASE }}
-                  />
-                  <motion.text
-                    x="200"
-                    y={115 + i * 85}
-                    textAnchor="middle"
-                    fill="currentColor"
-                    fontSize="13"
-                    fontFamily="var(--font-sans), system-ui"
-                    fontWeight="600"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.15 + i * 0.12 }}
+              {/* Centered discovery flow — matches cloud fit treatment */}
+              <rect
+                x="78"
+                y="92"
+                width="244"
+                height="216"
+                rx="22"
+                fill="url(#xe-journey-fill)"
+                stroke="#0D9488"
+                strokeWidth={1.2}
+                strokeOpacity={0.28}
+              />
+              {['Stakeholders', 'Research', 'Workshops'].map((label, i) => {
+                const rowY = 112 + i * 62
+                const isActive = i === 1
+                return (
+                  <motion.g
+                    key={label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.12, duration: 0.45, ease: EASE }}
                   >
-                    {label}
-                  </motion.text>
-                </motion.g>
-              ))}
+                    <rect
+                      x="96"
+                      y={rowY}
+                      width="208"
+                      height="48"
+                      rx="14"
+                      fill={
+                        isActive
+                          ? 'color-mix(in srgb, #0D9488 16%, transparent)'
+                          : 'var(--glass-bg-strong, #fff)'
+                      }
+                      stroke={isActive ? '#0D9488' : 'color-mix(in srgb, #0D9488 28%, transparent)'}
+                      strokeWidth={isActive ? 1.6 : 1.2}
+                    />
+                    <motion.circle
+                      cx="120"
+                      cy={rowY + 24}
+                      r="7"
+                      fill={isActive ? '#06B6D4' : '#0D9488'}
+                      filter="url(#xe-journey-glow)"
+                      animate={reduce ? undefined : { opacity: [0.55, 1, 0.55] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.18 }}
+                    />
+                    <text
+                      x="140"
+                      y={rowY + 20}
+                      fill="currentColor"
+                      fontSize="9"
+                      fontWeight="600"
+                      letterSpacing="0.12em"
+                      opacity={0.5}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </text>
+                    <text
+                      x="140"
+                      y={rowY + 36}
+                      fill="currentColor"
+                      fontSize="13"
+                      fontFamily="var(--font-sans), system-ui"
+                      fontWeight="600"
+                    >
+                      {label}
+                    </text>
+                    {i < 2 ? (
+                      <line
+                        x1="200"
+                        y1={rowY + 48}
+                        x2="200"
+                        y2={rowY + 62}
+                        stroke="url(#xe-journey-line)"
+                        strokeWidth={1.5}
+                        strokeOpacity={0.45}
+                      />
+                    ) : null}
+                  </motion.g>
+                )
+              })}
             </motion.g>
           ) : null}
 
@@ -234,47 +349,71 @@ function StageVisual({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
+              {/* Hub + orbit blueprint */}
+              <motion.circle
+                cx="200"
+                cy="200"
+                r="78"
+                fill="none"
+                stroke="url(#xe-journey-line)"
+                strokeWidth={1}
+                strokeDasharray="6 10"
+                animate={reduce ? undefined : { rotate: 360 }}
+                transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+                style={{ originX: '200px', originY: '200px' }}
+              />
               {[
-                { label: 'AI Models', x: 200, y: 90 },
-                { label: 'Cloud Design', x: 110, y: 210 },
-                { label: 'APIs', x: 290, y: 210 },
+                { label: 'AI', x: 200, y: 96 },
+                { label: 'Cloud', x: 108, y: 248 },
+                { label: 'APIs', x: 292, y: 248 },
               ].map((n, i) => (
                 <g key={n.label}>
-                  {i > 0 ? (
-                    <motion.line
-                      x1="200"
-                      y1="110"
-                      x2={n.x}
-                      y2={n.y - 20}
-                      stroke="url(#xe-journey-line)"
-                      strokeWidth="2"
-                      initial={{ pathLength: 0 }}
-                      animate={{ opacity: 0.7 }}
-                      transition={{ delay: 0.2 + i * 0.1 }}
-                    />
-                  ) : null}
+                  <motion.line
+                    x1="200"
+                    y1="200"
+                    x2={n.x}
+                    y2={n.y}
+                    stroke="url(#xe-journey-line)"
+                    strokeWidth={1.6}
+                    strokeOpacity={0.55}
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ delay: 0.1 + i * 0.12, duration: 0.6, ease: EASE }}
+                  />
                   <motion.circle
                     cx={n.x}
                     cy={n.y}
-                    r="36"
-                    fill="rgba(6,182,212,0.12)"
+                    r="32"
+                    fill="url(#xe-journey-fill)"
                     stroke="#06B6D4"
-                    initial={{ scale: 0.6, opacity: 0 }}
+                    strokeWidth={1.6}
+                    initial={{ scale: 0.7, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: i * 0.12, duration: 0.5, ease: EASE }}
+                    style={{ originX: `${n.x}px`, originY: `${n.y}px` }}
                   />
                   <text
                     x={n.x}
                     y={n.y + 4}
                     textAnchor="middle"
                     fill="currentColor"
-                    fontSize="11"
-                    fontWeight="600"
+                    fontSize="12"
+                    fontWeight="700"
                   >
-                    {n.label.split(' ')[0]}
+                    {n.label}
                   </text>
                 </g>
               ))}
+              <motion.circle
+                cx="200"
+                cy="200"
+                r="16"
+                fill="#0D9488"
+                filter="url(#xe-journey-glow)"
+                animate={reduce ? undefined : { scale: [1, 1.12, 1] }}
+                transition={{ duration: 2.4, repeat: Infinity }}
+                style={{ originX: '200px', originY: '200px' }}
+              />
             </motion.g>
           ) : null}
 
@@ -285,41 +424,64 @@ function StageVisual({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              {[0, 1, 2, 3].flatMap((row) =>
-                [0, 1, 2, 3, 4].map((col) => (
-                  <motion.rect
-                    key={`${row}-${col}`}
-                    x={70 + col * 52}
-                    y={90 + row * 55}
-                    width="40"
-                    height="40"
-                    rx="8"
-                    fill={
-                      row === 1 && col === 2
-                        ? '#0D9488'
-                        : 'color-mix(in srgb, var(--color-primary) 8%, transparent)'
-                    }
-                    stroke={
-                      row === 1 && col === 2
-                        ? '#06B6D4'
-                        : 'color-mix(in srgb, var(--color-primary) 18%, transparent)'
-                    }
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: (row * 5 + col) * 0.03, duration: 0.35 }}
-                  />
-                )),
-              )}
+              {/* Pipeline rail */}
+              <motion.path
+                d="M70 200 H330"
+                stroke="url(#xe-journey-line)"
+                strokeWidth={2}
+                strokeOpacity={0.35}
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.8, ease: EASE }}
+              />
+              {[0, 1, 2, 3, 4].map((col) => {
+                const x = 78 + col * 52
+                const activeCol = col === 2
+                return (
+                  <motion.g key={col}>
+                    <motion.rect
+                      x={x}
+                      y={148}
+                      width="44"
+                      height="104"
+                      rx="12"
+                      fill={activeCol ? 'url(#xe-journey-fill)' : 'var(--glass-bg-strong, #fff)'}
+                      stroke={
+                        activeCol
+                          ? '#0D9488'
+                          : 'color-mix(in srgb, var(--color-primary) 16%, transparent)'
+                      }
+                      strokeWidth={activeCol ? 1.8 : 1.2}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: col * 0.07, duration: 0.4, ease: EASE }}
+                    />
+                    {[0, 1, 2].map((row) => (
+                      <rect
+                        key={row}
+                        x={x + 10}
+                        y={164 + row * 26}
+                        width="24"
+                        height="8"
+                        rx="3"
+                        fill={
+                          activeCol
+                            ? '#0D9488'
+                            : 'color-mix(in srgb, var(--color-primary) 14%, transparent)'
+                        }
+                        opacity={activeCol ? 0.85 - row * 0.18 : 0.55}
+                      />
+                    ))}
+                  </motion.g>
+                )
+              })}
               {!reduce ? (
                 <motion.circle
-                  r="4"
+                  r="6"
                   fill="#06B6D4"
                   filter="url(#xe-journey-glow)"
-                  animate={{
-                    cx: [90, 310, 310, 90, 90],
-                    cy: [110, 110, 290, 290, 110],
-                  }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+                  animate={{ cx: [90, 310, 90], cy: [200, 200, 200] }}
+                  transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
                 />
               ) : null}
             </motion.g>
@@ -332,48 +494,74 @@ function StageVisual({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
+              {/* Centered control stack — safe inset inside frame */}
+              <rect
+                x="78"
+                y="92"
+                width="244"
+                height="216"
+                rx="22"
+                fill="url(#xe-journey-fill)"
+                stroke="#0D9488"
+                strokeWidth={1.2}
+                strokeOpacity={0.28}
+              />
               {['Kubernetes', 'Monitoring', 'Security'].map((label, i) => {
-                const y = 100 + i * 80
+                const rowY = 112 + i * 62
+                const isActive = i === 1
                 return (
-                  <g key={label}>
-                    <motion.rect
-                      x="80"
-                      y={y}
-                      width="240"
-                      height="52"
-                      rx="12"
-                      fill="rgba(13,148,136,0.12)"
-                      stroke="#0D9488"
-                      strokeOpacity={0.5}
-                      initial={{ scaleX: 0.6, opacity: 0 }}
-                      animate={{ scaleX: 1, opacity: 1 }}
-                      transition={{ delay: i * 0.15, duration: 0.5, ease: EASE }}
-                      style={{ originX: 0.5 }}
+                  <motion.g
+                    key={label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.12, duration: 0.45, ease: EASE }}
+                  >
+                    <rect
+                      x="96"
+                      y={rowY}
+                      width="208"
+                      height="48"
+                      rx="14"
+                      fill={
+                        isActive
+                          ? 'color-mix(in srgb, #0D9488 16%, transparent)'
+                          : 'var(--glass-bg-strong, #fff)'
+                      }
+                      stroke={isActive ? '#0D9488' : 'color-mix(in srgb, #0D9488 28%, transparent)'}
+                      strokeWidth={isActive ? 1.6 : 1.2}
                     />
-                    <text
-                      x="200"
-                      y={y + 32}
-                      textAnchor="middle"
-                      fill="currentColor"
-                      fontSize="13"
-                      fontWeight="600"
-                    >
+                    <motion.circle
+                      cx="120"
+                      cy={rowY + 24}
+                      r="6"
+                      fill={isActive ? '#06B6D4' : '#0D9488'}
+                      filter="url(#xe-journey-glow)"
+                      animate={reduce ? undefined : { opacity: [0.55, 1, 0.55] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.18 }}
+                    />
+                    <text x="140" y={rowY + 29} fill="currentColor" fontSize="13" fontWeight="600">
                       {label}
                     </text>
+                    <rect
+                      x="262"
+                      y={rowY + 17}
+                      width="26"
+                      height="14"
+                      rx="7"
+                      fill="color-mix(in srgb, #0D9488 20%, transparent)"
+                    />
                     {i < 2 ? (
-                      <motion.line
+                      <line
                         x1="200"
-                        y1={y + 52}
+                        y1={rowY + 48}
                         x2="200"
-                        y2={y + 80}
+                        y2={rowY + 62}
                         stroke="url(#xe-journey-line)"
-                        strokeWidth="2"
-                        strokeDasharray="4 6"
-                        animate={reduce ? undefined : { strokeDashoffset: [0, -20] }}
-                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                        strokeWidth={1.5}
+                        strokeOpacity={0.45}
                       />
                     ) : null}
-                  </g>
+                  </motion.g>
                 )
               })}
             </motion.g>
@@ -387,43 +575,45 @@ function StageVisual({
               exit={{ opacity: 0 }}
             >
               {[
-                { label: 'ROI', trend: '↑', x: 120, y: 130 },
-                { label: 'Perf', trend: '↑', x: 280, y: 130 },
-                { label: 'Cost', trend: '↓', x: 120, y: 260 },
-                { label: 'Growth', trend: '↑', x: 280, y: 260 },
+                { label: 'ROI', trend: '↑', x: 126, y: 138 },
+                { label: 'Perf', trend: '↑', x: 274, y: 138 },
+                { label: 'Cost', trend: '↓', x: 126, y: 262 },
+                { label: 'Growth', trend: '↑', x: 274, y: 262 },
               ].map((m, i) => (
                 <motion.g
                   key={m.label}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1, duration: 0.45 }}
+                  transition={{ delay: i * 0.1, duration: 0.45, ease: EASE }}
                 >
                   <rect
-                    x={m.x - 55}
-                    y={m.y - 40}
-                    width="110"
-                    height="80"
-                    rx="16"
-                    fill="rgba(16,185,129,0.1)"
-                    stroke="#10B981"
-                    strokeOpacity={0.45}
+                    x={m.x - 58}
+                    y={m.y - 42}
+                    width="116"
+                    height="84"
+                    rx="18"
+                    fill="url(#xe-journey-fill)"
+                    stroke="#0D9488"
+                    strokeWidth={1.5}
+                    strokeOpacity={0.5}
                   />
                   <text
                     x={m.x}
-                    y={m.y - 5}
+                    y={m.y - 8}
                     textAnchor="middle"
                     fill="currentColor"
                     fontSize="12"
                     fontWeight="600"
+                    opacity={0.85}
                   >
                     {m.label}
                   </text>
                   <text
                     x={m.x}
-                    y={m.y + 22}
+                    y={m.y + 24}
                     textAnchor="middle"
                     fill="#0D9488"
-                    fontSize="22"
+                    fontSize="24"
                     fontWeight="700"
                     fontFamily="var(--font-display), system-ui"
                   >

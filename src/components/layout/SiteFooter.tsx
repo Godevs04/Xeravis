@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { BrandLogo } from '@/components/brand/BrandLogo'
 import { Container } from '@/components/layout/Container'
 import { NewsletterForm } from '@/components/forms/NewsletterForm'
 import { getGlobal } from '@/lib/cms'
@@ -73,9 +74,12 @@ export async function SiteFooter() {
 
         <div className="grid gap-12 border-t border-[color:var(--glass-border-soft)] pt-14 lg:grid-cols-[1fr_2fr]">
           <div>
-            <Link href="/" className="font-display text-xl font-bold tracking-tight">
-              Xelarvis
-            </Link>
+            <BrandLogo
+              variant="footer"
+              wordmark="Xelarvis Technologies"
+              size={48}
+              wordmarkClassName="text-[1.15rem] sm:text-xl"
+            />
             <div className="mt-6 flex flex-wrap gap-3">
               {social?.linkedin ? (
                 <a

@@ -60,7 +60,7 @@ const CHAPTER_META = [
     statValue: 0,
     statSuffix: '',
     statLabel: 'distinctive craft left',
-    accent: '#10B981',
+    accent: '#0D9488',
   },
 ]
 
@@ -290,65 +290,253 @@ function ChallengeVisual({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.45 }}
             >
-              {[0, 1, 2].flatMap((row) =>
-                [0, 1, 2].map((col) => {
-                  const x = 95 + col * 70
-                  const y = 95 + row * 70
-                  return (
-                    <motion.rect
-                      key={`${row}-${col}`}
-                      x={x}
-                      y={y}
-                      width={52}
-                      height={52}
-                      rx={14}
-                      fill="rgba(255,255,255,0.04)"
-                      stroke="rgba(148,163,184,0.35)"
+              {/* Sameness grid — blueprint of interchangeable platforms */}
+              {[0, 1, 2, 3].map((i) => (
+                <motion.line
+                  key={`v-${i}`}
+                  x1={100 + i * 66}
+                  y1={78}
+                  x2={100 + i * 66}
+                  y2={268}
+                  stroke="var(--hero-grid)"
+                  strokeWidth={1}
+                  initial={reduce ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.05 * i, duration: 0.4 }}
+                />
+              ))}
+              {[0, 1, 2].map((i) => (
+                <motion.line
+                  key={`h-${i}`}
+                  x1={88}
+                  y1={100 + i * 72}
+                  x2={312}
+                  y2={100 + i * 72}
+                  stroke="var(--hero-grid)"
+                  strokeWidth={1}
+                  initial={reduce ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.08 * i, duration: 0.4 }}
+                />
+              ))}
+
+              {/* Cookie-cutter platform cards — identical clones */}
+              {[
+                { x: 78, y: 88, o: 0.42, delay: 0 },
+                { x: 108, y: 112, o: 0.68, delay: 0.08 },
+                { x: 138, y: 136, o: 1, delay: 0.16 },
+              ].map((card, i) => (
+                <motion.g
+                  key={`card-${i}`}
+                  initial={reduce ? false : { opacity: 0, y: 12 }}
+                  animate={{ opacity: card.o, y: 0 }}
+                  transition={{ delay: card.delay, duration: 0.55, ease: EASE }}
+                >
+                  <rect
+                    x={card.x}
+                    y={card.y}
+                    width={168}
+                    height={112}
+                    rx={16}
+                    fill="var(--hero-panel)"
+                    stroke="var(--hero-panel-border)"
+                    strokeWidth={1.5}
+                  />
+                  {/* Fake chrome bars — every clone looks the same */}
+                  <rect
+                    x={card.x + 14}
+                    y={card.y + 16}
+                    width={56}
+                    height={8}
+                    rx={4}
+                    fill={accent}
+                    opacity={0.35}
+                  />
+                  <rect
+                    x={card.x + 14}
+                    y={card.y + 34}
+                    width={140}
+                    height={6}
+                    rx={3}
+                    fill="var(--hero-muted)"
+                    opacity={0.28}
+                  />
+                  <rect
+                    x={card.x + 14}
+                    y={card.y + 48}
+                    width={108}
+                    height={6}
+                    rx={3}
+                    fill="var(--hero-muted)"
+                    opacity={0.18}
+                  />
+                  {[0, 1, 2].map((n) => (
+                    <rect
+                      key={n}
+                      x={card.x + 14 + n * 46}
+                      y={card.y + 68}
+                      width={38}
+                      height={28}
+                      rx={8}
+                      fill="var(--hero-bg)"
+                      stroke="var(--hero-panel-border)"
                       strokeWidth={1}
-                      initial={reduce ? false : { opacity: 0, scale: 0.8 }}
-                      animate={{
-                        opacity: [0.35, 0.75, 0.35],
-                        y: reduce ? y : [y, y - 4, y],
-                      }}
-                      transition={{
-                        duration: 3.2,
-                        repeat: Infinity,
-                        delay: (row + col) * 0.12,
-                        ease: 'easeInOut',
-                      }}
                     />
-                  )
-                }),
-              )}
-              {/* Fading brand mark */}
-              <motion.text
-                x={200}
-                y={340}
-                textAnchor="middle"
-                fill={accent}
-                fontSize={13}
-                fontFamily="var(--font-display), system-ui"
-                fontWeight={600}
-                animate={reduce ? undefined : { opacity: [0.25, 0.85, 0.25] }}
-                transition={{ duration: 2.8, repeat: Infinity }}
+                  ))}
+                  <text
+                    x={card.x + 148}
+                    y={card.y + 24}
+                    textAnchor="end"
+                    fill="var(--hero-muted)"
+                    fontSize={9}
+                    fontFamily="var(--font-sans), system-ui"
+                    letterSpacing="0.12em"
+                    opacity={0.7}
+                  >
+                    TMPL
+                  </text>
+                </motion.g>
+              ))}
+
+              {/* Identity seal cracking / emptying — craft erased */}
+              <motion.g
+                initial={reduce ? false : { scale: 0.85, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.28, duration: 0.55, ease: EASE }}
               >
-                Identity fading…
-              </motion.text>
+                <motion.circle
+                  cx={286}
+                  cy={168}
+                  r={46}
+                  fill="var(--hero-panel)"
+                  stroke={accent}
+                  strokeWidth={1.75}
+                  strokeDasharray="4 6"
+                  animate={
+                    reduce ? undefined : { strokeDashoffset: [0, 24], opacity: [0.85, 0.45, 0.85] }
+                  }
+                  transition={{ duration: 4.2, repeat: Infinity, ease: 'linear' }}
+                />
+                {/* Abstract brand diamond dissolving into dust */}
+                <motion.path
+                  d="M286 138 L308 168 L286 198 L264 168 Z"
+                  fill="none"
+                  stroke={accent}
+                  strokeWidth={2.2}
+                  strokeLinejoin="round"
+                  animate={
+                    reduce
+                      ? { opacity: 0.45 }
+                      : { opacity: [0.9, 0.15, 0.9], pathLength: [1, 0.35, 1] }
+                  }
+                  transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
+                />
+                <motion.path
+                  d="M286 152 L296 168 L286 184 L276 168 Z"
+                  fill={accent}
+                  animate={reduce ? { opacity: 0.2 } : { opacity: [0.55, 0.05, 0.55] }}
+                  transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
+                />
+                {/* Dust particles leaving the seal */}
+                {[
+                  { x: 318, y: 148 },
+                  { x: 326, y: 168 },
+                  { x: 316, y: 188 },
+                  { x: 332, y: 156 },
+                ].map((p, i) => (
+                  <motion.circle
+                    key={`dust-${i}`}
+                    r={2.4}
+                    fill={accent}
+                    initial={false}
+                    animate={
+                      reduce
+                        ? { cx: p.x, cy: p.y, opacity: 0.45 }
+                        : {
+                            cx: [p.x, p.x + 12 + i * 3, p.x],
+                            cy: [p.y, p.y - 6 + i, p.y],
+                            opacity: [0.75, 0, 0.75],
+                            r: [2.4, 1.1, 2.4],
+                          }
+                    }
+                    transition={{
+                      duration: 2.6 + i * 0.25,
+                      repeat: Infinity,
+                      delay: i * 0.18,
+                      ease: 'easeInOut',
+                    }}
+                  />
+                ))}
+              </motion.g>
+
+              {/* Empty craft meter */}
+              <g>
+                <text
+                  x={200}
+                  y={312}
+                  textAnchor="middle"
+                  fill="var(--hero-muted)"
+                  fontSize={10}
+                  fontFamily="var(--font-sans), system-ui"
+                  letterSpacing="0.14em"
+                >
+                  CRAFT INDEX
+                </text>
+                <rect
+                  x={120}
+                  y={322}
+                  width={160}
+                  height={10}
+                  rx={5}
+                  fill="var(--hero-panel)"
+                  stroke="var(--hero-panel-border)"
+                  strokeWidth={1}
+                />
+                <motion.rect
+                  x={122}
+                  y={324}
+                  width={reduce ? 4 : undefined}
+                  height={6}
+                  rx={3}
+                  fill={accent}
+                  initial={reduce ? false : { width: 96 }}
+                  animate={reduce ? undefined : { width: [96, 4, 96] }}
+                  transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+                />
+                <motion.text
+                  x={200}
+                  y={354}
+                  textAnchor="middle"
+                  fill={accent}
+                  fontSize={12}
+                  fontFamily="var(--font-display), system-ui"
+                  fontWeight={600}
+                  animate={reduce ? undefined : { opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 2.4, repeat: Infinity }}
+                >
+                  Identity → template
+                </motion.text>
+              </g>
             </motion.g>
           ) : null}
         </AnimatePresence>
       </svg>
 
-      {/* Floating glass chip */}
+      {/* Floating glass chip — mode-aware */}
       <motion.div
-        className="absolute top-[12%] right-[4%] rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-2 shadow-[var(--shadow-light)] backdrop-blur-xl dark:border-white/15 dark:bg-white/[0.07] dark:shadow-none"
+        className="absolute top-[12%] right-[4%] rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-2 shadow-[var(--shadow-light)] backdrop-blur-xl"
         animate={reduce ? undefined : { y: [0, -8, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <p className="text-[9px] tracking-[0.16em] text-[color:var(--color-accent)]/80 uppercase dark:text-cyan-200/80">
-          Signal
+        <p
+          className="text-[9px] tracking-[0.16em] uppercase"
+          style={{ color: accent, opacity: 0.85 }}
+        >
+          {mode === 0 ? 'Signal' : mode === 1 ? 'Model' : 'Clone'}
         </p>
-        <p className="font-display text-sm font-semibold text-[color:var(--hero-text)]">Live</p>
+        <p className="font-display text-sm font-semibold text-[color:var(--hero-text)]">
+          {mode === 0 ? 'Live' : mode === 1 ? 'Demo only' : 'Zero craft'}
+        </p>
       </motion.div>
     </div>
   )
@@ -598,7 +786,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                     </p>
                   ) : null}
 
-                  <div className="relative mt-10 overflow-hidden rounded-[24px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-5 shadow-[var(--shadow-medium)] backdrop-blur-xl dark:border-white/12 dark:bg-gradient-to-br dark:from-white/[0.09] dark:to-white/[0.02] dark:shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+                  <div className="relative mt-10 overflow-hidden rounded-[24px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-5 shadow-[var(--shadow-medium)] backdrop-blur-xl">
                     <div
                       aria-hidden
                       className="pointer-events-none absolute inset-0 rounded-[24px]"
@@ -616,6 +804,23 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                     <p className="relative mt-2 text-sm tracking-wide text-[color:var(--hero-muted)]">
                       {current?.statLabel}
                     </p>
+                    {mode === 2 ? (
+                      <div className="relative mt-5">
+                        <div className="mb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-[0.14em] text-[color:var(--hero-muted)] uppercase">
+                          <span>Craft index</span>
+                          <span style={{ color: current?.accent }}>Empty</span>
+                        </div>
+                        <div className="h-1.5 overflow-hidden rounded-full bg-[color:var(--hero-bg)] ring-1 ring-[color:var(--hero-panel-border)]">
+                          <motion.div
+                            className="h-full rounded-full"
+                            style={{ background: current?.accent }}
+                            initial={{ width: '42%' }}
+                            animate={reduce ? { width: '3%' } : { width: ['42%', '3%', '42%'] }}
+                            transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
+                          />
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
 
                   <p className="mt-8 text-[11px] tracking-[0.16em] text-[color:var(--hero-muted)] uppercase">

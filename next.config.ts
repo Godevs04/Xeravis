@@ -16,7 +16,12 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: false,
   },
   images: {
-    localPatterns: [{ pathname: '/api/media/file/**' }],
+    localPatterns: [
+      { pathname: '/api/media/file/**' },
+      { pathname: '/brand/**' },
+      { pathname: '/icons/**' },
+      { pathname: '/XELlogo512.png' },
+    ],
     remotePatterns: [
       { protocol: 'https', hostname: 'res.cloudinary.com' },
       { protocol: 'https', hostname: 'images.unsplash.com' },

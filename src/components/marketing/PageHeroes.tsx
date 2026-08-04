@@ -20,7 +20,7 @@ type BaseHero = {
 /** Services — capability masthead + glass ribbon */
 export function ServicesPageHero({ title, subtitle }: BaseHero) {
   const reduce = useReducedMotion()
-  const ribbon = ['AI Research', 'Data Science', 'IT Consulting', 'Clinical', 'Cloud']
+  const ribbon = ['Data Science', 'AI Research', 'Healthcare', 'IT Consulting', 'Cloud']
 
   return (
     <MeshBackdrop className="pt-28 pb-0 lg:pt-36" interactive={false}>
@@ -227,7 +227,7 @@ export function CareersPageHero({ title, subtitle }: BaseHero) {
 /** About — brand masthead with mesh atmosphere */
 export function AboutPageHero({ title, subtitle }: BaseHero) {
   const reduce = useReducedMotion()
-  const domains = ['Healthcare AI', 'Clinical Data', 'Machine Learning', 'Enterprise Software']
+  const domains = ['Data Science', 'AI Research', 'Healthcare AI', 'Clinical Data']
 
   return (
     <MeshBackdrop className="pt-28 pb-20 lg:pt-36 lg:pb-28" interactive={false}>

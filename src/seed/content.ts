@@ -2,6 +2,62 @@
 
 export const SEED_SERVICES = [
   {
+    title: 'Data Science & Advanced Analytics',
+    slug: 'data-science-advanced-analytics',
+    summary:
+      'Transform data into actionable insights with predictive analytics, business intelligence, statistical modeling, and visualization.',
+    icon: 'BarChart3',
+    challenges:
+      'Raw data rarely drives decisions without quality assessment, modeling, and clear executive storytelling.',
+    body: 'Data is one of the most valuable assets for any organization. XELARVIS helps businesses convert raw data into meaningful insights that improve decision-making, optimize operations, and uncover growth opportunities.',
+    process: [
+      {
+        title: 'Business Understanding',
+        description: 'Identify objectives, KPIs, and analytical requirements.',
+      },
+      {
+        title: 'Data Assessment',
+        description: 'Evaluate quality, completeness, and availability across sources.',
+      },
+      {
+        title: 'Data Engineering',
+        description: 'Prepare and transform data into analysis-ready formats.',
+      },
+      {
+        title: 'Statistical Analysis',
+        description: 'Discover patterns, trends, and relationships in the data.',
+      },
+      {
+        title: 'Machine Learning & Predictive Analytics',
+        description: 'Forecast outcomes and support data-driven decisions.',
+      },
+      {
+        title: 'Visualization & Reporting',
+        description: 'Interactive dashboards and executive reports.',
+      },
+      {
+        title: 'Business Recommendations',
+        description: 'Translate findings into practical improvement actions.',
+      },
+    ],
+    benefits: [
+      {
+        title: 'Predictive Analytics',
+        description: 'Forecast demand, risk, and customer outcomes.',
+      },
+      { title: 'Business Intelligence', description: 'Trusted metrics and self-serve reporting.' },
+      {
+        title: 'Healthcare Analytics',
+        description: 'Clinical and operational insights for life sciences.',
+      },
+      {
+        title: 'Customer & Risk Analytics',
+        description: 'Segmentation, forecasting, and risk models.',
+      },
+    ],
+    techLabels: ['Python', 'R', 'SQL', 'Power BI', 'Tableau', 'Apache Spark'],
+  },
+  {
     title: 'Artificial Intelligence & AI Research',
     slug: 'artificial-intelligence-ai-research',
     summary:
@@ -76,119 +132,6 @@ export const SEED_SERVICES = [
     ],
   },
   {
-    title: 'Data Science & Advanced Analytics',
-    slug: 'data-science-advanced-analytics',
-    summary:
-      'Transform data into actionable insights with predictive analytics, business intelligence, statistical modeling, and visualization.',
-    icon: 'BarChart3',
-    challenges:
-      'Raw data rarely drives decisions without quality assessment, modeling, and clear executive storytelling.',
-    body: 'Data is one of the most valuable assets for any organization. XELARVIS helps businesses convert raw data into meaningful insights that improve decision-making, optimize operations, and uncover growth opportunities.',
-    process: [
-      {
-        title: 'Business Understanding',
-        description: 'Identify objectives, KPIs, and analytical requirements.',
-      },
-      {
-        title: 'Data Assessment',
-        description: 'Evaluate quality, completeness, and availability across sources.',
-      },
-      {
-        title: 'Data Engineering',
-        description: 'Prepare and transform data into analysis-ready formats.',
-      },
-      {
-        title: 'Statistical Analysis',
-        description: 'Discover patterns, trends, and relationships in the data.',
-      },
-      {
-        title: 'Machine Learning & Predictive Analytics',
-        description: 'Forecast outcomes and support data-driven decisions.',
-      },
-      {
-        title: 'Visualization & Reporting',
-        description: 'Interactive dashboards and executive reports.',
-      },
-      {
-        title: 'Business Recommendations',
-        description: 'Translate findings into practical improvement actions.',
-      },
-    ],
-    benefits: [
-      {
-        title: 'Predictive Analytics',
-        description: 'Forecast demand, risk, and customer outcomes.',
-      },
-      { title: 'Business Intelligence', description: 'Trusted metrics and self-serve reporting.' },
-      {
-        title: 'Healthcare Analytics',
-        description: 'Clinical and operational insights for life sciences.',
-      },
-      {
-        title: 'Customer & Risk Analytics',
-        description: 'Segmentation, forecasting, and risk models.',
-      },
-    ],
-    techLabels: ['Python', 'R', 'SQL', 'Power BI', 'Tableau', 'Apache Spark'],
-  },
-  {
-    title: 'IT Consulting & Digital Transformation',
-    slug: 'it-consulting-digital-transformation',
-    summary:
-      'Modernize business operations through technology consulting, software engineering, cloud adoption, and automation.',
-    icon: 'Briefcase',
-    challenges:
-      'Legacy systems, unclear roadmaps, and fragmented delivery slow modernization and increase risk.',
-    body: 'Technology is at the core of modern business. XELARVIS provides consulting services that help organizations modernize infrastructure, improve operational efficiency, and implement innovative digital solutions.',
-    process: [
-      {
-        title: 'Business Assessment',
-        description: 'Understand processes and identify technology challenges.',
-      },
-      {
-        title: 'Solution Architecture',
-        description: 'Design scalable, secure, future-ready solutions.',
-      },
-      {
-        title: 'Technology Selection',
-        description: 'Recommend frameworks, cloud platforms, and tools.',
-      },
-      {
-        title: 'Software Development',
-        description: 'Enterprise applications, web platforms, APIs, and cloud solutions.',
-      },
-      { title: 'Integration', description: 'Connect applications with existing business systems.' },
-      {
-        title: 'Quality Assurance',
-        description: 'Functional, performance, security, and UAT testing.',
-      },
-      {
-        title: 'Deployment & Support',
-        description: 'Launch, maintain, enhance, and support production systems.',
-      },
-    ],
-    benefits: [
-      {
-        title: 'Digital Transformation',
-        description: 'Pragmatic programs tied to business outcomes.',
-      },
-      { title: 'Enterprise Software', description: 'Secure applications built for longevity.' },
-      { title: 'Cloud Migration', description: 'Move and modernize workloads with confidence.' },
-      { title: 'Process Automation', description: 'Reduce manual effort across operations.' },
-    ],
-    techLabels: [
-      'Java',
-      'Python',
-      'React',
-      'Node.js',
-      '.NET',
-      'Docker',
-      'Kubernetes',
-      'AWS',
-      'Azure',
-    ],
-  },
-  {
     title: 'Clinical Data Science & Healthcare AI',
     slug: 'clinical-data-science-healthcare-ai',
     summary:
@@ -259,6 +202,63 @@ export const SEED_SERVICES = [
       'Tableau',
       'TensorFlow',
       'PyTorch',
+    ],
+  },
+  {
+    title: 'IT Consulting & Digital Transformation',
+    slug: 'it-consulting-digital-transformation',
+    summary:
+      'Modernize business operations through technology consulting, software engineering, cloud adoption, and automation.',
+    icon: 'Briefcase',
+    challenges:
+      'Legacy systems, unclear roadmaps, and fragmented delivery slow modernization and increase risk.',
+    body: 'Technology is at the core of modern business. XELARVIS provides consulting services that help organizations modernize infrastructure, improve operational efficiency, and implement innovative digital solutions.',
+    process: [
+      {
+        title: 'Business Assessment',
+        description: 'Understand processes and identify technology challenges.',
+      },
+      {
+        title: 'Solution Architecture',
+        description: 'Design scalable, secure, future-ready solutions.',
+      },
+      {
+        title: 'Technology Selection',
+        description: 'Recommend frameworks, cloud platforms, and tools.',
+      },
+      {
+        title: 'Software Development',
+        description: 'Enterprise applications, web platforms, APIs, and cloud solutions.',
+      },
+      { title: 'Integration', description: 'Connect applications with existing business systems.' },
+      {
+        title: 'Quality Assurance',
+        description: 'Functional, performance, security, and UAT testing.',
+      },
+      {
+        title: 'Deployment & Support',
+        description: 'Launch, maintain, enhance, and support production systems.',
+      },
+    ],
+    benefits: [
+      {
+        title: 'Digital Transformation',
+        description: 'Pragmatic programs tied to business outcomes.',
+      },
+      { title: 'Enterprise Software', description: 'Secure applications built for longevity.' },
+      { title: 'Cloud Migration', description: 'Move and modernize workloads with confidence.' },
+      { title: 'Process Automation', description: 'Reduce manual effort across operations.' },
+    ],
+    techLabels: [
+      'Java',
+      'Python',
+      'React',
+      'Node.js',
+      '.NET',
+      'Docker',
+      'Kubernetes',
+      'AWS',
+      'Azure',
     ],
   },
   {
