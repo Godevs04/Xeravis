@@ -14,14 +14,13 @@ export const UNSPLASH = {
 
 export const DEFAULT_NAV = {
   primaryLinks: [
+    { label: 'About', href: '/about', mega: 'about' },
     { label: 'Services', href: '/services', mega: 'services' },
     { label: 'Solutions', href: '/solutions', mega: 'solutions' },
-    { label: 'Technologies', href: '/technologies', mega: 'none' },
     { label: 'Industries', href: '/industries', mega: 'industries' },
     { label: 'Research & Innovation', href: '/ai-research-lab', mega: 'research' },
     { label: 'Insights', href: '/insights', mega: 'insights' },
     { label: 'Careers', href: '/careers', mega: 'none' },
-    { label: 'About', href: '/about', mega: 'about' },
   ],
   ctaLabel: 'Contact Us',
   ctaHref: '/contact',

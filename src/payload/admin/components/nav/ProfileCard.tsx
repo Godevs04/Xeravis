@@ -6,8 +6,6 @@ import Link from 'next/link'
 import posthog from 'posthog-js'
 import React, { useEffect, useState } from 'react'
 
-import { useWorkspaceOptional } from '@/payload/admin/workspace/WorkspaceContext'
-
 function toggleTheme() {
   const root = document.documentElement
   const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'
@@ -24,7 +22,6 @@ function roleLabel(roles: unknown): string {
 }
 
 export const ProfileCard = () => {
-  const ctx = useWorkspaceOptional()
   const { user } = useAuth()
   const [open, setOpen] = useState(false)
 
@@ -52,7 +49,6 @@ export const ProfileCard = () => {
     posthog.reset()
   }
   const initials = name.slice(0, 2).toUpperCase()
-  const workspace = ctx?.workspace.label || 'Website'
 
   return (
     <div className={`xe-profile${open ? 'is-open' : ''}`}>
@@ -68,8 +64,8 @@ export const ProfileCard = () => {
         </span>
         <span className="xe-profile__meta">
           <span className="xe-profile__name">{name}</span>
-          <span className="xe-profile__role">
-            {role} · {workspace}
+          <span className="xe-profile__role" style={{ textTransform: 'capitalize' }}>
+            {role}
           </span>
         </span>
         <span className="xe-profile__chevron" aria-hidden>
@@ -88,10 +84,6 @@ export const ProfileCard = () => {
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="xe-profile__email">{email}</div>
-            <div className="xe-profile__meta-row">
-              <span>Workspace</span>
-              <strong>{workspace}</strong>
-            </div>
             <div className="xe-profile__meta-row">
               <span>Role</span>
               <strong style={{ textTransform: 'capitalize' }}>{role}</strong>

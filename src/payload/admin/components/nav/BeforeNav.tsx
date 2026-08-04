@@ -2,8 +2,6 @@
 
 import React from 'react'
 
-import { WorkspaceSwitcher } from './WorkspaceSwitcher'
-
 const NAV_KEY = 'xe-nav-collapsed'
 
 function toggleNav() {
@@ -13,11 +11,25 @@ function toggleNav() {
   window.localStorage.setItem(NAV_KEY, next === 'collapsed' ? '1' : '0')
 }
 
-/** Top of sidebar: collapse + workspace only */
+/** Top of sidebar: brand + collapse — workspace focus lives in BusinessNav */
 export const BeforeNav = () => {
   return (
     <div className="xe-before-nav">
-      <div className="xe-nav-collapse">
+      <div className="xe-before-nav__row">
+        <div className="xe-before-nav__brand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/xel-mark.png"
+            alt=""
+            width={22}
+            height={22}
+            className="xe-before-nav__mark"
+          />
+          <div className="xe-before-nav__brand-text">
+            <span className="xe-before-nav__brand-name">Xelarvis</span>
+            <span className="xe-before-nav__brand-sub">Admin</span>
+          </div>
+        </div>
         <button
           type="button"
           className="xe-nav-collapse__btn"
@@ -35,7 +47,6 @@ export const BeforeNav = () => {
           </svg>
         </button>
       </div>
-      <WorkspaceSwitcher />
     </div>
   )
 }

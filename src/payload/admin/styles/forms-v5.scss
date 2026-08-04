@@ -24,18 +24,56 @@ html[data-xe-ui='v5'] .form-fields {
   gap: 0 !important;
 }
 
-/* Auth + main fields as elegant section card */
+/* Auth + main fields as elegant section card — top-level only (not nested array rows) */
 html[data-xe-ui='v5'] .auth-fields,
 html[data-xe-ui='v5'] .collection-edit__auth,
-html[data-xe-ui='v5'] .account .render-fields,
+html[data-xe-ui='v5'] .account > .render-fields,
 html[data-xe-ui='v5'] .document-fields__edit > .render-fields,
 html[data-xe-ui='v5'] .payload-settings {
+  width: 100% !important;
+  max-width: 100% !important;
   background: var(--xe-card) !important;
   border: 1px solid var(--xe-border) !important;
   border-radius: var(--xe-radius-lg) !important;
   box-shadow: var(--xe-shadow) !important;
   padding: var(--xe-card-pad) !important;
-  margin-bottom: var(--xe-section-gap) !important;
+  margin: 0 0 var(--xe-edit-gap) !important;
+  box-sizing: border-box !important;
+}
+
+/* Nested field stacks inside arrays/blocks stay flat */
+html[data-xe-ui='v5'] .array-field .render-fields,
+html[data-xe-ui='v5'] .blocks-field .render-fields,
+html[data-xe-ui='v5'] .collapsible__content .render-fields,
+html[data-xe-ui='v5'] .group-field .render-fields {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__edit {
+  padding-top: 0 !important;
+  padding-bottom: 8px !important;
+  width: 100% !important;
+}
+
+html[data-xe-ui='v5'] .document-fields {
+  gap: var(--xe-edit-gap) !important;
+}
+
+html[data-xe-ui='v5'] .field-type,
+html[data-xe-ui='v5'] .field-type__wrap,
+html[data-xe-ui='v5'] .array-field,
+html[data-xe-ui='v5'] .array-field__wrap,
+html[data-xe-ui='v5'] .blocks-field,
+html[data-xe-ui='v5'] .group-field,
+html[data-xe-ui='v5'] .tabs-field {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 html[data-xe-ui='v5'] .render-fields > .field-type,
@@ -48,10 +86,11 @@ html[data-xe-ui='v5'] .auth-fields .field-type + .field-type {
   border-top: 1px solid var(--xe-border) !important;
 }
 
-/* Labels above fields */
+/* Labels above fields — never style every <label> in the admin shell */
 html[data-xe-ui='v5'] .field-label,
 html[data-xe-ui='v5'] .field-type__label,
-html[data-xe-ui='v5'] label {
+html[data-xe-ui='v5'] .field-type > label,
+html[data-xe-ui='v5'] .field-type > .field-label {
   display: block !important;
   color: var(--xe-muted) !important;
   font-size: var(--xe-fs-label) !important;
@@ -76,65 +115,65 @@ html[data-xe-ui='v5'] .field-type .field-description {
   margin-bottom: 0 !important;
 }
 
-/* Inputs — 48px · 16px radius · focus motion */
-html[data-xe-ui='v5'] input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
-html[data-xe-ui='v5'] textarea,
-html[data-xe-ui='v5'] select,
-html[data-xe-ui='v5'] .input input,
-html[data-xe-ui='v5'] .textarea textarea,
-html[data-xe-ui='v5'] .field-type__wrap input,
-html[data-xe-ui='v5'] .field-type__wrap textarea {
+/* Text/textarea inputs only — never style react-select's hidden input */
+html[data-xe-ui='v5'] .field-type__wrap > input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
+html[data-xe-ui='v5'] .input > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5'] .textarea > textarea,
+html[data-xe-ui='v5'] .date-time-picker input,
+html[data-xe-ui='v5'] .field-type.text input,
+html[data-xe-ui='v5'] .field-type.email input,
+html[data-xe-ui='v5'] .field-type.number input,
+html[data-xe-ui='v5'] .field-type.textarea textarea {
   min-height: var(--xe-input-h) !important;
   height: auto !important;
   padding: 12px 16px !important;
-  border-radius: var(--xe-radius) !important;
+  border-radius: 14px !important;
   border: 1px solid var(--xe-border-strong) !important;
   background: var(--xe-input-bg) !important;
   color: var(--xe-text) !important;
-  font-size: var(--xe-fs-body) !important;
+  font-size: 15px !important;
   font-family: var(--xe-font) !important;
   box-shadow: none !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
   caret-color: var(--xe-accent);
   transition:
     border-color var(--xe-dur) var(--xe-ease),
-    box-shadow var(--xe-dur) var(--xe-ease),
-    transform var(--xe-dur-fast) var(--xe-ease) !important;
+    box-shadow var(--xe-dur) var(--xe-ease) !important;
 }
 
-html[data-xe-ui='v5'] textarea,
-html[data-xe-ui='v5'] .textarea textarea {
+html[data-xe-ui='v5'] .field-type.textarea textarea,
+html[data-xe-ui='v5'] .textarea > textarea {
   min-height: 128px !important;
   resize: vertical;
 }
 
-html[data-xe-ui='v5'] input::placeholder,
-html[data-xe-ui='v5'] textarea::placeholder {
+html[data-xe-ui='v5'] .field-type__wrap > input::placeholder,
+html[data-xe-ui='v5'] .textarea > textarea::placeholder {
   color: var(--xe-faint) !important;
 }
 
-html[data-xe-ui='v5'] input:focus,
-html[data-xe-ui='v5'] textarea:focus,
-html[data-xe-ui='v5'] select:focus,
-html[data-xe-ui='v5'] .input input:focus,
-html[data-xe-ui='v5'] .textarea textarea:focus {
+html[data-xe-ui='v5'] .field-type__wrap > input:focus,
+html[data-xe-ui='v5'] .input > input:focus,
+html[data-xe-ui='v5'] .textarea > textarea:focus,
+html[data-xe-ui='v5'] .field-type.text input:focus,
+html[data-xe-ui='v5'] .field-type.email input:focus {
   outline: none !important;
   border-color: color-mix(in srgb, var(--xe-accent) 70%, transparent) !important;
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--xe-accent) 16%, transparent) !important;
-  transform: translateY(-1px);
 }
 
-/* React Select */
+/* React Select — control chrome only; keep internals unstyled */
 html[data-xe-ui='v5'] .react-select__control,
 html[data-xe-ui='v5'] .rs__control {
   min-height: var(--xe-input-h) !important;
-  border-radius: var(--xe-radius) !important;
+  border-radius: 14px !important;
   border: 1px solid var(--xe-border-strong) !important;
   background: var(--xe-input-bg) !important;
   box-shadow: none !important;
   color: var(--xe-text) !important;
-  transition:
-    border-color var(--xe-dur) var(--xe-ease),
-    box-shadow var(--xe-dur) var(--xe-ease) !important;
+  overflow: hidden !important;
 }
 
 html[data-xe-ui='v5'] .react-select__control--is-focused,
@@ -143,11 +182,52 @@ html[data-xe-ui='v5'] .rs__control--is-focused {
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--xe-accent) 16%, transparent) !important;
 }
 
+html[data-xe-ui='v5'] .react-select__value-container,
+html[data-xe-ui='v5'] .rs__value-container {
+  padding: 2px 12px !important;
+  overflow: hidden !important;
+  display: grid !important;
+  align-items: center !important;
+}
+
+html[data-xe-ui='v5'] .react-select__single-value,
+html[data-xe-ui='v5'] .rs__single-value {
+  color: var(--xe-text) !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  grid-area: 1 / 1 / 2 / 2 !important;
+}
+
+html[data-xe-ui='v5'] .react-select__input-container,
+html[data-xe-ui='v5'] .rs__input-container,
+html[data-xe-ui='v5'] .react-select__input,
+html[data-xe-ui='v5'] .rs__input,
+html[data-xe-ui='v5'] .react-select__input input,
+html[data-xe-ui='v5'] .rs__input input {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--xe-text) !important;
+  transform: none !important;
+}
+
+html[data-xe-ui='v5'] .react-select__indicators,
+html[data-xe-ui='v5'] .rs__indicators {
+  flex-shrink: 0 !important;
+}
+
 html[data-xe-ui='v5'] .react-select__menu,
 html[data-xe-ui='v5'] .rs__menu {
   background: var(--xe-menu-bg) !important;
   border: 1px solid var(--xe-border) !important;
-  border-radius: var(--xe-radius) !important;
+  border-radius: 14px !important;
   box-shadow: var(--xe-shadow-lg) !important;
   overflow: hidden;
   z-index: 80 !important;
@@ -157,7 +237,7 @@ html[data-xe-ui='v5'] .react-select__option,
 html[data-xe-ui='v5'] .rs__option {
   background: transparent !important;
   color: var(--xe-option-text) !important;
-  font-size: var(--xe-fs-caption) !important;
+  font-size: 14px !important;
 }
 
 html[data-xe-ui='v5'] .react-select__option--is-focused,
@@ -169,18 +249,6 @@ html[data-xe-ui='v5'] .react-select__option--is-selected,
 html[data-xe-ui='v5'] .rs__option--is-selected {
   background: var(--xe-secondary-soft) !important;
   color: var(--xe-text) !important;
-}
-
-html[data-xe-ui='v5'] .react-select__single-value,
-html[data-xe-ui='v5'] .rs__single-value,
-html[data-xe-ui='v5'] .react-select__input-container,
-html[data-xe-ui='v5'] .rs__input-container,
-html[data-xe-ui='v5'] .react-select__input input,
-html[data-xe-ui='v5'] .rs__input input,
-html[data-xe-ui='v5'] .react-select__value-container,
-html[data-xe-ui='v5'] .rs__value-container {
-  color: var(--xe-text) !important;
-  background: transparent !important;
 }
 
 html[data-xe-ui='v5'] .react-select__placeholder,
@@ -205,6 +273,7 @@ html[data-xe-ui='v5'] .multi-value-label__text {
 html[data-xe-ui='v5'] .react-select__indicator,
 html[data-xe-ui='v5'] .rs__indicator {
   color: var(--xe-muted) !important;
+  padding: 8px !important;
 }
 
 /* Radios / checkboxes */
@@ -217,12 +286,53 @@ html[data-xe-ui='v5'] .radio-input__label {
 }
 
 html[data-xe-ui='v5'] .pill,
-html[data-xe-ui='v5'] .chip,
-html[data-xe-ui='v5'] .status {
+html[data-xe-ui='v5'] .chip {
   background: var(--xe-pill-bg) !important;
   color: var(--xe-pill-text) !important;
   border: 1px solid var(--xe-pill-border) !important;
   border-radius: var(--xe-radius-pill) !important;
+}
+
+/* Payload Status is label + value — pill only the value, never the whole row */
+html[data-xe-ui='v5'] .status {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .status__label {
+  color: var(--xe-muted) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .status__value-wrap,
+html[data-xe-ui='v5'] .status__value {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .status__value {
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  background: var(--xe-pill-bg) !important;
+  color: var(--xe-pill-text) !important;
+  border: 1px solid var(--xe-pill-border) !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  line-height: 1.2 !important;
 }
 
 /* Groups / tabs / collapsibles as section cards */
@@ -245,15 +355,30 @@ html[data-xe-ui='v5'] .collapsible {
   margin-bottom: var(--xe-space-6) !important;
 }
 
-html[data-xe-ui='v5'] .collapsible__toggle,
+/* Payload uses a transparent absolute toggle + visible .row-label.
+   Coloring the toggle makes titles appear doubled/blurry. */
+html[data-xe-ui='v5'] .collapsible__toggle {
+  background: transparent !important;
+  color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .collapsible__toggle-wrap .row-label,
+html[data-xe-ui='v5'] .collapsible__header-wrap .row-label,
+html[data-xe-ui='v5'] .array-field .row-label {
+  color: var(--xe-text) !important;
+  font-weight: 650 !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
 html[data-xe-ui='v5'] .collapsible__content {
   background: transparent !important;
   color: var(--xe-text) !important;
   border-color: var(--xe-border) !important;
-}
-
-html[data-xe-ui='v5'] .collapsible__content {
-  padding: var(--xe-card-pad) !important;
+  padding: 16px 18px !important;
 }
 
 html[data-xe-ui='v5'] hr,

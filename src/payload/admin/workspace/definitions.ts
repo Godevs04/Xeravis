@@ -1,34 +1,44 @@
 export type WorkspaceId =
-  'website' | 'recruitment' | 'sales' | 'marketing' | 'content' | 'analytics' | 'administration'
+  'website' | 'content' | 'marketing' | 'sales' | 'recruitment' | 'analytics' | 'administration'
+
+export type NavLink = {
+  label: string
+  href: string
+  hint?: string
+}
 
 export type WorkspaceDef = {
   id: WorkspaceId
   label: string
   description: string
-  /** Collection / global path segments to show in Payload nav */
+  /** Collection / global path segments used for focus filtering */
   paths: string[]
-  /** Custom ops views for this workspace */
-  modules: { label: string; href: string; hint?: string }[]
+  /** Primary sidebar links — always Payload collections/globals (default admin shell) */
+  links: NavLink[]
   /** Quick create targets */
   creates: { label: string; href: string }[]
 }
 
+const col = (slug: string) => `/admin/collections/${slug}`
+const glob = (slug: string) => `/admin/globals/${slug}`
+
 /**
- * Real workspaces = filtered CMS views.
- * Collections are never removed — only hidden in the sidebar for focus.
+ * Admin areas aligned to Mainplan + ops.
+ * Navigation goes through default Payload collection/global URLs — not /workspace/*.
+ * Custom hub views remain registered for Command Center deep-links only.
  */
 export const WORKSPACES: WorkspaceDef[] = [
   {
     id: 'website',
     label: 'Website',
-    description: 'Pages, services, navigation, SEO',
+    description: 'Pages, services, solutions, SEO',
     paths: [
       'pages',
       'services',
       'solutions',
       'industries',
-      'case-studies',
       'technologies',
+      'case-studies',
       'media',
       'navigation',
       'footer',
@@ -36,65 +46,32 @@ export const WORKSPACES: WorkspaceDef[] = [
       'site-settings',
       'announcement-bar',
       'cookie-banner',
+      'contact-details',
+      'office-locations',
     ],
-    modules: [
-      { label: 'SEO Center', href: '/admin/workspace/seo', hint: 'Coverage & defaults' },
-      { label: 'Media Studio', href: '/admin/workspace/media', hint: 'Assets' },
-    ],
-    creates: [
-      { label: 'Page', href: '/admin/collections/pages/create' },
-      { label: 'Service', href: '/admin/collections/services/create' },
-    ],
-  },
-  {
-    id: 'recruitment',
-    label: 'Recruitment',
-    description: 'Jobs, candidates, interviews',
-    paths: ['careers', 'job-applications', 'interviews', 'departments'],
-    modules: [
-      { label: 'HR Dashboard', href: '/admin/workspace/recruitment', hint: 'Hiring funnel' },
+    links: [
+      { label: 'Pages', href: col('pages'), hint: 'Site pages' },
+      { label: 'Services', href: col('services'), hint: 'Service catalog' },
+      { label: 'Solutions', href: col('solutions'), hint: 'Solution catalog' },
+      { label: 'Industries', href: col('industries'), hint: 'Sector pages' },
+      { label: 'Navigation', href: glob('navigation'), hint: 'Primary menu' },
+      { label: 'SEO defaults', href: glob('seo-defaults'), hint: 'Meta defaults' },
+      { label: 'Media', href: col('media'), hint: 'Assets' },
+      { label: 'Site settings', href: glob('site-settings'), hint: 'Brand & contact' },
     ],
     creates: [
-      { label: 'Job', href: '/admin/collections/careers/create' },
-      { label: 'Interview', href: '/admin/collections/interviews/create' },
-    ],
-  },
-  {
-    id: 'sales',
-    label: 'Sales CRM',
-    description: 'Leads and inquiry pipeline',
-    paths: ['contact-messages', 'form-submissions'],
-    modules: [{ label: 'CRM Pipeline', href: '/admin/workspace/crm', hint: 'Leads' }],
-    creates: [],
-  },
-  {
-    id: 'marketing',
-    label: 'Marketing',
-    description: 'Newsletter, downloads, campaigns',
-    paths: [
-      'newsletter-subscribers',
-      'newsletter-campaigns',
-      'downloads',
-      'contact-messages',
-      'blogs',
-      'social-media',
-    ],
-    modules: [
-      { label: 'Newsletter', href: '/admin/workspace/newsletter', hint: 'Audience' },
-      { label: 'CRM', href: '/admin/workspace/crm', hint: 'Leads' },
-    ],
-    creates: [
-      { label: 'Campaign', href: '/admin/collections/newsletter-campaigns/create' },
-      { label: 'Download', href: '/admin/collections/downloads/create' },
+      { label: 'Page', href: `${col('pages')}/create` },
+      { label: 'Service', href: `${col('services')}/create` },
     ],
   },
   {
     id: 'content',
-    label: 'Content',
-    description: 'Blogs, research, brand content',
+    label: 'Insights & Research',
+    description: 'Blogs, research, case studies',
     paths: [
       'blogs',
       'research',
+      'case-studies',
       'faqs',
       'testimonials',
       'clients',
@@ -103,15 +80,59 @@ export const WORKSPACES: WorkspaceDef[] = [
       'categories',
       'tags',
       'media',
+      'downloads',
     ],
-    modules: [
-      { label: 'AI Assistant', href: '/admin/workspace/ai', hint: 'Draft copy' },
-      { label: 'Media Studio', href: '/admin/workspace/media', hint: 'Assets' },
+    links: [
+      { label: 'Blogs', href: col('blogs'), hint: 'Articles' },
+      { label: 'Research', href: col('research'), hint: 'Papers & notes' },
+      { label: 'Case studies', href: col('case-studies'), hint: 'Outcomes' },
+      { label: 'Downloads', href: col('downloads'), hint: 'Resources' },
+      { label: 'FAQs', href: col('faqs') },
+      { label: 'Team', href: col('team-members') },
     ],
     creates: [
-      { label: 'Blog', href: '/admin/collections/blogs/create' },
-      { label: 'Research', href: '/admin/collections/research/create' },
-      { label: 'Whitepaper intent', href: '/admin/collections/blogs/create' },
+      { label: 'Blog', href: `${col('blogs')}/create` },
+      { label: 'Research', href: `${col('research')}/create` },
+    ],
+  },
+  {
+    id: 'marketing',
+    label: 'Newsletter',
+    description: 'Subscribers, campaigns, downloads',
+    paths: ['newsletter-subscribers', 'newsletter-campaigns', 'downloads', 'social-media', 'blogs'],
+    links: [
+      { label: 'Subscribers', href: col('newsletter-subscribers'), hint: 'Audience' },
+      { label: 'Campaigns', href: col('newsletter-campaigns'), hint: 'Sends' },
+      { label: 'Downloads', href: col('downloads'), hint: 'Lead magnets' },
+      { label: 'Social', href: col('social-media') },
+    ],
+    creates: [{ label: 'Campaign', href: `${col('newsletter-campaigns')}/create` }],
+  },
+  {
+    id: 'sales',
+    label: 'Sales CRM',
+    description: 'Leads and inquiries',
+    paths: ['contact-messages', 'form-submissions'],
+    links: [
+      { label: 'Contact messages', href: col('contact-messages'), hint: 'Inbox' },
+      { label: 'Form submissions', href: col('form-submissions'), hint: 'Forms' },
+    ],
+    creates: [],
+  },
+  {
+    id: 'recruitment',
+    label: 'Recruitment',
+    description: 'Jobs, candidates, interviews',
+    paths: ['careers', 'job-applications', 'interviews', 'departments'],
+    links: [
+      { label: 'Jobs', href: col('careers'), hint: 'Open roles' },
+      { label: 'Candidates', href: col('job-applications'), hint: 'Applications' },
+      { label: 'Interviews', href: col('interviews'), hint: 'Schedule' },
+      { label: 'Departments', href: col('departments') },
+    ],
+    creates: [
+      { label: 'Job', href: `${col('careers')}/create` },
+      { label: 'Interview', href: `${col('interviews')}/create` },
     ],
   },
   {
@@ -120,14 +141,15 @@ export const WORKSPACES: WorkspaceDef[] = [
     description: 'Traffic, conversions, activity',
     paths: [
       'analytics-events',
+      'analytics',
+      'activity-logs',
       'downloads',
       'newsletter-subscribers',
-      'activity-logs',
-      'analytics',
     ],
-    modules: [
-      { label: 'Analytics Hub', href: '/admin/workspace/analytics', hint: 'KPIs' },
-      { label: 'Activity', href: '/admin/workspace/activity', hint: 'Timeline' },
+    links: [
+      { label: 'Events', href: col('analytics-events'), hint: 'Tracking' },
+      { label: 'Activity logs', href: col('activity-logs'), hint: 'Audit trail' },
+      { label: 'Analytics settings', href: glob('analytics') },
     ],
     creates: [],
   },
@@ -145,16 +167,48 @@ export const WORKSPACES: WorkspaceDef[] = [
       'contact-details',
       'office-locations',
       'cookie-banner',
+      'navigation',
+      'footer',
     ],
-    modules: [{ label: 'Activity', href: '/admin/workspace/activity', hint: 'Audit' }],
-    creates: [{ label: 'User', href: '/admin/collections/users/create' }],
+    links: [
+      { label: 'Users', href: col('users'), hint: 'Access' },
+      { label: 'Notifications', href: col('notifications') },
+      { label: 'Site settings', href: glob('site-settings') },
+      { label: 'Contact details', href: glob('contact-details') },
+      { label: 'Cookie banner', href: glob('cookie-banner') },
+    ],
+    creates: [{ label: 'User', href: `${col('users')}/create` }],
   },
 ]
 
 export const DEFAULT_WORKSPACE: WorkspaceId = 'website'
 
-export const WORKSPACE_STORAGE_KEY = 'xe-workspace-v3'
+export const WORKSPACE_STORAGE_KEY = 'xe-workspace-v5'
 
 export function getWorkspace(id: WorkspaceId): WorkspaceDef {
   return WORKSPACES.find((w) => w.id === id) || WORKSPACES[0]
+}
+
+/** Infer focus area from any admin path (collections, globals, legacy hubs) */
+export function workspaceIdFromPath(pathname: string): WorkspaceId | null {
+  if (pathname.startsWith('/admin/workspace/newsletter')) return 'marketing'
+  if (pathname.startsWith('/admin/workspace/crm')) return 'sales'
+  if (pathname.startsWith('/admin/workspace/recruitment')) return 'recruitment'
+  if (pathname.startsWith('/admin/workspace/analytics')) return 'analytics'
+  if (pathname.startsWith('/admin/workspace/activity')) return 'analytics'
+  if (pathname.startsWith('/admin/workspace/seo')) return 'website'
+  if (pathname.startsWith('/admin/workspace/media')) return 'website'
+  if (pathname.startsWith('/admin/workspace/ai')) return 'content'
+
+  const match = pathname.match(/\/admin\/(?:collections|globals)\/([^/?#]+)/)
+  const slug = match?.[1]?.toLowerCase()
+  if (!slug) {
+    if (pathname === '/admin' || pathname === '/admin/') return null
+    return null
+  }
+
+  for (const ws of WORKSPACES) {
+    if (ws.paths.includes(slug)) return ws.id
+  }
+  return null
 }

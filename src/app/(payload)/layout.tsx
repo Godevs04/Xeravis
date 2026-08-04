@@ -1,5 +1,5 @@
 /* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
+/* Extended: htmlProps so data-xe-ui is present on first paint (no FOUC / no Script hydration). */
 import config from '@payload-config'
 import '@payloadcms/next/css'
 import type { ServerFunctionClient } from 'payload'
@@ -23,7 +23,15 @@ const serverFunction: ServerFunctionClient = async function (args) {
 }
 
 const Layout = ({ children }: Args) => (
-  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
+  <RootLayout
+    config={config}
+    importMap={importMap}
+    serverFunction={serverFunction}
+    htmlProps={{
+      'data-xe-ui': 'v5',
+      suppressHydrationWarning: true,
+    }}
+  >
     {children}
   </RootLayout>
 )

@@ -51,6 +51,7 @@ export default buildConfig({
         './payload/admin/components/QuickCreateAction#QuickCreateAction',
         './payload/admin/components/NotificationBell#NotificationBell',
         './payload/admin/components/CommandAction#CommandAction',
+        './payload/admin/components/AdminThemeToggle#AdminThemeToggle',
       ],
       views: {
         dashboard: {

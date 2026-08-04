@@ -1,12 +1,31 @@
-/* ─── Premium Login (theme-aware glass) ─── */
+/* ─── Auth pages (login / forgot / reset / create-first-user) ─── */
 
 html:has(.login),
-body:has(.login) {
+html:has(.forgot-password),
+html:has(.reset-password),
+html:has(.createFirstUser),
+html:has(.verify),
+html:has(.logout),
+html:has(.unauthorized),
+body:has(.login),
+body:has(.forgot-password),
+body:has(.reset-password),
+body:has(.createFirstUser),
+body:has(.verify) {
   background: var(--xe-bg) !important;
 }
 
 .template-minimal.login,
-section.login.template-minimal {
+.template-minimal.forgot-password,
+.template-minimal.reset-password,
+.template-minimal.createFirstUser,
+.template-minimal.verify,
+.template-minimal.logout,
+.template-minimal.unauthorized,
+section.login.template-minimal,
+section.forgot-password.template-minimal,
+section.reset-password.template-minimal,
+section.createFirstUser.template-minimal {
   min-height: 100vh !important;
   width: 100% !important;
   max-width: none !important;
@@ -20,20 +39,26 @@ section.login.template-minimal {
     radial-gradient(ellipse 45% 35% at 85% 95%, var(--xe-mesh-2), transparent 55%),
     var(--xe-bg) !important;
   font-family: var(--xe-font) !important;
+  box-sizing: border-box !important;
 }
 
 .login .template-minimal__wrap,
+.forgot-password .template-minimal__wrap,
+.reset-password .template-minimal__wrap,
+.createFirstUser .template-minimal__wrap,
+.verify .template-minimal__wrap,
 .template-minimal__wrap {
   width: 100% !important;
-  max-width: 400px !important;
+  max-width: 420px !important;
   margin: 0 auto !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
   gap: 16px !important;
+  box-sizing: border-box !important;
 }
 
-/* Brand pill */
+/* Brand pill (login) */
 .login__brand {
   display: flex !important;
   align-items: center !important;
@@ -76,7 +101,6 @@ section.login.template-minimal {
   font-weight: 500;
 }
 
-/* Helper line from beforeLogin */
 .xe-login-tagline,
 .login > .template-minimal__wrap > p,
 .template-minimal__wrap > p {
@@ -88,21 +112,28 @@ section.login.template-minimal {
   letter-spacing: -0.01em;
 }
 
-/* Form card */
+/* ── Shared auth form card ── */
 .login__form,
-form.login__form {
+form.login__form,
+.template-minimal form:not(.login__form),
+.forgot-password form,
+.reset-password form,
+.createFirstUser form,
+.verify form {
   width: 100% !important;
   margin: 0 !important;
-  padding: 28px !important;
+  padding: 28px 28px 24px !important;
   background: var(--xe-card) !important;
   border: 1px solid var(--xe-border) !important;
-  border-radius: 18px !important;
+  border-radius: 20px !important;
   box-shadow: var(--xe-shadow-lg) !important;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   display: flex !important;
   flex-direction: column !important;
   gap: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 .login__form__inputWrap {
@@ -112,45 +143,99 @@ form.login__form {
   margin: 0 0 4px !important;
 }
 
+/* Form header (Forgot Password, Reset, etc.) */
+.template-minimal .form-header {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin: 0 0 22px !important;
+  padding: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.template-minimal .form-header h1,
+.template-minimal .form-header__heading,
+.template-minimal h1 {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--xe-text) !important;
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.2 !important;
+}
+
+.template-minimal .form-header p,
+.template-minimal .form-header__description {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--xe-muted) !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  max-width: none !important;
+}
+
 /* Labels */
 .login__form .field-label,
 .login__form label,
 .login__form .field-type > label,
-.login__form .render-fields .field-type .field-label {
+.login__form .render-fields .field-type .field-label,
+.template-minimal form .field-label,
+.template-minimal form label,
+.template-minimal form .field-type > label {
   display: block !important;
   margin: 0 0 10px !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.01em !important;
-  color: var(--xe-text) !important;
+  padding: 0 !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--xe-muted) !important;
   line-height: 1.2 !important;
 }
 
 .login__form .required,
-.login__form .field-label .required {
+.login__form .field-label .required,
+.template-minimal form .required,
+.template-minimal form .field-label .required {
   color: #f87171 !important;
   margin-left: 3px;
 }
 
-/* Inputs — theme-aware contrast */
+.template-minimal form .field-type {
+  margin: 0 0 18px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Inputs */
 .login__form input[type='email'],
 .login__form input[type='password'],
 .login__form input[type='text'],
 .login__form .field-type input,
 .login__form .input input,
-.login__form .password input {
+.login__form .password input,
+.template-minimal form input[type='email'],
+.template-minimal form input[type='password'],
+.template-minimal form input[type='text'],
+.template-minimal form .field-type input,
+.template-minimal form .input input {
   width: 100% !important;
+  max-width: 100% !important;
   height: 46px !important;
   padding: 0 14px !important;
   background: var(--xe-input-bg) !important;
   border: 1px solid var(--xe-border) !important;
-  border-radius: 11px !important;
+  border-radius: 12px !important;
   color: var(--xe-text) !important;
   font-size: 14.5px !important;
   font-weight: 450 !important;
   font-family: var(--xe-font) !important;
   line-height: 1.4 !important;
   box-shadow: var(--xe-shadow) !important;
+  box-sizing: border-box !important;
   transition:
     border-color 0.18s ease,
     box-shadow 0.18s ease,
@@ -158,18 +243,22 @@ form.login__form {
   caret-color: var(--xe-primary);
 }
 
-.login__form input::placeholder {
+.login__form input::placeholder,
+.template-minimal form input::placeholder {
   color: var(--xe-muted) !important;
   opacity: 0.85 !important;
 }
 
-.login__form input:hover {
+.login__form input:hover,
+.template-minimal form input:hover {
   border-color: var(--xe-border-strong) !important;
   background: var(--xe-hover) !important;
 }
 
 .login__form input:focus,
-.login__form input:focus-visible {
+.login__form input:focus-visible,
+.template-minimal form input:focus,
+.template-minimal form input:focus-visible {
   outline: none !important;
   border-color: var(--xe-primary) !important;
   background: var(--xe-input-bg) !important;
@@ -181,7 +270,7 @@ form.login__form {
   width: 100%;
 }
 
-/* Forgot password */
+/* Forgot password link on login */
 .login__form > a,
 .login__form a[href*='forgot'] {
   display: inline-block !important;
@@ -203,17 +292,38 @@ form.login__form {
   border-bottom-color: color-mix(in srgb, var(--xe-primary) 55%, transparent);
 }
 
-/* Login button — white label on blue for maximum clarity */
+/* Submit — style the button, not the wrapper */
+.login__form .form-submit,
+.template-minimal form .form-submit,
+.forgot-password .form-submit,
+.reset-password .form-submit,
+.createFirstUser .form-submit {
+  display: block !important;
+  width: 100% !important;
+  margin: 8px 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
 .login__form .btn,
 .login__form button[type='submit'],
 .login__form .form-submit .btn,
-.login__form .btn--style-primary {
+.login__form .btn--style-primary,
+.template-minimal form .btn,
+.template-minimal form button[type='submit'],
+.template-minimal form .form-submit .btn,
+.template-minimal form .btn--style-primary {
   width: 100% !important;
   height: 46px !important;
   margin: 0 !important;
   border: none !important;
   border-radius: 12px !important;
-  background: #0D9488 !important;
+  background: linear-gradient(135deg, #0d9488, #0f766e) !important;
+  background-image: linear-gradient(135deg, #0d9488, #0f766e) !important;
   color: #ffffff !important;
   font-size: 14.5px !important;
   font-weight: 650 !important;
@@ -230,8 +340,13 @@ form.login__form {
 .login__form .btn:hover,
 .login__form button[type='submit']:hover,
 .login__form .form-submit .btn:hover,
-.login__form .btn--style-primary:hover {
-  background: #0F766E !important;
+.login__form .btn--style-primary:hover,
+.template-minimal form .btn:hover,
+.template-minimal form button[type='submit']:hover,
+.template-minimal form .form-submit .btn:hover,
+.template-minimal form .btn--style-primary:hover {
+  background: #0f766e !important;
+  background-image: none !important;
   color: #ffffff !important;
   transform: translateY(-1px);
   box-shadow:
@@ -240,40 +355,79 @@ form.login__form {
 }
 
 .login__form .btn:active,
-.login__form button[type='submit']:active {
+.login__form button[type='submit']:active,
+.template-minimal form .btn:active,
+.template-minimal form button[type='submit']:active {
   transform: translateY(0);
 }
 
 .login__form .field-error,
-.login__form .error-message {
+.login__form .error-message,
+.template-minimal form .field-error,
+.template-minimal form .error-message {
   color: var(--xe-danger) !important;
   font-size: 12px !important;
   margin-top: 8px !important;
 }
 
-.template-minimal .form-header,
-.template-minimal h1 {
+/* Back to login / secondary links outside the card */
+.template-minimal__wrap > a,
+.forgot-password > .template-minimal__wrap > a,
+.reset-password > .template-minimal__wrap > a,
+.template-minimal.forgot-password a[href*='login'],
+.template-minimal.reset-password a[href*='login'] {
+  display: inline-flex !important;
+  align-self: flex-start !important;
+  margin: 4px 4px 0 !important;
+  padding: 0 !important;
+  font-size: 13.5px !important;
+  font-weight: 560 !important;
   color: var(--xe-text) !important;
-  letter-spacing: -0.03em;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  text-decoration-color: color-mix(in srgb, var(--xe-text) 28%, transparent) !important;
 }
 
-.template-minimal .card,
-.template-minimal form:not(.login__form) {
-  background: var(--xe-card) !important;
-  border: 1px solid var(--xe-border) !important;
-  border-radius: 18px !important;
-  box-shadow: var(--xe-shadow-lg) !important;
+.template-minimal__wrap > a:hover,
+.forgot-password > .template-minimal__wrap > a:hover {
+  color: var(--xe-secondary) !important;
+  text-decoration-color: color-mix(in srgb, var(--xe-secondary) 55%, transparent) !important;
+}
+
+/* Don't treat auth forms as floating dashboard cards */
+html[data-xe-ui='v5'] .template-minimal .card,
+html[data-xe-ui='v5'] .template-minimal form {
+  transform: none !important;
+}
+
+html[data-xe-ui='v5'] .template-minimal .card:hover,
+html[data-xe-ui='v5'] .template-minimal form:hover {
+  transform: none !important;
 }
 
 @media (max-width: 480px) {
   .template-minimal.login,
-  section.login.template-minimal {
+  .template-minimal.forgot-password,
+  .template-minimal.reset-password,
+  .template-minimal.createFirstUser,
+  section.login.template-minimal,
+  section.forgot-password.template-minimal,
+  section.reset-password.template-minimal {
     padding: 28px 16px !important;
   }
 
   .login__form,
-  form.login__form {
-    padding: 22px 18px !important;
+  form.login__form,
+  .template-minimal form:not(.login__form),
+  .forgot-password form,
+  .reset-password form {
+    padding: 22px 18px 20px !important;
     border-radius: 16px !important;
+  }
+
+  .template-minimal .form-header h1,
+  .template-minimal .form-header__heading,
+  .template-minimal h1 {
+    font-size: 22px !important;
   }
 }

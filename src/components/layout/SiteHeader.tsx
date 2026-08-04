@@ -50,17 +50,27 @@ const ABOUT_MENU: MegaMenuItem[] = [
   ...ABOUT_MEGA,
 ]
 
-/** CMS nav is used only when it matches Mainplan IA (About + Research; not stale Company). */
+/** CMS nav is used only when it matches Mainplan top nav (no stale Company / Technologies top-level). */
 function isMainplanAlignedNav(
   links: { label: string; href: string; mega?: string | null }[],
 ): boolean {
   if (links.length === 0 || links.length > 9) return false
   const megas = new Set(links.map((l) => l.mega).filter(Boolean))
+  const labels = links.map((l) => l.label.trim().toLowerCase())
   const hasResearch = megas.has('research')
-  const hasAbout = megas.has('about') || links.some((l) => /^about$/i.test(l.label.trim()))
-  const hasTechnologies = links.some((l) => l.href === '/technologies')
-  const hasStaleCompany = links.some((l) => /^company$/i.test(l.label.trim()))
-  return hasResearch && hasAbout && hasTechnologies && !hasStaleCompany
+  const hasAbout = megas.has('about') || labels.includes('about')
+  const hasServices = megas.has('services') || labels.includes('services')
+  const hasSolutions = megas.has('solutions') || labels.includes('solutions')
+  const hasStaleCompany = labels.includes('company')
+  const hasTechnologiesTop = labels.includes('technologies')
+  return (
+    hasResearch &&
+    hasAbout &&
+    hasServices &&
+    hasSolutions &&
+    !hasStaleCompany &&
+    !hasTechnologiesTop
+  )
 }
 
 export async function SiteHeader() {

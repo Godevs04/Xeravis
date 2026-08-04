@@ -71,7 +71,7 @@ export async function RecruitmentView(props: AdminViewServerProps) {
     <WorkspaceShell
       active="recruitment"
       title="HR · Recruitment"
-      subtitle="Candidates, jobs, interviews, and hiring funnel — one Payload workspace."
+      subtitle="Candidates, jobs, interviews, and hiring funnel — managed in Payload collections."
       stats={[
         {
           label: 'Active jobs',
