@@ -78,19 +78,23 @@ html[data-xe-ui='v5'] .xe-biz-nav__item {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  justify-content: space-between !important;
+  justify-content: flex-start !important;
   width: 100% !important;
+  min-width: 0 !important;
   min-height: 38px !important;
   padding: 0 12px !important;
   gap: 8px !important;
-  white-space: nowrap !important;
+  white-space: normal !important;
 }
 
 html[data-xe-ui='v5'] .xe-biz-nav__label {
   flex: 1 1 auto;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+  display: block;
+  width: 100%;
 }
 
 html[data-xe-ui='v5'] .xe-biz-nav__count {

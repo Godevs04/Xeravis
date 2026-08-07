@@ -76,8 +76,18 @@ export const WorkspaceSwitcher = () => {
                   setOpen(false)
                 }}
               >
-                <span className="xe-workspace__option-label">{item.label}</span>
-                <span className="xe-workspace__option-desc">{item.description}</span>
+                <span className="xe-workspace__option-avatar" aria-hidden>
+                  {item.label.slice(0, 1)}
+                </span>
+                <span className="xe-workspace__option-copy">
+                  <span className="xe-workspace__option-label">{item.label}</span>
+                  <span className="xe-workspace__option-desc">{item.description}</span>
+                </span>
+                {item.id === workspaceId ? (
+                  <span className="xe-workspace__option-check" aria-hidden>
+                    ●
+                  </span>
+                ) : null}
               </button>
             ))}
           </motion.div>

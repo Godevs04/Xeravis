@@ -48,9 +48,9 @@ export function HeroBannerFallback() {
   return (
     <PageHero
       brand="Xelarvis"
-      eyebrow="Enterprise product engineering"
-      title="Engineering Digital Excellence."
-      subtitle="We design and ship cloud platforms, AI systems, and digital products for organizations that refuse compromise."
+      eyebrow="Data Science · AI · Healthcare"
+      title="Data Science, AI & Healthcare."
+      subtitle="We design and ship data science, AI, and healthcare solutions—clinical intelligence and platforms operators can trust."
       ctas={[
         { label: 'Start a project', href: '/contact?intent=project', variant: 'accent' },
         { label: 'Explore services', href: '/services', variant: 'outline' },

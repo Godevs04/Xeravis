@@ -34,6 +34,7 @@ import { Logo as Logo_9b451d48b7ff5becf1d58711b3ab64e7 } from '../../../payload/
 import { QuickCreateAction as QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd } from '../../../payload/admin/components/QuickCreateAction'
 import { NotificationBell as NotificationBell_74fcf33514bb1f87e1e1bcf3339ed7d2 } from '../../../payload/admin/components/NotificationBell'
 import { CommandAction as CommandAction_8e711201309cba2687ecc4ae7869caa0 } from '../../../payload/admin/components/CommandAction'
+import { AdminThemeToggle as AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f } from '../../../payload/admin/components/AdminThemeToggle'
 import { AfterNavLinks as AfterNavLinks_59b0951428604bd2924d91920fe33245 } from '../../../payload/admin/components/nav/AfterNavLinks'
 import { BeforeLogin as BeforeLogin_6834cc0e5183808a75cbc16f726667d5 } from '../../../payload/admin/components/BeforeLogin'
 import { BeforeNav as BeforeNav_7975ec3298ed9bf6caeea012226eafcd } from '../../../payload/admin/components/nav/BeforeNav'
@@ -119,6 +120,8 @@ export const importMap = {
     NotificationBell_74fcf33514bb1f87e1e1bcf3339ed7d2,
   './payload/admin/components/CommandAction#CommandAction':
     CommandAction_8e711201309cba2687ecc4ae7869caa0,
+  './payload/admin/components/AdminThemeToggle#AdminThemeToggle':
+    AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f,
   './payload/admin/components/nav/AfterNavLinks#AfterNavLinks':
     AfterNavLinks_59b0951428604bd2924d91920fe33245,
   './payload/admin/components/BeforeLogin#BeforeLogin':

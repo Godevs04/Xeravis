@@ -108,7 +108,7 @@ async function seed() {
     slug: 'site-settings',
     data: {
       siteName: 'Xelarvis Technologies',
-      tagline: 'Data Science, AI, and Healthcare AI for enterprise and life sciences',
+      tagline: 'Data Science, AI & Healthcare',
       social: {
         linkedin: 'https://linkedin.com/company/xelarvis',
         twitter: 'https://x.com/xelarvis',
@@ -123,14 +123,13 @@ async function seed() {
     slug: 'navigation',
     data: {
       primaryLinks: [
+        { label: 'About', href: '/about', mega: 'about' },
         { label: 'Services', href: '/services', mega: 'services' },
         { label: 'Solutions', href: '/solutions', mega: 'solutions' },
-        { label: 'Technologies', href: '/technologies', mega: 'none' },
         { label: 'Industries', href: '/industries', mega: 'industries' },
         { label: 'Research & Innovation', href: '/ai-research-lab', mega: 'research' },
         { label: 'Insights', href: '/insights', mega: 'insights' },
         { label: 'Careers', href: '/careers', mega: 'none' },
-        { label: 'About', href: '/about', mega: 'about' },
       ],
       cta: { label: 'Contact Us', href: '/contact' },
       ctaLabel: 'Contact Us',
@@ -226,7 +225,7 @@ async function seed() {
     data: {
       titleTemplate: '%s · Xelarvis Technologies',
       defaultDescription:
-        'XELARVIS PRIVATE LIMITED delivers IT consulting, AI research, clinical data science, analytics, and cloud solutions for healthcare and enterprise organizations.',
+        'XELARVIS PRIVATE LIMITED specializes in Data Science, AI, and Healthcare—clinical data science, analytics, and platforms for life sciences and enterprise organizations.',
       twitterHandle: '@xelarvis',
     },
     overrideAccess: true,

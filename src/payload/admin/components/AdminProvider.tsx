@@ -29,18 +29,23 @@ function readStoredTheme(): ThemeMode | null {
   return stored === 'light' || stored === 'dark' ? stored : null
 }
 
-export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
-  React.useEffect(() => {
-    const root = document.documentElement
-    root.setAttribute('data-xe-ui', 'v5')
+function bootAdminShell() {
+  const root = document.documentElement
+  root.setAttribute('data-xe-ui', 'v5')
 
-    // V5 product default = light enterprise shell
-    // One-time migrate off forced-dark from prior admin skins
-    const migratedV5 = window.localStorage.getItem('xe-admin-v5-shell')
-    if (migratedV5 !== '2') {
-      applyResolvedTheme('light')
-      window.localStorage.setItem('xe-admin-v5-shell', '2')
-      window.localStorage.setItem('xe-theme-preference', 'light')
+  // V5 product default = light enterprise shell
+  // One-time migrate off forced-dark from prior admin skins
+  const migratedV5 = window.localStorage.getItem('xe-admin-v5-shell')
+  if (migratedV5 !== '2') {
+    applyResolvedTheme('light')
+    window.localStorage.setItem('xe-admin-v5-shell', '2')
+    window.localStorage.setItem('xe-theme-preference', 'light')
+  } else {
+    const pref = window.localStorage.getItem('xe-theme-preference')
+    if (pref === 'auto') {
+      applyResolvedTheme(resolveAutoTheme())
+    } else if (pref === 'light' || pref === 'dark') {
+      applyResolvedTheme(pref)
     } else {
       const existing = root.getAttribute('data-theme')
       if (existing === 'light' || existing === 'dark') {
@@ -50,9 +55,66 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         applyResolvedTheme(readStoredTheme() ?? 'light')
       }
     }
+  }
 
-    const collapsed = window.localStorage.getItem(NAV_KEY) === '1'
+  const collapsed = window.localStorage.getItem(NAV_KEY) === '1'
+  // One-time: expand sidebar after workspace-switcher removal so pages aren't stuck on icon-rail
+  if (window.localStorage.getItem('xe-admin-nav-expand-v4') !== '1') {
+    root.setAttribute('data-xe-nav', 'expanded')
+    window.localStorage.setItem(NAV_KEY, '0')
+    window.localStorage.setItem('xe-admin-nav-expand-v4', '1')
+  } else {
     root.setAttribute('data-xe-nav', collapsed ? 'collapsed' : 'expanded')
+  }
+}
+
+export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
+  // Layout effect: apply theme/nav before paint when possible (no next/script → no hydration clash)
+  React.useLayoutEffect(() => {
+    bootAdminShell()
+  }, [])
+
+  React.useEffect(() => {
+    const root = document.documentElement
+    root.setAttribute('data-xe-ui', 'v5')
+
+    // Payload sets `inert` when navOpen is false (common below large breakpoint).
+    // Our floating sidebar stays visible on desktop — strip inert so it can scroll.
+    const desktopMq = window.matchMedia('(min-width: 901px)')
+    const syncNavInteractivity = () => {
+      const aside = document.querySelector<HTMLElement>('aside.nav')
+      if (!aside) return
+      if (desktopMq.matches) {
+        if (aside.hasAttribute('inert')) aside.removeAttribute('inert')
+        root.setAttribute('data-xe-nav-shell', 'desktop')
+        return
+      }
+      root.setAttribute('data-xe-nav-shell', 'mobile')
+      if (aside.classList.contains('nav--nav-open')) {
+        aside.removeAttribute('inert')
+        root.setAttribute('data-xe-nav', 'open')
+      }
+    }
+    syncNavInteractivity()
+    const navObserver = new MutationObserver(() => {
+      window.requestAnimationFrame(syncNavInteractivity)
+    })
+    const observeNav = () => {
+      const aside = document.querySelector('aside.nav')
+      if (aside) {
+        navObserver.observe(aside, { attributes: true, attributeFilter: ['inert', 'class'] })
+        return true
+      }
+      return false
+    }
+    if (!observeNav()) {
+      const boot = new MutationObserver(() => {
+        if (observeNav()) boot.disconnect()
+      })
+      boot.observe(document.body, { childList: true, subtree: true })
+      window.setTimeout(() => boot.disconnect(), 8000)
+    }
+    desktopMq.addEventListener('change', syncNavInteractivity)
 
     const themeObserver = new MutationObserver(() => {
       if (root.getAttribute('data-xe-ui') !== 'v5') {
@@ -167,6 +229,8 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     window.addEventListener('keydown', onSave)
     return () => {
       themeObserver.disconnect()
+      navObserver.disconnect()
+      desktopMq.removeEventListener('change', syncNavInteractivity)
       document.removeEventListener('change', onThemePreferenceChange, true)
       document.removeEventListener('click', onThemePreferenceClick, true)
       mq.removeEventListener('change', onSystemTheme)

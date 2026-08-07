@@ -39,16 +39,16 @@ html[data-xe-ui='v5'] .template-default__wrap {
 
 html[data-xe-ui='v5'] .nav {
   position: fixed !important;
-  top: var(--xe-space-4) !important;
-  left: var(--xe-space-4) !important;
-  bottom: var(--xe-space-4) !important;
+  top: 12px !important;
+  left: 12px !important;
+  bottom: 12px !important;
   width: var(--xe-sidebar-w) !important;
-  height: auto !important;
-  max-height: none !important;
+  height: calc(100dvh - 24px) !important;
+  max-height: calc(100dvh - 24px) !important;
   z-index: 40 !important;
   display: flex !important;
   flex-direction: column !important;
-  padding: var(--xe-space-4) !important;
+  padding: 12px !important;
   margin: 0 !important;
   border-radius: var(--xe-radius-lg) !important;
   background: var(--xe-sidebar-solid) !important;
@@ -67,6 +67,16 @@ html[data-xe-ui='v5'] .nav {
   visibility: visible !important;
   pointer-events: auto !important;
   transform: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Always show sidebar chrome once template mounts (don't wait for Payload nav-open) */
+.template-default aside.nav,
+.template-default--nav-hydrated aside.nav,
+.template-default .nav {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .nav {
@@ -79,23 +89,58 @@ html[data-xe-ui='v5'] .nav__log-out {
   display: none !important;
 }
 
+/* BusinessNav is the side header — hide duplicate Payload collection groups */
+html[data-xe-ui='v5'] .nav__wrap > .nav-group,
+html[data-xe-ui='v5'] .nav__scroll > .nav__wrap > .nav-group {
+  display: none !important;
+}
+
+/* Payload DOM: aside.nav > .nav__scroll > (beforeNav + .nav__wrap + header)
+   Scroll MUST live on .nav__scroll. .nav__wrap sizes to content — never clip. */
+html[data-xe-ui='v5'] .nav__scroll {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  padding: 4px 4px 12px !important;
+  margin: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: color-mix(in srgb, var(--xe-secondary) 45%, transparent) transparent !important;
+  box-sizing: border-box !important;
+}
+
+html[data-xe-ui='v5'] .nav__scroll::-webkit-scrollbar {
+  display: block !important;
+  width: 6px !important;
+}
+
+html[data-xe-ui='v5'] .nav__scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--xe-secondary) 40%, transparent) !important;
+  border-radius: 999px !important;
+}
+
 html[data-xe-ui='v5'] .nav__wrap {
   display: flex !important;
   flex-direction: column !important;
-  height: 100% !important;
-  gap: var(--xe-space-3) !important;
+  align-items: stretch !important;
+  flex: 0 0 auto !important;
+  flex-grow: 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  gap: 8px !important;
   padding: 0 !important;
-  overflow: hidden !important;
-}
-
-html[data-xe-ui='v5'] .nav__scroll {
-  flex: 1 !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 0 var(--xe-space-1) !important;
-  margin: 0 !important;
-  scrollbar-width: thin;
-  scrollbar-color: var(--xe-border) transparent;
+  overflow: visible !important;
+  box-sizing: border-box !important;
 }
 
 html[data-xe-ui='v5'] .nav__link,
@@ -154,15 +199,14 @@ html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-workspace__meta,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-workspace__chevron,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-profile__meta,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-profile__chevron,
-html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-biz-nav__item span,
+html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-biz-nav__item .xe-biz-nav__copy,
+html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-biz-nav__item .xe-biz-nav__count,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-biz-nav__item em,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-biz-nav__modules,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-nav-section__title,
-html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-nav-section__list a {
-  opacity: 0;
-  width: 0;
-  overflow: hidden;
-  pointer-events: none;
+html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-nav-section__list a span:not(.xe-nav-section__dot),
+html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-before-nav__brand-text {
+  display: none !important;
 }
 
 /* Content offset for floating sidebar */
@@ -300,7 +344,7 @@ html[data-xe-ui='v5'] .app-header__account .graphic-account {
 }
 
 /* ============================================================
-   CONTENT CONTAINER — centered, max 1400 / content 1200
+   CONTENT CONTAINER — one aligned column for lists + editors
    ============================================================ */
 
 html[data-xe-ui='v5'] .collection-list,
@@ -308,22 +352,37 @@ html[data-xe-ui='v5'] .collection-edit,
 html[data-xe-ui='v5'] .global-edit,
 html[data-xe-ui='v5'] .dashboard,
 html[data-xe-ui='v5'] .account,
-html[data-xe-ui='v5'] .template-default__wrap > .collection-list,
-html[data-xe-ui='v5'] .gutter {
+html[data-xe-ui='v5'] .template-default__wrap > .collection-list {
   max-width: var(--xe-shell-max) !important;
+  width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding-left: var(--xe-gutter) !important;
-  padding-right: var(--xe-gutter) !important;
-  padding-top: var(--xe-space-7) !important;
-  padding-bottom: var(--xe-space-9) !important;
+  padding: 12px var(--xe-gutter) 48px !important;
+  box-sizing: border-box !important;
+}
+
+/* Kill nested gutter padding that created the huge white void */
+html[data-xe-ui='v5'] .collection-edit .gutter,
+html[data-xe-ui='v5'] .global-edit .gutter,
+html[data-xe-ui='v5'] .collection-list .gutter,
+html[data-xe-ui='v5'] .account .gutter,
+html[data-xe-ui='v5'] .gutter {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   box-sizing: border-box !important;
 }
 
 html[data-xe-ui='v5'] .collection-edit__main,
+html[data-xe-ui='v5'] .collection-edit__main-wrapper,
 html[data-xe-ui='v5'] .global-edit__main,
 html[data-xe-ui='v5'] .document-fields,
 html[data-xe-ui='v5'] .document-fields__main,
+html[data-xe-ui='v5'] .document-fields__edit,
 html[data-xe-ui='v5'] .account .render-fields,
 html[data-xe-ui='v5'] .form-fields,
 html[data-xe-ui='v5'] .doc-header,
@@ -333,10 +392,16 @@ html[data-xe-ui='v5'] .doc-controls,
 html[data-xe-ui='v5'] .auth-fields,
 html[data-xe-ui='v5'] .collection-edit__auth,
 html[data-xe-ui='v5'] .payload-settings {
-  max-width: var(--xe-content-max) !important;
+  max-width: 100% !important;
   width: 100% !important;
   margin-left: 0 !important;
-  margin-right: auto !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Do not force sidebar rail to full width — that crushed the form column */
+html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+  max-width: 280px !important;
   box-sizing: border-box !important;
 }
 
@@ -384,27 +449,29 @@ html[data-xe-ui='v5'] .doc-header,
 html[data-xe-ui='v5'] .collection-edit__header,
 html[data-xe-ui='v5'] .global-edit__header {
   display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  gap: var(--xe-space-4) !important;
-  margin-bottom: var(--xe-space-6) !important;
-  max-width: var(--xe-content-max) !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-bottom: var(--xe-edit-gap) !important;
+  max-width: 100% !important;
 }
 
 /* ============================================================
-   STICKY ACTION BAR (replaces floating save)
+   STICKY ACTION BAR — same width as form column
    ============================================================ */
 
 html[data-xe-ui='v5'] .doc-controls {
   position: sticky !important;
-  top: var(--xe-header-h) !important;
+  top: calc(var(--xe-header-h) + 8px) !important;
   z-index: 25 !important;
   width: 100% !important;
-  max-width: var(--xe-content-max) !important;
-  margin: 0 0 var(--xe-space-6) !important;
+  max-width: 100% !important;
+  margin: 0 0 var(--xe-edit-gap) !important;
   padding: 0 !important;
   border: 1px solid var(--xe-border) !important;
-  border-radius: var(--xe-radius) !important;
+  border-radius: 16px !important;
   background: var(--xe-glass) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
@@ -457,13 +524,29 @@ html[data-xe-ui='v5'] .doc-controls__controls .btn {
 }
 
 html[data-xe-ui='v5'] .doc-controls .btn--style-primary,
-html[data-xe-ui='v5'] .form-submit,
 html[data-xe-ui='v5'] .btn--style-primary {
   background: var(--xe-secondary) !important;
   background-image: none !important;
   color: #fff !important;
   border: 0 !important;
   box-shadow: none !important;
+  font-weight: 600 !important;
+}
+
+/* Keep FormSubmit wrapper transparent — gradient belongs on the button */
+html[data-xe-ui='v5'] .form-submit {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+html[data-xe-ui='v5'] .form-submit .btn,
+html[data-xe-ui='v5'] .form-submit .btn--style-primary {
+  background: var(--xe-secondary) !important;
+  background-image: none !important;
+  color: #fff !important;
+  border: 0 !important;
   font-weight: 600 !important;
 }
 
@@ -496,7 +579,6 @@ html[data-xe-ui='v5'] .btn--style-subtle:hover {
 html[data-xe-ui='v5'] .card,
 html[data-xe-ui='v5'] .xe-panel,
 html[data-xe-ui='v5'] .xe-stat,
-html[data-xe-ui='v5'] .collapsible,
 html[data-xe-ui='v5'] .xe-form-section {
   background: var(--xe-card) !important;
   border: 1px solid var(--xe-border) !important;
@@ -507,6 +589,16 @@ html[data-xe-ui='v5'] .xe-form-section {
     transform var(--xe-dur) var(--xe-ease),
     box-shadow var(--xe-dur) var(--xe-ease),
     border-color var(--xe-dur) var(--xe-ease) !important;
+}
+
+/* Collapsible chrome is owned by forms/os — avoid card hover transform ghosting titles */
+html[data-xe-ui='v5'] .collapsible {
+  background: var(--xe-card) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-radius-lg) !important;
+  box-shadow: var(--xe-shadow) !important;
+  color: var(--xe-text) !important;
+  transform: none !important;
 }
 
 html[data-xe-ui='v5'] .card:hover,
@@ -560,15 +652,85 @@ html[data-xe-ui='v5'] .table tbody tr:hover td {
 html[data-xe-ui='v5'] .xe-before-nav {
   display: flex;
   flex-direction: column;
-  gap: var(--xe-space-3);
-  padding: var(--xe-space-2) var(--xe-space-1) var(--xe-space-3);
+  flex: 0 0 auto;
+  gap: 8px;
+  padding: 2px 2px 10px;
   border-bottom: 1px solid var(--xe-border);
-  margin-bottom: var(--xe-space-2);
+  margin-bottom: 2px;
+  min-width: 0;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: linear-gradient(
+    180deg,
+    var(--xe-sidebar-solid) 70%,
+    color-mix(in srgb, var(--xe-sidebar-solid) 85%, transparent)
+  );
+}
+
+html[data-xe-ui='v5'] .xe-before-nav__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+html[data-xe-ui='v5'] .xe-before-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+html[data-xe-ui='v5'] .xe-before-nav__mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  background: var(--xe-secondary-soft);
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+html[data-xe-ui='v5'] .xe-before-nav__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+html[data-xe-ui='v5'] .xe-before-nav__brand-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--xe-text);
+  line-height: 1.2;
+}
+
+html[data-xe-ui='v5'] .xe-before-nav__brand-sub {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--xe-faint);
+}
+
+html[data-xe-ui='v5'] .xe-before-nav__label {
+  margin: 0;
+  padding: 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--xe-faint);
 }
 
 html[data-xe-ui='v5'] .xe-nav-collapse {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 0;
 }
 
 html[data-xe-ui='v5'] .xe-nav-collapse__btn {
@@ -581,9 +743,11 @@ html[data-xe-ui='v5'] .xe-nav-collapse__btn {
   cursor: pointer;
   display: grid;
   place-items: center;
+  flex: 0 0 auto;
   transition:
     background var(--xe-dur-fast) ease,
-    color var(--xe-dur-fast) ease;
+    color var(--xe-dur-fast) ease,
+    border-color var(--xe-dur-fast) ease;
 }
 
 html[data-xe-ui='v5'] .xe-nav-collapse__btn:hover {
@@ -763,9 +927,17 @@ html[data-xe-ui='v5'] .xe-nav-section__dot--muted {
 }
 
 html[data-xe-ui='v5'] .xe-after-nav {
-  margin-top: auto;
-  padding-top: var(--xe-space-3);
+  position: sticky;
+  bottom: 0;
+  z-index: 6;
+  margin-top: 8px;
+  padding: 10px 0 2px;
   border-top: 1px solid var(--xe-border);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--xe-sidebar-solid) 0%, transparent),
+    var(--xe-sidebar-solid) 32%
+  );
 }
 
 html[data-xe-ui='v5'] .xe-profile__menu,
@@ -806,21 +978,61 @@ html[data-xe-ui='v5'] .xe-ws__desc {
    RESPONSIVE
    ============================================================ */
 
+@media (min-width: 901px) {
+  html[data-xe-ui='v5'] .nav,
+  .template-default aside.nav,
+  .template-default .nav {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  html[data-xe-ui='v5'] .template-default__wrap {
+    margin-left: calc(var(--xe-sidebar-w) + var(--xe-space-4) * 2) !important;
+  }
+
+  html[data-xe-ui='v5'][data-xe-nav='collapsed'] .template-default__wrap {
+    margin-left: calc(var(--xe-sidebar-w-collapsed) + var(--xe-space-4) * 2) !important;
+  }
+}
+
 @media (max-width: 900px) {
-  html[data-xe-ui='v5'] .nav {
+  html[data-xe-ui='v5'] .nav,
+  .template-default aside.nav {
     top: 0 !important;
     left: 0 !important;
     bottom: 0 !important;
-    border-radius: 0 var(--xe-radius-lg) var(--xe-radius-lg) 0 !important;
-    transform: translateX(-110%);
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    width: min(320px, 88vw) !important;
+    border-radius: 0 24px 24px 0 !important;
+    transform: translateX(-110%) !important;
+    opacity: 1 !important;
+    z-index: 80 !important;
   }
 
-  html[data-xe-ui='v5'][data-xe-nav='open'] .nav {
-    transform: translateX(0);
+  html[data-xe-ui='v5'] .nav.nav--nav-open,
+  html[data-xe-ui='v5'][data-xe-nav='open'] .nav,
+  .template-default .nav.nav--nav-open {
+    transform: translateX(0) !important;
+  }
+
+  html[data-xe-ui='v5'] .nav__header {
+    display: flex !important;
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    z-index: 10 !important;
   }
 
   html[data-xe-ui='v5'] .template-default__wrap {
     margin-left: 0 !important;
+  }
+
+  html[data-xe-ui='v5'] .xe-before-nav__row .xe-nav-collapse__btn {
+    display: none;
   }
 }
 
@@ -1009,13 +1221,34 @@ html[data-xe-ui='v5'] .template-default__wrap {
 
 html[data-xe-ui='v5'] .doc-header,
 html[data-xe-ui='v5'] .collection-list__header,
-html[data-xe-ui='v5'] .list-header {
-  border-radius: var(--xe-radius-xl) !important;
+html[data-xe-ui='v5'] .list-header,
+html[data-xe-ui='v5'] .collection-edit__header,
+html[data-xe-ui='v5'] .global-edit__header {
+  border-radius: 16px !important;
   background: var(--xe-card) !important;
   border: 1px solid var(--xe-border) !important;
   box-shadow: var(--xe-shadow) !important;
-  padding: 16px 20px !important;
-  margin-bottom: 16px !important;
+  padding: 12px 18px !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  min-height: 0 !important;
+}
+
+html[data-xe-ui='v5'] .doc-header h1,
+html[data-xe-ui='v5'] .collection-edit__header h1,
+html[data-xe-ui='v5'] .global-edit__header h1,
+html[data-xe-ui='v5'] .doc-header .render-title {
+  margin: 0 !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
 }
 
 html[data-xe-ui='v5'] .table {
@@ -1044,23 +1277,33 @@ html[data-xe-ui='v5'] .table tbody tr:hover {
 }
 
 html[data-xe-ui='v5'] .field-type:focus-within {
-  border-color: color-mix(in srgb, var(--xe-primary) 55%, var(--xe-border)) !important;
-  box-shadow: 0 0 0 3px var(--xe-primary-soft) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
 
 html[data-xe-ui='v5'] .doc-controls {
-  border-radius: 16px 16px 0 0 !important;
+  border-radius: 16px !important;
   border: 1px solid var(--xe-border) !important;
-  background: color-mix(in srgb, var(--xe-card) 90%, transparent) !important;
-  box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.06) !important;
+  background: color-mix(in srgb, var(--xe-card) 92%, transparent) !important;
+  box-shadow: var(--xe-shadow) !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 html[data-xe-ui='v5'] .btn--style-primary,
-html[data-xe-ui='v5'] .form-submit {
+html[data-xe-ui='v5'] .form-submit .btn,
+html[data-xe-ui='v5'] .form-submit .btn--style-primary {
   border-radius: 12px !important;
   background: linear-gradient(135deg, #0d9488, #0f766e) !important;
   border: 0 !important;
   box-shadow: 0 8px 20px rgba(13, 148, 136, 0.28) !important;
+  color: #fff !important;
+}
+
+html[data-xe-ui='v5'] .form-submit {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
 }
 
 html[data-xe-ui='v5'] .nav__group,

@@ -68,19 +68,19 @@ export async function EnterpriseDashboard(props: AdminViewServerProps) {
       label: 'Leads',
       value: messagesCount,
       meta: newLeads ? `${newLeads} need reply` : 'Inbox clear',
-      href: '/admin/workspace/crm',
+      href: '/admin/collections/contact-messages',
     },
     {
       label: 'Applications',
       value: applicationsCount,
       meta: newApps ? `${newApps} new` : 'No new apps',
-      href: '/admin/workspace/recruitment',
+      href: '/admin/collections/job-applications',
     },
     {
       label: 'Traffic',
       value: pageviews,
       meta: 'Page views',
-      href: '/admin/workspace/analytics',
+      href: '/admin/collections/analytics-events',
     },
     {
       label: 'Insights',
@@ -96,7 +96,7 @@ export async function EnterpriseDashboard(props: AdminViewServerProps) {
       id: 'leads',
       title: `Reply to ${newLeads} lead${newLeads === 1 ? '' : 's'}`,
       meta: 'CRM',
-      href: '/admin/workspace/crm',
+      href: '/admin/collections/contact-messages',
       tone: 'warn',
     })
   }
@@ -105,7 +105,7 @@ export async function EnterpriseDashboard(props: AdminViewServerProps) {
       id: 'apps',
       title: `Review ${newApps} application${newApps === 1 ? '' : 's'}`,
       meta: 'Recruitment',
-      href: '/admin/workspace/recruitment',
+      href: '/admin/collections/job-applications',
       tone: 'accent',
     })
   }
@@ -131,7 +131,7 @@ export async function EnterpriseDashboard(props: AdminViewServerProps) {
   const summary =
     pending > 0
       ? `${pending} item${pending === 1 ? '' : 's'} need attention.`
-      : 'Nothing blocking — pick a workspace and ship.'
+      : 'Nothing blocking — open a collection and ship.'
 
   const userRecord = user as { email?: string; name?: string } | null
   const userName =
@@ -151,7 +151,7 @@ export async function EnterpriseDashboard(props: AdminViewServerProps) {
         quickActions={[
           { label: 'New blog', href: '/admin/collections/blogs/create' },
           { label: 'New job', href: '/admin/collections/careers/create' },
-          { label: 'Leads', href: '/admin/workspace/crm' },
+          { label: 'Leads', href: '/admin/collections/contact-messages' },
           { label: 'Upload', href: '/admin/collections/media/create' },
         ]}
       />

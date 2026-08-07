@@ -18,7 +18,7 @@ export function ServiceAnswerBlock({
   title,
   summary,
   whoFor = 'Healthcare executives, CTOs, CIOs, Healthcare IT leaders, enterprise buyers, and research organizations',
-  whyChoose = 'Xelarvis combines AI research, clinical data science, and enterprise engineering for production systems operators can trust.',
+  whyChoose = 'Xelarvis combines data science, AI, and healthcare expertise for production systems operators can trust.',
   howDeliver = 'Discovery, solution architecture, implementation, validation, cloud deployment, and ongoing optimization.',
   industries = 'Healthcare, life sciences, finance, manufacturing, and regulated enterprises',
   outcomes = 'Faster decision cycles, audit-ready workflows, scalable platforms, and measurable operational lift',

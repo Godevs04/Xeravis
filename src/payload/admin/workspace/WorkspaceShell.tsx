@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import React from 'react'
 
-import { WORKSPACE_NAV, type WorkspaceRow, type WorkspaceStat } from './lib'
+import type { WorkspaceRow, WorkspaceStat } from './lib'
 
 type WorkspaceShellProps = {
   title: string
   subtitle: string
-  active: (typeof WORKSPACE_NAV)[number]['id']
+  /** Kept for call-site compatibility — horizontal tab strip removed (sidebar is source of truth) */
+  active?: string
   stats?: WorkspaceStat[]
   actions?: { label: string; href: string; primary?: boolean }[]
   children: React.ReactNode
@@ -22,7 +23,6 @@ function toneClass(tone?: WorkspaceStat['tone'] | WorkspaceRow['badgeTone']) {
 export function WorkspaceShell({
   title,
   subtitle,
-  active,
   stats = [],
   actions = [],
   children,
@@ -31,7 +31,7 @@ export function WorkspaceShell({
     <div className="xe-ws">
       <header className="xe-ws__hero">
         <div>
-          <p className="xe-ws__eyebrow">Xelarvis Workspace</p>
+          <p className="xe-ws__eyebrow">Xelarvis Admin</p>
           <h1 className="xe-ws__title">{title}</h1>
           <p className="xe-ws__subtitle">{subtitle}</p>
         </div>
@@ -49,19 +49,6 @@ export function WorkspaceShell({
           </div>
         ) : null}
       </header>
-
-      <nav className="xe-ws__tabs" aria-label="Workspace modules">
-        {WORKSPACE_NAV.map((item) => (
-          <Link
-            key={item.id}
-            href={item.href}
-            className={`xe-ws__tab${active === item.id ? 'is-active' : ''}`}
-            title={item.description}
-          >
-            {item.label}
-          </Link>
-        ))}
-      </nav>
 
       {stats.length > 0 ? (
         <section className="xe-ws__stats">

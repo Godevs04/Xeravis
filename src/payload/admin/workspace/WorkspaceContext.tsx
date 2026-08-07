@@ -7,6 +7,7 @@ import {
   getWorkspace,
   WORKSPACE_STORAGE_KEY,
   WORKSPACES,
+  workspaceIdFromPath,
   type WorkspaceDef,
   type WorkspaceId,
 } from './definitions'
@@ -42,19 +43,9 @@ function applyNavFilter(workspace: WorkspaceDef) {
     row.setAttribute('data-xe-nav-filtered', show ? 'show' : 'hide')
   })
 
-  // Hide empty nav groups
   document
     .querySelectorAll<HTMLElement>('.nav .nav-group, .nav [class*="nav-group"]')
     .forEach((group) => {
-      const visible = Array.from(
-        group.querySelectorAll<HTMLElement>('[data-xe-nav-filtered], a[href*="/admin/"]'),
-      ).some((el) => {
-        if (el.getAttribute('data-xe-nav-filtered') === 'hide') return false
-        if (el.getAttribute('data-xe-nav-filtered') === 'show') return true
-        const style = window.getComputedStyle(el)
-        return style.display !== 'none' && style.visibility !== 'hidden'
-      })
-      // Prefer checking filtered children
       const filtered = group.querySelectorAll('[data-xe-nav-filtered]')
       if (filtered.length > 0) {
         const anyShow = Array.from(filtered).some(
@@ -63,6 +54,14 @@ function applyNavFilter(workspace: WorkspaceDef) {
         group.style.display = anyShow ? '' : 'none'
         return
       }
+      const visible = Array.from(
+        group.querySelectorAll<HTMLElement>('[data-xe-nav-filtered], a[href*="/admin/"]'),
+      ).some((el) => {
+        if (el.getAttribute('data-xe-nav-filtered') === 'hide') return false
+        if (el.getAttribute('data-xe-nav-filtered') === 'show') return true
+        const style = window.getComputedStyle(el)
+        return style.display !== 'none' && style.visibility !== 'hidden'
+      })
       group.style.display = visible ? '' : 'none'
     })
 }
@@ -74,6 +73,25 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     const stored = window.localStorage.getItem(WORKSPACE_STORAGE_KEY) as WorkspaceId | null
     if (stored && WORKSPACES.some((w) => w.id === stored)) {
       setWorkspaceId(stored)
+    }
+  }, [])
+
+  // Keep focus filter in sync with the route (sidebar + page stay aligned)
+  useEffect(() => {
+    const syncFromRoute = () => {
+      const fromPath = workspaceIdFromPath(window.location.pathname)
+      if (fromPath) {
+        setWorkspaceId(fromPath)
+        window.localStorage.setItem(WORKSPACE_STORAGE_KEY, fromPath)
+      }
+    }
+    syncFromRoute()
+    window.addEventListener('popstate', syncFromRoute)
+    const onClick = () => window.setTimeout(syncFromRoute, 0)
+    document.addEventListener('click', onClick, true)
+    return () => {
+      window.removeEventListener('popstate', syncFromRoute)
+      document.removeEventListener('click', onClick, true)
     }
   }, [])
 

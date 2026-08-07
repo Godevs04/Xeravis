@@ -153,3 +153,5 @@ export const WORKSPACE_NAV = [
     description: 'Recent changes across the CMS',
   },
 ] as const
+
+/** @deprecated Horizontal tabs removed — sidebar BusinessNav is the source of truth */
