@@ -39,9 +39,9 @@ function departmentLabel(job: CareerDoc) {
 }
 
 export const metadata = buildMetadata({
-  title: 'Data Science, AI & Healthcare Careers',
+  title: 'Careers in AI Research, Consulting & Healthcare',
   description:
-    'Join Xelarvis to build data science, AI, Healthcare AI, clinical data science, and enterprise platforms. Open roles and talent network.',
+    'Join Xelarvis—life at XELARVIS, hiring process, learning & development, internships, graduate programs, and open roles across AI research, data science, and healthcare.',
   path: '/careers',
 })
 
@@ -54,8 +54,8 @@ export default async function CareersPage() {
   return (
     <>
       <CareersPageHero
-        title="Build the Future with AI, Healthcare, and Technology"
-        subtitle="Join XELARVIS and work on innovative projects in Artificial Intelligence, Clinical Data Science, Healthcare Analytics, Enterprise Software, and Cloud Technologies."
+        title="Build careers in AI research, consulting, and healthcare technology"
+        subtitle="Join XELARVIS to work on programmes that turn data into measurable business value—across Artificial Intelligence, Data Science, Healthcare AI, and Enterprise Technology Consulting."
       />
 
       <WhyJoinSection benefits={WHY_JOIN} />
@@ -133,15 +133,19 @@ export default async function CareersPage() {
           {[
             {
               title: 'Internship Program',
-              body: 'Hands-on experience across AI, analytics, and software engineering with mentorship.',
+              body: 'Hands-on experience across AI research, analytics, and enterprise consulting with structured mentorship.',
             },
             {
               title: GRADUATE_PROGRAMS.title,
               body: GRADUATE_PROGRAMS.body,
             },
             {
+              title: 'Learning & Development',
+              body: 'Certification support, research exposure, and continuous learning budgets so talent grows with the practice.',
+            },
+            {
               title: 'Research Opportunities',
-              body: 'Collaborate with the AI Research Lab on publications and applied innovation projects.',
+              body: 'Collaborate with the AI Research Lab on publications, benchmarks, open-source, and applied innovation projects.',
             },
             {
               title: 'Employee Benefits',

@@ -15,7 +15,6 @@ const initialState: ContactFormState = { ok: false, message: '' }
 
 const LEGACY_INTENT_MAP: Record<string, string> = {
   project: 'business',
-  partnership: 'research',
   careers: 'career',
 }
 

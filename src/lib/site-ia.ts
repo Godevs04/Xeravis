@@ -133,17 +133,21 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     slug: 'company-overview',
     path: '/about/company-overview',
     eyebrow: 'About Us',
-    title: 'Data Science, AI, and Healthcare AI—global research and consulting',
+    title: 'Global AI research, IT consulting, data science, and healthcare AI',
     subtitle:
-      'XELARVIS PRIVATE LIMITED leads with data science, AI, and Healthcare AI—delivering clinical data science, machine learning, advanced analytics, IT consulting, and enterprise platforms for regulated industries.',
+      'XELARVIS PRIVATE LIMITED is a global AI research, IT consulting, data science, and healthcare AI company—positioned closer to enterprise consulting and applied research organizations than to a typical software agency.',
     sections: [
       {
         heading: 'About the Company',
-        body: 'XELARVIS PRIVATE LIMITED is positioned as a data science, AI research, and Healthcare AI company—with IT consulting depth—closer in craft to enterprise consulting and applied research organizations than to a typical software agency. We specialize in Data Science, Artificial Intelligence, Healthcare AI, Clinical Data Science, and Advanced Analytics, and ship platforms that survive audits, scale in production, and move real clinical and business decisions.',
+        body: 'XELARVIS PRIVATE LIMITED is intended to be a global AI research, IT consulting, data science, and healthcare AI company. We combine research rigor with consulting-led delivery—closer in craft to organizations such as IBM Consulting, Accenture, IQVIA, NVIDIA Enterprise, Microsoft AI, or Deloitte AI than to a typical software agency. We help organisations transform data into measurable business value through AI-powered decision intelligence.',
+      },
+      {
+        heading: 'Overall Vision',
+        body: 'A Global Artificial Intelligence Research & Digital Transformation Company serving healthcare, enterprises, and research partners worldwide.',
       },
       {
         heading: 'Our Mission',
-        body: 'Our mission is to advance data science, AI, and healthcare technology by delivering reliable, secure, and future-ready solutions for hospitals, life sciences, and regulated enterprises.',
+        body: 'Bridge artificial intelligence, data science, healthcare, and enterprise technology with reliable, secure, and future-ready solutions that accelerate innovation and improve outcomes.',
       },
     ],
   },
@@ -156,11 +160,11 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     sections: [
       {
         heading: 'Vision',
-        body: 'To be a trusted global partner for intelligent healthcare, AI research, and digital transformation — enabling organizations to turn data into lasting competitive advantage.',
+        body: 'To be a trusted global Artificial Intelligence Research & Digital Transformation partner—enabling healthcare and enterprise organizations to turn data into lasting competitive advantage.',
       },
       {
         heading: 'Mission',
-        body: 'Bridge healthcare, artificial intelligence, and enterprise technology with reliable, secure, and future-ready solutions that accelerate innovation and improve outcomes.',
+        body: 'Help organisations transform data into measurable business value through AI-powered decision intelligence, clinical data science, and enterprise technology consulting.',
       },
     ],
   },
@@ -337,11 +341,17 @@ export const LAB_PAGES: ContentPageDef[] = [
     eyebrow: 'AI Research Lab',
     title: 'Research that ships',
     subtitle:
-      'XELARVIS AI Research Lab explores machine learning, generative AI, NLP, computer vision, and healthcare AI — always with a path to production.',
+      'XELARVIS AI Research Lab explores machine learning, generative AI, NLP, computer vision, healthcare AI, and decision intelligence—always with a path to production.',
     sections: [
       {
         heading: 'What we do',
-        body: 'We investigate applied AI problems, validate approaches with rigorous evaluation, and transfer successful ideas into client solutions and open collaboration.',
+        body: 'We investigate applied AI problems, validate approaches with rigorous evaluation, and transfer successful ideas into client solutions and open collaboration. This lab differentiates XELARVIS from typical IT service firms.',
+        bullets: [
+          'Research domains and benchmarks',
+          'Publications, white papers, and research blogs',
+          'Open-source projects and reusable evaluation harnesses',
+          'AI models and innovation initiatives',
+        ],
       },
     ],
   },
@@ -351,7 +361,7 @@ export const LAB_PAGES: ContentPageDef[] = [
     eyebrow: 'AI Research Lab',
     title: 'Research Areas',
     subtitle:
-      'Focus domains spanning foundation models, clinical intelligence, and enterprise automation.',
+      'Focus domains spanning foundation models, clinical intelligence, benchmarks, and enterprise automation.',
     sections: [
       {
         heading: 'Core areas',
@@ -361,7 +371,8 @@ export const LAB_PAGES: ContentPageDef[] = [
           'Natural Language Processing and Medical NLP',
           'Computer Vision',
           'Healthcare Predictive Analytics',
-          'MLOps and responsible AI',
+          'Decision intelligence and enterprise AI',
+          'MLOps, benchmarks, and responsible AI',
         ],
       },
     ],
@@ -462,30 +473,30 @@ export const HIRING_STEPS = [
 ] as const
 
 export const WHY_JOIN = [
-  'Work on AI and Healthcare projects',
+  'Work on AI research, healthcare, and enterprise programs',
   'Research-driven environment',
-  'Learning and certification support',
+  'Learning, certifications, and development support',
+  'Internship and graduate pathways',
   'Flexible work opportunities',
   'Global collaboration',
   'Career growth and mentorship',
-  'Modern technologies',
-  'Inclusive workplace',
+  'Inclusive workplace with meaningful benefits',
 ] as const
 
 export const LIFE_AT_XELARVIS = {
   title: 'Life at XELARVIS',
-  body: 'A collaborative culture where engineers, analysts, and researchers solve meaningful problems in AI, healthcare, and enterprise technology — with mentorship, learning support, and room to grow.',
+  body: 'A collaborative culture where engineers, analysts, researchers, and consultants solve meaningful problems in AI, healthcare, and enterprise technology—with mentorship, learning support, and room to grow.',
   bullets: [
-    'Cross-functional teams spanning AI, clinical data science, and software',
+    'Cross-functional teams spanning AI research, clinical data science, and consulting',
     'Continuous learning through projects, reviews, and certifications',
     'Inclusive workplace with flexible work opportunities',
-    'Clear ownership and recognition for impact',
+    'Clear ownership and recognition for business impact',
   ],
 } as const
 
 export const GRADUATE_PROGRAMS = {
   title: 'Graduate Programs',
-  body: 'Structured pathways for early-career talent to build depth in AI, analytics, clinical programming, and software engineering with mentorship and real project exposure.',
+  body: 'Structured pathways for early-career talent to build depth in AI, analytics, clinical programming, and enterprise technology consulting with mentorship and real project exposure.',
   bullets: [
     'Rotations and guided onboarding into delivery teams',
     'Mentorship from senior practitioners',
@@ -498,7 +509,12 @@ export const CONTACT_INTENTS = [
   {
     value: 'business',
     label: 'Business Enquiry',
-    description: 'Projects, solutions, and partnership discussions.',
+    description: 'Projects, solutions, and executive briefings.',
+  },
+  {
+    value: 'partnership',
+    label: 'Partnership Enquiry',
+    description: 'Technology partners, alliances, and co-delivery.',
   },
   {
     value: 'research',

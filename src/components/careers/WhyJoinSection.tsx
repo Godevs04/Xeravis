@@ -102,9 +102,9 @@ const CARD_META: {
 ]
 
 const HEADING_LINES = [
-  'Build the future of Healthcare AI,',
-  'Cloud Engineering &',
-  'Enterprise Innovation.',
+  'Build the future of AI Research,',
+  'Healthcare Intelligence &',
+  'Enterprise Consulting.',
 ]
 
 function metaForBenefit(title: string) {

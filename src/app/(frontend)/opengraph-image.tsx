@@ -33,10 +33,10 @@ export default function OpenGraphImage() {
             maxWidth: 900,
           }}
         >
-          Data Science, AI & Healthcare.
+          Engineering Intelligent Systems for Healthcare, Enterprises, and the Future.
         </div>
         <div style={{ fontSize: 24, color: '#94A3B8', maxWidth: 720 }}>
-          Clinical intelligence and platforms for regulated industries.
+          Global AI research, IT consulting, data science, and healthcare AI.
         </div>
       </div>
       <div style={{ display: 'flex', fontSize: 20, color: '#64748B' }}>xelarvis.in</div>

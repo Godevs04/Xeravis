@@ -1,4 +1,4 @@
-import { Inter, Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google'
+import { Manrope, Plus_Jakarta_Sans } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 
 import { TrackingScripts } from '@/components/analytics/TrackingScripts'
@@ -13,14 +13,16 @@ import { AppProviders } from '@/providers'
 
 import './globals.css'
 
-const display = Space_Grotesk({
+/** Heading font — enterprise tech (client brief: Manrope / Jakarta / max 2 families) */
+const display = Manrope({
   subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
-  weight: ['500', '600', '700'],
+  weight: ['500', '600', '700', '800'],
   preload: true,
 })
 
+/** Body font */
 const body = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-body',
@@ -29,20 +31,12 @@ const body = Plus_Jakarta_Sans({
   preload: true,
 })
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-  preload: false,
-})
-
 export const metadata: Metadata = {
   ...buildMetadata({
-    // Empty title → "Xelarvis | Data Science, AI & Healthcare"
+    // Empty title → "Xelarvis | AI Research, Consulting, Data Science & Healthcare"
     title: '',
     description:
-      'Xelarvis specializes in Data Science, AI, and Healthcare—clinical intelligence, advanced analytics, and platforms for hospitals, life sciences, and regulated enterprises.',
+      'Xelarvis is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value.',
     path: '/',
   }),
   verification: {
@@ -66,11 +60,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
   const jsonLd = graphJsonLd(organizationJsonLd(), websiteJsonLd())
 
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${body.variable} ${inter.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
