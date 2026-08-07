@@ -22,15 +22,17 @@ const serverFunction: ServerFunctionClient = async function (args) {
   })
 }
 
+const htmlProps = {
+  'data-xe-ui': 'v5',
+  suppressHydrationWarning: true,
+} as React.HtmlHTMLAttributes<HTMLHtmlElement>
+
 const Layout = ({ children }: Args) => (
   <RootLayout
     config={config}
     importMap={importMap}
     serverFunction={serverFunction}
-    htmlProps={{
-      'data-xe-ui': 'v5',
-      suppressHydrationWarning: true,
-    }}
+    htmlProps={htmlProps}
   >
     {children}
   </RootLayout>
