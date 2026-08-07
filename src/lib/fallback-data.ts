@@ -1,6 +1,6 @@
 export const BRAND = {
   name: 'Xelarvis Technologies',
-  tagline: 'Data Science, AI, and Healthcare AI for enterprise and life sciences',
+  tagline: 'Data Science, AI & Healthcare',
   domain: 'xelarvis.in',
 } as const
 

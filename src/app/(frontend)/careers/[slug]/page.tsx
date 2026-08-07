@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: Props) {
     description:
       job?.meta?.description ||
       job?.aboutRole ||
-      `Apply for ${job?.title || fallback?.title} at Xelarvis. Healthcare AI, clinical data science, and enterprise engineering roles.`,
+      `Apply for ${job?.title || fallback?.title} at Xelarvis. Roles across Data Science, AI, and Healthcare.`,
     path: `/careers/${slug}`,
   })
 }

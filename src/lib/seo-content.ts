@@ -48,7 +48,7 @@ export function serviceFaqsFor(title: string, summary: string): FaqItem[] {
     },
     {
       question: `Why choose Xelarvis for ${name}?`,
-      answer: `Xelarvis combines AI research, clinical data science, and enterprise engineering so ${name} can move from concept into audited, production systems.`,
+      answer: `Xelarvis combines data science, AI, and healthcare expertise so ${name} can move from concept into audited, production systems.`,
     },
     ...DEFAULT_SERVICE_FAQS.slice(2),
   ]

@@ -60,7 +60,7 @@ const CATEGORY_META: Record<string, { title: string; blurb: string; featuredLabe
   },
   services: {
     title: 'Services',
-    blurb: 'Data science, AI, and Healthcare AI—capabilities that move research into production.',
+    blurb: 'Data Science, AI & Healthcare—capabilities that move research into production.',
     featuredLabel: 'Featured service',
   },
   industries: {

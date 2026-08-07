@@ -36,7 +36,7 @@ export default function OpenGraphImage() {
           Data Science, AI & Healthcare.
         </div>
         <div style={{ fontSize: 24, color: '#94A3B8', maxWidth: 720 }}>
-          Clinical intelligence and enterprise platforms for regulated industries.
+          Clinical intelligence and platforms for regulated industries.
         </div>
       </div>
       <div style={{ display: 'flex', fontSize: 20, color: '#64748B' }}>xelarvis.in</div>

@@ -1,6 +1,6 @@
 # Xelarvis Technologies Website
 
-Enterprise corporate website for **Xelarvis Technologies** — Engineering Digital Excellence.
+Enterprise corporate website for **Xelarvis Technologies** — Data Science, AI & Healthcare.
 
 **Stack:** Next.js 15 · React 19 · TypeScript · Tailwind CSS · shadcn/ui · Framer Motion · Payload CMS 3 · MongoDB Atlas · Vercel · Cloudinary (production media)
 

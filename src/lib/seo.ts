@@ -10,38 +10,40 @@ export const SITE_NAME = BRAND.name
 export const SITE_DOMAIN = BRAND.domain
 export const TWITTER_HANDLE = '@xelarvis'
 
+/** Primary brand positioning — Data Science, AI, Healthcare (not “enterprise engineering”). */
+export const BRAND_POSITIONING = 'Data Science, AI & Healthcare'
+
 export const DEFAULT_DESCRIPTION =
-  'Xelarvis leads with data science, AI, and Healthcare AI—delivering clinical intelligence, advanced analytics, and enterprise platforms for hospitals, life sciences, and regulated enterprises.'
+  'Xelarvis specializes in Data Science, AI, and Healthcare—clinical intelligence, advanced analytics, and platforms for hospitals, life sciences, and regulated enterprises.'
 
 /** Entity phrases for GEO / knowledge-graph consistency. */
 export const ENTITY_ALIASES = [
   'Data Science Company',
-  'AI Research Company',
+  'AI Company',
   'Healthcare AI Company',
+  'AI Research Company',
+  'Clinical Data Science Company',
   'Clinical Intelligence Company',
   'Artificial Intelligence Company',
-  'Clinical Data Science Company',
   'IT Consulting Company',
-  'Enterprise AI Consulting Company',
   'Healthcare Technology Consulting Company',
   'Cloud Engineering Company',
 ] as const
 
 export const KNOWNS_FOR = [
   'Data Science',
-  'AI Research',
+  'Artificial Intelligence',
+  'AI',
+  'Healthcare',
   'Healthcare AI',
   'Clinical Data Science',
   'Clinical Intelligence',
   'Machine Learning',
   'Advanced Analytics',
   'Healthcare Analytics',
-  'Enterprise AI',
   'IT Consulting',
-  'Healthcare Technology Consulting',
   'Cloud Engineering',
   'Data Engineering',
-  'Enterprise Software Platforms',
 ] as const
 
 export const SOCIAL_PROFILES = [
@@ -74,9 +76,13 @@ function clampDescription(text: string, max = 158) {
 /** Prefer CMS titles that already include brand; otherwise append `| Xelarvis`. */
 export function formatPageTitle(title?: string | null) {
   if (!title?.trim()) {
-    return `${SITE_NAME_SHORT} | Data Science, AI & Healthcare`
+    return `${SITE_NAME_SHORT} | ${BRAND_POSITIONING}`
   }
   const t = title.trim()
+  // Never keep the retired “Healthcare AI & Enterprise Engineering” framing
+  if (/healthcare ai\s*&\s*enterprise engineering/i.test(t)) {
+    return `${SITE_NAME_SHORT} | ${BRAND_POSITIONING}`
+  }
   if (/xelarvis/i.test(t)) return t
   return `${t} | ${SITE_NAME_SHORT}`
 }
@@ -98,11 +104,11 @@ export function buildMetadata({
   const imageUrl = getMediaUrl(image as Parameters<typeof getMediaUrl>[0])
   const url = absoluteUrl(path)
   const defaultKeywords = [
+    'Data Science',
+    'AI',
+    'Healthcare',
     'Healthcare AI',
-    'Enterprise AI',
-    'Clinical Intelligence',
-    'Cloud Engineering',
-    'Data Engineering',
+    'Clinical Data Science',
     'Xelarvis',
     ...ENTITY_ALIASES.slice(0, 4),
   ]

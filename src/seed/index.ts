@@ -108,7 +108,7 @@ async function seed() {
     slug: 'site-settings',
     data: {
       siteName: 'Xelarvis Technologies',
-      tagline: 'Data Science, AI, and Healthcare AI for enterprise and life sciences',
+      tagline: 'Data Science, AI & Healthcare',
       social: {
         linkedin: 'https://linkedin.com/company/xelarvis',
         twitter: 'https://x.com/xelarvis',
@@ -225,7 +225,7 @@ async function seed() {
     data: {
       titleTemplate: '%s · Xelarvis Technologies',
       defaultDescription:
-        'XELARVIS PRIVATE LIMITED delivers IT consulting, AI research, clinical data science, analytics, and cloud solutions for healthcare and enterprise organizations.',
+        'XELARVIS PRIVATE LIMITED specializes in Data Science, AI, and Healthcare—clinical data science, analytics, and platforms for life sciences and enterprise organizations.',
       twitterHandle: '@xelarvis',
     },
     overrideAccess: true,
