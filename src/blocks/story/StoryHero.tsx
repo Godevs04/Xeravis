@@ -224,9 +224,9 @@ export function StoryHero({
   heading,
   subheading,
   ctaLabel = "Let's Talk",
-  ctaHref = '/contact',
-  secondaryCtaLabel = 'Explore solutions',
-  secondaryCtaHref = '/solutions',
+  ctaHref = '/contact?intent=business',
+  secondaryCtaLabel = 'Explore services',
+  secondaryCtaHref = '/services',
   brand = 'Xelarvis',
 }: StoryHeroProps) {
   const reduce = useReducedMotion()

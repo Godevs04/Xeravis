@@ -108,7 +108,7 @@ async function seed() {
     slug: 'site-settings',
     data: {
       siteName: 'Xelarvis Technologies',
-      tagline: 'Data Science, AI & Healthcare',
+      tagline: 'Global AI Research, IT Consulting, Data Science & Healthcare AI',
       social: {
         linkedin: 'https://linkedin.com/company/xelarvis',
         twitter: 'https://x.com/xelarvis',
@@ -225,7 +225,7 @@ async function seed() {
     data: {
       titleTemplate: '%s · Xelarvis Technologies',
       defaultDescription:
-        'XELARVIS PRIVATE LIMITED specializes in Data Science, AI, and Healthcare—clinical data science, analytics, and platforms for life sciences and enterprise organizations.',
+        'XELARVIS PRIVATE LIMITED is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value.',
       twitterHandle: '@xelarvis',
     },
     overrideAccess: true,
@@ -381,14 +381,14 @@ async function seed() {
     {
       blockType: 'storyHero' as const,
       brand: 'Xelarvis',
-      eyebrow: 'Data Science · AI · Healthcare',
-      heading: 'Intelligence that survives the real world.',
+      eyebrow: 'AI Research · Consulting · Data Science · Healthcare',
+      heading: 'Engineering Intelligent Systems for Healthcare, Enterprises, and the Future.',
       subheading:
-        'We lead with data science, AI, and Healthcare AI — clinical intelligence and enterprise platforms that operators trust, not demos that fade.',
+        'We help organisations transform data into measurable business value through AI-powered decision intelligence—backed by research depth and enterprise delivery.',
       ctaLabel: "Let's Talk",
-      ctaHref: '/contact',
-      secondaryCtaLabel: 'Explore solutions',
-      secondaryCtaHref: '/solutions',
+      ctaHref: '/contact?intent=business',
+      secondaryCtaLabel: 'Explore services',
+      secondaryCtaHref: '/services',
     },
     {
       blockType: 'storyChallenge' as const,
@@ -433,19 +433,19 @@ async function seed() {
       eyebrow: 'Capabilities',
       heading: 'What we bring to the table.',
       subheading:
-        'AI research, data science, IT consulting, clinical data science, and cloud platforms — scroll sideways to explore.',
+        'AI research & innovation, data science, enterprise technology consulting, clinical data science, and cloud platforms.',
     },
     {
       blockType: 'storyTechOrbit' as const,
       eyebrow: 'Technology',
       heading: 'A constellation, not a checklist.',
       subheading:
-        'Hover the orbit. Each node is a capability we put into production for healthcare, AI, and enterprise delivery.',
+        'Hover the orbit. Each node is a capability we put into production for healthcare, enterprises, and research teams.',
     },
     {
       blockType: 'storyProof' as const,
-      eyebrow: 'Proof',
-      heading: 'Why Fortune-facing teams trust Xelarvis.',
+      eyebrow: 'Credibility',
+      heading: 'Built for enterprise trust.',
       stats: [
         { label: 'Core services', value: '5' },
         { label: 'Industries served', value: '8' },
@@ -497,15 +497,16 @@ async function seed() {
     },
     {
       blockType: 'storyPresence' as const,
-      eyebrow: 'Client stories',
-      heading: 'Trusted by leaders building the future.',
+      eyebrow: 'Trust',
+      heading: 'Credibility that enterprise buyers expect.',
     },
     {
       blockType: 'storyCta' as const,
       heading: 'Ready for the next intelligent chapter?',
-      subheading: 'Tell us about your AI, clinical, analytics, or transformation goals.',
+      subheading:
+        'Tell us about your AI research, consulting, analytics, healthcare, or partnership goals.',
       ctaLabel: 'Schedule a Consultation',
-      ctaHref: '/contact',
+      ctaHref: '/contact?intent=business',
     },
   ]
 
@@ -518,7 +519,7 @@ async function seed() {
     {
       blockType: 'aboutPreview' as const,
       heading: 'About the Company',
-      body: 'We help organizations transform complex data into intelligent solutions through innovative technologies, research-driven methodologies, and scalable digital platforms. Our mission is to bridge the gap between healthcare, artificial intelligence, and enterprise technology.',
+      body: 'XELARVIS is a global AI research, IT consulting, data science, and healthcare AI company. We help organisations transform data into measurable business value through AI-powered decision intelligence—closer to enterprise consulting and applied research than to a typical software agency.',
       cta: {
         label: 'Company overview',
         href: '/about/company-overview',
@@ -530,9 +531,10 @@ async function seed() {
       heading: 'Vision & Mission',
       missionTitle: 'Mission',
       missionBody:
-        'Advance data science, AI, and healthcare technology by delivering reliable, secure, and future-ready solutions.',
+        'Help organisations transform data into measurable business value through AI-powered decision intelligence, clinical data science, and enterprise technology consulting.',
       visionTitle: 'Vision',
-      visionBody: 'Be a trusted global partner for data science, AI research, and Healthcare AI.',
+      visionBody:
+        'Be a trusted Global Artificial Intelligence Research & Digital Transformation Company.',
     },
     {
       blockType: 'valuesGrid' as const,

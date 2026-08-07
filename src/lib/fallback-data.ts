@@ -1,6 +1,6 @@
 export const BRAND = {
   name: 'Xelarvis Technologies',
-  tagline: 'Data Science, AI & Healthcare',
+  tagline: 'Global AI Research, IT Consulting, Data Science & Healthcare AI',
   domain: 'xelarvis.in',
 } as const
 
@@ -74,15 +74,15 @@ export const FALLBACK_SERVICES = [
     title: 'Data Science & Advanced Analytics',
     slug: 'data-science-advanced-analytics',
     summary:
-      'Transform data into actionable insights with predictive analytics, BI, statistical modeling, and visualization.',
+      'Help organisations turn data into measurable business value through predictive analytics, BI, and decision intelligence.',
     icon: 'BarChart3',
   },
   {
     id: '2',
-    title: 'Artificial Intelligence & AI Research',
+    title: 'AI Research & Innovation',
     slug: 'artificial-intelligence-ai-research',
     summary:
-      'Develop intelligent systems using machine learning, generative AI, computer vision, NLP, and AI agents.',
+      'Applied AI research and production systems—machine learning, generative AI, vision, NLP, and intelligent agents.',
     icon: 'Sparkles',
   },
   {
@@ -90,15 +90,15 @@ export const FALLBACK_SERVICES = [
     title: 'Clinical Data Science & Healthcare AI',
     slug: 'clinical-data-science-healthcare-ai',
     summary:
-      'Clinical SAS, CDISC standards, healthcare analytics, and AI-powered research solutions for regulated care.',
+      'Clinical SAS, CDISC standards, healthcare analytics, and AI-powered research for regulated care.',
     icon: 'HeartPulse',
   },
   {
     id: '4',
-    title: 'IT Consulting & Digital Transformation',
+    title: 'Enterprise Technology Consulting',
     slug: 'it-consulting-digital-transformation',
     summary:
-      'Modernize operations through technology consulting, software engineering, cloud adoption, and automation.',
+      'Enterprise consulting for modernization—architecture, software engineering, cloud adoption, and automation.',
     icon: 'Briefcase',
   },
   {
@@ -106,7 +106,7 @@ export const FALLBACK_SERVICES = [
     title: 'Data Engineering & Cloud Solutions',
     slug: 'data-engineering-cloud-solutions',
     summary:
-      'Design scalable cloud platforms, data pipelines, AI infrastructure, and enterprise data architectures.',
+      'Scalable cloud platforms, data pipelines, AI infrastructure, and enterprise data architectures.',
     icon: 'Cloud',
   },
 ]
@@ -303,7 +303,7 @@ export const FALLBACK_ABOUT_BLOCKS = [
   {
     blockType: 'aboutPreview',
     heading: 'About the Company',
-    body: 'We help organizations transform complex data into intelligent solutions through innovative technologies, research-driven methodologies, and scalable digital platforms.',
+    body: 'XELARVIS is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value through AI-powered decision intelligence.',
     cta: { label: 'Why XELARVIS', href: '/about/why-xelarvis', style: 'secondary' },
   },
   {
@@ -311,9 +311,10 @@ export const FALLBACK_ABOUT_BLOCKS = [
     heading: 'Vision & Mission',
     missionTitle: 'Mission',
     missionBody:
-      'Advance data science, AI, and healthcare technology by delivering reliable, secure, and future-ready solutions.',
+      'Help organisations transform data into measurable business value through AI-powered decision intelligence, clinical data science, and enterprise technology consulting.',
     visionTitle: 'Vision',
-    visionBody: 'Be a trusted global partner for data science, AI research, and Healthcare AI.',
+    visionBody:
+      'Be a trusted Global Artificial Intelligence Research & Digital Transformation Company.',
   },
   {
     blockType: 'valuesGrid',
@@ -321,8 +322,9 @@ export const FALLBACK_ABOUT_BLOCKS = [
     subheading: 'What makes our partnership different.',
     values: [
       {
-        title: 'Data Science + AI + Healthcare',
-        description: 'Clinical data science and Healthcare AI alongside applied AI research.',
+        title: 'AI Research + Consulting + Healthcare',
+        description:
+          'Research depth with consulting-led delivery for regulated and enterprise buyers.',
       },
       {
         title: 'Research-driven',

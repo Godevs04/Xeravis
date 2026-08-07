@@ -5,11 +5,11 @@ export const SEED_SERVICES = [
     title: 'Data Science & Advanced Analytics',
     slug: 'data-science-advanced-analytics',
     summary:
-      'Transform data into actionable insights with predictive analytics, business intelligence, statistical modeling, and visualization.',
+      'Help organisations turn data into measurable business value through predictive analytics, BI, and decision intelligence.',
     icon: 'BarChart3',
     challenges:
       'Raw data rarely drives decisions without quality assessment, modeling, and clear executive storytelling.',
-    body: 'Data is one of the most valuable assets for any organization. XELARVIS helps businesses convert raw data into meaningful insights that improve decision-making, optimize operations, and uncover growth opportunities.',
+    body: 'Data is one of the most valuable assets for any organization. XELARVIS helps businesses convert raw data into meaningful insights that improve decision-making, optimize operations, and uncover growth opportunities—so leaders act on intelligence, not intuition alone.',
     process: [
       {
         title: 'Business Understanding',
@@ -58,14 +58,14 @@ export const SEED_SERVICES = [
     techLabels: ['Python', 'R', 'SQL', 'Power BI', 'Tableau', 'Apache Spark'],
   },
   {
-    title: 'Artificial Intelligence & AI Research',
+    title: 'AI Research & Innovation',
     slug: 'artificial-intelligence-ai-research',
     summary:
-      'Develop intelligent systems using machine learning, generative AI, computer vision, NLP, and AI agents.',
+      'Applied AI research and production systems—machine learning, generative AI, vision, NLP, and intelligent agents.',
     icon: 'Sparkles',
     challenges:
       'Organizations need AI that improves efficiency and creates measurable value without compromising reliability or governance.',
-    body: 'Artificial Intelligence is transforming how organizations operate, make decisions, and deliver services. At XELARVIS PRIVATE LIMITED, we combine AI research with practical engineering to develop intelligent, scalable, and business-focused solutions.',
+    body: 'Artificial Intelligence is transforming how organizations operate, make decisions, and deliver services. At XELARVIS, we combine AI research with practical engineering so teams can turn models into governed, production systems that create measurable value.',
     process: [
       {
         title: 'Business Discovery & AI Strategy',
@@ -205,14 +205,14 @@ export const SEED_SERVICES = [
     ],
   },
   {
-    title: 'IT Consulting & Digital Transformation',
+    title: 'Enterprise Technology Consulting',
     slug: 'it-consulting-digital-transformation',
     summary:
-      'Modernize business operations through technology consulting, software engineering, cloud adoption, and automation.',
+      'Enterprise consulting for modernization—architecture, software engineering, cloud adoption, and automation.',
     icon: 'Briefcase',
     challenges:
       'Legacy systems, unclear roadmaps, and fragmented delivery slow modernization and increase risk.',
-    body: 'Technology is at the core of modern business. XELARVIS provides consulting services that help organizations modernize infrastructure, improve operational efficiency, and implement innovative digital solutions.',
+    body: 'XELARVIS provides enterprise technology consulting that helps organizations modernize infrastructure, improve operational efficiency, and implement digital programs tied to business outcomes—closer to consulting-led delivery than a typical software agency.',
     process: [
       {
         title: 'Business Assessment',

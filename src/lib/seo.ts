@@ -10,38 +10,37 @@ export const SITE_NAME = BRAND.name
 export const SITE_DOMAIN = BRAND.domain
 export const TWITTER_HANDLE = '@xelarvis'
 
-/** Primary brand positioning — Data Science, AI, Healthcare (not “enterprise engineering”). */
-export const BRAND_POSITIONING = 'Data Science, AI & Healthcare'
+/** Primary brand positioning — global AI research, consulting, data science, healthcare AI. */
+export const BRAND_POSITIONING = 'AI Research, Consulting, Data Science & Healthcare'
 
 export const DEFAULT_DESCRIPTION =
-  'Xelarvis specializes in Data Science, AI, and Healthcare—clinical intelligence, advanced analytics, and platforms for hospitals, life sciences, and regulated enterprises.'
+  'Xelarvis is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value through AI-powered decision intelligence.'
 
 /** Entity phrases for GEO / knowledge-graph consistency. */
 export const ENTITY_ALIASES = [
-  'Data Science Company',
-  'AI Company',
-  'Healthcare AI Company',
   'AI Research Company',
-  'Clinical Data Science Company',
-  'Clinical Intelligence Company',
-  'Artificial Intelligence Company',
   'IT Consulting Company',
-  'Healthcare Technology Consulting Company',
+  'Data Science Company',
+  'Healthcare AI Company',
+  'Enterprise Technology Consulting Company',
+  'Clinical Data Science Company',
+  'Artificial Intelligence Company',
+  'Digital Transformation Partner',
+  'Clinical Intelligence Company',
   'Cloud Engineering Company',
 ] as const
 
 export const KNOWNS_FOR = [
-  'Data Science',
   'Artificial Intelligence',
-  'AI',
-  'Healthcare',
+  'AI Research',
+  'IT Consulting',
+  'Data Science',
   'Healthcare AI',
+  'Enterprise Technology Consulting',
   'Clinical Data Science',
-  'Clinical Intelligence',
   'Machine Learning',
   'Advanced Analytics',
-  'Healthcare Analytics',
-  'IT Consulting',
+  'Digital Transformation',
   'Cloud Engineering',
   'Data Engineering',
 ] as const
@@ -104,11 +103,11 @@ export function buildMetadata({
   const imageUrl = getMediaUrl(image as Parameters<typeof getMediaUrl>[0])
   const url = absoluteUrl(path)
   const defaultKeywords = [
+    'AI Research',
+    'IT Consulting',
     'Data Science',
-    'AI',
-    'Healthcare',
     'Healthcare AI',
-    'Clinical Data Science',
+    'Enterprise Technology Consulting',
     'Xelarvis',
     ...ENTITY_ALIASES.slice(0, 4),
   ]
