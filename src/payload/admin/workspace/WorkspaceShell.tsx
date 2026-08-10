@@ -1,6 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { EmptyState } from '@/payload/admin/components/ui/EmptyState'
+import { PageHeader } from '@/payload/admin/components/ui/PageHeader'
+import { StatCard } from '@/payload/admin/components/ui/StatCard'
+import { StatusBadge } from '@/payload/admin/components/ui/StatusBadge'
+
 import type { WorkspaceRow, WorkspaceStat } from './lib'
 
 type WorkspaceShellProps = {
@@ -13,11 +18,11 @@ type WorkspaceShellProps = {
   children: React.ReactNode
 }
 
-function toneClass(tone?: WorkspaceStat['tone'] | WorkspaceRow['badgeTone']) {
-  if (tone === 'accent' || tone === 'open') return 'xe-ws-badge--open'
-  if (tone === 'warn') return 'xe-ws-badge--warn'
-  if (tone === 'muted') return 'xe-ws-badge--muted'
-  return ''
+function badgeTone(tone?: WorkspaceStat['tone'] | WorkspaceRow['badgeTone']) {
+  if (tone === 'accent' || tone === 'open') return 'success' as const
+  if (tone === 'warn') return 'warning' as const
+  if (tone === 'muted') return 'muted' as const
+  return 'default' as const
 }
 
 export function WorkspaceShell({
@@ -28,49 +33,39 @@ export function WorkspaceShell({
   children,
 }: WorkspaceShellProps) {
   return (
-    <div className="xe-ws">
-      <header className="xe-ws__hero">
-        <div>
-          <p className="xe-ws__eyebrow">Xelarvis Admin</p>
-          <h1 className="xe-ws__title">{title}</h1>
-          <p className="xe-ws__subtitle">{subtitle}</p>
-        </div>
-        {actions.length > 0 ? (
-          <div className="xe-ws__actions">
-            {actions.map((action) => (
-              <Link
-                key={action.href}
-                href={action.href}
-                className={action.primary ? 'xe-ws-btn xe-ws-btn--primary' : 'xe-ws-btn'}
-              >
-                {action.label}
-              </Link>
-            ))}
-          </div>
-        ) : null}
-      </header>
+    <div className="xe-content-shell xe-page xe-ws">
+      <PageHeader
+        eyebrow="Xelarvis Admin"
+        title={title}
+        description={subtitle}
+        actions={
+          actions.length > 0 ? (
+            <>
+              {actions.map((action) => (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className={action.primary ? 'xe-ws-btn xe-ws-btn--primary' : 'xe-ws-btn'}
+                >
+                  {action.label}
+                </Link>
+              ))}
+            </>
+          ) : undefined
+        }
+      />
 
       {stats.length > 0 ? (
-        <section className="xe-ws__stats">
+        <section className="xe-ws__stats" aria-label="Workspace metrics">
           {stats.map((stat) => {
-            const inner = (
-              <>
-                <span className="xe-ws-stat__label">{stat.label}</span>
-                <strong className="xe-ws-stat__value">{stat.value}</strong>
-                {stat.meta ? <span className="xe-ws-stat__meta">{stat.meta}</span> : null}
-              </>
-            )
+            const card = <StatCard label={stat.label} value={stat.value} hint={stat.meta} />
             return stat.href ? (
-              <Link
-                key={stat.label}
-                href={stat.href}
-                className={`xe-ws-stat ${toneClass(stat.tone)}`}
-              >
-                {inner}
+              <Link key={stat.label} href={stat.href} className="xe-ws-stat-link">
+                {card}
               </Link>
             ) : (
-              <div key={stat.label} className={`xe-ws-stat ${toneClass(stat.tone)}`}>
-                {inner}
+              <div key={stat.label} className="xe-ws-stat-link">
+                {card}
               </div>
             )
           })}
@@ -94,9 +89,9 @@ export function WorkspacePanel({
   children: React.ReactNode
 }) {
   return (
-    <section className="xe-ws-panel">
+    <section className="xe-ws-panel xe-card is-static">
       <div className="xe-ws-panel__head">
-        <h2>{title}</h2>
+        <h2 className="xe-card__title">{title}</h2>
         {href ? (
           <Link href={href} className="xe-ws-panel__link">
             {linkLabel}
@@ -109,7 +104,7 @@ export function WorkspacePanel({
 }
 
 export function WorkspaceTable({ rows, empty }: { rows: WorkspaceRow[]; empty: string }) {
-  if (!rows.length) return <p className="xe-ws-empty">{empty}</p>
+  if (!rows.length) return <EmptyState title="No items" description={empty} />
 
   return (
     <ul className="xe-ws-list">
@@ -120,12 +115,9 @@ export function WorkspaceTable({ rows, empty }: { rows: WorkspaceRow[]; empty: s
               <span className="xe-ws-row__title">{row.title}</span>
               {row.subtitle ? <span className="xe-ws-row__sub">{row.subtitle}</span> : null}
             </span>
-            <span className="xe-ws-row__side">
-              {row.meta ? <span className="xe-ws-row__meta">{row.meta}</span> : null}
-              {row.badge ? (
-                <span className={`xe-ws-badge ${toneClass(row.badgeTone)}`}>{row.badge}</span>
-              ) : null}
-            </span>
+            {row.badge ? (
+              <StatusBadge tone={badgeTone(row.badgeTone)}>{row.badge}</StatusBadge>
+            ) : null}
           </Link>
         </li>
       ))}

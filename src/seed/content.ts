@@ -2,75 +2,19 @@
 
 export const SEED_SERVICES = [
   {
-    title: 'Data Science & Advanced Analytics',
-    slug: 'data-science-advanced-analytics',
-    summary:
-      'Help organisations turn data into measurable business value through predictive analytics, BI, and decision intelligence.',
-    icon: 'BarChart3',
-    challenges:
-      'Raw data rarely drives decisions without quality assessment, modeling, and clear executive storytelling.',
-    body: 'Data is one of the most valuable assets for any organization. XELARVIS helps businesses convert raw data into meaningful insights that improve decision-making, optimize operations, and uncover growth opportunities—so leaders act on intelligence, not intuition alone.',
-    process: [
-      {
-        title: 'Business Understanding',
-        description: 'Identify objectives, KPIs, and analytical requirements.',
-      },
-      {
-        title: 'Data Assessment',
-        description: 'Evaluate quality, completeness, and availability across sources.',
-      },
-      {
-        title: 'Data Engineering',
-        description: 'Prepare and transform data into analysis-ready formats.',
-      },
-      {
-        title: 'Statistical Analysis',
-        description: 'Discover patterns, trends, and relationships in the data.',
-      },
-      {
-        title: 'Machine Learning & Predictive Analytics',
-        description: 'Forecast outcomes and support data-driven decisions.',
-      },
-      {
-        title: 'Visualization & Reporting',
-        description: 'Interactive dashboards and executive reports.',
-      },
-      {
-        title: 'Business Recommendations',
-        description: 'Translate findings into practical improvement actions.',
-      },
-    ],
-    benefits: [
-      {
-        title: 'Predictive Analytics',
-        description: 'Forecast demand, risk, and customer outcomes.',
-      },
-      { title: 'Business Intelligence', description: 'Trusted metrics and self-serve reporting.' },
-      {
-        title: 'Healthcare Analytics',
-        description: 'Clinical and operational insights for life sciences.',
-      },
-      {
-        title: 'Customer & Risk Analytics',
-        description: 'Segmentation, forecasting, and risk models.',
-      },
-    ],
-    techLabels: ['Python', 'R', 'SQL', 'Power BI', 'Tableau', 'Apache Spark'],
-  },
-  {
-    title: 'AI Research & Innovation',
+    title: 'Artificial Intelligence',
     slug: 'artificial-intelligence-ai-research',
     summary:
-      'Applied AI research and production systems—machine learning, generative AI, vision, NLP, and intelligent agents.',
+      'Strategy-led AI programs—machine learning, generative AI, agents, vision, and NLP—delivered as governed production systems.',
     icon: 'Sparkles',
     challenges:
-      'Organizations need AI that improves efficiency and creates measurable value without compromising reliability or governance.',
-    body: 'Artificial Intelligence is transforming how organizations operate, make decisions, and deliver services. At XELARVIS, we combine AI research with practical engineering so teams can turn models into governed, production systems that create measurable value.',
+      'Organizations need AI that improves efficiency and creates measurable value without compromising reliability, security, or governance.',
+    body: 'Artificial Intelligence is transforming how organizations operate, make decisions, and deliver services. At XELARVIS, we combine AI strategy with applied research and engineering so teams can turn models into governed, production systems that create measurable business value.',
     process: [
       {
         title: 'Business Discovery & AI Strategy',
         description:
-          'Requirement analysis, AI opportunity assessment, feasibility study, data readiness evaluation, and solution roadmap.',
+          'Requirement analysis, opportunity assessment, feasibility study, data readiness, and solution roadmap.',
       },
       {
         title: 'Data Collection & Preparation',
@@ -80,7 +24,7 @@ export const SEED_SERVICES = [
       {
         title: 'AI Model Research & Development',
         description:
-          'Predictive models, recommendation systems, computer vision, NLP, generative AI, AI agents, and decision support.',
+          'Predictive models, generative AI, computer vision, NLP, AI agents, and decision support.',
       },
       {
         title: 'Model Training & Optimization',
@@ -90,56 +34,371 @@ export const SEED_SERVICES = [
       {
         title: 'AI Solution Development',
         description:
-          'Integrate models into apps, dashboards, APIs, and platforms — chatbots, medical AI, automation, and document intelligence.',
+          'Integrate models into applications, APIs, dashboards, and platforms for real workflows.',
+      },
+      {
+        title: 'Evaluation & Responsible AI Review',
+        description: 'Accuracy, fairness, safety, and governance checks before production release.',
       },
       {
         title: 'Testing & Quality Assurance',
-        description: 'Accuracy, reliability, scalability, and security testing before deployment.',
+        description: 'Reliability, scalability, security, and acceptance testing.',
       },
       {
         title: 'Deployment & Continuous Improvement',
         description:
-          'Cloud or on-premises deployment with ongoing monitoring and model improvement.',
+          'Cloud or on-premises deployment with monitoring, retraining, and MLOps support.',
       },
     ],
     benefits: [
       {
-        title: 'AI Consulting',
-        description: 'Strategy and opportunity assessment for AI programs.',
+        title: 'AI Strategy & Advisory',
+        description: 'Opportunity assessment, feasibility, and roadmap for AI programs.',
       },
       {
         title: 'Machine Learning',
-        description: 'Predictive and deep learning solutions tailored to your data.',
+        description: 'Supervised and deep learning models tailored to your data and KPIs.',
       },
       {
-        title: 'Generative AI & Agents',
-        description: 'LLM applications and autonomous assistants for real workflows.',
+        title: 'Generative AI',
+        description: 'LLM applications for knowledge work, content, and decision support.',
       },
       {
-        title: 'NLP & Vision',
-        description: 'Language and computer vision systems for documents, media, and ops.',
+        title: 'LLMs',
+        description: 'Foundation-model integration, fine-tuning, and retrieval-augmented systems.',
+      },
+      {
+        title: 'AI Agents',
+        description: 'Autonomous and assisted agents for multi-step business workflows.',
+      },
+      {
+        title: 'NLP',
+        description: 'Language understanding for documents, search, chat, and classification.',
+      },
+      {
+        title: 'Computer Vision',
+        description: 'Image and video intelligence for inspection, media, and operations.',
+      },
+      {
+        title: 'Predictive AI',
+        description: 'Forecasting and scoring models that anticipate outcomes.',
+      },
+      {
+        title: 'Responsible AI',
+        description: 'Fairness, transparency, and safety practices built into delivery.',
+      },
+      {
+        title: 'AI Evaluation & Governance',
+        description: 'Model evaluation, risk controls, and production governance.',
+      },
+      {
+        title: 'MLOps',
+        description: 'CI/CD, monitoring, and lifecycle management for production models.',
+      },
+    ],
+    techLabels: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'Hugging Face', 'LangChain'],
+  },
+  {
+    title: 'Data Science & Advanced Analytics',
+    slug: 'data-science-advanced-analytics',
+    summary:
+      'Turn data into measurable business value through strategy, modeling, forecasting, BI, and decision intelligence.',
+    icon: 'BarChart3',
+    challenges:
+      'Raw data rarely drives decisions without quality assessment, rigorous modeling, and clear executive storytelling.',
+    body: 'Data is one of the most valuable assets for any organization. XELARVIS helps businesses convert raw data into meaningful insights that improve decision-making, optimize operations, and uncover growth opportunities—so leaders act on intelligence, not intuition alone.',
+    process: [
+      {
+        title: 'Business Understanding',
+        description: 'Identify objectives, KPIs, and analytical requirements.',
+      },
+      {
+        title: 'Data Strategy & Assessment',
+        description: 'Evaluate quality, completeness, availability, and analytic priorities.',
+      },
+      {
+        title: 'Exploratory Data Analysis',
+        description: 'Profile sources, surface patterns, and validate assumptions.',
+      },
+      {
+        title: 'Data Preparation',
+        description: 'Transform and enrich data into analysis-ready formats.',
+      },
+      {
+        title: 'Statistical Modeling & Machine Learning',
+        description: 'Build models for prediction, segmentation, risk, and optimization.',
+      },
+      {
+        title: 'Forecasting & Decision Models',
+        description: 'Anticipate demand, risk, and outcomes tied to business decisions.',
+      },
+      {
+        title: 'Visualization & Business Intelligence',
+        description: 'Interactive dashboards and trusted executive reporting.',
+      },
+      {
+        title: 'Recommendations & Enablement',
+        description: 'Translate findings into actions and hand off lasting analytic capability.',
+      },
+    ],
+    benefits: [
+      {
+        title: 'Data Strategy',
+        description: 'Prioritize use cases, metrics, and analytic roadmaps.',
+      },
+      {
+        title: 'EDA',
+        description: 'Explore data quality, distributions, and relationships.',
+      },
+      {
+        title: 'Statistical Modeling',
+        description: 'Inferential and descriptive models grounded in evidence.',
+      },
+      {
+        title: 'Predictive Analytics',
+        description: 'Forecast demand, risk, and customer outcomes.',
+      },
+      {
+        title: 'ML',
+        description: 'Machine learning models for classification, scoring, and recommendation.',
+      },
+      {
+        title: 'Forecasting',
+        description: 'Time-series and planning models for operations and finance.',
+      },
+      {
+        title: 'Customer Analytics',
+        description: 'Segmentation, retention, and lifetime-value insight.',
+      },
+      {
+        title: 'Risk Analytics',
+        description: 'Credit, fraud, and operational risk models.',
+      },
+      {
+        title: 'Optimization',
+        description: 'Resource allocation and process optimization models.',
+      },
+      {
+        title: 'BI',
+        description: 'Trusted metrics layers and self-serve reporting.',
+      },
+      {
+        title: 'Viz',
+        description: 'Clear visual storytelling for executives and operators.',
+      },
+      {
+        title: 'Decision Intelligence',
+        description: 'Connect insight to decisions with governed recommendations.',
+      },
+    ],
+    techLabels: ['Python', 'Power BI', 'Tableau', 'Apache Spark', 'Snowflake', 'Databricks'],
+  },
+  {
+    title: 'IT Consulting & Digital Transformation',
+    slug: 'it-consulting-digital-transformation',
+    summary:
+      'Enterprise consulting for modernization—strategy, architecture, software engineering, cloud, and automation.',
+    icon: 'Briefcase',
+    challenges:
+      'Legacy systems, unclear roadmaps, and fragmented delivery slow modernization and increase operational risk.',
+    body: 'XELARVIS provides IT consulting and digital transformation that helps organizations modernize infrastructure, improve operational efficiency, and implement technology programs tied to business outcomes—consulting-led delivery for production systems, not agency-style demos.',
+    process: [
+      {
+        title: 'IT Strategy & Assessment',
+        description: 'Understand processes, systems, and technology challenges.',
+      },
+      {
+        title: 'Digital Transformation Roadmap',
+        description: 'Prioritize initiatives against outcomes, risk, and readiness.',
+      },
+      {
+        title: 'Enterprise Architecture',
+        description: 'Design scalable, secure, future-ready solution landscapes.',
+      },
+      {
+        title: 'Technology Selection & Advisory',
+        description: 'Recommend platforms, frameworks, and cloud approaches.',
+      },
+      {
+        title: 'Application Modernization & Engineering',
+        description: 'Rebuild, refactor, or extend applications for longevity.',
+      },
+      {
+        title: 'API, Integration & Automation',
+        description: 'Connect systems and reduce manual operational effort.',
+      },
+      {
+        title: 'Quality Assurance',
+        description: 'Functional, performance, security, and UAT testing.',
+      },
+      {
+        title: 'Cloud Transformation & DevOps',
+        description: 'Deploy with CI/CD, observability, and managed support.',
+      },
+    ],
+    benefits: [
+      {
+        title: 'IT Strategy',
+        description: 'Align technology investments to business priorities.',
+      },
+      {
+        title: 'Digital Transformation',
+        description: 'Pragmatic programs tied to measurable outcomes.',
+      },
+      {
+        title: 'Enterprise Architecture',
+        description: 'Coherent target architectures across applications and data.',
+      },
+      {
+        title: 'Application Modernization',
+        description: 'Evolve legacy systems into maintainable platforms.',
+      },
+      {
+        title: 'Software Engineering',
+        description: 'Secure enterprise applications built for scale.',
+      },
+      {
+        title: 'Cloud Transformation',
+        description: 'Migrate and modernize workloads on AWS, Azure, and GCP.',
+      },
+      {
+        title: 'Technology Advisory',
+        description: 'Independent guidance on tools, vendors, and build-vs-buy.',
+      },
+      {
+        title: 'API & Integration',
+        description: 'Connect applications and data across the enterprise.',
+      },
+      {
+        title: 'DevOps',
+        description: 'CI/CD, infrastructure as code, and release reliability.',
+      },
+      {
+        title: 'Automation',
+        description: 'Reduce manual effort across business and IT operations.',
+      },
+      {
+        title: 'Legacy Modernization',
+        description: 'De-risk replacement and coexistence for aging systems.',
       },
     ],
     techLabels: [
       'Python',
-      'TensorFlow',
-      'PyTorch',
-      'OpenAI',
-      'Hugging Face',
-      'LangChain',
-      'LlamaIndex',
-      'ONNX',
+      'React',
+      'Node.js',
+      'Docker',
+      'Kubernetes',
+      'AWS',
+      'Microsoft Azure',
+      'Google Cloud Platform',
     ],
   },
   {
-    title: 'Clinical Data Science & Healthcare AI',
+    title: 'Data Engineering & Cloud',
+    slug: 'data-engineering-cloud-solutions',
+    summary:
+      'Design scalable data architectures, lakes, warehouses, pipelines, and MLOps infrastructure on the cloud.',
+    icon: 'Cloud',
+    challenges:
+      'Enterprises need reliable data platforms, pipelines, and governance foundations to power analytics and AI at scale.',
+    body: 'Modern organizations require scalable and secure data platforms to support analytics, AI, and business operations. XELARVIS designs and implements cloud-native data architectures that enable organizations to collect, process, store, and analyze data efficiently—with governance and quality built in.',
+    process: [
+      {
+        title: 'Data Architecture Assessment',
+        description: 'Evaluate systems, sources, quality, and platform requirements.',
+      },
+      {
+        title: 'Platform & Lakehouse Design',
+        description: 'Design data lakes, warehouses, and scalable architectures.',
+      },
+      {
+        title: 'Pipeline & ETL/ELT Development',
+        description: 'Build automated pipelines for reliable movement and transformation.',
+      },
+      {
+        title: 'Cloud Data Platform Implementation',
+        description: 'Deploy secure infrastructure for storage, analytics, and AI.',
+      },
+      {
+        title: 'Big Data & Streaming',
+        description: 'Process high-volume batch and real-time workloads.',
+      },
+      {
+        title: 'Governance & Data Quality',
+        description: 'Access controls, lineage, quality rules, and monitoring.',
+      },
+      {
+        title: 'MLOps Infrastructure',
+        description: 'CI/CD, model deployment foundations, and operational monitoring.',
+      },
+      {
+        title: 'Managed Optimization',
+        description: 'Ongoing performance, cost, and reliability improvements.',
+      },
+    ],
+    benefits: [
+      {
+        title: 'Data Architecture',
+        description: 'Target architectures for analytics and AI workloads.',
+      },
+      {
+        title: 'Data Lakes',
+        description: 'Flexible storage for structured and unstructured data.',
+      },
+      {
+        title: 'Warehouses',
+        description: 'Trusted analytical warehouses for reporting and BI.',
+      },
+      {
+        title: 'Pipelines',
+        description: 'Reliable, observable data movement at scale.',
+      },
+      {
+        title: 'ETL/ELT',
+        description: 'Batch and incremental transformation patterns.',
+      },
+      {
+        title: 'Big Data',
+        description: 'Distributed processing for high-volume workloads.',
+      },
+      {
+        title: 'Cloud Data Platforms',
+        description: 'AWS, Azure, and GCP foundations for the data estate.',
+      },
+      {
+        title: 'Governance',
+        description: 'Access, lineage, catalog, and compliance controls.',
+      },
+      {
+        title: 'Quality',
+        description: 'Profiling, rules, and monitoring for trusted data.',
+      },
+      {
+        title: 'MLOps Infrastructure',
+        description: 'Platform support for model training and deployment.',
+      },
+    ],
+    techLabels: [
+      'Apache Spark',
+      'Apache Kafka',
+      'Snowflake',
+      'Databricks',
+      'AWS',
+      'Microsoft Azure',
+      'Google Cloud Platform',
+      'Docker',
+      'Kubernetes',
+    ],
+  },
+  {
+    title: 'Healthcare & Clinical Data Science',
     slug: 'clinical-data-science-healthcare-ai',
     summary:
-      'Support healthcare innovation through Clinical SAS Programming, CDISC standards, healthcare analytics, and AI-powered research solutions.',
+      'Specialized clinical programming, CDISC standards, healthcare analytics, and regulated AI for life sciences.',
     icon: 'HeartPulse',
     challenges:
       'Managing clinical trial data, meeting regulatory submissions, maintaining quality, and accelerating study timelines while adopting AI safely.',
-    body: 'XELARVIS combines expertise in clinical research, statistical programming, artificial intelligence, and healthcare analytics to support pharmaceutical companies, biotechnology organizations, CROs, hospitals, and healthcare innovators. We deliver secure, scalable, and high-quality clinical data solutions — including SDTM/ADaM, TLFs, RWE analytics, medical NLP, and predictive healthcare models.',
+    body: 'Healthcare & Clinical Data Science is a specialty at XELARVIS—not our lead brand identity. We combine clinical research expertise, statistical programming, healthcare analytics, and responsible AI to support pharmaceutical companies, biotechnology organizations, CROs, hospitals, and healthcare innovators with secure, high-quality clinical data solutions.',
     process: [
       {
         title: 'Clinical Study Assessment',
@@ -155,47 +414,71 @@ export const SEED_SERVICES = [
         description: 'SDTM and ADaM development with Define.xml and validation reports.',
       },
       {
-        title: 'Statistical Programming',
-        description: 'TLF programming, CSR outputs, safety/efficacy reports, QC programming.',
+        title: 'Statistical Programming & TLF Automation',
+        description: 'TLF programming, CSR outputs, safety/efficacy reports, and QC.',
       },
       {
-        title: 'Healthcare AI & Advanced Analytics',
-        description:
-          'Predictive models, medical NLP, clinical document intelligence, and research automation.',
+        title: 'Clinical & Real-World Analytics',
+        description: 'Trial dashboards, RWD analysis, and research analytics.',
+      },
+      {
+        title: 'Healthcare AI (where appropriate)',
+        description: 'Medical NLP, document intelligence, and predictive models under governance.',
       },
       {
         title: 'Quality Assurance & Validation',
         description: 'Independent QC, dataset validation, model evaluation, and security review.',
       },
       {
-        title: 'Deployment & Support',
-        description: 'Cloud deployment, dashboards, training, maintenance, and monitoring.',
+        title: 'Regulatory Delivery & Support',
+        description: 'Submission-ready outputs, training, maintenance, and monitoring.',
       },
     ],
     benefits: [
       {
-        title: 'Clinical Statistical Programming',
-        description: 'SAS, SDTM, ADaM, TLFs, Define.xml, and QC.',
+        title: 'Clinical SAS',
+        description: 'Statistical programming for trials and submissions.',
       },
       {
-        title: 'Clinical Data Analytics',
-        description: 'RWE, patient analytics, and trial dashboards.',
+        title: 'SDTM',
+        description: 'Study data tabulation models aligned to CDISC.',
+      },
+      {
+        title: 'ADaM',
+        description: 'Analysis datasets for efficacy and safety outputs.',
+      },
+      {
+        title: 'TLF Automation',
+        description: 'Tables, listings, and figures with QC and automation.',
+      },
+      {
+        title: 'Clinical Analytics',
+        description: 'Operational and scientific insight across study data.',
+      },
+      {
+        title: 'CDM',
+        description: 'Clinical data management, cleaning, and validation.',
       },
       {
         title: 'Healthcare AI',
-        description: 'Medical NLP, document intelligence, and decision support.',
+        description: 'Governed AI for clinical documents and decision support.',
       },
       {
-        title: 'Regulatory-ready outputs',
-        description: 'Validated deliverables for research and submissions.',
+        title: 'RWD',
+        description: 'Real-world data analytics for research and evidence.',
+      },
+      {
+        title: 'Clinical Research Analytics',
+        description: 'Dashboards and analyses that accelerate research decisions.',
+      },
+      {
+        title: 'Regulatory Standards',
+        description: 'CDISC-aligned, validated deliverables for submissions.',
       },
     ],
     techLabels: [
       'SAS',
-      'SAS Viya',
       'Python',
-      'R',
-      'SQL',
       'CDISC Standards',
       'Pinnacle 21',
       'Power BI',
@@ -204,168 +487,64 @@ export const SEED_SERVICES = [
       'PyTorch',
     ],
   },
-  {
-    title: 'Enterprise Technology Consulting',
-    slug: 'it-consulting-digital-transformation',
-    summary:
-      'Enterprise consulting for modernization—architecture, software engineering, cloud adoption, and automation.',
-    icon: 'Briefcase',
-    challenges:
-      'Legacy systems, unclear roadmaps, and fragmented delivery slow modernization and increase risk.',
-    body: 'XELARVIS provides enterprise technology consulting that helps organizations modernize infrastructure, improve operational efficiency, and implement digital programs tied to business outcomes—closer to consulting-led delivery than a typical software agency.',
-    process: [
-      {
-        title: 'Business Assessment',
-        description: 'Understand processes and identify technology challenges.',
-      },
-      {
-        title: 'Solution Architecture',
-        description: 'Design scalable, secure, future-ready solutions.',
-      },
-      {
-        title: 'Technology Selection',
-        description: 'Recommend frameworks, cloud platforms, and tools.',
-      },
-      {
-        title: 'Software Development',
-        description: 'Enterprise applications, web platforms, APIs, and cloud solutions.',
-      },
-      { title: 'Integration', description: 'Connect applications with existing business systems.' },
-      {
-        title: 'Quality Assurance',
-        description: 'Functional, performance, security, and UAT testing.',
-      },
-      {
-        title: 'Deployment & Support',
-        description: 'Launch, maintain, enhance, and support production systems.',
-      },
-    ],
-    benefits: [
-      {
-        title: 'Digital Transformation',
-        description: 'Pragmatic programs tied to business outcomes.',
-      },
-      { title: 'Enterprise Software', description: 'Secure applications built for longevity.' },
-      { title: 'Cloud Migration', description: 'Move and modernize workloads with confidence.' },
-      { title: 'Process Automation', description: 'Reduce manual effort across operations.' },
-    ],
-    techLabels: [
-      'Java',
-      'Python',
-      'React',
-      'Node.js',
-      '.NET',
-      'Docker',
-      'Kubernetes',
-      'AWS',
-      'Azure',
-    ],
-  },
-  {
-    title: 'Data Engineering & Cloud Solutions',
-    slug: 'data-engineering-cloud-solutions',
-    summary:
-      'Design scalable cloud platforms, data pipelines, AI infrastructure, and enterprise data architectures.',
-    icon: 'Cloud',
-    challenges:
-      'Enterprises need reliable data lakes, warehouses, pipelines, and MLOps foundations to power analytics and AI.',
-    body: 'Modern organizations require scalable and secure data platforms to support analytics, AI, and business operations. XELARVIS designs and implements cloud-native data architectures that enable organizations to collect, process, store, and analyze data efficiently.',
-    process: [
-      {
-        title: 'Data Architecture Assessment',
-        description: 'Evaluate systems, sources, and requirements.',
-      },
-      {
-        title: 'Data Platform Design',
-        description: 'Design data lakes, warehouses, and scalable architectures.',
-      },
-      {
-        title: 'Data Pipeline Development',
-        description: 'Build automated ETL/ELT for reliable movement and transformation.',
-      },
-      {
-        title: 'Cloud Implementation',
-        description: 'Deploy secure infrastructure for storage, analytics, and AI.',
-      },
-      {
-        title: 'MLOps & AI Infrastructure',
-        description: 'CI/CD, model deployment, monitoring, and governance.',
-      },
-      {
-        title: 'Security & Governance',
-        description: 'Access controls, encryption, backups, and monitoring.',
-      },
-      { title: 'Managed Services', description: 'Ongoing optimization, maintenance, and support.' },
-    ],
-    benefits: [
-      { title: 'Data Engineering', description: 'Reliable pipelines and warehousing.' },
-      { title: 'Cloud Migration', description: 'Secure moves to AWS, Azure, and GCP.' },
-      { title: 'MLOps', description: 'Production ML with monitoring and governance.' },
-      { title: 'Managed Cloud', description: 'Long-term reliability and performance.' },
-    ],
-    techLabels: [
-      'Apache Spark',
-      'Apache Kafka',
-      'Apache Airflow',
-      'Snowflake',
-      'Databricks',
-      'AWS',
-      'Microsoft Azure',
-      'Google Cloud Platform',
-      'Docker',
-      'Kubernetes',
-    ],
-  },
 ] as const
 
 export const SEED_SOLUTIONS = [
   {
-    title: 'Enterprise AI Solutions',
+    title: 'Enterprise AI',
     slug: 'enterprise-ai-solutions',
-    summary: 'Production AI systems aligned to business workflows and governance.',
+    summary:
+      'When AI pilots stall in production—governed enterprise AI systems that move from use-case selection to measurable operational outcomes.',
     techLabels: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'LangChain'],
   },
   {
-    title: 'AI Agents & Intelligent Automation',
-    slug: 'ai-agents-intelligent-automation',
-    summary: 'Autonomous and assisted agents plus AI-powered process automation.',
+    title: 'Intelligent Automation',
+    slug: 'intelligent-automation',
+    summary:
+      'When manual handoffs slow the business—AI agents and automation that reduce cycle time across knowledge and operational workflows.',
     techLabels: ['LangChain', 'OpenAI', 'Python', 'Apache Kafka'],
   },
   {
-    title: 'Healthcare AI Platforms',
-    slug: 'healthcare-ai-platforms',
-    summary: 'Clinical and healthcare platforms that improve research and care outcomes.',
-    techLabels: ['Python', 'SAS', 'CDISC Standards', 'Power BI'],
-  },
-  {
-    title: 'Predictive Analytics Solutions',
+    title: 'Predictive Analytics',
     slug: 'predictive-analytics-solutions',
-    summary: 'Forecasting and risk models that anticipate outcomes.',
-    techLabels: ['Python', 'TensorFlow', 'Apache Spark', 'Power BI'],
+    summary:
+      'When leaders need foresight—not lagging reports—forecasting and risk models that anticipate demand, churn, and operational outcomes.',
+    techLabels: ['Python', 'Apache Spark', 'Power BI', 'Databricks'],
   },
   {
-    title: 'Business Intelligence Solutions',
+    title: 'Business Intelligence',
     slug: 'business-intelligence-solutions',
-    summary: 'Executive dashboards and reporting that turn data into decisions.',
-    techLabels: ['Power BI', 'Tableau', 'Python', 'Apache Spark'],
+    summary:
+      'When metrics conflict across teams—trusted BI layers and executive dashboards that turn fragmented data into shared decisions.',
+    techLabels: ['Power BI', 'Tableau', 'Python', 'Snowflake'],
   },
   {
-    title: 'Custom Software Solutions',
-    slug: 'custom-software-solutions',
-    summary: 'Enterprise applications engineered for security, scale, and longevity.',
-    techLabels: ['Python', 'Apache Kafka', 'Apache Spark', 'Power BI'],
+    title: 'Data Platforms',
+    slug: 'data-platforms',
+    summary:
+      'When analytics and AI outgrow spreadsheets—scalable lakes, warehouses, and pipelines that become the enterprise data foundation.',
+    techLabels: ['Apache Spark', 'Apache Kafka', 'Snowflake', 'Databricks', 'AWS'],
   },
   {
-    title: 'AI-Powered Digital Products',
-    slug: 'ai-powered-digital-products',
-    summary: 'Productized AI experiences for customer, research, and operations workflows.',
-    techLabels: ['Python', 'OpenAI', 'LangChain', 'Hugging Face'],
+    title: 'Custom AI Products',
+    slug: 'custom-ai-products',
+    summary:
+      'When off-the-shelf tools fall short—productized AI experiences engineered for your customer, research, or operations workflows.',
+    techLabels: ['Python', 'OpenAI', 'LangChain', 'Hugging Face', 'React'],
   },
   {
-    title: 'Clinical Research Solutions',
-    slug: 'clinical-research-solutions',
-    summary: 'CDISC-aligned programming, TLFs, and research analytics.',
-    techLabels: ['SAS', 'CDISC Standards', 'Pinnacle 21', 'Python'],
+    title: 'Healthcare & Clinical Intelligence',
+    slug: 'healthcare-clinical-intelligence',
+    summary:
+      'When regulated research needs speed without risk—clinical programming, CDISC delivery, and healthcare analytics under governance.',
+    techLabels: ['SAS', 'CDISC Standards', 'Pinnacle 21', 'Python', 'Power BI'],
+  },
+  {
+    title: 'Application Modernization',
+    slug: 'application-modernization',
+    summary:
+      'When legacy systems constrain growth—modernize applications, APIs, and delivery practices for security, scale, and longevity.',
+    techLabels: ['Python', 'React', 'Node.js', 'Docker', 'Kubernetes', 'AWS'],
   },
 ] as const
 

@@ -115,13 +115,14 @@ function iconForItem(label: string, href: string): LucideIcon {
 
 function tagsForItem(label: string, href: string): string[] {
   const t = `${label} ${href}`.toLowerCase()
-  if (t.includes('health') || t.includes('clinical')) return ['Healthcare', '40+ Deployments']
+  if (t.includes('health') || t.includes('clinical')) return ['Healthcare specialty', 'Clinical']
   if (t.includes('ai') || t.includes('intelligent')) return ['Generative AI', 'LLMs', 'Automation']
-  if (t.includes('cloud') || t.includes('engineering')) return ['Azure', 'AWS', 'Kubernetes']
+  if (t.includes('cloud') || t.includes('engineering') || t.includes('platform'))
+    return ['Azure', 'AWS', 'Kubernetes']
   if (t.includes('intelligence') || t.includes('analytics') || t.includes('bi'))
     return ['Analytics', 'Power BI', 'Dashboards']
   if (t.includes('predict')) return ['Forecasting', 'Risk', 'Models']
-  if (t.includes('automat')) return ['Workflows', 'Integrations']
+  if (t.includes('automat') || t.includes('modern')) return ['Workflows', 'Integrations']
   return ['Enterprise', 'Production']
 }
 
@@ -129,29 +130,29 @@ function metricsForItem(label: string, href: string) {
   const t = `${label} ${href}`.toLowerCase()
   if (t.includes('health') || t.includes('clinical')) {
     return [
-      { v: '98%', l: 'Accuracy' },
-      { v: '40+', l: 'Hospitals' },
-      { v: '120TB', l: 'Clinical Data' },
+      { v: 'Clinical', l: 'Standards' },
+      { v: 'Governed', l: 'Analytics' },
+      { v: 'RWD', l: 'Insights' },
     ]
   }
   if (t.includes('ai') || t.includes('intelligent')) {
     return [
-      { v: '99%', l: 'Eval Pass' },
-      { v: '4×', l: 'Time to Value' },
-      { v: '24/7', l: 'Monitoring' },
+      { v: 'Strategy', l: 'to Prod' },
+      { v: 'Eval', l: 'Gates' },
+      { v: 'Ops', l: 'Ready' },
     ]
   }
-  if (t.includes('cloud')) {
+  if (t.includes('cloud') || t.includes('platform')) {
     return [
-      { v: '99.9%', l: 'Uptime' },
-      { v: '3×', l: 'Deploy Speed' },
-      { v: '70%', l: 'Cost Down' },
+      { v: 'Secure', l: 'Foundations' },
+      { v: 'Scalable', l: 'Pipelines' },
+      { v: 'MLOps', l: 'Ready' },
     ]
   }
   return [
-    { v: '98%', l: 'Accuracy' },
-    { v: '40+', l: 'Clients' },
-    { v: '120+', l: 'Projects' },
+    { v: 'AI', l: 'Pillar' },
+    { v: 'Data', l: 'Pillar' },
+    { v: 'IT', l: 'Pillar' },
   ]
 }
 

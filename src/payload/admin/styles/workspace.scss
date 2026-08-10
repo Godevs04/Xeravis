@@ -1,53 +1,53 @@
 /* Xelarvis Enterprise Workspace — custom Payload views */
 
 .xe-ws {
-  --xe-ws-border: color-mix(in srgb, var(--theme-elevation-150) 88%, transparent);
-  --xe-ws-surface: var(--theme-elevation-0);
-  --xe-ws-muted: var(--theme-elevation-500);
-  --xe-ws-text: var(--theme-text);
-  --xe-ws-accent: #0d9488;
-  --xe-ws-accent-2: #06b6d4;
-  padding: 0 0 2.5rem;
+  --xe-ws-border: var(--xe-border);
+  --xe-ws-surface: var(--xe-surface);
+  --xe-ws-muted: var(--xe-muted);
+  --xe-ws-text: var(--xe-text);
+  --xe-ws-accent: var(--xe-secondary);
+  --xe-ws-accent-2: var(--xe-accent);
+  padding: 0;
 }
 
+/* PageHeader owns hero chrome — keep legacy class harmless */
 .xe-ws__hero {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem 1.5rem;
-  margin-bottom: 1.25rem;
-  padding: 1.25rem 1.35rem;
-  border: 1px solid var(--xe-ws-border);
-  border-radius: 20px;
-  background:
-    radial-gradient(ellipse 70% 120% at 100% 0%, rgba(13, 148, 136, 0.14), transparent 55%),
-    radial-gradient(ellipse 50% 80% at 0% 100%, rgba(6, 182, 212, 0.1), transparent 50%),
-    var(--xe-ws-surface);
+  gap: var(--xe-btn-gap);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .xe-ws__eyebrow {
-  margin: 0 0 0.35rem;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  margin: 0;
+  font-size: var(--xe-fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--xe-ws-accent);
+  color: var(--xe-muted);
 }
 
 .xe-ws__title {
   margin: 0;
-  font-size: clamp(1.55rem, 2vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-size: var(--xe-fs-page-title);
+  font-weight: 650;
+  line-height: var(--xe-lh-page-title);
+  letter-spacing: var(--xe-tracking-tight);
   color: var(--xe-ws-text);
 }
 
 .xe-ws__subtitle {
-  margin: 0.45rem 0 0;
-  max-width: 54ch;
+  margin: 0;
+  max-width: 56ch;
   color: var(--xe-ws-muted);
-  line-height: 1.5;
+  font-size: var(--xe-fs-secondary);
+  line-height: var(--xe-lh-secondary);
 }
 
 .xe-ws__actions {
@@ -60,26 +60,29 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 2.25rem;
-  padding: 0 0.95rem;
+  min-height: var(--xe-btn-h);
+  height: var(--xe-btn-h);
+  padding: 0 14px;
   border: 1px solid var(--xe-ws-border);
-  border-radius: 999px;
+  border-radius: var(--xe-radius-sm);
   background: var(--xe-ws-surface);
   color: var(--xe-ws-text);
-  font-size: 0.8125rem;
+  font-size: var(--xe-fs-secondary);
   font-weight: 600;
   text-decoration: none;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
 }
 
 .xe-ws-btn:hover {
   border-color: color-mix(in srgb, var(--xe-ws-accent) 45%, var(--xe-ws-border));
+  transform: translateY(-1px);
 }
 
 .xe-ws-btn--primary {
   border-color: transparent;
-  background: linear-gradient(135deg, var(--xe-ws-accent), var(--xe-ws-accent-2));
+  background: linear-gradient(135deg, #0d9488 0%, #0891b2 60%, #06b6d4 100%);
   color: #fff;
+  box-shadow: 0 6px 16px rgba(13, 148, 136, 0.24);
 }
 
 .xe-ws-btn--primary:hover {
@@ -115,13 +118,33 @@
 .xe-ws__stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1.15rem;
+  gap: var(--xe-space-3);
+  margin: 0;
+  align-items: stretch;
+}
+
+.xe-ws-stat-link {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  min-width: 0;
+}
+
+.xe-ws-stat-link .xe-card,
+.xe-ws__stats > .xe-card {
+  height: 100%;
 }
 
 @media (max-width: 1100px) {
   .xe-ws__stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .xe-ws__stats {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -131,28 +154,29 @@
   gap: 0.25rem;
   padding: 1rem 1.05rem;
   border: 1px solid var(--xe-ws-border);
-  border-radius: 16px;
+  border-radius: var(--xe-card-radius);
   background: var(--xe-ws-surface);
   text-decoration: none;
   color: inherit;
 }
 
 .xe-ws-stat__label {
-  font-size: 0.72rem;
-  font-weight: 650;
+  font-size: var(--xe-fs-label);
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--xe-ws-muted);
 }
 
 .xe-ws-stat__value {
-  font-size: 1.55rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 36px;
 }
 
 .xe-ws-stat__meta {
-  font-size: 0.78rem;
+  font-size: var(--xe-fs-caption);
   color: var(--xe-ws-muted);
 }
 

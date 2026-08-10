@@ -22,17 +22,19 @@ type AboutPreviewProps = {
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-const MILESTONES = [
-  { year: '2014', label: 'Founded' },
-  { year: '2018', label: 'Enterprise scale' },
-  { year: '2022', label: 'AI platforms' },
-  { year: '2026', label: 'Global delivery' },
+const HOW_WE_WORK = [
+  { step: '01', label: 'Research' },
+  { step: '02', label: 'Strategy' },
+  { step: '03', label: 'Design' },
+  { step: '04', label: 'Build' },
+  { step: '05', label: 'Deploy' },
+  { step: '06', label: 'Optimize' },
 ]
 
 const PRINCIPLES = [
-  { title: 'Clarity first', detail: 'Architecture you can explain in one slide.' },
-  { title: 'Ship durable', detail: 'Code and platforms that age gracefully.' },
-  { title: 'Own outcomes', detail: 'Senior leads from discovery to production.' },
+  { title: 'Research-driven', detail: 'Evaluation, evidence and responsible AI over hype.' },
+  { title: 'Engineering-led', detail: 'Architecture and delivery that survive production.' },
+  { title: 'Outcome-focused', detail: 'Problem → solution → measurable business value.' },
 ]
 
 export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
@@ -122,26 +124,26 @@ export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
                 }}
               />
               <p className="relative text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-muted)] uppercase">
-                Journey
+                How we work
               </p>
               <div className="relative mt-5">
                 <div
                   aria-hidden
                   className="absolute top-5 right-4 left-4 hidden h-px bg-[color:var(--glass-border)] sm:block"
                 />
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {MILESTONES.map((m, i) => (
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+                  {HOW_WE_WORK.map((m, i) => (
                     <motion.div
-                      key={m.year}
+                      key={m.step}
                       className="relative rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] px-3 py-3 text-center shadow-[var(--shadow-light)]"
                       initial={reduce ? false : { opacity: 0, y: 12 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: 0.08 + i * 0.07, duration: 0.4, ease: EASE }}
+                      transition={{ delay: 0.08 + i * 0.05, duration: 0.4, ease: EASE }}
                     >
                       <span className="mx-auto mb-2 hidden h-2.5 w-2.5 rounded-full bg-[color:var(--color-accent)] shadow-[0_0_12px_var(--color-accent-glow)] sm:block" />
-                      <p className="font-display text-lg font-bold text-[color:var(--color-accent)]">
-                        {m.year}
+                      <p className="font-display text-sm font-bold text-[color:var(--color-accent)]">
+                        {m.step}
                       </p>
                       <p className="mt-1 text-xs font-medium text-[color:var(--color-secondary)]">
                         {m.label}

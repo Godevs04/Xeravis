@@ -40,9 +40,9 @@ type SocialGlobal = {
 }
 
 export const metadata = buildMetadata({
-  title: 'Contact Xelarvis',
+  title: 'Contact XELARVIS',
   description:
-    'Business enquiry, partnership, research collaboration, or careers—talk with Xelarvis about AI research, consulting, data science, and healthcare AI.',
+    "Let's solve your next data, AI or technology challenge. Talk with XELARVIS about Artificial Intelligence, Data Science, IT Consulting, data platforms or Healthcare specialty programs.",
   path: '/contact',
 })
 
@@ -77,8 +77,8 @@ export default async function ContactPage() {
       <PageHero
         brand="Xelarvis"
         eyebrow="Contact"
-        title="Let's discuss your next initiative."
-        subtitle="Choose a business enquiry, partnership, research collaboration, or careers path—and we will connect you with the right specialists."
+        title="Let's solve your next data, AI or technology challenge."
+        subtitle="Tell us about your challenge across AI, data science, IT consulting, digital transformation, data engineering, healthcare specialty work, research or partnership."
         size="compact"
       />
       <Section>

@@ -218,16 +218,17 @@ html[data-xe-ui='v5'] .xe-dash__eyebrow {
 
 html[data-xe-ui='v5'] .xe-dash__title {
   margin: 0 0 8px !important;
-  font-size: 28px !important;
-  font-weight: 750 !important;
-  letter-spacing: -0.03em !important;
-  line-height: 1.15 !important;
+  font-size: var(--xe-fs-page-title) !important;
+  font-weight: 650 !important;
+  letter-spacing: var(--xe-tracking-tight) !important;
+  line-height: var(--xe-lh-page-title) !important;
   color: var(--xe-text) !important;
 }
 
 html[data-xe-ui='v5'] .xe-dash__subtitle {
   margin: 0 !important;
-  font-size: 15px !important;
+  font-size: var(--xe-fs-secondary) !important;
+  line-height: var(--xe-lh-secondary) !important;
   color: var(--xe-muted) !important;
   max-width: 48ch !important;
 }
@@ -368,10 +369,10 @@ html[data-xe-ui='v5'] .xe-stat__label {
 
 html[data-xe-ui='v5'] .xe-stat__value {
   margin: 0 !important;
-  font-size: 32px !important;
-  font-weight: 750 !important;
-  letter-spacing: -0.04em !important;
-  line-height: 1 !important;
+  font-size: 28px !important;
+  font-weight: 650 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 36px !important;
   color: var(--xe-text) !important;
 }
 

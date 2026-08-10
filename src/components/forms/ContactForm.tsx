@@ -16,6 +16,7 @@ const initialState: ContactFormState = { ok: false, message: '' }
 const LEGACY_INTENT_MAP: Record<string, string> = {
   project: 'business',
   careers: 'career',
+  ai: 'business',
 }
 
 export function ContactForm() {
@@ -34,9 +35,9 @@ export function ContactForm() {
     initialState,
   )
   const searchParams = useSearchParams()
-  const rawIntent = searchParams.get('intent') || 'general'
+  const rawIntent = searchParams.get('intent') || 'business'
   const mapped = LEGACY_INTENT_MAP[rawIntent] || rawIntent
-  const defaultIntent = CONTACT_INTENTS.some((i) => i.value === mapped) ? mapped : 'general'
+  const defaultIntent = CONTACT_INTENTS.some((i) => i.value === mapped) ? mapped : 'business'
   const [intent, setIntent] = useState(defaultIntent)
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export function ContactForm() {
       />
 
       <div className="space-y-2">
-        <Label htmlFor="intent">Enquiry type</Label>
+        <Label htmlFor="intent">What can we help with?</Label>
         <select
           id="intent"
           name="intent"
@@ -76,7 +77,7 @@ export function ContactForm() {
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Full name</Label>
+          <Label htmlFor="name">Name</Label>
           <Input
             id="name"
             name="name"
@@ -89,7 +90,7 @@ export function ContactForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Work email</Label>
+          <Label htmlFor="email">Business email</Label>
           <Input
             id="email"
             name="email"
@@ -107,12 +108,20 @@ export function ContactForm() {
           <Input id="company" name="company" autoComplete="organization" />
         </div>
         <div className="space-y-2">
+          <Label htmlFor="jobTitle">Job title</Label>
+          <Input id="jobTitle" name="jobTitle" autoComplete="organization-title" />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="country">Country</Label>
+          <Input id="country" name="country" autoComplete="country-name" />
+        </div>
+        <div className="space-y-2">
           <Label htmlFor="phone">Phone</Label>
           <Input id="phone" name="phone" type="tel" autoComplete="tel" />
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="message">How can we help?</Label>
+        <Label htmlFor="message">Tell us about your challenge</Label>
         <Textarea
           id="message"
           name="message"
@@ -130,7 +139,7 @@ export function ContactForm() {
         </p>
       )}
       <Button type="submit" variant="primary" disabled={pending} loading={pending}>
-        Send message
+        Submit
       </Button>
     </form>
   )

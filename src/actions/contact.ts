@@ -7,20 +7,48 @@ import { z } from 'zod'
 import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
 import { getPayload } from '@/lib/payload'
 
+const INTENT_VALUES = [
+  'business',
+  'data-science',
+  'it-consulting',
+  'digital-transformation',
+  'data-engineering',
+  'healthcare',
+  'research',
+  'partnership',
+  'career',
+  'general',
+  'project',
+] as const
+
+type Intent = (typeof INTENT_VALUES)[number]
+
 const contactSchema = z.object({
   name: z.string().min(2, 'Name is required').max(120),
   email: z.string().email('Valid email is required').max(200),
   company: z.string().max(160).optional(),
+  jobTitle: z.string().max(120).optional(),
+  country: z.string().max(120).optional(),
   phone: z.string().max(40).optional(),
   message: z.string().min(10, 'Please provide a brief message').max(5000),
   intent: z.string().max(40).optional(),
-  website: z.string().optional(), // honeypot
+  website: z.string().optional(),
 })
 
 export type ContactFormState = {
   ok: boolean
   message: string
   fieldErrors?: Record<string, string[]>
+}
+
+function mapIntent(raw?: string): Intent {
+  const legacy: Record<string, Intent> = {
+    project: 'business',
+    careers: 'career',
+    ai: 'business',
+  }
+  const value = legacy[raw || ''] || (raw as Intent) || 'general'
+  return INTENT_VALUES.includes(value) ? value : 'general'
 }
 
 export async function submitContact(
@@ -43,6 +71,8 @@ export async function submitContact(
     name: formData.get('name'),
     email: formData.get('email'),
     company: formData.get('company') || undefined,
+    jobTitle: formData.get('jobTitle') || undefined,
+    country: formData.get('country') || undefined,
     phone: formData.get('phone') || undefined,
     message: formData.get('message'),
     intent: formData.get('intent') || undefined,
@@ -61,6 +91,8 @@ export async function submitContact(
     return { ok: true, message: 'Thank you. Our team will respond within one business day.' }
   }
 
+  const intent = mapIntent(parsed.data.intent)
+
   try {
     const payload = await getPayload()
     await payload.create({
@@ -70,28 +102,12 @@ export async function submitContact(
         name: parsed.data.name,
         email: parsed.data.email,
         company: parsed.data.company,
+        jobTitle: parsed.data.jobTitle,
+        country: parsed.data.country,
         phone: parsed.data.phone,
         message: parsed.data.message,
-        intent: (() => {
-          type Intent = 'business' | 'research' | 'career' | 'general' | 'project' | 'partnership'
-          const raw = parsed.data.intent || 'general'
-          const legacy: Record<string, Intent> = {
-            project: 'business',
-            partnership: 'research',
-            careers: 'career',
-          }
-          const mapped = legacy[raw] || raw
-          const allowed: Intent[] = [
-            'business',
-            'research',
-            'career',
-            'general',
-            'project',
-            'partnership',
-          ]
-          return (allowed.includes(mapped as Intent) ? mapped : 'general') as Intent
-        })(),
-        subject: parsed.data.intent || 'Website enquiry',
+        intent,
+        subject: intent || 'Website enquiry',
         status: 'new',
       },
     })
@@ -102,7 +118,7 @@ export async function submitContact(
       data: {
         type: 'lead',
         path: '/contact',
-        meta: { email: parsed.data.email },
+        meta: { email: parsed.data.email, intent },
       },
     })
 
@@ -121,8 +137,10 @@ export async function submitContact(
           `Name: ${parsed.data.name}`,
           `Email: ${parsed.data.email}`,
           parsed.data.company ? `Company: ${parsed.data.company}` : '',
+          parsed.data.jobTitle ? `Job title: ${parsed.data.jobTitle}` : '',
+          parsed.data.country ? `Country: ${parsed.data.country}` : '',
           parsed.data.phone ? `Phone: ${parsed.data.phone}` : '',
-          parsed.data.intent ? `Intent: ${parsed.data.intent}` : '',
+          `Area of interest: ${intent}`,
           '',
           parsed.data.message,
         ]

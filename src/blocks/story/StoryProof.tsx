@@ -44,19 +44,9 @@ const DEFAULT_METRICS: MetricPanel[] = [
     value: 5,
     display: '5',
     suffix: '',
-    detail: 'AI, data science, consulting, clinical, and cloud — owned end to end.',
+    detail: 'AI, Data Science, IT Consulting, Data Engineering, and Healthcare specialty.',
     viz: 'ring',
     nodeIds: [0, 1],
-  },
-  {
-    id: 'industries',
-    label: 'Industries served',
-    value: 8,
-    display: '8',
-    suffix: '',
-    detail: 'Healthcare, life sciences, finance, manufacturing, and more.',
-    viz: 'bars',
-    nodeIds: [2, 3],
   },
   {
     id: 'solutions',
@@ -64,39 +54,29 @@ const DEFAULT_METRICS: MetricPanel[] = [
     value: 8,
     display: '8',
     suffix: '',
-    detail: 'Packaged themes that combine research, architecture, and delivery.',
+    detail: 'Business problems we solve across AI, data, automation and modernization.',
+    viz: 'bars',
+    nodeIds: [2, 3],
+  },
+  {
+    id: 'pillars',
+    label: 'Practice pillars',
+    value: 3,
+    display: '3',
+    suffix: '',
+    detail: 'Artificial Intelligence, Data Science and IT Consulting.',
     viz: 'ring',
     nodeIds: [3, 4],
   },
   {
-    id: 'uptime',
-    label: 'Infrastructure availability',
-    value: 99.9,
-    display: '99.9',
-    suffix: '%',
-    detail: 'Production systems engineered for regulated, always-on environments.',
+    id: 'framework',
+    label: 'Delivery stages',
+    value: 9,
+    display: '9',
+    suffix: '',
+    detail: 'Discover through Scale — the XELARVIS Delivery Framework.',
     viz: 'pulse',
     nodeIds: [5, 6],
-  },
-  {
-    id: 'projects',
-    label: 'Projects delivered',
-    value: 120,
-    display: '120',
-    suffix: '+',
-    detail: 'Programs that moved from research and design into live operations.',
-    viz: 'bars',
-    nodeIds: [6, 7],
-  },
-  {
-    id: 'clients',
-    label: 'Enterprise clients',
-    value: 40,
-    display: '40',
-    suffix: '+',
-    detail: 'Long-horizon partnerships where craft compounds over releases.',
-    viz: 'ring',
-    nodeIds: [1, 7],
   },
 ]
 
@@ -404,7 +384,7 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
     return () => window.removeEventListener('pointermove', onMove)
   }, [reduce, mx, my])
 
-  const heroValue = 120
+  const heroValue = 9
 
   return (
     <section
@@ -482,16 +462,15 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
             <div className="mt-10">
               <p className="font-display text-[clamp(3.5rem,8vw,5.5rem)] leading-none font-bold tracking-[-0.06em] text-[color:var(--hero-text)]">
                 <CountNumber value={heroValue} active={inView} />
-                <span className="text-[color:var(--color-accent)]">+</span>
               </p>
               <p className="mt-3 text-sm font-medium tracking-wide text-[color:var(--hero-muted)] uppercase">
-                Projects delivered
+                Delivery framework stages
               </p>
             </div>
 
             <p className="mt-8 max-w-sm text-base leading-relaxed text-[color:var(--hero-muted)]">
-              Fortune-facing teams trust Xelarvis when research, regulated delivery, and production
-              craft have to live in the same system — not in three different vendors.
+              Enterprise buyers look for clarity, evidence, expertise and governance—a credible path
+              from problem to solution to measurable outcome.
             </p>
 
             <Link

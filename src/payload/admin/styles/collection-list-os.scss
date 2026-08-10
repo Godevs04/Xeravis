@@ -1,0 +1,629 @@
+/* ============================================================
+   XELARVIS COLLECTION LIST OS
+   Universal layout for EVERY Payload collection list page.
+   Cascades last among content sheets — owns list chrome.
+   ============================================================ */
+
+/* ── Page shell: one column, shared edges ── */
+html[data-xe-ui='v5'] .collection-list {
+  width: 100% !important;
+  max-width: var(--xe-shell-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 28px var(--xe-gutter) 64px !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .gutter,
+html[data-xe-ui='v5'] .collection-list__wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Kill Payload sibling gap that amplifies empty drawers */
+html[data-xe-ui='v5'] .collection-list__wrap > *:not(:last-child) {
+  margin-bottom: 20px !important;
+}
+
+html[data-xe-ui='v5'] .collection-list__wrap > .list-controls {
+  margin-bottom: 20px !important;
+}
+
+/* ── Header: title + create on one row ── */
+html[data-xe-ui='v5'] .collection-list .list-header,
+html[data-xe-ui='v5'] .collection-list__header,
+html[data-xe-ui='v5'] .collection-list .collection-list__header {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px 16px !important;
+  margin: 0 0 24px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  min-height: 0 !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-header__content,
+html[data-xe-ui='v5'] .collection-list .list-header__title-and-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px 16px !important;
+  width: 100% !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-header h1,
+html[data-xe-ui='v5'] .collection-list__header h1,
+html[data-xe-ui='v5'] .collection-list .list-header__title {
+  margin: 0 !important;
+  font-size: 30px !important;
+  font-weight: 650 !important;
+  line-height: 38px !important;
+  letter-spacing: -0.02em !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list__sub-header,
+html[data-xe-ui='v5'] .collection-list .list-header__after-header-content,
+html[data-xe-ui='v5'] .collection-list .list-header p {
+  flex-basis: 100% !important;
+  margin: 4px 0 0 !important;
+  padding: 0 !important;
+  max-width: 56ch !important;
+  font-size: var(--xe-fs-secondary) !important;
+  line-height: var(--xe-lh-secondary) !important;
+  color: var(--xe-muted) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-header__actions,
+html[data-xe-ui='v5'] .collection-list .list-header__title-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-left: auto !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-header .btn,
+html[data-xe-ui='v5'] .collection-list .list-header .btn--style-primary,
+html[data-xe-ui='v5'] .collection-list .list-header a.btn,
+html[data-xe-ui='v5'] .collection-list .no-results .btn,
+html[data-xe-ui='v5'] .collection-list .no-results .btn--style-primary,
+html[data-xe-ui='v5'] .collection-list .no-results a.btn {
+  --btn-padding-block-start: 0;
+  --btn-padding-block-end: 0;
+  --btn-padding-inline-start: 16px;
+  --btn-padding-inline-end: 16px;
+  --btn-line-height: 1;
+  --margin-block: 0;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  box-sizing: border-box !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  max-height: 40px !important;
+  margin: 0 !important;
+  margin-block: 0 !important;
+  padding: 0 16px !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-header .btn .btn__content,
+html[data-xe-ui='v5'] .collection-list .list-header .btn .btn__label,
+html[data-xe-ui='v5'] .collection-list .no-results .btn .btn__content,
+html[data-xe-ui='v5'] .collection-list .no-results .btn .btn__label {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  height: auto !important;
+}
+
+/* ── Toolbar: ONE compact row — no empty drawer gaps ── */
+html[data-xe-ui='v5'] .collection-list .list-controls {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  margin: 0 0 20px !important;
+  padding: 0 !important;
+  border: 1px solid #e5eaf0 !important;
+  border-radius: 16px !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+  backdrop-filter: none !important;
+  overflow: hidden !important;
+}
+
+html[data-theme='dark'][data-xe-ui='v5'] .collection-list .list-controls {
+  border-color: var(--xe-border) !important;
+  background: var(--xe-surface) !important;
+  box-shadow: var(--xe-card-shadow) !important;
+}
+
+/*
+  ROOT CAUSE FIX:
+  Payload AnimateHeight drawers (.list-controls__where / __columns / __group-by)
+  stay in the DOM when closed. On browsers that support interpolate-size,
+  height is NOT patched to 0px — collapse relies on children display:none.
+  Any padding/margin/border on the drawer ROOTS created empty horizontal bands
+  under Search. Keep drawer roots zero-chrome; style only open panels.
+*/
+html[data-xe-ui='v5'] .collection-list .list-controls__where,
+html[data-xe-ui='v5'] .collection-list .list-controls__columns,
+html[data-xe-ui='v5'] .collection-list .list-controls__group-by,
+html[data-xe-ui='v5'] .list-controls__where,
+html[data-xe-ui='v5'] .list-controls__columns,
+html[data-xe-ui='v5'] .list-controls__group-by {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+}
+
+/* Closed: force collapse even if keyword height animation leaves residual chrome */
+html[data-xe-ui='v5'] .list-controls__where[aria-hidden='true'],
+html[data-xe-ui='v5'] .list-controls__columns[aria-hidden='true'],
+html[data-xe-ui='v5'] .list-controls__group-by[aria-hidden='true'] {
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Open drawers: style the panel content only (filters/columns still work) */
+html[data-xe-ui='v5'] .collection-list .list-controls__where[aria-hidden='false'] > *,
+html[data-xe-ui='v5'] .collection-list .list-controls__columns[aria-hidden='false'] > *,
+html[data-xe-ui='v5'] .collection-list .list-controls__group-by[aria-hidden='false'] > *,
+html[data-xe-ui='v5'] .list-controls__where[aria-hidden='false'] > *,
+html[data-xe-ui='v5'] .list-controls__columns[aria-hidden='false'] > *,
+html[data-xe-ui='v5'] .list-controls__group-by[aria-hidden='false'] > * {
+  margin: 0 !important;
+  padding: 16px !important;
+  border: 0 !important;
+  border-top: 1px solid #e5eaf0 !important;
+  border-radius: 0 !important;
+  background: #f8fafc !important;
+  box-shadow: none !important;
+}
+
+html[data-theme='dark'][data-xe-ui='v5'] .list-controls__where[aria-hidden='false'] > *,
+html[data-theme='dark'][data-xe-ui='v5'] .list-controls__columns[aria-hidden='false'] > *,
+html[data-theme='dark'][data-xe-ui='v5'] .list-controls__group-by[aria-hidden='false'] > * {
+  border-top-color: var(--xe-border) !important;
+  background: color-mix(in srgb, var(--xe-surface) 80%, #000) !important;
+}
+
+/* Search bar = toolbar row */
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar {
+  --icon-width: 40px;
+  --search-bg: transparent;
+  display: grid !important;
+  grid-template-columns: minmax(240px, 1fr) auto !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 52px !important;
+  height: 52px !important;
+  margin: 0 !important;
+  padding: 0 8px 0 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar .icon--search {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 / 2 !important;
+  z-index: 2 !important;
+  width: var(--icon-width) !important;
+  height: 44px !important;
+  align-self: center !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #64748b !important;
+  pointer-events: none !important;
+  opacity: 0.9;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar .icon--search svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar .search-filter {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 / 2 !important;
+  min-width: 0 !important;
+  height: 44px !important;
+  align-self: center !important;
+  margin-left: 8px !important;
+  background: transparent !important;
+  border-radius: 12px !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-filter__input,
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar input {
+  width: 100% !important;
+  min-height: 44px !important;
+  height: 44px !important;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-inline-start: calc(var(--icon-width) - 8px) !important;
+  padding-inline-end: 14px !important;
+  border: 1px solid #d9e2ec !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 44px !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-filter__input::placeholder,
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar input::placeholder {
+  color: #64748b !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-filter__input:focus,
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar input:focus {
+  outline: none !important;
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1) !important;
+  background: #ffffff !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar:focus-within {
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar__actions {
+  grid-column: 2 / 3 !important;
+  grid-row: 1 / 2 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 0 10px 0 8px !important;
+  flex-shrink: 0 !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar__actions .pill,
+html[data-xe-ui='v5'] .collection-list .list-controls__toggle-columns,
+html[data-xe-ui='v5'] .collection-list .list-controls__toggle-where,
+html[data-xe-ui='v5'] .collection-list .list-controls__toggle-sort,
+html[data-xe-ui='v5'] .collection-list .list-controls__toggle-group-by {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-height: 44px !important;
+  height: 44px !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d9e2ec !important;
+  background: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--xe-text) !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar__actions .pill:hover,
+html[data-xe-ui='v5'] .collection-list .list-controls__toggle-columns:hover,
+html[data-xe-ui='v5'] .collection-list .list-controls__toggle-where:hover {
+  background: #f8fafc !important;
+  border-color: #d9e2ec !important;
+  transform: none !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .list-controls .search-bar__actions .pill[aria-expanded='true'],
+html[data-xe-ui='v5'] .collection-list .list-controls__toggle-columns[aria-expanded='true'],
+html[data-xe-ui='v5'] .collection-list .list-controls__toggle-where[aria-expanded='true'] {
+  border-color: #0d9488 !important;
+  color: #0f766e !important;
+}
+
+/* ── Table card ── */
+html[data-xe-ui='v5'] .collection-list__tables,
+html[data-xe-ui='v5'] .collection-list .table-wrap {
+  margin: 0 !important;
+  border: 1px solid #e5eaf0 !important;
+  border-radius: 16px !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+  overflow: hidden !important;
+}
+
+html[data-theme='dark'][data-xe-ui='v5'] .collection-list__tables,
+html[data-theme='dark'][data-xe-ui='v5'] .collection-list .table-wrap {
+  border-color: var(--xe-border) !important;
+  background: var(--xe-surface) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .table thead th {
+  height: 56px !important;
+  padding: 12px 18px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--xe-muted) !important;
+  background: #f8fafc !important;
+  border-bottom: 1px solid #e5eaf0 !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .table tbody td {
+  min-height: 64px !important;
+  height: 64px !important;
+  padding: 14px 18px !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  border-bottom: 1px solid #e5eaf0 !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .table tbody tr:hover td {
+  background: #f8fafc !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+/* ── Empty state: compact, intentional ── */
+html[data-xe-ui='v5'] .collection-list .no-results,
+html[data-xe-ui='v5'] .collection-list__no-results,
+html[data-xe-ui='v5'] .collection-list .empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 280px !important;
+  max-height: 360px !important;
+  margin: 0 !important;
+  padding: 48px 24px !important;
+  text-align: center !important;
+  border: 1px solid #e5eaf0 !important;
+  border-radius: 16px !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+  color: var(--xe-muted) !important;
+}
+
+html[data-theme='dark'][data-xe-ui='v5'] .collection-list .no-results {
+  border-color: var(--xe-border) !important;
+  background: var(--xe-surface) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .no-results h3,
+html[data-xe-ui='v5'] .collection-list .no-results h2 {
+  margin: 0 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 24px !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .no-results p {
+  margin: 0 !important;
+  max-width: 36ch !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+  color: var(--xe-muted) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .no-results__actions {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 16px !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .no-results .btn--style-primary,
+html[data-xe-ui='v5'] .collection-list .list-header .btn--style-primary {
+  background: linear-gradient(135deg, #0d9488 0%, #0891b2 70%) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.2) !important;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .no-results .btn--style-primary:hover,
+html[data-xe-ui='v5'] .collection-list .list-header .btn--style-primary:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 22px rgba(13, 148, 136, 0.28) !important;
+}
+
+/* Bulk selection bar */
+html[data-xe-ui='v5'] .collection-list__list-selection {
+  margin: 0 0 16px !important;
+  padding: 12px 16px !important;
+  border-radius: 14px !important;
+  border: 1px solid color-mix(in srgb, #0d9488 20%, transparent) !important;
+  background: color-mix(in srgb, #0d9488 8%, transparent) !important;
+}
+
+/* Pagination */
+html[data-xe-ui='v5'] .collection-list .page-controls {
+  margin-top: 20px !important;
+  padding: 12px 16px !important;
+  border: 1px solid #e5eaf0 !important;
+  border-radius: 16px !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Query presets bar if present */
+html[data-xe-ui='v5'] .collection-list .query-preset-bar {
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid #e5eaf0 !important;
+}
+
+/* ── Motion ── */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-xe-ui='v5'] .collection-list {
+    animation: xe-collection-enter 200ms var(--xe-ease) both;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-controls {
+    animation: xe-collection-fade 150ms var(--xe-ease) both;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .no-results {
+    animation: xe-collection-empty 180ms var(--xe-ease) both;
+  }
+}
+
+@keyframes xe-collection-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes xe-collection-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes xe-collection-empty {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  html[data-xe-ui='v5'] .collection-list {
+    padding-inline: 24px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html[data-xe-ui='v5'] .collection-list {
+    padding: 24px 16px 48px !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-header h1,
+  html[data-xe-ui='v5'] .collection-list__header h1 {
+    font-size: 28px !important;
+    line-height: 36px !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-controls .search-bar {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 10px !important;
+    gap: 8px !important;
+    position: relative !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-controls .search-bar .search-filter {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 / 2 !important;
+    margin-left: 0 !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-controls .search-bar .icon--search {
+    position: absolute !important;
+    left: 10px !important;
+    top: 10px !important;
+    width: 44px !important;
+    height: 44px !important;
+    grid-column: unset !important;
+    grid-row: unset !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-controls .search-filter__input,
+  html[data-xe-ui='v5'] .collection-list .list-controls .search-bar input {
+    padding-inline-start: 44px !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-controls .search-bar__actions {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 / 3 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-controls .search-bar__actions .pill {
+    width: 100% !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-header__actions {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .list-header .btn {
+    flex: 1 1 auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  html[data-xe-ui='v5'] .collection-list .list-controls .search-bar__actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list .no-results {
+    min-height: 240px !important;
+    max-height: none !important;
+    padding: 36px 16px !important;
+  }
+}

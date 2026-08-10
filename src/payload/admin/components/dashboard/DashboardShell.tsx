@@ -40,11 +40,11 @@ type Props = {
 }
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 6 },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 0.04 * i, duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: 0.04 * i, duration: 0.28, ease: [0.22, 1, 0.36, 1] },
   }),
 }
 
@@ -88,13 +88,13 @@ export const DashboardShell = ({
   const daypart = hour < 12 ? 'Morning' : hour < 18 ? 'Afternoon' : 'Evening'
 
   return (
-    <div className="xe-dash xe-dash--os">
+    <div className="xe-content-shell xe-page xe-dash xe-dash--os">
       {/* Hero */}
       <motion.header
-        className="xe-os-hero"
-        initial={{ opacity: 0, y: 10 }}
+        className="xe-os-hero xe-page__header"
+        initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="xe-os-hero__copy">
           <p className="xe-os-hero__eyebrow">

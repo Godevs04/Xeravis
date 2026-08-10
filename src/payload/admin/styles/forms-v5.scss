@@ -94,17 +94,18 @@ html[data-xe-ui='v5'] .field-type > .field-label {
   display: block !important;
   color: var(--xe-muted) !important;
   font-size: var(--xe-fs-label) !important;
-  font-weight: 600 !important;
+  font-weight: 550 !important;
+  line-height: var(--xe-lh-label) !important;
   letter-spacing: 0.01em !important;
-  margin-bottom: var(--xe-space-2) !important;
+  margin-bottom: var(--xe-label-gap, var(--xe-space-2)) !important;
   text-transform: none !important;
 }
 
 html[data-xe-ui='v5'] .field-description,
 html[data-xe-ui='v5'] .field-type__description {
   color: var(--xe-field-desc) !important;
-  font-size: var(--xe-fs-caption) !important;
-  line-height: 1.45 !important;
+  font-size: var(--xe-fs-secondary) !important;
+  line-height: var(--xe-lh-secondary) !important;
   margin: 0 0 var(--xe-space-3) !important;
 }
 
@@ -126,12 +127,13 @@ html[data-xe-ui='v5'] .field-type.number input,
 html[data-xe-ui='v5'] .field-type.textarea textarea {
   min-height: var(--xe-input-h) !important;
   height: auto !important;
-  padding: 12px 16px !important;
-  border-radius: 14px !important;
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
   border: 1px solid var(--xe-border-strong) !important;
   background: var(--xe-input-bg) !important;
   color: var(--xe-text) !important;
-  font-size: 15px !important;
+  font-size: var(--xe-fs-body) !important;
+  line-height: var(--xe-lh-body) !important;
   font-family: var(--xe-font) !important;
   box-shadow: none !important;
   box-sizing: border-box !important;
@@ -164,30 +166,44 @@ html[data-xe-ui='v5'] .field-type.email input:focus {
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--xe-accent) 16%, transparent) !important;
 }
 
-/* React Select — control chrome only; keep internals unstyled */
+/* React Select — control chrome; multi chips must shrink-wrap (never grid-stretch) */
 html[data-xe-ui='v5'] .react-select__control,
 html[data-xe-ui='v5'] .rs__control {
   min-height: var(--xe-input-h) !important;
-  border-radius: 14px !important;
+  border-radius: 12px !important;
   border: 1px solid var(--xe-border-strong) !important;
   background: var(--xe-input-bg) !important;
   box-shadow: none !important;
   color: var(--xe-text) !important;
   overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 html[data-xe-ui='v5'] .react-select__control--is-focused,
 html[data-xe-ui='v5'] .rs__control--is-focused {
-  border-color: color-mix(in srgb, var(--xe-accent) 70%, transparent) !important;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--xe-accent) 16%, transparent) !important;
+  border-color: color-mix(in srgb, var(--xe-accent) 60%, transparent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--xe-accent) 14%, transparent) !important;
 }
 
+/* Default: flex so multi-value pills size to content */
 html[data-xe-ui='v5'] .react-select__value-container,
 html[data-xe-ui='v5'] .rs__value-container {
-  padding: 2px 12px !important;
-  overflow: hidden !important;
-  display: grid !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
   align-items: center !important;
+  gap: 6px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  padding: 6px 12px !important;
+  overflow: hidden !important;
+}
+
+/* Single-select only: grid stacks value + input for ellipsis */
+html[data-xe-ui='v5'] .react-select__value-container:not(.react-select__value-container--is-multi),
+html[data-xe-ui='v5'] .rs__value-container:not(.rs__value-container--is-multi) {
+  display: grid !important;
+  gap: 0 !important;
 }
 
 html[data-xe-ui='v5'] .react-select__single-value,
@@ -211,6 +227,9 @@ html[data-xe-ui='v5'] .rs__input input {
   padding: 0 !important;
   min-height: 0 !important;
   height: auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+  flex: 0 1 auto !important;
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -218,16 +237,27 @@ html[data-xe-ui='v5'] .rs__input input {
   transform: none !important;
 }
 
+html[data-xe-ui='v5'] .react-select__value-container--is-multi .react-select__input-container,
+html[data-xe-ui='v5'] .rs__value-container--is-multi .rs__input-container {
+  margin: 0 !important;
+  padding: 2px 0 !important;
+  flex: 1 1 40px !important;
+  min-width: 40px !important;
+}
+
 html[data-xe-ui='v5'] .react-select__indicators,
 html[data-xe-ui='v5'] .rs__indicators {
+  flex: 0 0 auto !important;
   flex-shrink: 0 !important;
+  align-self: stretch !important;
+  padding-right: 4px !important;
 }
 
 html[data-xe-ui='v5'] .react-select__menu,
 html[data-xe-ui='v5'] .rs__menu {
   background: var(--xe-menu-bg) !important;
   border: 1px solid var(--xe-border) !important;
-  border-radius: 14px !important;
+  border-radius: 12px !important;
   box-shadow: var(--xe-shadow-lg) !important;
   overflow: hidden;
   z-index: 80 !important;
@@ -237,7 +267,8 @@ html[data-xe-ui='v5'] .react-select__option,
 html[data-xe-ui='v5'] .rs__option {
   background: transparent !important;
   color: var(--xe-option-text) !important;
-  font-size: 14px !important;
+  font-size: var(--xe-fs-body) !important;
+  padding: 10px 12px !important;
 }
 
 html[data-xe-ui='v5'] .react-select__option--is-focused,
@@ -256,24 +287,75 @@ html[data-xe-ui='v5'] .rs__placeholder {
   color: var(--xe-faint) !important;
 }
 
+/* Multi-value chips — tight wrap around label + remove */
 html[data-xe-ui='v5'] .react-select__multi-value,
 html[data-xe-ui='v5'] .rs__multi-value,
 html[data-xe-ui='v5'] .multi-value {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  width: auto !important;
+  max-width: 100% !important;
+  flex: 0 1 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 28px !important;
   background: var(--xe-pill-bg) !important;
   border: 1px solid var(--xe-pill-border) !important;
-  border-radius: var(--xe-radius-pill) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
 }
 
 html[data-xe-ui='v5'] .react-select__multi-value__label,
+html[data-xe-ui='v5'] .rs__multi-value__label,
 html[data-xe-ui='v5'] .multi-value-label,
 html[data-xe-ui='v5'] .multi-value-label__text {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 3px 8px !important;
+  margin: 0 !important;
+  font-size: var(--xe-fs-label) !important;
+  font-weight: 600 !important;
+  line-height: var(--xe-lh-label) !important;
   color: var(--xe-pill-text) !important;
+  white-space: nowrap !important;
+}
+
+html[data-xe-ui='v5'] .react-select__multi-value__remove,
+html[data-xe-ui='v5'] .rs__multi-value__remove,
+html[data-xe-ui='v5'] .multi-value-label__remove {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  height: 100% !important;
+  min-height: 28px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  color: var(--xe-pill-text) !important;
+  cursor: pointer !important;
+  flex: 0 0 auto !important;
+}
+
+html[data-xe-ui='v5'] .react-select__multi-value__remove:hover,
+html[data-xe-ui='v5'] .rs__multi-value__remove:hover {
+  background: color-mix(in srgb, var(--xe-secondary) 18%, transparent) !important;
+  color: #0f766e !important;
 }
 
 html[data-xe-ui='v5'] .react-select__indicator,
 html[data-xe-ui='v5'] .rs__indicator {
   color: var(--xe-muted) !important;
   padding: 8px !important;
+}
+
+/* Select / relationship fields — readable width, not full bleed */
+html[data-xe-ui='v5'] .field-type.select .field-type__wrap,
+html[data-xe-ui='v5'] .field-type.select .react-select-container,
+html[data-xe-ui='v5'] .field-type.select .rs__container,
+html[data-xe-ui='v5'] .field-type.relationship:not(.relationship--has-many) .react-select-container {
+  max-width: min(100%, 560px) !important;
 }
 
 /* Radios / checkboxes */

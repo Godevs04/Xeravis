@@ -2,17 +2,10 @@
 
 import React from 'react'
 
-import { BusinessNav } from './BusinessNav'
-import { FavoritesAndRecent } from './FavoritesAndRecent'
-
-/** Workspaces → pinned shortcuts; Payload collection links render below */
-export const BeforeNavLinks = () => {
-  return (
-    <div className="xe-before-links">
-      <BusinessNav />
-      <FavoritesAndRecent />
-    </div>
-  )
-}
+/**
+ * Navigation moved to beforeNav (outside .nav__wrap).
+ * Slot kept for Payload config compatibility.
+ */
+export const BeforeNavLinks = () => null
 
 export default BeforeNavLinks

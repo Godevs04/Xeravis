@@ -20,7 +20,7 @@ type BaseHero = {
 /** Services — capability masthead + glass ribbon */
 export function ServicesPageHero({ title, subtitle }: BaseHero) {
   const reduce = useReducedMotion()
-  const ribbon = ['Data Science', 'AI Research', 'Healthcare', 'Consulting', 'Cloud']
+  const ribbon = ['AI', 'Data Science', 'IT Consulting', 'Data Engineering', 'Healthcare Specialty']
 
   return (
     <MeshBackdrop className="pt-28 pb-0 lg:pt-36" interactive={false}>
@@ -227,7 +227,12 @@ export function CareersPageHero({ title, subtitle }: BaseHero) {
 /** About — brand masthead with mesh atmosphere */
 export function AboutPageHero({ title, subtitle }: BaseHero) {
   const reduce = useReducedMotion()
-  const domains = ['AI Research', 'Data Science', 'Healthcare AI', 'Consulting']
+  const domains = [
+    'Artificial Intelligence',
+    'Data Science',
+    'IT Consulting',
+    'Healthcare Specialty',
+  ]
 
   return (
     <MeshBackdrop className="pt-28 pb-20 lg:pt-36 lg:pb-28" interactive={false}>
@@ -290,7 +295,7 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
                 variant="outline"
                 className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-7 font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/40 hover:bg-[color:var(--color-hover)]"
               >
-                <Link href="/about/why-xelarvis">Why XELARVIS</Link>
+                <Link href="/about/our-approach">Our Approach</Link>
               </Button>
             </motion.div>
           </div>
@@ -302,7 +307,7 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
             transition={{ duration: 0.65, delay: 0.18, ease: EASE }}
           >
             <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-accent)] uppercase">
-              Focus domains
+              What we do
             </p>
             <ul className="mt-5 space-y-3">
               {domains.map((d, i) => (
@@ -318,22 +323,9 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
                 </motion.li>
               ))}
             </ul>
-            <div className="mt-6 grid grid-cols-3 gap-2 border-t border-[color:var(--hero-panel-border)] pt-5">
-              {[
-                { v: '10+', l: 'Years' },
-                { v: '120+', l: 'Projects' },
-                { v: '40+', l: 'Clients' },
-              ].map((s) => (
-                <div key={s.l} className="text-center">
-                  <p className="font-display text-lg font-bold text-[color:var(--hero-text)]">
-                    {s.v}
-                  </p>
-                  <p className="text-[10px] tracking-wide text-[color:var(--hero-muted)] uppercase">
-                    {s.l}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <p className="mt-6 border-t border-[color:var(--hero-panel-border)] pt-5 text-xs leading-relaxed text-[color:var(--hero-muted)]">
+              Research → Strategy → Design → Build → Deploy → Optimize
+            </p>
           </motion.div>
         </div>
       </Container>
