@@ -110,7 +110,7 @@ async function seed() {
       siteName: 'Xelarvis Technologies',
       tagline: 'Artificial Intelligence, Data Science & IT Consulting',
       social: {
-        linkedin: 'https://linkedin.com/company/xelarvis',
+        linkedin: 'https://www.linkedin.com/company/xelarvis',
         twitter: 'https://x.com/xelarvis_ai',
         github: '',
         youtube: '',
@@ -196,7 +196,7 @@ async function seed() {
   await payload.updateGlobal({
     slug: 'social-media',
     data: {
-      linkedin: 'https://linkedin.com/company/xelarvis',
+      linkedin: 'https://www.linkedin.com/company/xelarvis',
       twitter: 'https://x.com/xelarvis_ai',
       github: '',
       youtube: '',
@@ -227,7 +227,7 @@ async function seed() {
     data: {
       titleTemplate: '%s · Xelarvis Technologies',
       defaultDescription:
-        'XELARVIS PRIVATE LIMITED is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value.',
+        'XELARVIS combines Artificial Intelligence, Data Science and IT Consulting to help organisations turn complex data and technology challenges into measurable business outcomes—with specialized expertise in Healthcare & Life Sciences.',
       twitterHandle: '@xelarvis_ai',
     },
     overrideAccess: true,

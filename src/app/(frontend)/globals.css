@@ -195,8 +195,9 @@
   }
 
   .aurora-mesh {
-    background-size: 140% 140%;
-    animation: aurora-drift 24s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
+    animation: aurora-float 28s ease-in-out infinite;
   }
 
   .dark .bg-mesh {
@@ -207,7 +208,7 @@
   }
 
   .dark .aurora-mesh {
-    animation: aurora-drift 26s ease-in-out infinite;
+    animation: aurora-float 32s ease-in-out infinite;
   }
 
   .hero-navy {
@@ -228,16 +229,15 @@
   }
 
   .hero-emphasis-text {
-    background-image: linear-gradient(90deg, #0d9488, #06b6d4, #14b8a6, #0d9488);
-    background-size: 220% 100%;
+    background-image: linear-gradient(90deg, #0d9488, #06b6d4, #14b8a6);
+    background-size: 100% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: gradient-shift 8s ease-in-out infinite;
   }
 
   .dark .hero-emphasis-text {
-    background-image: linear-gradient(90deg, #2dd4bf, #22d3ee, #5eead4, #2dd4bf);
+    background-image: linear-gradient(90deg, #2dd4bf, #22d3ee, #5eead4);
   }
 
   .bg-grid {
@@ -332,33 +332,13 @@
     }
   }
 
-  @keyframes aurora-drift {
+  @keyframes aurora-float {
     0%,
     100% {
-      background-position:
-        0% 40%,
-        100% 0%,
-        80% 100%,
-        10% 80%,
-        0% 0%;
+      transform: translate3d(0, 0, 0) scale(1);
     }
     50% {
-      background-position:
-        18% 55%,
-        82% 12%,
-        70% 88%,
-        22% 70%,
-        0% 0%;
-    }
-  }
-
-  @keyframes gradient-shift {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
+      transform: translate3d(-1.5%, 1%, 0) scale(1.03);
     }
   }
 
@@ -384,13 +364,8 @@
   @media (prefers-reduced-motion: reduce) {
     .aurora-mesh,
     .animate-blob,
-    .animate-blob-slow,
-    .hero-emphasis-text {
+    .animate-blob-slow {
       animation: none !important;
-    }
-
-    .hero-emphasis-text {
-      background-position: 0% 50%;
     }
   }
 }

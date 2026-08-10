@@ -11,12 +11,12 @@ export const DEFAULT_SERVICE_FAQS: FaqItem[] = [
   {
     question: 'What does Xelarvis specialize in?',
     answer:
-      'Xelarvis is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value through AI-powered decision intelligence.',
+      'Xelarvis is an Artificial Intelligence, Data Science, and IT Consulting company that helps organisations turn complex data and technology challenges into measurable business outcomes—with specialized expertise in Healthcare & Life Sciences.',
   },
   {
     question: 'Who should choose Xelarvis?',
     answer:
-      'Hospitals, life sciences organizations, healthcare IT leaders, CTOs, CIOs, enterprise buyers, and research organizations that need production-grade AI and cloud systems—not demos.',
+      'Enterprise technology leaders, CTOs, CIOs, data and analytics teams, and organisations modernising platforms or adopting AI—especially where governance, production delivery, and domain depth matter. Healthcare & Life Sciences is a specialty practice.',
   },
   {
     question: 'How long does a typical engagement take?',
@@ -26,12 +26,12 @@ export const DEFAULT_SERVICE_FAQS: FaqItem[] = [
   {
     question: 'How secure are Xelarvis platforms?',
     answer:
-      'Security is designed for regulated environments: access control, auditability, encryption in transit and at rest, evaluation of AI systems, and alignment with healthcare and enterprise compliance requirements.',
+      'Security is designed for enterprise and regulated environments: access control, auditability, encryption in transit and at rest, evaluation of AI systems, and alignment with applicable compliance requirements.',
   },
   {
     question: 'Do you build custom software?',
     answer:
-      'Yes. Xelarvis designs and builds custom AI systems, clinical data platforms, cloud architectures, and enterprise software tailored to client workflows and regulatory constraints.',
+      'Yes. Xelarvis designs and builds custom AI systems, data platforms, cloud architectures, and enterprise software tailored to client workflows, integration needs, and governance constraints.',
   },
 ]
 

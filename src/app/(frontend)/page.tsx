@@ -1,6 +1,4 @@
 import { RenderBlocks, type PageBlock } from '@/blocks/RenderBlocks'
-import { Container } from '@/components/layout/Container'
-import { EmptyState } from '@/components/ui/empty-state'
 import { safePayload } from '@/lib/cms'
 
 export const revalidate = 60
@@ -53,14 +51,22 @@ export default async function HomePage() {
     return <RenderBlocks blocks={page.layout} />
   }
 
+  // Build/runtime fallback when CMS is unreachable — keeps LCP/CLS stable vs empty shell.
   return (
-    <Container className="py-24 lg:py-32">
-      <EmptyState
-        title="Homepage content is not published"
-        description="Publish a Pages document with slug “home” and layout blocks in Payload Admin."
-        actionLabel="Open admin"
-        href="/admin"
-      />
-    </Container>
+    <RenderBlocks
+      blocks={[
+        {
+          blockType: 'storyHero',
+          heading: 'Engineering Intelligence. Transforming Business.',
+          subheading:
+            'Artificial Intelligence, Data Science, and IT Consulting—with Healthcare AI as a specialty.',
+          ctaLabel: "Let's Talk",
+          ctaHref: '/contact?intent=business',
+          secondaryCtaLabel: 'Explore services',
+          secondaryCtaHref: '/services',
+          brand: 'Xelarvis',
+        },
+      ]}
+    />
   )
 }

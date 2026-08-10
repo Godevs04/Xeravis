@@ -15,6 +15,8 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/index.ts",
     "typecheck": "tsc --noEmit",
+    "lighthouse": "lighthouse http://localhost:3000 --view --only-categories=performance,accessibility,best-practices,seo --output=html --output=json --output-path=./lighthouse-report --chrome-flags=\"--headless\"",
+    "lighthouse:ci": "lighthouse http://localhost:3000 --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=./lighthouse-report.json --chrome-flags=\"--headless --no-sandbox\" --quiet",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -76,6 +78,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.11",
     "husky": "^9.1.7",
+    "lighthouse": "^13.4.1",
     "lint-staged": "^16.4.0",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.6.14",

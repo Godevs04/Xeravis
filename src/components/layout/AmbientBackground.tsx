@@ -9,7 +9,7 @@ import {
 } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-/** Aurora field — soft mesh, drifting orbs, mouse parallax */
+/** Soft mesh + a few orbs — kept light for main-thread / LCP. */
 export function AmbientBackground() {
   const reduce = useReducedMotion()
   const [mounted, setMounted] = useState(false)
@@ -22,7 +22,25 @@ export function AmbientBackground() {
   const live = mounted && !reduce
 
   useEffect(() => {
-    setMounted(true)
+    // Defer motion orbs until after first paint / interaction — cuts main-thread work for LCP.
+    const enable = () => setMounted(true)
+    const opts: AddEventListenerOptions = { once: true, passive: true }
+    window.addEventListener('pointerdown', enable, opts)
+    window.addEventListener('scroll', enable, opts)
+    const ric = window.requestIdleCallback?.bind(window)
+    let idleId: number | undefined
+    let timeoutId: number | undefined
+    if (ric) {
+      idleId = ric(enable, { timeout: 2500 })
+    } else {
+      timeoutId = window.setTimeout(enable, 1500)
+    }
+    return () => {
+      window.removeEventListener('pointerdown', enable)
+      window.removeEventListener('scroll', enable)
+      if (idleId !== undefined) window.cancelIdleCallback?.(idleId)
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId)
+    }
   }, [])
 
   useEffect(() => {
@@ -59,41 +77,6 @@ export function AmbientBackground() {
         />
       </motion.div>
 
-      <motion.div
-        className="absolute bottom-[-14%] left-[18%] h-[50vh] w-[58vh]"
-        style={live ? { transform: layerA } : undefined}
-      >
-        <div
-          className={`h-full w-full rounded-full bg-[radial-gradient(circle,var(--mesh-glow-3),transparent_70%)] blur-3xl ${live ? 'animate-blob' : ''}`}
-        />
-      </motion.div>
-
-      {live ? (
-        <>
-          <motion.div
-            className="absolute top-[36%] left-[42%] h-80 w-80 rounded-full bg-[radial-gradient(circle,var(--mesh-glow-4),transparent_70%)] blur-2xl"
-            animate={{ opacity: [0.35, 0.8, 0.35], scale: [1, 1.14, 1], x: [0, 28, 0] }}
-            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          {Array.from({ length: 16 }).map((_, i) => (
-            <motion.span
-              key={i}
-              className="absolute h-1 w-1 rounded-full bg-[color:var(--color-accent)]/45"
-              style={{
-                left: `${8 + ((i * 17) % 84)}%`,
-                top: `${12 + ((i * 23) % 76)}%`,
-              }}
-              animate={{ opacity: [0.12, 0.65, 0.12], y: [0, -20, 0] }}
-              transition={{
-                duration: 5.5 + (i % 5),
-                delay: i * 0.32,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-        </>
-      ) : null}
       <div className="noise-overlay" />
     </div>
   )

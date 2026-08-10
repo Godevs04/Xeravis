@@ -95,4 +95,33 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+const withPayloadConfig = withPayload(nextConfig, { devBundleServerPackages: false })
+
+/**
+ * Payload's withPayload injects Critical-CH: Sec-CH-Prefers-Color-Scheme which forces
+ * Chrome to re-request the document on first paint — a large LCP hit in Lighthouse.
+ * Keep Accept-CH (optional later hints) but drop Critical-CH + its Vary-only entry.
+ */
+export default {
+  ...withPayloadConfig,
+  async headers() {
+    const entries =
+      typeof withPayloadConfig.headers === 'function' ? await withPayloadConfig.headers() : []
+
+    return entries
+      .map((entry) => ({
+        ...entry,
+        headers: (entry.headers || []).filter((header) => {
+          if (header.key === 'Critical-CH') return false
+          if (header.key === 'Accept-CH' && header.value.includes('Sec-CH-Prefers-Color-Scheme')) {
+            return false
+          }
+          if (header.key === 'Vary' && header.value === 'Sec-CH-Prefers-Color-Scheme') {
+            return false
+          }
+          return true
+        }),
+      }))
+      .filter((entry) => (entry.headers || []).length > 0)
+  },
+}
