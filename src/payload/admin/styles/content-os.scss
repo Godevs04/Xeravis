@@ -1,0 +1,1134 @@
+/* ============================================================
+   XELARVIS ENTERPRISE CONTENT OS
+   Single content chrome authority · tokens-driven
+   Cascades after layout/os-v6 — wins on shared selectors
+   ============================================================ */
+
+html[data-xe-ui='v5'] {
+  --xe-glass: color-mix(in srgb, var(--xe-surface, #fff) 82%, transparent);
+  --xe-glass-strong: color-mix(in srgb, var(--xe-surface, #fff) 94%, transparent);
+  --gutter-h: 0;
+}
+
+html[data-theme='dark'][data-xe-ui='v5'] {
+  --xe-glass: color-mix(in srgb, var(--xe-surface, #0f172a) 82%, transparent);
+  --xe-glass-strong: color-mix(in srgb, var(--xe-surface, #0f172a) 94%, transparent);
+}
+
+/* ────────────────────────────────────────────────────────────
+   1. PAGE CONTAINER — one grid for every admin page
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .template-default__wrap {
+  --spacing-view-bottom: 64px;
+  min-width: 0 !important;
+  overflow-x: clip !important;
+}
+
+html[data-xe-ui='v5'] .collection-list,
+html[data-xe-ui='v5'] .collection-edit,
+html[data-xe-ui='v5'] .global-edit,
+html[data-xe-ui='v5'] .dashboard,
+html[data-xe-ui='v5'] .account,
+html[data-xe-ui='v5'] .payload-settings,
+html[data-xe-ui='v5'] .versions,
+html[data-xe-ui='v5'] .query-inspector,
+html[data-xe-ui='v5'] .xe-content-shell,
+html[data-xe-ui='v5'] .xe-page,
+html[data-xe-ui='v5'] .xe-dash,
+html[data-xe-ui='v5'] .xe-dash--os,
+html[data-xe-ui='v5'] .xe-ws {
+  max-width: var(--xe-shell-max) !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: var(--xe-section-gap) var(--xe-gutter) 64px !important;
+  box-sizing: border-box !important;
+}
+
+html[data-xe-ui='v5'] .dashboard:has(.xe-content-shell),
+html[data-xe-ui='v5'] .dashboard:has(.xe-dash) {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .xe-content-shell.is-flush,
+html[data-xe-ui='v5'] .xe-page.is-flush {
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+html[data-xe-ui='v5'] .collection-edit .gutter,
+html[data-xe-ui='v5'] .global-edit .gutter,
+html[data-xe-ui='v5'] .collection-list .gutter,
+html[data-xe-ui='v5'] .account .gutter,
+html[data-xe-ui='v5'] .doc-header.gutter,
+html[data-xe-ui='v5'] .query-inspector.gutter,
+html[data-xe-ui='v5'] .gutter {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html[data-xe-ui='v5'] .template-default__wrap > .doc-header {
+  max-width: var(--xe-shell-max) !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: var(--xe-space-5) var(--xe-gutter) 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Readable line length for long-form fields */
+html[data-xe-ui='v5'] .document-fields__edit > .render-fields .field-type.textarea,
+html[data-xe-ui='v5'] .document-fields__edit > .render-fields .rich-text-lexical,
+html[data-xe-ui='v5'] .document-fields__edit > .render-fields .rich-text {
+  max-width: var(--xe-readable-max);
+}
+
+/* ────────────────────────────────────────────────────────────
+   2. APP HEADER
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .app-header,
+html[data-xe-ui='v5'] .app-header.sticky,
+html[data-xe-ui='v5'] .template-default > .template-default__wrap > header {
+  height: var(--xe-header-h) !important;
+  min-height: var(--xe-header-h) !important;
+  max-height: var(--xe-header-h) !important;
+  margin: 12px var(--xe-gutter) 0 !important;
+  padding: 0 16px !important;
+  max-width: calc(var(--xe-shell-max));
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-radius-lg) !important;
+  background: var(--xe-glass) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  box-shadow: var(--xe-card-shadow) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   3. BREADCRUMBS
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .step-nav {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: var(--xe-fs-secondary) !important;
+  line-height: var(--xe-lh-secondary) !important;
+  color: var(--xe-muted) !important;
+}
+
+html[data-xe-ui='v5'] .step-nav a {
+  font-size: var(--xe-fs-secondary) !important;
+  font-weight: 500 !important;
+  color: var(--xe-muted) !important;
+  text-decoration: none !important;
+  transition: color var(--xe-dur-fast) ease !important;
+}
+
+html[data-xe-ui='v5'] .step-nav a:hover {
+  color: var(--xe-secondary) !important;
+}
+
+html[data-xe-ui='v5'] .step-nav span[aria-current='page'],
+html[data-xe-ui='v5'] .step-nav .step-nav__last {
+  color: var(--xe-text) !important;
+  font-weight: 600 !important;
+}
+
+html[data-xe-ui='v5'] .xe-header-chip--breadcrumb {
+  font-size: var(--xe-fs-secondary) !important;
+  font-weight: 500 !important;
+  color: var(--xe-muted) !important;
+  max-width: min(420px, 40vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html[data-xe-ui='v5'] .xe-header-chip--breadcrumb strong {
+  font-weight: 600 !important;
+  color: var(--xe-text-secondary, #475569) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   4. PAGE HEADER — compact, premium (no giant boxes)
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .list-header,
+html[data-xe-ui='v5'] .collection-list__header,
+html[data-xe-ui='v5'] .doc-header__header,
+html[data-xe-ui='v5'] .doc-header,
+html[data-xe-ui='v5'] .collection-edit__header,
+html[data-xe-ui='v5'] .global-edit__header {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin: 0 0 var(--xe-space-6) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html[data-xe-ui='v5'] .list-header__content,
+html[data-xe-ui='v5'] .list-header__title-and-actions,
+html[data-xe-ui='v5'] .doc-header__header {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: var(--xe-btn-gap) !important;
+  width: 100% !important;
+}
+
+html[data-xe-ui='v5'] .list-header__title,
+html[data-xe-ui='v5'] .list-header h1,
+html[data-xe-ui='v5'] .collection-list__header h1,
+html[data-xe-ui='v5'] .doc-header h1,
+html[data-xe-ui='v5'] .render-title,
+html[data-xe-ui='v5'] .doc-header .render-title,
+html[data-xe-ui='v5'] .xe-page__title {
+  font-family: var(--xe-display) !important;
+  font-size: var(--xe-fs-page-title) !important;
+  font-weight: 650 !important;
+  letter-spacing: var(--xe-tracking-tight) !important;
+  line-height: var(--xe-lh-page-title) !important;
+  color: var(--xe-text) !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .list-header__after-header-content,
+html[data-xe-ui='v5'] .list-header p,
+html[data-xe-ui='v5'] .doc-header__after-header,
+html[data-xe-ui='v5'] .collection-list__sub-header,
+html[data-xe-ui='v5'] .xe-page__desc {
+  font-size: var(--xe-fs-secondary) !important;
+  line-height: var(--xe-lh-secondary) !important;
+  color: var(--xe-muted) !important;
+  max-width: 56ch;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .list-header__actions,
+html[data-xe-ui='v5'] .list-header__title-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Document tabs */
+html[data-xe-ui='v5'] .doc-header .tabs-field__tabs,
+html[data-xe-ui='v5'] .doc-header .document-tabs,
+html[data-xe-ui='v5'] .doc-tabs,
+html[data-xe-ui='v5'] .doc-tab {
+  gap: 4px !important;
+  margin-top: 4px !important;
+}
+
+html[data-xe-ui='v5'] .doc-tabs__link,
+html[data-xe-ui='v5'] .doc-tab,
+html[data-xe-ui='v5'] .document-tabs a {
+  min-height: 36px !important;
+  padding: 6px 12px !important;
+  border-radius: var(--xe-radius-sm) !important;
+  font-size: var(--xe-fs-secondary) !important;
+  font-weight: 600 !important;
+  color: var(--xe-muted) !important;
+  transition:
+    background var(--xe-dur) var(--xe-ease),
+    color var(--xe-dur) ease !important;
+}
+
+html[data-xe-ui='v5'] .doc-tabs__link:hover,
+html[data-xe-ui='v5'] .doc-tab:hover,
+html[data-xe-ui='v5'] .document-tabs a:hover {
+  background: color-mix(in srgb, var(--xe-secondary) 10%, transparent) !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .doc-tabs__link.active,
+html[data-xe-ui='v5'] .doc-tab--active,
+html[data-xe-ui='v5'] .document-tabs a[aria-current='page'] {
+  background: color-mix(in srgb, var(--xe-secondary) 12%, transparent) !important;
+  color: var(--xe-secondary) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--xe-secondary) 20%, transparent) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   5. ACTION BAR (doc-controls)
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .doc-controls {
+  position: sticky !important;
+  top: calc(var(--xe-header-h) + 16px) !important;
+  z-index: 30 !important;
+  margin: 0 0 var(--xe-space-6) !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .doc-controls__wrapper {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: var(--xe-btn-gap) !important;
+  padding: 10px 14px !important;
+  border-radius: var(--xe-radius-lg) !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--xe-glass) !important;
+  backdrop-filter: blur(16px) saturate(160%) !important;
+  box-shadow: var(--xe-card-shadow) !important;
+}
+
+html[data-xe-ui='v5'] .doc-controls__divider {
+  display: none !important;
+}
+
+html[data-xe-ui='v5'] .doc-controls__content,
+html[data-xe-ui='v5'] .doc-controls__meta,
+html[data-xe-ui='v5'] .doc-controls__controls,
+html[data-xe-ui='v5'] .doc-controls__controls-wrapper {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px 12px !important;
+  min-width: 0 !important;
+}
+
+html[data-xe-ui='v5'] .doc-controls__controls,
+html[data-xe-ui='v5'] .doc-controls__controls-wrapper {
+  margin-left: auto !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   6. BUTTON SYSTEM
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .doc-controls .btn,
+html[data-xe-ui='v5'] .list-header .btn,
+html[data-xe-ui='v5'] .collection-list .btn,
+html[data-xe-ui='v5'] .app-header .btn,
+html[data-xe-ui='v5'] .btn,
+html[data-xe-ui='v5'] a.btn {
+  --btn-padding-block-start: 0;
+  --btn-padding-block-end: 0;
+  --btn-line-height: 1;
+  --margin-block: 0;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  min-height: var(--xe-btn-h) !important;
+  height: var(--xe-btn-h) !important;
+  margin-block: 0 !important;
+  padding: 0 14px !important;
+  border-radius: var(--xe-radius-sm) !important;
+  font-size: var(--xe-fs-secondary) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  transition:
+    transform var(--xe-dur-fast) var(--xe-ease),
+    box-shadow var(--xe-dur) var(--xe-ease),
+    background var(--xe-dur) ease,
+    border-color var(--xe-dur) ease !important;
+}
+
+html[data-xe-ui='v5'] .btn .btn__content,
+html[data-xe-ui='v5'] .btn .btn__label,
+html[data-xe-ui='v5'] a.btn .btn__content,
+html[data-xe-ui='v5'] a.btn .btn__label {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html[data-xe-ui='v5'] .doc-controls .btn:hover,
+html[data-xe-ui='v5'] .list-header .btn:hover {
+  transform: translateY(-1px);
+}
+
+html[data-xe-ui='v5'] .btn--style-primary,
+html[data-xe-ui='v5'] .doc-controls .btn--style-primary,
+html[data-xe-ui='v5'] .list-header .btn--style-primary,
+html[data-xe-ui='v5'] .collection-list .btn--style-primary {
+  background: linear-gradient(135deg, #0d9488 0%, #0891b2 60%, #06b6d4 100%) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 6px 16px rgba(13, 148, 136, 0.24) !important;
+}
+
+html[data-xe-ui='v5'] .btn--style-secondary,
+html[data-xe-ui='v5'] .doc-controls .btn--style-secondary,
+html[data-xe-ui='v5'] .list-header .btn--style-secondary,
+html[data-xe-ui='v5'] .btn--style-subtle,
+html[data-xe-ui='v5'] .doc-controls .btn--style-subtle {
+  background: var(--xe-surface) !important;
+  border: 1px solid var(--xe-border) !important;
+  color: var(--xe-text) !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .status__value,
+html[data-xe-ui='v5'] .doc-controls .status__value,
+html[data-xe-ui='v5'] .xe-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 24px !important;
+  padding: 2px 10px !important;
+  border-radius: var(--xe-radius-pill) !important;
+  font-size: var(--xe-fs-caption) !important;
+  font-weight: 600 !important;
+  line-height: var(--xe-lh-caption) !important;
+  background: color-mix(in srgb, var(--xe-secondary) 12%, transparent) !important;
+  color: #0f766e !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   7. DOCUMENT GRID — 70 / 30
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .document-fields--has-sidebar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, var(--xe-doc-sidebar)) !important;
+  gap: var(--xe-card-gap) !important;
+  align-items: start !important;
+}
+
+html[data-xe-ui='v5'] .document-fields--no-sidebar {
+  display: block !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+  position: sticky !important;
+  top: calc(var(--xe-header-h) + 80px) !important;
+  max-width: none !important;
+  width: 100% !important;
+  align-self: start !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__sidebar,
+html[data-xe-ui='v5'] .document-fields__sidebar-fields {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--xe-card-gap) !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__edit {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--xe-edit-gap) !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   8. CARDS (form sections)
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .auth-fields,
+html[data-xe-ui='v5'] .collection-edit__auth,
+html[data-xe-ui='v5'] .account > .render-fields,
+html[data-xe-ui='v5'] .document-fields__edit > .render-fields,
+html[data-xe-ui='v5'] .document-fields__sidebar-fields > .render-fields,
+html[data-xe-ui='v5'] .payload-settings,
+html[data-xe-ui='v5'] .group-field:not(.array-field .group-field):not(.blocks-field .group-field),
+html[data-xe-ui='v5'] .tabs-field,
+html[data-xe-ui='v5'] .upload,
+html[data-xe-ui='v5'] .file-field,
+html[data-xe-ui='v5'] .document-fields__edit > .file-details,
+html[data-xe-ui='v5'] .document-fields__edit > .upload,
+html[data-xe-ui='v5'] .xe-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  background: var(--xe-glass-strong) !important;
+  border: 1px solid var(--xe-border) !important;
+  border-radius: var(--xe-card-radius) !important;
+  box-shadow: var(--xe-card-shadow) !important;
+  padding: var(--xe-card-pad) !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  transition:
+    transform var(--xe-dur) var(--xe-ease),
+    box-shadow var(--xe-dur) var(--xe-ease),
+    border-color var(--xe-dur) ease !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__edit > .render-fields:hover,
+html[data-xe-ui='v5'] .document-fields__sidebar-fields > .render-fields:hover,
+html[data-xe-ui='v5'] .group-field:not(.array-field .group-field):hover,
+html[data-xe-ui='v5'] .xe-card:hover {
+  box-shadow: var(--xe-card-shadow-hover) !important;
+  border-color: color-mix(in srgb, var(--xe-secondary) 22%, var(--xe-border)) !important;
+  transform: translateY(-2px);
+}
+
+html[data-xe-ui='v5'] .array-field .render-fields,
+html[data-xe-ui='v5'] .blocks-field .render-fields,
+html[data-xe-ui='v5'] .collapsible__content .render-fields,
+html[data-xe-ui='v5'] .group-field .render-fields,
+html[data-xe-ui='v5'] .tabs-field__tab .render-fields {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  transform: none !important;
+}
+
+html[data-xe-ui='v5'] .group-field__wrap > .field-label,
+html[data-xe-ui='v5'] .collapsible__toggle-wrap .row-label {
+  font-size: var(--xe-fs-card-title) !important;
+  font-weight: 600 !important;
+  line-height: var(--xe-lh-card-title) !important;
+  color: var(--xe-text) !important;
+  letter-spacing: -0.01em !important;
+}
+
+html[data-xe-ui='v5'] .render-fields > .field-type,
+html[data-xe-ui='v5'] .auth-fields .field-type {
+  padding: var(--xe-field-gap) 0 !important;
+}
+
+html[data-xe-ui='v5'] .render-fields > .field-type + .field-type,
+html[data-xe-ui='v5'] .auth-fields .field-type + .field-type {
+  border-top: 1px solid var(--xe-border) !important;
+}
+
+html[data-xe-ui='v5'] .field-label,
+html[data-xe-ui='v5'] .field-type__label,
+html[data-xe-ui='v5'] .field-type > label,
+html[data-xe-ui='v5'] .field-type > .field-label {
+  margin-bottom: var(--xe-label-gap) !important;
+  font-size: var(--xe-fs-label) !important;
+  font-weight: 550 !important;
+  line-height: var(--xe-lh-label) !important;
+  color: var(--xe-muted) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   9. INPUTS
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .field-type__wrap > input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
+html[data-xe-ui='v5'] .input > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5'] .textarea > textarea,
+html[data-xe-ui='v5'] .date-time-picker input,
+html[data-xe-ui='v5'] .field-type.text input,
+html[data-xe-ui='v5'] .field-type.email input,
+html[data-xe-ui='v5'] .field-type.number input,
+html[data-xe-ui='v5'] .field-type.textarea textarea {
+  min-height: var(--xe-input-h) !important;
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--xe-border-strong) !important;
+  background: var(--xe-input-bg) !important;
+  font-size: var(--xe-fs-body) !important;
+  line-height: var(--xe-lh-body) !important;
+  color: var(--xe-text) !important;
+  transition:
+    border-color var(--xe-dur) var(--xe-ease),
+    box-shadow var(--xe-dur) var(--xe-ease),
+    background var(--xe-dur) ease !important;
+}
+
+html[data-xe-ui='v5'] .field-type.textarea textarea,
+html[data-xe-ui='v5'] .textarea > textarea {
+  min-height: 128px !important;
+  padding: 14px 16px !important;
+  line-height: 1.6 !important;
+  resize: vertical;
+}
+
+html[data-xe-ui='v5'] .field-type__wrap > input:focus,
+html[data-xe-ui='v5'] .input > input:focus,
+html[data-xe-ui='v5'] .textarea > textarea:focus,
+html[data-xe-ui='v5'] .field-type.text input:focus,
+html[data-xe-ui='v5'] .field-type.email input:focus,
+html[data-xe-ui='v5'] .field-type.number input:focus {
+  outline: none !important;
+  border-color: color-mix(in srgb, var(--xe-accent) 60%, transparent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--xe-accent) 14%, transparent) !important;
+  background: var(--xe-surface) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__control,
+html[data-xe-ui='v5'] .rs__control {
+  min-height: var(--xe-input-h) !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--xe-border-strong) !important;
+  background: var(--xe-input-bg) !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .react-select__control--is-focused,
+html[data-xe-ui='v5'] .rs__control--is-focused {
+  border-color: color-mix(in srgb, var(--xe-accent) 60%, transparent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--xe-accent) 14%, transparent) !important;
+}
+
+/* Multi-select chips must shrink-wrap (grid on value-container stretches them) */
+html[data-xe-ui='v5'] .react-select__value-container--is-multi,
+html[data-xe-ui='v5'] .rs__value-container--is-multi {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+html[data-xe-ui='v5'] .react-select__multi-value,
+html[data-xe-ui='v5'] .rs__multi-value,
+html[data-xe-ui='v5'] .multi-value {
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  max-width: min(100%, 280px) !important;
+  flex: 0 1 auto !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .react-select__multi-value__label,
+html[data-xe-ui='v5'] .rs__multi-value__label {
+  padding: 3px 8px !important;
+  font-size: var(--xe-fs-label) !important;
+  font-weight: 600 !important;
+  color: var(--xe-pill-text) !important;
+}
+
+html[data-xe-ui='v5'] .react-select__multi-value__remove,
+html[data-xe-ui='v5'] .rs__multi-value__remove {
+  width: 22px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   10. UPLOAD / RICH TEXT / ARRAYS / TABS
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .file-field__upload,
+html[data-xe-ui='v5'] .upload__dropzone,
+html[data-xe-ui='v5'] .dropzone {
+  min-height: 160px !important;
+  border-radius: var(--xe-radius-lg) !important;
+  border: 1.5px dashed color-mix(in srgb, var(--xe-secondary) 32%, transparent) !important;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(13, 148, 136, 0.06), transparent 70%),
+    color-mix(in srgb, var(--xe-secondary) 3%, transparent) !important;
+}
+
+html[data-xe-ui='v5'] .rich-text-lexical,
+html[data-xe-ui='v5'] .lexical-rich-text-container,
+html[data-xe-ui='v5'] .rich-text {
+  border-radius: 14px !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--xe-surface) !important;
+  overflow: hidden !important;
+}
+
+html[data-xe-ui='v5'] .ContentEditable__root,
+html[data-xe-ui='v5'] .lexical-rich-text-container [contenteditable='true'] {
+  min-height: 200px !important;
+  padding: 18px 20px !important;
+  font-size: var(--xe-fs-body) !important;
+  line-height: 1.65 !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .array-field__row,
+html[data-xe-ui='v5'] .blocks-field__row,
+html[data-xe-ui='v5'] .collapsible {
+  border-radius: 14px !important;
+  border: 1px solid var(--xe-border) !important;
+  background: color-mix(in srgb, var(--xe-surface) 80%, transparent) !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03) !important;
+  overflow: hidden !important;
+  margin-bottom: 10px !important;
+}
+
+html[data-xe-ui='v5'] .collapsible__toggle {
+  min-height: 44px !important;
+  padding: 10px 14px !important;
+}
+
+html[data-xe-ui='v5'] .tabs-field__tabs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  padding: 4px !important;
+  margin-bottom: 14px !important;
+  border-radius: 12px !important;
+  background: color-mix(in srgb, var(--xe-text) 4%, transparent) !important;
+  border: 0 !important;
+}
+
+html[data-xe-ui='v5'] .tabs-field__tab-button {
+  min-height: 34px !important;
+  padding: 6px 12px !important;
+  border-radius: 9px !important;
+  font-size: var(--xe-fs-secondary) !important;
+  font-weight: 600 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--xe-muted) !important;
+}
+
+html[data-xe-ui='v5'] .tabs-field__tab-button--active,
+html[data-xe-ui='v5'] .tabs-field__tab-button[aria-selected='true'] {
+  background: var(--xe-surface) !important;
+  color: var(--xe-secondary) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   11. LIST CONTROLS + SEARCH
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .list-controls {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  margin: 0 0 var(--xe-card-gap) !important;
+  padding: 10px 12px !important;
+  border-radius: var(--xe-card-radius) !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--xe-glass) !important;
+  backdrop-filter: blur(14px) !important;
+  box-shadow: var(--xe-card-shadow) !important;
+  box-sizing: border-box !important;
+}
+
+html[data-xe-ui='v5'] .list-controls .search-bar {
+  --icon-width: 40px;
+  --search-bg: color-mix(in srgb, var(--xe-surface) 94%, #f1f5f9);
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 44px !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--search-bg) !important;
+  box-shadow: none !important;
+}
+
+@media (min-width: 769px) {
+  html[data-xe-ui='v5'] .list-controls .search-bar {
+    height: 44px !important;
+    overflow: hidden !important;
+  }
+}
+
+html[data-xe-ui='v5'] .list-controls .search-bar .icon--search {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 / 2 !important;
+  z-index: 2 !important;
+  width: var(--icon-width) !important;
+  height: 100% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--xe-muted) !important;
+  pointer-events: none !important;
+}
+
+html[data-xe-ui='v5'] .list-controls .search-bar .search-filter {
+  grid-column: 1 / 3 !important;
+  grid-row: 1 / 2 !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  background: transparent !important;
+}
+
+html[data-xe-ui='v5'] .list-controls .search-filter__input,
+html[data-xe-ui='v5'] .list-controls .search-bar input {
+  width: 100% !important;
+  min-height: 44px !important;
+  height: 44px !important;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-inline-start: var(--icon-width, 40px) !important;
+  padding-inline-end: 14px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: var(--xe-fs-body) !important;
+  font-weight: 500 !important;
+  line-height: 44px !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .list-controls .search-filter__input:focus,
+html[data-xe-ui='v5'] .list-controls .search-bar input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .list-controls .search-bar:focus-within {
+  border-color: color-mix(in srgb, var(--xe-accent) 50%, transparent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--xe-accent) 12%, transparent) !important;
+}
+
+html[data-xe-ui='v5'] .list-controls .search-bar__actions {
+  grid-column: 3 / 4 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 0 8px 0 4px !important;
+}
+
+html[data-xe-ui='v5'] .list-controls .btn,
+html[data-xe-ui='v5'] .list-controls button.pill,
+html[data-xe-ui='v5'] .search-bar__actions .pill {
+  min-height: 32px !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  border-radius: 9px !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--xe-surface) !important;
+  font-weight: 600 !important;
+  font-size: var(--xe-fs-label) !important;
+  color: var(--xe-text) !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .collection-list__list-selection {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 0 14px !important;
+  padding: 10px 14px !important;
+  border-radius: 14px !important;
+  background: color-mix(in srgb, var(--xe-secondary) 8%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--xe-secondary) 18%, transparent) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   12. TABLES
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .collection-list__tables,
+html[data-xe-ui='v5'] .table-wrap {
+  border-radius: var(--xe-card-radius) !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--xe-glass-strong) !important;
+  box-shadow: var(--xe-card-shadow) !important;
+  overflow: hidden !important;
+  margin: 0 0 var(--xe-card-gap) !important;
+}
+
+html[data-xe-ui='v5'] .table,
+html[data-xe-ui='v5'] .collection-list .table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: transparent !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .table thead th,
+html[data-xe-ui='v5'] .collection-list .table thead th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  height: 44px !important;
+  padding: 10px 16px !important;
+  font-size: var(--xe-fs-label) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  color: var(--xe-muted) !important;
+  background: color-mix(in srgb, var(--xe-surface) 92%, #f1f5f9) !important;
+  border-bottom: 1px solid var(--xe-border) !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+}
+
+html[data-xe-ui='v5'] .table tbody td,
+html[data-xe-ui='v5'] .collection-list .table tbody td {
+  min-height: var(--xe-row-h) !important;
+  padding: 14px 16px !important;
+  font-size: var(--xe-fs-body) !important;
+  line-height: var(--xe-lh-body) !important;
+  color: var(--xe-text) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--xe-border) 80%, transparent) !important;
+  vertical-align: middle !important;
+}
+
+html[data-xe-ui='v5'] .table thead th:first-child,
+html[data-xe-ui='v5'] .table tbody td:first-child {
+  width: 48px !important;
+  padding-left: 16px !important;
+  padding-right: 8px !important;
+}
+
+html[data-xe-ui='v5'] .table tbody tr:hover td {
+  background: color-mix(in srgb, var(--xe-secondary) 5%, transparent) !important;
+}
+
+html[data-xe-ui='v5'] .table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+html[data-xe-ui='v5'] .table a {
+  color: var(--xe-text) !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+
+html[data-xe-ui='v5'] .table a:hover {
+  color: var(--xe-secondary) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   13. PAGINATION / EMPTY / WHERE
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .page-controls {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 12px 14px !important;
+  border-radius: var(--xe-radius-lg) !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--xe-glass) !important;
+  box-shadow: var(--xe-card-shadow) !important;
+}
+
+html[data-xe-ui='v5'] .page-controls__page-info,
+html[data-xe-ui='v5'] .paginator,
+html[data-xe-ui='v5'] .per-page {
+  font-size: var(--xe-fs-secondary) !important;
+  color: var(--xe-muted) !important;
+}
+
+html[data-xe-ui='v5'] .paginator button,
+html[data-xe-ui='v5'] .page-controls button {
+  min-width: 34px !important;
+  min-height: 34px !important;
+  border-radius: 9px !important;
+  font-weight: 600 !important;
+}
+
+html[data-xe-ui='v5'] .paginator button[aria-current='page'],
+html[data-xe-ui='v5'] .paginator .paginator__page--current {
+  background: color-mix(in srgb, var(--xe-secondary) 12%, transparent) !important;
+  color: var(--xe-secondary) !important;
+  border: 1px solid color-mix(in srgb, var(--xe-secondary) 20%, transparent) !important;
+}
+
+html[data-xe-ui='v5'] .no-results,
+html[data-xe-ui='v5'] .collection-list__no-results,
+html[data-xe-ui='v5'] .empty-state,
+html[data-xe-ui='v5'] .xe-empty {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 280px !important;
+  max-height: 360px !important;
+  padding: 48px 24px !important;
+  text-align: center !important;
+  border-radius: 16px !important;
+  border: 1px solid #e5eaf0 !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+  color: var(--xe-muted) !important;
+  font-size: var(--xe-fs-secondary) !important;
+}
+
+html[data-theme='dark'][data-xe-ui='v5'] .no-results,
+html[data-theme='dark'][data-xe-ui='v5'] .collection-list__no-results,
+html[data-theme='dark'][data-xe-ui='v5'] .empty-state {
+  border-color: var(--xe-border) !important;
+  background: var(--xe-surface) !important;
+  box-shadow: var(--xe-card-shadow) !important;
+}
+
+html[data-xe-ui='v5'] .where-builder,
+html[data-xe-ui='v5'] .list-controls__where,
+html[data-xe-ui='v5'] .list-controls__columns,
+html[data-xe-ui='v5'] .list-controls__group-by {
+  /* Drawer chrome owned by collection-list-os.scss — do not pad closed AnimateHeight roots */
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   14. DRAWERS / TOASTS / DASHBOARD ALIGN
+   ──────────────────────────────────────────────────────────── */
+
+html[data-xe-ui='v5'] .drawer__content,
+html[data-xe-ui='v5'] .modal,
+html[data-xe-ui='v5'] .popup__content,
+html[data-xe-ui='v5'] .confirmation-modal {
+  border-radius: var(--xe-radius-lg) !important;
+  border: 1px solid var(--xe-border) !important;
+  background: var(--xe-glass-strong) !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14) !important;
+}
+
+html[data-xe-ui='v5'] .xe-dash--os,
+html[data-xe-ui='v5'] .xe-dash,
+html[data-xe-ui='v5'] .xe-ws,
+html[data-xe-ui='v5'] .xe-page {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--xe-section-gap) !important;
+}
+
+html[data-xe-ui='v5'] .xe-ws__hero,
+html[data-xe-ui='v5'] .xe-page__header {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .xe-ws__title,
+html[data-xe-ui='v5'] .xe-page__title {
+  font-size: var(--xe-fs-page-title) !important;
+  font-weight: 650 !important;
+  line-height: var(--xe-lh-page-title) !important;
+  letter-spacing: var(--xe-tracking-tight) !important;
+}
+
+html[data-xe-ui='v5'] .xe-ws__subtitle,
+html[data-xe-ui='v5'] .xe-page__desc {
+  font-size: var(--xe-fs-secondary) !important;
+  line-height: var(--xe-lh-secondary) !important;
+  color: var(--xe-muted) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   15. MOTION
+   ──────────────────────────────────────────────────────────── */
+
+@keyframes xe-content-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-xe-ui='v5'] .collection-list,
+  html[data-xe-ui='v5'] .collection-edit,
+  html[data-xe-ui='v5'] .global-edit,
+  html[data-xe-ui='v5'] .account,
+  html[data-xe-ui='v5'] .query-inspector,
+  html[data-xe-ui='v5'] .xe-dash,
+  html[data-xe-ui='v5'] .xe-page {
+    animation: xe-content-fade-in var(--xe-dur-page) var(--xe-ease) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-xe-ui='v5'] .xe-card:hover,
+  html[data-xe-ui='v5'] .document-fields__edit > .render-fields:hover {
+    transform: none !important;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   16. RESPONSIVE
+   ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1280px) {
+  html[data-xe-ui='v5'] .document-fields--has-sidebar {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 300px) !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  html[data-xe-ui='v5'] .document-fields--has-sidebar {
+    grid-template-columns: 1fr !important;
+  }
+
+  html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+    position: static !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html[data-xe-ui='v5'] .list-header h1,
+  html[data-xe-ui='v5'] .doc-header h1,
+  html[data-xe-ui='v5'] .render-title {
+    font-size: var(--xe-fs-page-title) !important;
+  }
+
+  html[data-xe-ui='v5'] .doc-controls__controls,
+  html[data-xe-ui='v5'] .doc-controls__controls-wrapper {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  html[data-xe-ui='v5'] .table thead th,
+  html[data-xe-ui='v5'] .table tbody td {
+    padding: 12px 12px !important;
+  }
+
+  html[data-xe-ui='v5'] .collection-list__tables,
+  html[data-xe-ui='v5'] .table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 390px) {
+  html[data-xe-ui='v5'] .collection-list,
+  html[data-xe-ui='v5'] .collection-edit,
+  html[data-xe-ui='v5'] .global-edit,
+  html[data-xe-ui='v5'] .account,
+  html[data-xe-ui='v5'] .xe-dash {
+    padding-inline: 16px !important;
+  }
+}
+
+html[data-xe-ui='v5'] .template-default__wrap,
+html[data-xe-ui='v5'] .collection-edit,
+html[data-xe-ui='v5'] .collection-list,
+html[data-xe-ui='v5'] .document-fields,
+html[data-xe-ui='v5'] .render-fields,
+html[data-xe-ui='v5'] .field-type,
+html[data-xe-ui='v5'] .field-type__wrap {
+  max-width: 100% !important;
+  min-width: 0 !important;
+}

@@ -1,14 +1,11 @@
 /* ============================================================
    XELARVIS ENTERPRISE OS — Visual Layer V6
-   Premium AI operating system chrome · no API/collection changes
+   Canvas / mesh / dashboard chrome only.
+   Tokens (radius, type, shell) live in tokens.scss — do not override.
    ============================================================ */
 
 html[data-xe-ui='v5'] {
-  --xe-radius-sm: 14px;
-  --xe-radius: 22px;
-  --xe-radius-lg: 28px;
-  --xe-sidebar-w: 300px;
-  --xe-header-h: 68px;
+  /* Intentionally empty — radii / sidebar / header come from tokens.scss */
 }
 
 /* Alive but calm canvas */
@@ -24,10 +21,10 @@ html[data-xe-ui='v5'] .template-default {
 html[data-theme='dark'][data-xe-ui='v5'] body:has(.template-default),
 html[data-theme='dark'][data-xe-ui='v5'] .template-default {
   background:
-    radial-gradient(ellipse 55% 40% at 8% -5%, rgba(13, 148, 136, 0.18), transparent 55%),
-    radial-gradient(ellipse 45% 35% at 95% 5%, rgba(6, 182, 212, 0.12), transparent 50%),
-    radial-gradient(ellipse 40% 30% at 70% 100%, rgba(6, 182, 212, 0.06), transparent 55%),
-    linear-gradient(180deg, #0b1220 0%, #020617 100%) !important;
+    radial-gradient(ellipse 55% 40% at 8% -5%, rgba(13, 148, 136, 0.14), transparent 55%),
+    radial-gradient(ellipse 45% 35% at 95% 5%, rgba(6, 182, 212, 0.1), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 70% 100%, rgba(6, 182, 212, 0.05), transparent 55%),
+    linear-gradient(180deg, #080f1f 0%, #020617 100%) !important;
 }
 
 html[data-xe-ui='v5'] .template-default::before {
@@ -435,18 +432,18 @@ html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-biz-nav--os .xe-biz-nav__item
 
 .xe-os-hero__title {
   margin: 0;
-  font-size: clamp(28px, 3vw, 40px);
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  font-weight: 750;
+  font-size: var(--xe-fs-display);
+  line-height: var(--xe-lh-display);
+  letter-spacing: var(--xe-tracking-tight);
+  font-weight: 650;
   color: var(--xe-text);
 }
 
 .xe-os-hero__subtitle {
-  margin: 12px 0 0;
-  max-width: 42ch;
-  font-size: 15px;
-  line-height: 1.55;
+  margin: 8px 0 0;
+  max-width: 48ch;
+  font-size: var(--xe-fs-secondary);
+  line-height: var(--xe-lh-secondary);
   color: var(--xe-muted);
 }
 
@@ -632,14 +629,15 @@ html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-biz-nav--os .xe-biz-nav__item
 }
 
 .xe-os-kpi__value {
-  font-size: 34px;
-  font-weight: 750;
-  letter-spacing: -0.05em;
-  line-height: 1;
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 36px;
 }
 
 .xe-os-kpi__meta {
-  font-size: 12px;
+  font-size: var(--xe-fs-caption);
+  line-height: var(--xe-lh-caption);
   color: var(--xe-muted);
 }
 
@@ -953,12 +951,13 @@ html[data-xe-ui='v5'] .table tbody tr:hover td {
   background: var(--xe-hover) !important;
 }
 
+/* Collection lists: flat page canvas — toolbar/table are the cards (see collection-list-os) */
 html[data-xe-ui='v5'] .collection-list {
-  border-radius: 24px !important;
-  border: 1px solid var(--xe-border) !important;
-  background: var(--xe-surface) !important;
-  box-shadow: var(--xe-shadow) !important;
-  overflow: hidden !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
 }
 
 /* ── Forms — handcrafted feel ── */
@@ -1312,7 +1311,7 @@ html[data-xe-ui='v5'] .collection-list {
   width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding: 12px var(--xe-gutter) 48px !important;
+  padding: var(--xe-section-gap) var(--xe-gutter) 64px !important;
   box-sizing: border-box !important;
 }
 
@@ -1529,20 +1528,29 @@ html[data-xe-ui='v5'] .react-select__control,
 html[data-xe-ui='v5'] .rs__control {
   display: flex !important;
   align-items: center !important;
-  min-height: 48px !important;
+  min-height: var(--xe-input-h) !important;
   height: auto !important;
   padding: 0 !important;
   overflow: hidden !important;
 }
 
+/* Multi: flex wrap. Single: grid (see forms-v5). Never force grid on multi. */
 html[data-xe-ui='v5'] .react-select__value-container,
 html[data-xe-ui='v5'] .rs__value-container {
-  display: grid !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
   align-items: center !important;
+  gap: 6px !important;
   flex: 1 1 auto !important;
   min-width: 0 !important;
-  padding: 2px 12px !important;
+  padding: 6px 12px !important;
   overflow: hidden !important;
+}
+
+html[data-xe-ui='v5'] .react-select__value-container:not(.react-select__value-container--is-multi),
+html[data-xe-ui='v5'] .rs__value-container:not(.rs__value-container--is-multi) {
+  display: grid !important;
+  gap: 0 !important;
 }
 
 html[data-xe-ui='v5'] .react-select__single-value,
@@ -1588,6 +1596,17 @@ html[data-xe-ui='v5'] .rs__indicators {
 html[data-xe-ui='v5'] .react-select__menu,
 html[data-xe-ui='v5'] .rs__menu {
   z-index: 100 !important;
+}
+
+html[data-xe-ui='v5'] .react-select__multi-value,
+html[data-xe-ui='v5'] .rs__multi-value,
+html[data-xe-ui='v5'] .multi-value {
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  max-width: 100% !important;
+  flex: 0 1 auto !important;
+  margin: 0 !important;
 }
 
 /* Tighten edit chrome — less empty void under breadcrumbs */
@@ -1637,7 +1656,7 @@ html[data-xe-ui='v5'] .app-header__step-nav-wrapper {
 }
 
 html[data-xe-ui='v5'] .app-header__actions {
-  gap: 8px !important;
+  gap: 10px !important;
   flex: 0 0 auto !important;
 }
 
@@ -1649,10 +1668,11 @@ html[data-xe-ui='v5'] .app-header .xe-header-create > .xe-action-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 40px !important;
-  height: 40px !important;
+  min-height: 36px !important;
+  height: 36px !important;
   box-sizing: border-box !important;
   line-height: 1 !important;
+  border-radius: 10px !important;
 }
 
 html[data-xe-ui='v5'] .app-header__account,

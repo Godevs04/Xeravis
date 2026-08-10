@@ -8,46 +8,46 @@ import { absoluteUrl, getSiteURL } from '@/lib/utils'
 export const SITE_NAME_SHORT = 'Xelarvis'
 export const SITE_NAME = BRAND.name
 export const SITE_DOMAIN = BRAND.domain
-export const TWITTER_HANDLE = '@xelarvis'
+export const TWITTER_HANDLE = '@xelarvis_ai'
 
-/** Primary brand positioning — global AI research, consulting, data science, healthcare AI. */
-export const BRAND_POSITIONING = 'AI Research, Consulting, Data Science & Healthcare'
+/** Primary brand positioning — AI, Data Science, IT Consulting (Healthcare as specialty). */
+export const BRAND_POSITIONING = 'Artificial Intelligence, Data Science & IT Consulting'
 
 export const DEFAULT_DESCRIPTION =
-  'Xelarvis is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value through AI-powered decision intelligence.'
+  'XELARVIS combines Artificial Intelligence, Data Science and IT Consulting to help organisations turn complex data and technology challenges into measurable business outcomes—with specialized expertise in Healthcare & Life Sciences.'
 
 /** Entity phrases for GEO / knowledge-graph consistency. */
 export const ENTITY_ALIASES = [
-  'AI Research Company',
-  'IT Consulting Company',
-  'Data Science Company',
-  'Healthcare AI Company',
-  'Enterprise Technology Consulting Company',
-  'Clinical Data Science Company',
   'Artificial Intelligence Company',
+  'Data Science Company',
+  'IT Consulting Company',
   'Digital Transformation Partner',
-  'Clinical Intelligence Company',
+  'AI Consulting Company',
+  'Enterprise Technology Consulting Company',
+  'Data Engineering Company',
   'Cloud Engineering Company',
+  'Healthcare Analytics Specialty',
+  'Clinical Data Science Specialty',
 ] as const
 
 export const KNOWNS_FOR = [
   'Artificial Intelligence',
-  'AI Research',
-  'IT Consulting',
-  'Data Science',
-  'Healthcare AI',
-  'Enterprise Technology Consulting',
-  'Clinical Data Science',
   'Machine Learning',
+  'Generative AI',
+  'Data Science',
   'Advanced Analytics',
+  'IT Consulting',
   'Digital Transformation',
-  'Cloud Engineering',
   'Data Engineering',
+  'Cloud Platforms',
+  'Enterprise Architecture',
+  'Healthcare & Clinical Data Science',
+  'Responsible AI',
 ] as const
 
 export const SOCIAL_PROFILES = [
   'https://www.linkedin.com/company/xelarvis',
-  'https://x.com/xelarvis',
+  'https://x.com/xelarvis_ai',
 ] as const
 
 type MetaInput = {
@@ -103,11 +103,10 @@ export function buildMetadata({
   const imageUrl = getMediaUrl(image as Parameters<typeof getMediaUrl>[0])
   const url = absoluteUrl(path)
   const defaultKeywords = [
-    'AI Research',
-    'IT Consulting',
+    'Artificial Intelligence',
     'Data Science',
-    'Healthcare AI',
-    'Enterprise Technology Consulting',
+    'IT Consulting',
+    'Digital Transformation',
     'Xelarvis',
     ...ENTITY_ALIASES.slice(0, 4),
   ]
@@ -223,7 +222,6 @@ export function organizationJsonLd(): JsonLd {
     image: absoluteUrl('/icons/site-192.png'),
     description: DEFAULT_DESCRIPTION,
     slogan: BRAND.tagline,
-    foundingDate: '2012',
     knowsAbout: [...KNOWNS_FOR],
     areaServed: ['IN', 'Global'],
     sameAs: [...SOCIAL_PROFILES],

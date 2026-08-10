@@ -59,7 +59,7 @@ export async function generateMetadata() {
     title: page?.meta?.title || page?.title || 'About',
     description:
       page?.meta?.description ||
-      'Learn about Xelarvis—a global AI research, IT consulting, data science, and healthcare AI company.',
+      'Learn about XELARVIS—an AI, Data Science and IT Consulting company with specialized Healthcare & Life Sciences expertise.',
     image: page?.meta?.image,
     path: '/about',
   })
@@ -72,8 +72,8 @@ export default async function AboutPage() {
   return (
     <>
       <AboutPageHero
-        title="Global AI Research, IT Consulting, Data Science & Healthcare AI"
-        subtitle="XELARVIS PRIVATE LIMITED is positioned closer to enterprise consulting and applied research organizations than to a typical software agency—helping organisations transform data into measurable business value."
+        title="AI, Data Science and IT Consulting"
+        subtitle="XELARVIS helps organizations turn data and technology into measurable business value—with specialized expertise in Healthcare & Life Sciences."
       />
       <AboutExploreStrip />
       <RenderBlocks blocks={withoutHeroBlocks(raw)} />

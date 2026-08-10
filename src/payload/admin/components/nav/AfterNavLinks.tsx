@@ -1,14 +1,9 @@
 import React from 'react'
 
-import { ProfileCard } from './ProfileCard'
-
-/** Bottom of sidebar: profile only — keep nav clean */
-export const AfterNavLinks = () => {
-  return (
-    <div className="xe-after-nav">
-      <ProfileCard />
-    </div>
-  )
-}
+/**
+ * Profile dock lives in EnterpriseNav.
+ * Slot kept for Payload config compatibility.
+ */
+export const AfterNavLinks = () => null
 
 export default AfterNavLinks

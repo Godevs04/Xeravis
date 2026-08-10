@@ -52,7 +52,7 @@ export const RESEARCH_MEGA: MegaMenuItem[] = [
   {
     label: 'Research Areas',
     href: '/ai-research-lab/research-areas',
-    description: 'Focus domains across AI and healthcare.',
+    description: 'Focus domains across AI and applied science.',
   },
   {
     label: 'Publications',
@@ -77,7 +77,7 @@ export const RESEARCH_MEGA: MegaMenuItem[] = [
   {
     label: 'Technologies',
     href: '/technologies',
-    description: 'AI, clinical, cloud, and data stack.',
+    description: 'AI, cloud, and data stack.',
   },
 ]
 
@@ -133,21 +133,33 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     slug: 'company-overview',
     path: '/about/company-overview',
     eyebrow: 'About Us',
-    title: 'Global AI research, IT consulting, data science, and healthcare AI',
+    title: 'About XELARVIS',
     subtitle:
-      'XELARVIS PRIVATE LIMITED is a global AI research, IT consulting, data science, and healthcare AI company—positioned closer to enterprise consulting and applied research organizations than to a typical software agency.',
+      'XELARVIS is an AI, Data Science and IT Consulting company focused on helping organizations turn data and technology into measurable business value—with specialized expertise in Healthcare & Life Sciences.',
     sections: [
       {
-        heading: 'About the Company',
-        body: 'XELARVIS PRIVATE LIMITED is intended to be a global AI research, IT consulting, data science, and healthcare AI company. We combine research rigor with consulting-led delivery—closer in craft to organizations such as IBM Consulting, Accenture, IQVIA, NVIDIA Enterprise, Microsoft AI, or Deloitte AI than to a typical software agency. We help organisations transform data into measurable business value through AI-powered decision intelligence.',
+        heading: 'What we do',
+        body: 'We help organizations solve complex data and technology challenges through three primary pillars: Artificial Intelligence, Data Science & Analytics, and IT Consulting & Digital Transformation. Healthcare & Life Sciences is a specialized practice—not our lead brand identity.',
+        bullets: [
+          'Artificial Intelligence — machine learning, generative AI, agents, NLP, and computer vision',
+          'Data Science & Analytics — modeling, forecasting, BI, and decision intelligence',
+          'IT Consulting & Digital Transformation — architecture, modernization, cloud, and engineering',
+          'Specialty: Healthcare & Clinical Data Science — clinical programming, analytics, and regulated AI',
+        ],
       },
       {
-        heading: 'Overall Vision',
-        body: 'A Global Artificial Intelligence Research & Digital Transformation Company serving healthcare, enterprises, and research partners worldwide.',
+        heading: 'How we work',
+        body: 'Engagements follow a clear path from problem to production: research and discovery, strategy, design, build, deploy, and continuous optimization. Senior practitioners stay accountable across the lifecycle so solutions are accurate, secure, and operable.',
       },
       {
-        heading: 'Our Mission',
-        body: 'Bridge artificial intelligence, data science, healthcare, and enterprise technology with reliable, secure, and future-ready solutions that accelerate innovation and improve outcomes.',
+        heading: 'What makes us different',
+        body: 'We combine research rigor with consulting-led delivery—closer in craft to enterprise AI and technology consulting organizations than to a typical software agency.',
+        bullets: [
+          'Research-driven — methods grounded in evaluation and continuous learning',
+          'Engineering-led — architecture and delivery that survive production',
+          'Outcome-focused — a credible path from problem to measurable business value',
+          'Industry-aware — enterprise delivery across sectors, with depth in Healthcare & Life Sciences',
+        ],
       },
     ],
   },
@@ -160,11 +172,11 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     sections: [
       {
         heading: 'Vision',
-        body: 'To be a trusted global Artificial Intelligence Research & Digital Transformation partner—enabling healthcare and enterprise organizations to turn data into lasting competitive advantage.',
+        body: 'Be a trusted partner for AI, data and technology transformation across industries—with depth where regulated and research-intensive work demands it.',
       },
       {
         heading: 'Mission',
-        body: 'Help organisations transform data into measurable business value through AI-powered decision intelligence, clinical data science, and enterprise technology consulting.',
+        body: 'Help organisations turn complex data and technology challenges into measurable outcomes through Artificial Intelligence, Data Science and IT Consulting.',
       },
     ],
   },
@@ -180,7 +192,7 @@ export const ABOUT_PAGES: ContentPageDef[] = [
         body: 'XELARVIS leadership emphasizes clarity, accountable ownership, and research-informed engineering. Our leaders stay close to client outcomes — from discovery through production.',
         bullets: [
           'Hands-on architecture and delivery oversight',
-          'Ethics and quality in AI and clinical data work',
+          'Ethics, quality, and governance in AI and data work',
           'Mentorship and continuous learning culture',
         ],
       },
@@ -198,39 +210,61 @@ export const ABOUT_PAGES: ContentPageDef[] = [
         heading: 'How we innovate',
         body: 'XELARVIS advances technology through a dual track: applied AI research and enterprise-grade engineering. We evaluate emerging methods, validate them with clear metrics, and productize what proves reliable in real workflows.',
         bullets: [
-          'AI, ML, generative AI, and intelligent automation',
-          'Clinical data science and healthcare analytics platforms',
-          'Cloud-native data engineering and MLOps',
-          'Secure, maintainable enterprise software',
+          'AI, ML, generative AI, agents, and intelligent automation',
+          'Data science, analytics platforms, and decision intelligence',
+          'Cloud-native data engineering, platforms, and MLOps',
+          'IT consulting, application modernization, and secure enterprise software',
+          'Specialty depth in clinical data science and healthcare analytics where required',
         ],
       },
       {
         heading: 'From lab to production',
-        body: 'Innovation is measured by outcomes — accuracy, compliance readiness, operability, and business value — not demos. Successful prototypes move into governed delivery with monitoring and continuous improvement.',
+        body: 'Innovation is measured by outcomes — accuracy, governance readiness, operability, and business value — not demos. Successful prototypes move into governed delivery with monitoring and continuous improvement.',
       },
     ],
   },
   {
     slug: 'our-approach',
     path: '/about/our-approach',
-    eyebrow: 'About Us',
+    eyebrow: 'XELARVIS Delivery Framework',
     title: 'Our Approach',
-    subtitle: 'A clear path from discovery to durable production systems.',
+    subtitle: 'A consulting + engineering methodology from business problem to measurable results.',
     sections: [
       {
-        heading: 'Delivery principles',
-        body: 'We start with business and domain context, then design solutions that are accurate, secure, and operable. Senior practitioners stay accountable across the lifecycle.',
-        bullets: [
-          'Discover — goals, data readiness, constraints, and success metrics',
-          'Design — architecture, governance, and evaluation criteria',
-          'Build — iterative delivery with quality gates',
-          'Validate — testing, explainability, and compliance checks',
-          'Operate — deployment, monitoring, and continuous improvement',
-        ],
+        heading: '01 — Discover',
+        body: 'Understand the business problem.',
       },
       {
-        heading: 'Partnership model',
-        body: 'Engagements are transparent: clear scope, measurable milestones, and open communication. We transfer knowledge so client teams can own and extend what we build.',
+        heading: '02 — Assess',
+        body: 'Evaluate data, technology and organizational readiness.',
+      },
+      {
+        heading: '03 — Strategize',
+        body: 'Define the AI, data and technology roadmap.',
+      },
+      {
+        heading: '04 — Architect',
+        body: 'Design scalable architecture.',
+      },
+      {
+        heading: '05 — Build',
+        body: 'Develop the solution.',
+      },
+      {
+        heading: '06 — Validate',
+        body: 'Evaluate quality, security, performance and AI behavior.',
+      },
+      {
+        heading: '07 — Deploy',
+        body: 'Production implementation.',
+      },
+      {
+        heading: '08 — Operate',
+        body: 'Monitor, maintain and optimize.',
+      },
+      {
+        heading: '09 — Scale',
+        body: 'Expand successful solutions across the organization.',
       },
     ],
   },
@@ -246,14 +280,15 @@ export const ABOUT_PAGES: ContentPageDef[] = [
         body: 'XELARVIS treats research as a disciplined practice: define the question, evaluate methods honestly, document assumptions, and ship only what meets quality and safety bars.',
         bullets: [
           'Evidence over hype — evaluate models with clear metrics',
-          'Responsible AI — bias, privacy, and human oversight',
-          'Domain depth — especially healthcare and clinical data',
+          'Responsible AI — bias, privacy, safety, and human oversight',
+          'Production path — methods that transfer into governed delivery',
+          'Domain depth where it matters — including healthcare as a specialty',
           'Open collaboration — academia, industry, and open source where appropriate',
         ],
       },
       {
         heading: 'Impact orientation',
-        body: 'We publish and share methods that help teams adopt AI safely in regulated and enterprise environments, while keeping a direct line from research insights to client delivery.',
+        body: 'We publish and share methods that help teams adopt AI safely in enterprise and regulated environments, while keeping a direct line from research insights to client delivery.',
       },
     ],
   },
@@ -262,17 +297,19 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     path: '/about/why-xelarvis',
     eyebrow: 'About Us',
     title: 'Why XELARVIS',
-    subtitle: 'A partner built for durable outcomes in AI, healthcare, and enterprise technology.',
+    subtitle:
+      'Enterprise buyers look for clarity, evidence, expertise, governance, and a credible path from problem to measurable outcome.',
     sections: [
       {
         heading: 'What sets us apart',
-        body: 'We combine research-driven methods with practical engineering so solutions are accurate, compliant, and ready for production.',
+        body: 'We combine research-driven methods with practical engineering so solutions are accurate, governed, and ready for production—without overstating scale or inventing credentials.',
         bullets: [
-          'Deep expertise in Healthcare AI and Clinical Data Science',
-          'End-to-end delivery from strategy to cloud deployment',
-          'Transparent process and senior ownership',
-          'Modern stacks selected for maintainability and scale',
-          'Focus on measurable business and research outcomes',
+          'Clarity — honest positioning across AI, data science, and IT consulting',
+          'Evidence — rigorous evaluation and delivery you can inspect',
+          'Expertise — practitioners who stay accountable from strategy to operate',
+          'Governance — responsible AI, security, and quality built into delivery',
+          'Specialty depth — Healthcare & Clinical Data Science when regulated work demands it',
+          'End-to-end path — from discovery and architecture to production and scale',
         ],
       },
     ],
@@ -287,51 +324,246 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     sections: [
       {
         heading: 'Where we work',
-        body: 'XELARVIS supports clients across pharmaceutical, biotechnology, healthcare, finance, manufacturing, retail, logistics, and education — with delivery hubs and remote collaboration models.',
+        body: 'XELARVIS supports organizations across industries—without positioning healthcare as the only market we serve. Delivery hubs and remote collaboration models connect client teams with our practitioners.',
         bullets: [
-          'India headquarters with distributed delivery teams',
-          'Partnerships with research and industry organizations',
-          'Flexible engagement for global programs',
+          'Banks and financial services',
+          'Manufacturers and industrial operators',
+          'Retail and e-commerce organizations',
+          'Technology companies',
+          'Healthcare organizations',
+          'Pharmaceutical companies',
+          'Universities and research institutions',
+          'Government and public-sector programs',
         ],
       },
     ],
   },
 ]
 
-/** Sub-capabilities surfaced as in-page chips on service detail pages (Mainplan nesting). */
+/** Sub-capabilities surfaced as in-page chips on service detail pages (client brief nesting). */
 export const SERVICE_CAPABILITIES: Record<string, string[]> = {
   'artificial-intelligence-ai-research': [
+    'AI Strategy & Advisory',
+    'Machine Learning',
     'Generative AI',
-    'Machine Learning Solutions',
+    'Large Language Models',
+    'AI Agents',
     'Natural Language Processing',
     'Computer Vision',
-    'AI Model Development',
+    'Predictive AI',
+    'Responsible AI',
+    'AI Evaluation & Governance',
+    'MLOps / AI Engineering',
   ],
   'data-science-advanced-analytics': [
+    'Data Strategy',
+    'Exploratory Data Analysis',
+    'Statistical Modeling',
     'Predictive Analytics',
-    'Data Visualisation',
-    'Statistical Analysis',
+    'Machine Learning',
+    'Forecasting',
+    'Customer Analytics',
+    'Risk Analytics',
+    'Optimization',
     'Business Intelligence',
+    'Data Visualization',
+    'Decision Intelligence',
+  ],
+  'it-consulting-digital-transformation': [
+    'IT Strategy',
+    'Digital Transformation',
+    'Enterprise Architecture',
+    'Application Modernization',
+    'Software Engineering',
+    'Cloud Transformation',
+    'Technology Advisory',
+    'API & Integration',
+    'DevOps',
+    'Automation',
+    'Legacy Modernization',
+  ],
+  'data-engineering-cloud-solutions': [
+    'Data Architecture',
+    'Data Lakes',
+    'Data Warehouses',
+    'Data Pipelines',
+    'ETL/ELT',
+    'Big Data',
+    'Cloud Data Platforms',
+    'Data Governance',
+    'Data Quality',
+    'MLOps Infrastructure',
   ],
   'clinical-data-science-healthcare-ai': [
     'Clinical SAS Programming',
-    'SDTM & ADaM Automation',
-    'TLF Generation',
+    'SDTM',
+    'ADaM',
+    'TLF Automation',
     'Clinical Analytics',
-    'AI in Healthcare Research',
+    'Clinical Data Management',
+    'Healthcare AI',
+    'Real-World Data Analytics',
+    'Clinical Research Analytics',
+    'Regulatory Data Standards',
   ],
-  'it-consulting-digital-transformation': [
-    'Enterprise Software Consulting',
-    'Digital Strategy',
-    'Application Development',
-    'Technology Consulting',
-  ],
-  'data-engineering-cloud-solutions': [
-    'Data Platforms',
-    'Cloud Migration',
-    'Data Pipelines',
-    'MLOps & Deployment',
-  ],
+}
+
+/**
+ * Extra service-page content (deliverables / industries / outcomes / related solutions)
+ * keyed by the five stable service slugs.
+ */
+export const SERVICE_PAGE_EXTRAS: Record<
+  string,
+  {
+    deliverables: string[]
+    industries: string[]
+    outcomes: string[]
+    relatedSolutions: { label: string; href: string }[]
+  }
+> = {
+  'artificial-intelligence-ai-research': {
+    deliverables: [
+      'AI opportunity assessment and roadmap',
+      'Production-ready models and agent workflows',
+      'Evaluation harnesses and governance controls',
+      'MLOps pipelines with monitoring and retraining paths',
+      'Integration into applications, APIs, and platforms',
+    ],
+    industries: [
+      'Banking & Financial Services',
+      'Manufacturing',
+      'Retail & E-Commerce',
+      'Enterprise Technology',
+      'Healthcare & Life Sciences',
+      'Education & Research',
+    ],
+    outcomes: [
+      'Faster path from AI pilots to production systems',
+      'Clear evaluation criteria and responsible-AI controls',
+      'Measurable operational or decision improvements',
+      'Maintainable model lifecycle with ownership transfer',
+    ],
+    relatedSolutions: [
+      { label: 'Enterprise AI', href: '/solutions/enterprise-ai-solutions' },
+      { label: 'Intelligent Automation', href: '/solutions/intelligent-automation' },
+      { label: 'Custom AI Products', href: '/solutions/custom-ai-products' },
+    ],
+  },
+  'data-science-advanced-analytics': {
+    deliverables: [
+      'Data strategy and analytic roadmap',
+      'Statistical and ML models tied to KPIs',
+      'Forecasting and decision models',
+      'BI dashboards and executive reporting layers',
+      'Recommendations and enablement for client teams',
+    ],
+    industries: [
+      'Banking & Financial Services',
+      'Manufacturing',
+      'Retail & E-Commerce',
+      'Logistics',
+      'Enterprise Technology',
+      'Healthcare & Life Sciences',
+    ],
+    outcomes: [
+      'Decisions grounded in trusted metrics and models',
+      'Improved forecasting, risk, and customer insight',
+      'Shared analytic language across business and data teams',
+      'Repeatable modeling patterns clients can extend',
+    ],
+    relatedSolutions: [
+      { label: 'Predictive Analytics', href: '/solutions/predictive-analytics-solutions' },
+      { label: 'Business Intelligence', href: '/solutions/business-intelligence-solutions' },
+      { label: 'Enterprise AI', href: '/solutions/enterprise-ai-solutions' },
+    ],
+  },
+  'it-consulting-digital-transformation': {
+    deliverables: [
+      'IT strategy and transformation roadmap',
+      'Target enterprise architecture',
+      'Modernized applications and integration patterns',
+      'Cloud and DevOps delivery foundations',
+      'Automation and legacy coexistence plans',
+    ],
+    industries: [
+      'Enterprise Technology',
+      'Banking & Financial Services',
+      'Manufacturing',
+      'Retail & E-Commerce',
+      'Government & Public Sector',
+      'Healthcare & Life Sciences',
+    ],
+    outcomes: [
+      'Clear modernization priorities tied to business outcomes',
+      'More maintainable, secure application landscapes',
+      'Faster, safer release cycles through DevOps practices',
+      'Reduced operational risk from legacy systems',
+    ],
+    relatedSolutions: [
+      { label: 'Application Modernization', href: '/solutions/application-modernization' },
+      { label: 'Data Platforms', href: '/solutions/data-platforms' },
+      { label: 'Intelligent Automation', href: '/solutions/intelligent-automation' },
+    ],
+  },
+  'data-engineering-cloud-solutions': {
+    deliverables: [
+      'Data architecture and platform design',
+      'Lakes, warehouses, and pipeline implementations',
+      'ETL/ELT and streaming workloads',
+      'Governance, quality, and observability controls',
+      'MLOps infrastructure for analytics and AI',
+    ],
+    industries: [
+      'Banking & Financial Services',
+      'Manufacturing',
+      'Retail & E-Commerce',
+      'Enterprise Technology',
+      'Pharmaceutical & Biotechnology',
+      'Education & Research',
+    ],
+    outcomes: [
+      'Reliable data foundations for analytics and AI',
+      'Lower latency and higher trust in critical datasets',
+      'Governed access, lineage, and quality monitoring',
+      'Scalable cloud cost and performance posture',
+    ],
+    relatedSolutions: [
+      { label: 'Data Platforms', href: '/solutions/data-platforms' },
+      { label: 'Business Intelligence', href: '/solutions/business-intelligence-solutions' },
+      { label: 'Enterprise AI', href: '/solutions/enterprise-ai-solutions' },
+    ],
+  },
+  'clinical-data-science-healthcare-ai': {
+    deliverables: [
+      'Clinical study assessment and CDISC-aligned plans',
+      'SDTM and ADaM datasets with validation artifacts',
+      'TLF programming and automation packages',
+      'Clinical and real-world analytics dashboards',
+      'Governed healthcare AI prototypes where appropriate',
+    ],
+    industries: [
+      'Pharmaceutical',
+      'Biotechnology',
+      'CROs and clinical research',
+      'Hospitals and healthcare providers',
+      'Medical devices',
+      'Health technology',
+    ],
+    outcomes: [
+      'Submission-ready clinical data packages',
+      'Faster, more consistent TLF and analytics cycles',
+      'Stronger quality and standards alignment',
+      'Safe adoption of AI in regulated research workflows',
+    ],
+    relatedSolutions: [
+      {
+        label: 'Healthcare & Clinical Intelligence',
+        href: '/solutions/healthcare-clinical-intelligence',
+      },
+      { label: 'Predictive Analytics', href: '/solutions/predictive-analytics-solutions' },
+      { label: 'Data Platforms', href: '/solutions/data-platforms' },
+    ],
+  },
 }
 
 export const LAB_PAGES: ContentPageDef[] = [
@@ -339,19 +571,24 @@ export const LAB_PAGES: ContentPageDef[] = [
     slug: 'overview',
     path: '/ai-research-lab',
     eyebrow: 'AI Research Lab',
-    title: 'Research that ships',
+    title: 'A genuine research lab with a path to production',
     subtitle:
-      'XELARVIS AI Research Lab explores machine learning, generative AI, NLP, computer vision, healthcare AI, and decision intelligence—always with a path to production.',
+      'XELARVIS AI Research Lab investigates applied AI problems—publications, projects, methodology, datasets/code, and responsible AI—always with a credible transfer into client delivery.',
     sections: [
       {
-        heading: 'What we do',
-        body: 'We investigate applied AI problems, validate approaches with rigorous evaluation, and transfer successful ideas into client solutions and open collaboration. This lab differentiates XELARVIS from typical IT service firms.',
+        heading: 'What the lab does',
+        body: 'We treat research as a disciplined practice, not a marketing label. Teams define questions, evaluate methods honestly, document assumptions, and only promote approaches that meet quality and safety bars.',
         bullets: [
-          'Research domains and benchmarks',
-          'Publications, white papers, and research blogs',
-          'Open-source projects and reusable evaluation harnesses',
-          'AI models and innovation initiatives',
+          'Publications — papers, technical notes, and methodology briefs',
+          'Innovation projects — applied experiments with clear evaluation criteria',
+          'Methodology — reproducible evaluation, benchmarks, and responsible-AI review',
+          'Datasets & code — reusable harnesses and open contributions where appropriate',
+          'Responsible AI — fairness, privacy, safety, and human oversight',
         ],
+      },
+      {
+        heading: 'From research to delivery',
+        body: 'Successful ideas transfer into consulting engagements as governed production systems—models, platforms, and evaluation practices client teams can own and extend.',
       },
     ],
   },
@@ -361,18 +598,19 @@ export const LAB_PAGES: ContentPageDef[] = [
     eyebrow: 'AI Research Lab',
     title: 'Research Areas',
     subtitle:
-      'Focus domains spanning foundation models, clinical intelligence, benchmarks, and enterprise automation.',
+      'Focus domains spanning foundation models, agents, NLP, vision, decision intelligence, MLOps, and responsible AI—with healthcare as a specialty application area.',
     sections: [
       {
         heading: 'Core areas',
-        body: 'Our research agenda is organized around high-impact application domains.',
+        body: 'Our research agenda is organized around high-impact application domains that support enterprise AI, data science, and technology programs.',
         bullets: [
-          'Generative AI and AI Agents',
-          'Natural Language Processing and Medical NLP',
-          'Computer Vision',
-          'Healthcare Predictive Analytics',
-          'Decision intelligence and enterprise AI',
-          'MLOps, benchmarks, and responsible AI',
+          'Generative AI, LLMs, and AI agents',
+          'Natural language processing and document intelligence',
+          'Computer vision and multimodal systems',
+          'Predictive modeling and decision intelligence',
+          'MLOps, evaluation harnesses, and benchmarks',
+          'Responsible AI — bias, privacy, safety, and governance',
+          'Specialty: healthcare and clinical intelligence where regulated depth is required',
         ],
       },
     ],
@@ -382,11 +620,18 @@ export const LAB_PAGES: ContentPageDef[] = [
     path: '/ai-research-lab/publications',
     eyebrow: 'AI Research Lab',
     title: 'Publications',
-    subtitle: 'Selected notes, white papers, and research outputs from our practice.',
+    subtitle:
+      'Papers, white papers, methodology notes, and research briefs that document evidence—not hype.',
     sections: [
       {
         heading: 'Sharing knowledge',
-        body: 'We publish practical research findings and methodology notes that help teams adopt AI safely in regulated and enterprise environments. Explore Insights for related articles and white papers.',
+        body: 'We publish practical findings that help teams adopt AI safely in enterprise and regulated environments: evaluation methods, failure modes, governance patterns, and transfer lessons from lab to production.',
+        bullets: [
+          'Technical notes and research blogs',
+          'White papers and methodology briefs',
+          'Conference-style write-ups and internal reports when shareable',
+          'Links to related Insights content for broader audiences',
+        ],
       },
     ],
   },
@@ -395,11 +640,18 @@ export const LAB_PAGES: ContentPageDef[] = [
     path: '/ai-research-lab/innovation-projects',
     eyebrow: 'AI Research Lab',
     title: 'Innovation Projects',
-    subtitle: 'Applied experiments that validate new capabilities before full-scale delivery.',
+    subtitle:
+      'Applied experiments that validate new capabilities before full-scale consulting delivery.',
     sections: [
       {
         heading: 'From prototype to product',
-        body: 'Innovation projects explore AI assistants, clinical document intelligence, recommendation systems, and automation — with clear evaluation criteria and a path to productionization.',
+        body: 'Innovation projects explore AI assistants, document intelligence, recommendation systems, forecasting prototypes, and automation agents—with explicit success metrics, responsible-AI checks, and a documented path to productionization.',
+        bullets: [
+          'Scoped experiments with evaluation criteria up front',
+          'Reproducible notebooks, datasets, and harnesses where possible',
+          'Go / no-go decisions based on evidence, not demos alone',
+          'Handoff packages for engineering and client delivery teams',
+        ],
       },
     ],
   },
@@ -407,12 +659,19 @@ export const LAB_PAGES: ContentPageDef[] = [
     slug: 'open-source',
     path: '/ai-research-lab/open-source',
     eyebrow: 'AI Research Lab',
-    title: 'Open Source',
-    subtitle: 'Contributing tools and patterns that strengthen the broader AI ecosystem.',
+    title: 'Open Source & Code',
+    subtitle:
+      'Datasets, evaluation harnesses, libraries, and documentation that strengthen reliable AI engineering.',
     sections: [
       {
-        heading: 'Community',
-        body: 'Where appropriate, we contribute libraries, evaluation harnesses, and documentation that help others build reliable AI systems.',
+        heading: 'Community contributions',
+        body: 'Where appropriate, we contribute tools and patterns that help others build governed AI systems—evaluation harnesses, reference pipelines, documentation, and reusable components.',
+        bullets: [
+          'Evaluation and benchmarking utilities',
+          'Reference MLOps and data pipeline patterns',
+          'Documentation for responsible-AI practices',
+          'Selective open datasets or synthetic fixtures for reproducible tests',
+        ],
       },
     ],
   },
@@ -421,16 +680,16 @@ export const LAB_PAGES: ContentPageDef[] = [
     path: '/ai-research-lab/collaborations',
     eyebrow: 'AI Research Lab',
     title: 'Collaborations',
-    subtitle: 'Working with academia, industry, and healthcare innovators.',
+    subtitle: 'Working with academia, industry, and technology partners on applied research.',
     sections: [
       {
         heading: 'Partners',
-        body: 'We collaborate with universities, research institutions, CROs, and technology partners to advance healthcare AI and enterprise intelligence.',
+        body: 'We collaborate with universities, research institutions, technology partners, and industry teams to advance applied AI—across enterprise domains, with healthcare and life sciences as one specialty area among others.',
         bullets: [
-          'Research collaborations',
-          'University partnerships',
-          'Industry collaborations',
-          'Technology ecosystem',
+          'University and academic research partnerships',
+          'Industry collaborations on applied AI problems',
+          'Technology ecosystem partnerships',
+          'Joint methodology and publication efforts where appropriate',
         ],
       },
     ],
@@ -473,21 +732,21 @@ export const HIRING_STEPS = [
 ] as const
 
 export const WHY_JOIN = [
-  'Work on AI research, healthcare, and enterprise programs',
-  'Research-driven environment',
+  'Work on AI, data science, and IT consulting programs',
+  'Research-driven environment with a path to production',
   'Learning, certifications, and development support',
   'Internship and graduate pathways',
   'Flexible work opportunities',
-  'Global collaboration',
+  'Global collaboration across industries',
   'Career growth and mentorship',
-  'Inclusive workplace with meaningful benefits',
+  'Inclusive workplace — healthcare specialty available where roles require it',
 ] as const
 
 export const LIFE_AT_XELARVIS = {
   title: 'Life at XELARVIS',
-  body: 'A collaborative culture where engineers, analysts, researchers, and consultants solve meaningful problems in AI, healthcare, and enterprise technology—with mentorship, learning support, and room to grow.',
+  body: 'A collaborative culture where engineers, analysts, researchers, and consultants solve meaningful problems in AI, data science, and IT consulting—with mentorship, learning support, and room to grow. Healthcare & clinical work is available as a specialty track, not the only path.',
   bullets: [
-    'Cross-functional teams spanning AI research, clinical data science, and consulting',
+    'Cross-functional teams spanning AI, analytics, data engineering, and consulting',
     'Continuous learning through projects, reviews, and certifications',
     'Inclusive workplace with flexible work opportunities',
     'Clear ownership and recognition for business impact',
@@ -496,7 +755,7 @@ export const LIFE_AT_XELARVIS = {
 
 export const GRADUATE_PROGRAMS = {
   title: 'Graduate Programs',
-  body: 'Structured pathways for early-career talent to build depth in AI, analytics, clinical programming, and enterprise technology consulting with mentorship and real project exposure.',
+  body: 'Structured pathways for early-career talent to build depth in AI, analytics, data platforms, and enterprise technology consulting with mentorship and real project exposure.',
   bullets: [
     'Rotations and guided onboarding into delivery teams',
     'Mentorship from senior practitioners',
@@ -505,16 +764,58 @@ export const GRADUATE_PROGRAMS = {
   ],
 } as const
 
+/**
+ * Contact interest areas for the marketing form / contact page chips.
+ *
+ * Existing ContactMessages / submitContact allowed values:
+ *   business | research | career | general | project | partnership
+ *
+ * Mapping choices:
+ *   - AI & Machine Learning → `business` (keeps /contact?intent=business links working)
+ *   - Research / Partnership / Careers / General → existing select values
+ *
+ * New values below are NOT yet in ContactMessages.options or submitContact's
+ * Intent union — add (or remapped) in:
+ *   - src/payload/collections/ContactMessages.ts (intent options)
+ *   - src/actions/contact.ts (Intent type + allowed list)
+ *   - regenerate payload types after schema change
+ *
+ *   data-science | it-consulting | digital-transformation |
+ *   data-engineering | healthcare
+ *
+ * Until updated, submitContact coerces those unknown intents to `general`
+ * (the form subject field still records the raw value).
+ */
 export const CONTACT_INTENTS = [
   {
     value: 'business',
-    label: 'Business Enquiry',
-    description: 'Projects, solutions, and executive briefings.',
+    label: 'AI & Machine Learning',
+    description: 'Models, generative AI, agents, and production AI programs.',
   },
   {
-    value: 'partnership',
-    label: 'Partnership Enquiry',
-    description: 'Technology partners, alliances, and co-delivery.',
+    value: 'data-science',
+    label: 'Data Science & Analytics',
+    description: 'Modeling, forecasting, BI, and decision intelligence.',
+  },
+  {
+    value: 'it-consulting',
+    label: 'IT Consulting',
+    description: 'Strategy, architecture, and enterprise technology programs.',
+  },
+  {
+    value: 'digital-transformation',
+    label: 'Digital Transformation',
+    description: 'Modernization roadmaps and technology-led change.',
+  },
+  {
+    value: 'data-engineering',
+    label: 'Data Engineering',
+    description: 'Platforms, pipelines, cloud data foundations, and MLOps.',
+  },
+  {
+    value: 'healthcare',
+    label: 'Healthcare / Clinical Data Science',
+    description: 'Clinical programming, CDISC, and healthcare analytics specialty.',
   },
   {
     value: 'research',
@@ -522,13 +823,18 @@ export const CONTACT_INTENTS = [
     description: 'Academic, industry, and lab collaborations.',
   },
   {
+    value: 'partnership',
+    label: 'Partnership',
+    description: 'Technology partners, alliances, and co-delivery.',
+  },
+  {
     value: 'career',
-    label: 'Career Enquiry',
+    label: 'Careers',
     description: 'Roles, internships, and graduate programs.',
   },
   {
     value: 'general',
-    label: 'General Contact',
+    label: 'General enquiry',
     description: 'Other questions and media enquiries.',
   },
 ] as const

@@ -422,25 +422,27 @@ html[data-xe-ui='v5'] .doc-header h1,
 html[data-xe-ui='v5'] .render-title,
 html[data-xe-ui='v5'] .collection-list__header h1 {
   font-family: var(--xe-display) !important;
-  font-size: var(--xe-fs-heading) !important;
-  font-weight: 750 !important;
+  font-size: var(--xe-fs-page-title) !important;
+  font-weight: 650 !important;
   letter-spacing: var(--xe-tracking-tight) !important;
-  line-height: var(--xe-lh-tight) !important;
+  line-height: var(--xe-lh-page-title) !important;
   color: var(--xe-text) !important;
-  margin: 0 0 var(--xe-space-3) !important;
+  margin: 0 0 var(--xe-space-2) !important;
 }
 
 html[data-xe-ui='v5'] h2 {
-  font-size: var(--xe-fs-subheading) !important;
-  font-weight: 700 !important;
+  font-size: var(--xe-fs-section) !important;
+  font-weight: 600 !important;
   letter-spacing: var(--xe-tracking-tight) !important;
+  line-height: var(--xe-lh-section) !important;
   color: var(--xe-text) !important;
 }
 
 html[data-xe-ui='v5'] h3,
 html[data-xe-ui='v5'] .payload-settings h3 {
-  font-size: var(--xe-fs-section) !important;
-  font-weight: 650 !important;
+  font-size: var(--xe-fs-card-title) !important;
+  font-weight: 600 !important;
+  line-height: var(--xe-lh-card-title) !important;
   color: var(--xe-text) !important;
   margin: var(--xe-section-gap) 0 var(--xe-space-5) !important;
 }
@@ -1219,27 +1221,16 @@ html[data-xe-ui='v5'] .template-default__wrap {
   background: var(--xe-surface);
 }
 
+/* Page headers — chrome owned by content-os.scss (compact premium) */
 html[data-xe-ui='v5'] .doc-header,
 html[data-xe-ui='v5'] .collection-list__header,
 html[data-xe-ui='v5'] .list-header,
 html[data-xe-ui='v5'] .collection-edit__header,
 html[data-xe-ui='v5'] .global-edit__header {
-  border-radius: 16px !important;
-  background: var(--xe-card) !important;
-  border: 1px solid var(--xe-border) !important;
-  box-shadow: var(--xe-shadow) !important;
-  padding: 12px 18px !important;
-  margin-bottom: 12px !important;
+  /* Defer visual chrome to content-os; keep layout basics only */
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 12px !important;
-  min-height: 0 !important;
 }
 
 html[data-xe-ui='v5'] .doc-header h1,

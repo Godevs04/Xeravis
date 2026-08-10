@@ -5,6 +5,7 @@ import React from 'react'
 import { AdminPwa } from '@/components/pwa/AdminPwa'
 import { WorkspaceProvider } from '@/payload/admin/workspace/WorkspaceContext'
 
+import { ApiViewPolish } from './api/ApiViewPolish'
 import { CommandPalette } from './CommandPalette'
 
 const STORAGE_KEY = 'payload-theme'
@@ -243,6 +244,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     <WorkspaceProvider>
       {children}
       <CommandPalette />
+      <ApiViewPolish />
       <AdminPwa />
     </WorkspaceProvider>
   )

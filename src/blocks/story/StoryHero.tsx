@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import {
   motion,
-  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -11,13 +10,7 @@ import {
   useTransform,
 } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
-import {
-  useEffect,
-  useRef,
-  useState,
-  type MouseEvent as ReactMouseEvent,
-  type ReactNode,
-} from 'react'
+import { useRef, useState, type MouseEvent as ReactMouseEvent, type ReactNode } from 'react'
 
 import { HeroCinematicBackground } from '@/components/marketing/HeroCinematicBackground'
 import { HeroProductVisual } from '@/components/marketing/HeroProductVisual'
@@ -41,17 +34,17 @@ const EMPHASIS =
   /\b(AI|Healthcare|Enterprise|Innovation|Cloud|Digital|Intelligent|Excellence|Intelligence)\b/gi
 
 const TRUST_LOGOS = [
-  { name: 'Hospital Networks', mark: 'HN' },
-  { name: 'Enterprise Clients', mark: 'EC' },
-  { name: 'Research Labs', mark: 'RL' },
-  { name: 'Fortune Companies', mark: 'FC' },
+  { name: 'Banking & Finance', mark: 'BF' },
+  { name: 'Manufacturing', mark: 'MF' },
+  { name: 'Healthcare Specialty', mark: 'HS' },
+  { name: 'Technology', mark: 'TE' },
 ]
 
-const LIVE_METRICS = [
-  { value: 120, suffix: '+', label: 'Enterprise Deployments', decimals: 0 },
-  { value: 99.98, suffix: '%', label: 'Platform Uptime', decimals: 2 },
-  { value: 40, suffix: '+', label: 'Healthcare Partners', decimals: 0 },
-  { value: 18, suffix: '+', label: 'Countries', decimals: 0 },
+const LIVE_PILLARS = [
+  { label: 'Artificial Intelligence', short: 'AI' },
+  { label: 'Data Science', short: 'Data' },
+  { label: 'IT Consulting', short: 'IT' },
+  { label: 'Healthcare Specialty', short: 'Health' },
 ]
 
 function renderEmphasizedTitle(title: string) {
@@ -88,48 +81,6 @@ function splitTitleLines(title: string) {
   if (words.length <= 5) return [cleaned]
   const mid = Math.ceil(words.length * 0.55)
   return [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
-}
-
-function MetricCounter({
-  value,
-  suffix,
-  decimals,
-  active,
-}: {
-  value: number
-  suffix: string
-  decimals: number
-  active: boolean
-}) {
-  const reduce = useReducedMotion()
-  const [n, setN] = useState(reduce || !active ? value : 0)
-
-  useEffect(() => {
-    if (reduce) {
-      setN(value)
-      return
-    }
-    if (!active) return
-    let frame = 0
-    const duration = 1200
-    const start = performance.now()
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration)
-      const eased = 1 - Math.pow(1 - t, 3)
-      const next = value * eased
-      setN(decimals > 0 ? Number(next.toFixed(decimals)) : Math.round(next))
-      if (t < 1) frame = requestAnimationFrame(tick)
-    }
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [active, value, decimals, reduce])
-
-  return (
-    <span className="tabular-nums">
-      {decimals > 0 ? n.toFixed(decimals) : n}
-      {suffix}
-    </span>
-  )
 }
 
 function MagneticCTA({ href, label, outline }: { href: string; label: string; outline?: boolean }) {
@@ -231,8 +182,6 @@ export function StoryHero({
 }: StoryHeroProps) {
   const reduce = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
-  const metricsRef = useRef<HTMLDivElement>(null)
-  const metricsInView = useInView(metricsRef, { once: true, margin: '-12% 0px' })
   const cursorX = useMotionValue(50)
   const cursorY = useMotionValue(40)
 
@@ -340,13 +289,13 @@ export function StoryHero({
               transition={{ delay: 0.56, duration: 0.55, ease: EASE }}
             >
               <p className="mb-2.5 text-[10px] font-bold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase">
-                Trusted by
+                Industries we serve
               </p>
               <div className="flex flex-wrap gap-2 sm:gap-2.5">
                 {TRUST_LOGOS.map((logo) => (
                   <div
                     key={logo.name}
-                    className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-2.5 py-1 text-[color:var(--hero-muted)] grayscale transition-[filter,color,border-color,background] duration-300 hover:border-[color:var(--color-accent)]/40 hover:text-[color:var(--hero-text)] hover:grayscale-0"
+                    className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-2.5 py-1 text-[color:var(--hero-muted)] transition-[color,border-color,background] duration-300 hover:border-[color:var(--color-accent)]/40 hover:text-[color:var(--hero-text)]"
                   >
                     <span className="grid h-5 w-5 place-items-center rounded-md bg-[color:var(--color-hover)] text-[9px] font-bold tracking-wide text-[color:var(--hero-muted)] transition-colors group-hover:bg-teal-500/20 group-hover:text-[color:var(--color-accent)]">
                       {logo.mark}
@@ -358,26 +307,20 @@ export function StoryHero({
             </motion.div>
 
             <motion.div
-              ref={metricsRef}
               className="mt-6 grid max-w-xl grid-cols-2 gap-2.5 border-t border-[color:var(--hero-panel-border)] pt-5 sm:grid-cols-4"
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.64, duration: 0.55, ease: EASE }}
             >
-              {LIVE_METRICS.map((item) => (
+              {LIVE_PILLARS.map((item) => (
                 <div
                   key={item.label}
                   className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-3 shadow-[var(--shadow-light)] backdrop-blur-md"
                 >
-                  <p className="font-display text-xl font-bold tracking-tight text-[color:var(--hero-text)] sm:text-2xl">
-                    <MetricCounter
-                      value={item.value}
-                      suffix={item.suffix}
-                      decimals={item.decimals}
-                      active={metricsInView}
-                    />
+                  <p className="font-display text-sm font-bold tracking-tight text-[color:var(--hero-text)] sm:text-base">
+                    {item.short}
                   </p>
-                  <p className="mt-1 text-[10px] leading-snug text-[color:var(--hero-muted)] sm:text-xs">
+                  <p className="mt-1 text-[10px] leading-snug font-medium tracking-wide text-[color:var(--hero-muted)] uppercase">
                     {item.label}
                   </p>
                 </div>

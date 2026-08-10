@@ -1459,7 +1459,23 @@ export interface ContactMessage {
   phone?: string | null
   subject?: string | null
   message: string
-  intent?: ('business' | 'research' | 'career' | 'general' | 'project' | 'partnership') | null
+  intent?:
+    | (
+        | 'business'
+        | 'data-science'
+        | 'it-consulting'
+        | 'digital-transformation'
+        | 'data-engineering'
+        | 'healthcare'
+        | 'research'
+        | 'partnership'
+        | 'career'
+        | 'general'
+        | 'project'
+      )
+    | null
+  jobTitle?: string | null
+  country?: string | null
   status: 'new' | 'assigned' | 'meeting' | 'proposal' | 'won' | 'lost' | 'in-progress' | 'closed'
   assignee?: (string | null) | User
   meetingAt?: string | null
@@ -2803,6 +2819,8 @@ export interface ContactMessagesSelect<T extends boolean = true> {
   subject?: T
   message?: T
   intent?: T
+  jobTitle?: T
+  country?: T
   status?: T
   assignee?: T
   meetingAt?: T

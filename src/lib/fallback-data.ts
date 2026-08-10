@@ -1,6 +1,6 @@
 export const BRAND = {
   name: 'Xelarvis Technologies',
-  tagline: 'Global AI Research, IT Consulting, Data Science & Healthcare AI',
+  tagline: 'Artificial Intelligence, Data Science & IT Consulting',
   domain: 'xelarvis.in',
 } as const
 
@@ -17,6 +17,7 @@ export const DEFAULT_NAV = {
     { label: 'About', href: '/about', mega: 'about' },
     { label: 'Services', href: '/services', mega: 'services' },
     { label: 'Solutions', href: '/solutions', mega: 'solutions' },
+    { label: 'Approach', href: '/about/our-approach', mega: 'none' },
     { label: 'Industries', href: '/industries', mega: 'industries' },
     { label: 'Research & Innovation', href: '/ai-research-lab', mega: 'research' },
     { label: 'Insights', href: '/insights', mega: 'insights' },
@@ -32,6 +33,7 @@ export const DEFAULT_FOOTER = {
       title: 'About',
       links: [
         { label: 'About', href: '/about' },
+        { label: 'Our Approach', href: '/about/our-approach' },
         { label: 'Research & Innovation', href: '/ai-research-lab' },
         { label: 'Collaborations', href: '/ai-research-lab/collaborations' },
         { label: 'Careers', href: '/careers' },
@@ -71,6 +73,14 @@ export const DEFAULT_FOOTER = {
 export const FALLBACK_SERVICES = [
   {
     id: '1',
+    title: 'Artificial Intelligence',
+    slug: 'artificial-intelligence-ai-research',
+    summary:
+      'Applied AI research and production systems—machine learning, generative AI, vision, NLP, and intelligent agents.',
+    icon: 'Sparkles',
+  },
+  {
+    id: '2',
     title: 'Data Science & Advanced Analytics',
     slug: 'data-science-advanced-analytics',
     summary:
@@ -78,36 +88,28 @@ export const FALLBACK_SERVICES = [
     icon: 'BarChart3',
   },
   {
-    id: '2',
-    title: 'AI Research & Innovation',
-    slug: 'artificial-intelligence-ai-research',
-    summary:
-      'Applied AI research and production systems—machine learning, generative AI, vision, NLP, and intelligent agents.',
-    icon: 'Sparkles',
-  },
-  {
     id: '3',
-    title: 'Clinical Data Science & Healthcare AI',
-    slug: 'clinical-data-science-healthcare-ai',
-    summary:
-      'Clinical SAS, CDISC standards, healthcare analytics, and AI-powered research for regulated care.',
-    icon: 'HeartPulse',
-  },
-  {
-    id: '4',
-    title: 'Enterprise Technology Consulting',
+    title: 'IT Consulting & Digital Transformation',
     slug: 'it-consulting-digital-transformation',
     summary:
       'Enterprise consulting for modernization—architecture, software engineering, cloud adoption, and automation.',
     icon: 'Briefcase',
   },
   {
-    id: '5',
-    title: 'Data Engineering & Cloud Solutions',
+    id: '4',
+    title: 'Data Engineering & Cloud',
     slug: 'data-engineering-cloud-solutions',
     summary:
       'Scalable cloud platforms, data pipelines, AI infrastructure, and enterprise data architectures.',
     icon: 'Cloud',
+  },
+  {
+    id: '5',
+    title: 'Healthcare & Clinical Data Science',
+    slug: 'clinical-data-science-healthcare-ai',
+    summary:
+      'Specialized clinical SAS, CDISC standards, and analytics for regulated life sciences and care delivery.',
+    icon: 'HeartPulse',
   },
 ]
 
@@ -172,119 +174,110 @@ export const FALLBACK_INDUSTRIES = [
 export const FALLBACK_SOLUTIONS = [
   {
     id: '1',
-    title: 'Enterprise AI Solutions',
+    title: 'Enterprise AI',
     slug: 'enterprise-ai-solutions',
     summary: 'Production AI systems aligned to business workflows and governance.',
   },
   {
     id: '2',
-    title: 'AI Agents & Intelligent Automation',
-    slug: 'ai-agents-intelligent-automation',
-    summary: 'Autonomous and assisted agents plus AI-powered process automation.',
+    title: 'Intelligent Automation',
+    slug: 'intelligent-automation',
+    summary: 'Assisted agents and AI-powered process automation for repeatable operations.',
   },
   {
     id: '3',
-    title: 'Healthcare AI Platforms',
-    slug: 'healthcare-ai-platforms',
-    summary: 'Clinical and healthcare platforms that improve research and care outcomes.',
+    title: 'Predictive Analytics',
+    slug: 'predictive-analytics-solutions',
+    summary: 'Forecasting and risk models that help teams anticipate outcomes.',
   },
   {
     id: '4',
-    title: 'Predictive Analytics Solutions',
-    slug: 'predictive-analytics-solutions',
-    summary: 'Forecasting and risk models that anticipate outcomes.',
-  },
-  {
-    id: '5',
-    title: 'Business Intelligence Solutions',
+    title: 'Business Intelligence',
     slug: 'business-intelligence-solutions',
     summary: 'Executive dashboards and reporting that turn data into decisions.',
   },
   {
-    id: '6',
-    title: 'Custom Software Solutions',
-    slug: 'custom-software-solutions',
-    summary: 'Enterprise applications engineered for security, scale, and longevity.',
+    id: '5',
+    title: 'Data Platforms',
+    slug: 'data-platforms',
+    summary:
+      'Modern data foundations—pipelines, warehouses, and governed access for analytics and AI.',
   },
   {
-    id: '7',
-    title: 'AI-Powered Digital Products',
-    slug: 'ai-powered-digital-products',
+    id: '6',
+    title: 'Custom AI Products',
+    slug: 'custom-ai-products',
     summary: 'Productized AI experiences for customer, research, and operations workflows.',
   },
   {
+    id: '7',
+    title: 'Healthcare & Clinical Intelligence',
+    slug: 'healthcare-clinical-intelligence',
+    summary: 'Specialized analytics and intelligence for clinical research and care delivery.',
+  },
+  {
     id: '8',
-    title: 'Clinical Research Solutions',
-    slug: 'clinical-research-solutions',
-    summary: 'CDISC-aligned programming, TLFs, and research analytics.',
+    title: 'Application Modernization',
+    slug: 'application-modernization',
+    summary:
+      'Legacy-to-modern application paths—architecture, cloud adoption, and delivery hardening.',
   },
 ]
 
 export const FALLBACK_CASE_STUDIES = [
   {
     id: '1',
-    title: 'Healthcare AI clinical intelligence platform',
-    slug: 'healthcare-ai-clinical-intelligence',
-    client: 'Regional health network',
-    challenge: 'Hospitals lacked unified patient intelligence across clinical systems.',
-    outcome: 'AI-powered clinical analytics with 98% prediction accuracy and 3× faster reporting.',
+    title: 'Clinical reporting pipeline for a regional health system',
+    slug: 'clinical-reporting-pipeline-regional-health',
+    client: 'Regional health system',
+    challenge:
+      'Fragmented clinical and operational data made routine reporting slow and hard to trust.',
+    outcome:
+      'Unified analytics pipelines and governed dashboards that shortened reporting cycles and improved data consistency.',
     industry: 'Healthcare',
     metrics: [
-      { value: '98%', label: 'Prediction accuracy' },
-      { value: '45%', label: 'Less manual effort' },
-      { value: '3×', label: 'Faster reporting' },
+      { value: 'Faster', label: 'Reporting cycles' },
+      { value: 'Governed', label: 'Data access' },
+      { value: 'Clearer', label: 'Operational views' },
     ],
-    technologies: ['Python', 'Azure', 'AI', 'Power BI'],
-    timeline: '14 weeks',
+    technologies: ['Python', 'Azure', 'Power BI', 'SQL'],
+    timeline: 'Multi-phase engagement',
   },
   {
     id: '2',
-    title: 'Global payments platform modernization',
-    slug: 'global-payments-modernization',
-    client: 'Leading fintech',
-    challenge: 'Legacy monolith limiting release velocity and compliance reporting.',
-    outcome: 'Cloud-native architecture with 3× faster deployments and improved audit readiness.',
-    industry: 'Fintech',
+    title: 'Predictive maintenance analytics for a mid-market manufacturer',
+    slug: 'predictive-maintenance-mid-market-manufacturer',
+    client: 'Mid-market manufacturer',
+    challenge:
+      'Equipment telemetry and maintenance logs sat in silos, limiting early fault detection.',
+    outcome:
+      'Predictive analytics models and operator-facing views that support proactive maintenance planning.',
+    industry: 'Manufacturing',
     metrics: [
-      { value: '3×', label: 'Deployment speed' },
-      { value: '70%', label: 'Infra cost down' },
-      { value: '99.9%', label: 'Availability' },
+      { value: 'Earlier', label: 'Fault signals' },
+      { value: 'Shared', label: 'Ops visibility' },
+      { value: 'Repeatable', label: 'Model refresh' },
     ],
-    technologies: ['Next.js', 'Kubernetes', 'AWS', 'Docker'],
-    timeline: '20 weeks',
+    technologies: ['Python', 'Spark', 'Cloud', 'Power BI'],
+    timeline: 'Pilot to production',
   },
   {
     id: '3',
-    title: 'Clinical trial analytics modernization',
-    slug: 'clinical-trial-analytics',
-    client: 'Life sciences partner',
-    challenge: 'Fragmented trial data slowing submission-ready analytics.',
+    title: 'Submission-ready trial analytics for a life sciences sponsor',
+    slug: 'trial-analytics-life-sciences-sponsor',
+    client: 'Life sciences sponsor',
+    challenge:
+      'Trial datasets and programming deliverables needed clearer standards alignment for analysis handoff.',
     outcome:
-      'CDISC-aligned pipelines processing 120M+ records with 40% operational efficiency gains.',
+      'CDISC-aligned programming patterns and reviewable analytics packages for study teams.',
     industry: 'Life sciences',
     metrics: [
-      { value: '120M', label: 'Records processed' },
-      { value: '40%', label: 'Ops efficiency' },
-      { value: '2×', label: 'Faster cycles' },
+      { value: 'Aligned', label: 'CDISC patterns' },
+      { value: 'Reviewable', label: 'Deliverables' },
+      { value: 'Steady', label: 'Handoff cadence' },
     ],
-    technologies: ['SAS', 'Python', 'CDISC', 'Spark'],
-    timeline: '18 weeks',
-  },
-  {
-    id: '4',
-    title: 'Production-grade enterprise AI agents',
-    slug: 'enterprise-ai-agents',
-    client: 'Global enterprise',
-    challenge: 'Models impressed demos but stalled before regulated production.',
-    outcome: 'Grounded LLM workflows with evaluation, observability, and human oversight.',
-    industry: 'Enterprise AI',
-    metrics: [
-      { value: '4×', label: 'Time to value' },
-      { value: '99%', label: 'Eval pass rate' },
-      { value: '24/7', label: 'Monitoring' },
-    ],
-    technologies: ['LangChain', 'OpenAI', 'Python', 'Cloud'],
-    timeline: '12 weeks',
+    technologies: ['SAS', 'Python', 'CDISC', 'Pinnacle 21'],
+    timeline: 'Study-support engagement',
   },
 ]
 
@@ -302,37 +295,36 @@ export const FALLBACK_BLOG_POSTS = [
 export const FALLBACK_ABOUT_BLOCKS = [
   {
     blockType: 'aboutPreview',
-    heading: 'About the Company',
-    body: 'XELARVIS is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value through AI-powered decision intelligence.',
-    cta: { label: 'Why XELARVIS', href: '/about/why-xelarvis', style: 'secondary' },
+    heading: 'About XELARVIS',
+    body: 'XELARVIS is an AI, Data Science and IT Consulting company focused on helping organizations turn data and technology into measurable business value—with specialized expertise in Healthcare & Life Sciences.',
+    cta: { label: 'Our Approach', href: '/about/our-approach', style: 'secondary' },
   },
   {
     blockType: 'missionVision',
     heading: 'Vision & Mission',
     missionTitle: 'Mission',
     missionBody:
-      'Help organisations transform data into measurable business value through AI-powered decision intelligence, clinical data science, and enterprise technology consulting.',
+      'Help organisations turn complex data and technology challenges into measurable outcomes through Artificial Intelligence, Data Science and IT Consulting.',
     visionTitle: 'Vision',
     visionBody:
-      'Be a trusted Global Artificial Intelligence Research & Digital Transformation Company.',
+      'Be a trusted partner for AI, data and technology transformation across industries.',
   },
   {
     blockType: 'valuesGrid',
-    heading: 'Why XELARVIS',
-    subheading: 'What makes our partnership different.',
+    heading: 'What makes us different',
+    subheading: 'Research-driven. Engineering-led. Outcome-focused. Industry-aware.',
     values: [
       {
-        title: 'AI Research + Consulting + Healthcare',
-        description:
-          'Research depth with consulting-led delivery for regulated and enterprise buyers.',
-      },
-      {
         title: 'Research-driven',
-        description: 'Methods grounded in evaluation, standards, and continuous learning.',
+        description: 'Methods grounded in evaluation, responsible AI and continuous learning.',
       },
       {
-        title: 'Senior ownership',
-        description: 'Practitioners accountable from discovery through production.',
+        title: 'Engineering-led',
+        description: 'Architecture, build and operate disciplines that survive production.',
+      },
+      {
+        title: 'Outcome-focused',
+        description: 'Clear path from problem to solution to measurable business value.',
       },
     ],
   },
@@ -394,10 +386,8 @@ export const FALLBACK_CONTACT = {
 }
 
 export const FALLBACK_STATS = [
-  { label: 'Years of experience', value: '10+' },
-  { label: 'Projects delivered', value: '120+' },
-  { label: 'Countries served', value: '12' },
-  { label: 'Happy clients', value: '40+' },
-  { label: 'Support', value: '24/7' },
-  { label: 'Technology partners', value: '25+' },
+  { label: 'Core services', value: '5' },
+  { label: 'Solution areas', value: '8' },
+  { label: 'Delivery focus', value: 'Multi-industry' },
+  { label: 'Practice pillars', value: 'AI · Data · Technology' },
 ]

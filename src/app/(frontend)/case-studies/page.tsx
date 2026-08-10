@@ -19,7 +19,8 @@ type CaseStudyDoc = {
 
 export const metadata = buildMetadata({
   title: 'Case Studies',
-  description: 'Enterprise delivery outcomes from Xelarvis Technologies.',
+  description:
+    'Representative engagements and delivery patterns from XELARVIS across AI, data science and IT consulting.',
   path: '/case-studies',
 })
 
@@ -31,9 +32,9 @@ export default async function CaseStudiesPage() {
     <>
       <PageHero
         brand="Xelarvis"
-        eyebrow="Case studies"
-        title="Outcomes that speak to engineering discipline."
-        subtitle="Selected programs demonstrating measurable business and technical impact."
+        eyebrow="Evidence"
+        title="Representative engagements."
+        subtitle="Anonymized delivery patterns that show how XELARVIS moves from business problem to governed outcomes—without inflated claims."
         size="compact"
       />
       <Section>

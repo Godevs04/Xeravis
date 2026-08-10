@@ -108,10 +108,10 @@ async function seed() {
     slug: 'site-settings',
     data: {
       siteName: 'Xelarvis Technologies',
-      tagline: 'Global AI Research, IT Consulting, Data Science & Healthcare AI',
+      tagline: 'Artificial Intelligence, Data Science & IT Consulting',
       social: {
         linkedin: 'https://linkedin.com/company/xelarvis',
-        twitter: 'https://x.com/xelarvis',
+        twitter: 'https://x.com/xelarvis_ai',
         github: '',
         youtube: '',
       },
@@ -126,6 +126,7 @@ async function seed() {
         { label: 'About', href: '/about', mega: 'about' },
         { label: 'Services', href: '/services', mega: 'services' },
         { label: 'Solutions', href: '/solutions', mega: 'solutions' },
+        { label: 'Approach', href: '/about/our-approach', mega: 'none' },
         { label: 'Industries', href: '/industries', mega: 'industries' },
         { label: 'Research & Innovation', href: '/ai-research-lab', mega: 'research' },
         { label: 'Insights', href: '/insights', mega: 'insights' },
@@ -146,6 +147,7 @@ async function seed() {
           title: 'About',
           links: [
             { label: 'About', href: '/about' },
+            { label: 'Our Approach', href: '/about/our-approach' },
             { label: 'Research & Innovation', href: '/ai-research-lab' },
             { label: 'Collaborations', href: '/ai-research-lab/collaborations' },
             { label: 'Careers', href: '/careers' },
@@ -195,7 +197,7 @@ async function seed() {
     slug: 'social-media',
     data: {
       linkedin: 'https://linkedin.com/company/xelarvis',
-      twitter: 'https://x.com/xelarvis',
+      twitter: 'https://x.com/xelarvis_ai',
       github: '',
       youtube: '',
       instagram: '',
@@ -226,7 +228,7 @@ async function seed() {
       titleTemplate: '%s · Xelarvis Technologies',
       defaultDescription:
         'XELARVIS PRIVATE LIMITED is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value.',
-      twitterHandle: '@xelarvis',
+      twitterHandle: '@xelarvis_ai',
     },
     overrideAccess: true,
   })
@@ -381,131 +383,141 @@ async function seed() {
     {
       blockType: 'storyHero' as const,
       brand: 'Xelarvis',
-      eyebrow: 'AI Research · Consulting · Data Science · Healthcare',
-      heading: 'Engineering Intelligent Systems for Healthcare, Enterprises, and the Future.',
+      eyebrow: 'Artificial Intelligence · Data Science · IT Consulting',
+      heading: 'Engineering Intelligence. Transforming Business.',
       subheading:
-        'We help organisations transform data into measurable business value through AI-powered decision intelligence—backed by research depth and enterprise delivery.',
-      ctaLabel: "Let's Talk",
-      ctaHref: '/contact?intent=business',
-      secondaryCtaLabel: 'Explore services',
-      secondaryCtaHref: '/services',
+        'XELARVIS combines Artificial Intelligence, Data Science and IT Consulting to help organizations turn complex data and technology challenges into measurable business outcomes.',
+      ctaLabel: 'Explore Our Capabilities',
+      ctaHref: '/services',
+      secondaryCtaLabel: 'Talk to XELARVIS',
+      secondaryCtaHref: '/contact?intent=business',
     },
     {
       blockType: 'storyChallenge' as const,
-      eyebrow: 'The challenge',
-      heading: 'Most digital programs look finished. Few feel inevitable.',
+      eyebrow: 'Business problems',
+      heading: 'Organizations are facing three connected challenges.',
       items: [
         {
-          title: 'Fragmented clinical & enterprise data',
-          body: 'Signals live in silos. Decisions wait on spreadsheets.',
+          title: 'Data complexity',
+          body: 'Disconnected data makes decision-making slow.',
         },
         {
-          title: 'AI without operational grounding',
-          body: 'Models that impress demos but stall in regulated reality.',
+          title: 'AI adoption',
+          body: 'Organizations struggle to move AI from experimentation into production.',
         },
         {
-          title: 'Transformation without craft',
-          body: 'Generic platforms. Generic outcomes. Forgotten brands.',
+          title: 'Technology modernization',
+          body: 'Legacy systems limit scalability, security and innovation.',
         },
       ],
     },
     {
       blockType: 'storySolution' as const,
-      eyebrow: 'The solution',
-      heading: 'One practice where research, regulation, and delivery meet.',
+      eyebrow: 'What XELARVIS does',
+      heading: 'XELARVIS connects strategy, data, AI and technology execution.',
       chapters: [
         {
-          title: 'Intelligence that ships',
-          body: 'We design AI and analytics systems that survive audits, scale in production, and move real clinical and enterprise decisions.',
+          title: 'Artificial Intelligence',
+          body: 'Build and deploy intelligent systems using machine learning, generative AI, computer vision, NLP and AI agents.',
         },
         {
-          title: 'Healthcare-first engineering',
-          body: 'CDISC, SAS, and regulated workflows sit beside modern cloud and LLM stacks — not as afterthoughts.',
+          title: 'Data Science & Analytics',
+          body: 'Turn complex data into predictions, insights and decisions through advanced analytics, machine learning and business intelligence.',
         },
         {
-          title: 'One narrative, many surfaces',
-          body: 'From research lab to delivery cockpit, every capability connects to a measurable outcome for your teams.',
+          title: 'IT Consulting & Digital Transformation',
+          body: 'Modernize technology ecosystems through architecture, cloud, software engineering, automation and digital transformation.',
+        },
+        {
+          title: 'Healthcare & Life Sciences',
+          body: 'Specialized expertise applying AI and data science to clinical research, healthcare analytics and life-sciences workflows.',
         },
       ],
     },
     {
       blockType: 'storyCapabilities' as const,
       eyebrow: 'Capabilities',
-      heading: 'What we bring to the table.',
+      heading: 'How we help — and what problems we solve.',
       subheading:
-        'AI research & innovation, data science, enterprise technology consulting, clinical data science, and cloud platforms.',
+        'Services are how we work. Solutions are the business problems we solve across AI, data, consulting and healthcare specialty programs.',
     },
     {
       blockType: 'storyTechOrbit' as const,
       eyebrow: 'Technology',
       heading: 'A constellation, not a checklist.',
       subheading:
-        'Hover the orbit. Each node is a capability we put into production for healthcare, enterprises, and research teams.',
+        'Hover the orbit. Each node is a capability we put into production for enterprise and industry teams.',
     },
     {
       blockType: 'storyProof' as const,
       eyebrow: 'Credibility',
-      heading: 'Built for enterprise trust.',
+      heading: 'Clarity, evidence and governed delivery.',
       stats: [
         { label: 'Core services', value: '5' },
-        { label: 'Industries served', value: '8' },
         { label: 'Solution areas', value: '8' },
-        { label: 'Infrastructure availability', value: '99.9', suffix: '%' },
-        { label: 'Projects delivered', value: '120', suffix: '+' },
-        { label: 'Enterprise clients', value: '40', suffix: '+' },
+        { label: 'Delivery pillars', value: 'AI · Data · IT' },
+        { label: 'Specialty', value: 'Healthcare' },
       ],
     },
     {
       blockType: 'storyCases' as const,
-      eyebrow: 'Success stories',
-      heading: 'Engineering solutions that deliver measurable outcomes.',
+      eyebrow: 'Evidence',
+      heading: 'Representative engagements and delivery patterns.',
     },
     {
       blockType: 'storyProcess' as const,
-      eyebrow: 'The Engineering Journey',
+      eyebrow: 'XELARVIS Delivery Framework',
       heading: 'From business problem to measurable results.',
       steps: [
         {
-          title: 'Business Problem',
-          description:
-            'Every engagement starts with a real constraint — not a technology preference.',
+          title: 'Discover',
+          description: 'Understand the business problem.',
         },
         {
-          title: 'Discovery',
-          description: 'Workshops and research turn the problem into a shared, actionable frame.',
+          title: 'Assess',
+          description: 'Evaluate data, technology and organizational readiness.',
         },
         {
-          title: 'Solution Architecture',
-          description:
-            'The blueprint assembles — AI, cloud, and APIs designed to survive production.',
+          title: 'Strategize',
+          description: 'Define the AI, data and technology roadmap.',
         },
         {
-          title: 'Development',
-          description: 'Code appears. Components connect. Tests run. Operators stay in the loop.',
+          title: 'Architect',
+          description: 'Design scalable architecture.',
         },
         {
-          title: 'Cloud Infrastructure',
-          description:
-            'Secure, observable infrastructure — Kubernetes, monitoring, and hardened controls.',
+          title: 'Build',
+          description: 'Develop the solution.',
         },
         {
-          title: 'Business Results',
-          description:
-            'The system pays for itself — measurable ROI, performance, cost, and growth.',
+          title: 'Validate',
+          description: 'Evaluate quality, security, performance and AI behavior.',
+        },
+        {
+          title: 'Deploy',
+          description: 'Production implementation.',
+        },
+        {
+          title: 'Operate',
+          description: 'Monitor, maintain and optimize.',
+        },
+        {
+          title: 'Scale',
+          description: 'Expand successful solutions across the organization.',
         },
       ],
     },
     {
       blockType: 'storyPresence' as const,
       eyebrow: 'Trust',
-      heading: 'Credibility that enterprise buyers expect.',
+      heading: 'Consulting + engineering for enterprise buyers.',
     },
     {
       blockType: 'storyCta' as const,
-      heading: 'Ready for the next intelligent chapter?',
+      heading: "Let's solve your next data, AI or technology challenge.",
       subheading:
-        'Tell us about your AI research, consulting, analytics, healthcare, or partnership goals.',
-      ctaLabel: 'Schedule a Consultation',
+        'Talk with XELARVIS about AI, data science, IT consulting, data platforms or healthcare specialty programs.',
+      ctaLabel: 'Talk to XELARVIS',
       ctaHref: '/contact?intent=business',
     },
   ]
@@ -518,8 +530,8 @@ async function seed() {
   const aboutLayout = [
     {
       blockType: 'aboutPreview' as const,
-      heading: 'About the Company',
-      body: 'XELARVIS is a global AI research, IT consulting, data science, and healthcare AI company. We help organisations transform data into measurable business value through AI-powered decision intelligence—closer to enterprise consulting and applied research than to a typical software agency.',
+      heading: 'About XELARVIS',
+      body: 'XELARVIS is an AI, Data Science and IT Consulting company focused on helping organizations turn data and technology into measurable business value—with specialized expertise in Healthcare & Life Sciences.',
       cta: {
         label: 'Company overview',
         href: '/about/company-overview',
@@ -531,27 +543,32 @@ async function seed() {
       heading: 'Vision & Mission',
       missionTitle: 'Mission',
       missionBody:
-        'Help organisations transform data into measurable business value through AI-powered decision intelligence, clinical data science, and enterprise technology consulting.',
+        'Help organisations turn complex data and technology challenges into measurable outcomes through Artificial Intelligence, Data Science and IT Consulting.',
       visionTitle: 'Vision',
       visionBody:
-        'Be a trusted Global Artificial Intelligence Research & Digital Transformation Company.',
+        'Be a trusted partner for AI, data and technology transformation across industries—with depth where regulated and research-intensive work demands it.',
     },
     {
       blockType: 'valuesGrid' as const,
-      heading: 'Why XELARVIS',
-      subheading: 'What makes our partnership different.',
+      heading: 'What makes us different',
+      subheading: 'Research-driven. Engineering-led. Outcome-focused. Industry-aware.',
       values: [
         {
-          title: 'Data Science + AI + Healthcare',
-          description: 'Clinical data science and Healthcare AI alongside applied AI research.',
-        },
-        {
           title: 'Research-driven',
-          description: 'Methods grounded in evaluation, standards, and continuous learning.',
+          description: 'Methods grounded in evaluation, responsible AI and continuous learning.',
         },
         {
-          title: 'Senior ownership',
-          description: 'Practitioners accountable from discovery through production.',
+          title: 'Engineering-led',
+          description: 'Architecture, build and operate disciplines that survive production.',
+        },
+        {
+          title: 'Outcome-focused',
+          description: 'Clear path from problem to solution to measurable business value.',
+        },
+        {
+          title: 'Industry-aware',
+          description:
+            'Enterprise delivery across sectors, with specialized Healthcare & Life Sciences expertise.',
         },
       ],
     },
@@ -637,6 +654,51 @@ async function seed() {
     })
     clinicalDeptId = dept.id
   }
+
+  await upsertBySlug(payload, 'careers', 'data-scientist', {
+    title: 'Data Scientist',
+    department: 'Artificial Intelligence',
+    departmentRef: aiDeptId,
+    office: 'Hyderabad / Remote',
+    location: 'Hyderabad / Remote',
+    type: 'full-time',
+    workMode: 'hybrid',
+    experienceRequired: '0–2 Years',
+    openings: 2,
+    postedAt: new Date().toISOString(),
+    aboutRole:
+      'Develop predictive models, perform statistical analysis, build ML pipelines, collaborate with engineers, and communicate findings to stakeholders.',
+    description: richParagraph(
+      'Join XELARVIS to apply statistics and machine learning to real business problems across AI, analytics and consulting programs.',
+    ),
+    requirements: richParagraph(
+      'Python, SQL, statistics, machine learning fundamentals, and Pandas / Scikit-learn. Nice to have: PyTorch, cloud platforms, MLOps, NLP.',
+    ),
+    responsibilities: [
+      { item: 'Develop predictive models' },
+      { item: 'Perform statistical analysis' },
+      { item: 'Build ML pipelines' },
+      { item: 'Collaborate with engineers' },
+      { item: 'Communicate findings' },
+    ],
+    requiredSkills: [
+      { item: 'Python' },
+      { item: 'SQL' },
+      { item: 'Statistics' },
+      { item: 'Machine Learning' },
+      { item: 'Pandas / Scikit-learn' },
+    ],
+    preferredSkills: [{ item: 'PyTorch' }, { item: 'Cloud' }, { item: 'MLOps' }, { item: 'NLP' }],
+    qualifications:
+      "Bachelor's or Master's degree in Computer Science, Data Science, Statistics, Mathematics, or related field.",
+    benefits: [
+      { item: 'Flexible work' },
+      { item: 'Learning budget' },
+      { item: 'Mentorship' },
+      { item: 'Research exposure' },
+    ],
+    active: true,
+  })
 
   await upsertBySlug(payload, 'careers', 'ai-engineer', {
     title: 'AI Engineer',
