@@ -90,7 +90,9 @@ html[data-xe-ui='v5'] .document-fields__edit > .render-fields .rich-text {
 }
 
 /* ────────────────────────────────────────────────────────────
-   2. APP HEADER
+   2. APP HEADER — shell.scss owns layout (full-bleed sticky bar).
+   Do NOT reintroduce floating pill margins / max-width here —
+   that misaligns breadcrumbs vs content and fights the grid.
    ──────────────────────────────────────────────────────────── */
 
 html[data-xe-ui='v5'] .app-header,
@@ -99,15 +101,17 @@ html[data-xe-ui='v5'] .template-default > .template-default__wrap > header {
   height: var(--xe-header-h) !important;
   min-height: var(--xe-header-h) !important;
   max-height: var(--xe-header-h) !important;
-  margin: 12px var(--xe-gutter) 0 !important;
-  padding: 0 16px !important;
-  max-width: calc(var(--xe-shell-max));
-  border: 1px solid var(--xe-border) !important;
-  border-radius: var(--xe-radius-lg) !important;
-  background: var(--xe-glass) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
-  box-shadow: var(--xe-card-shadow) !important;
+  margin: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 var(--xe-gutter) !important;
+  border: none !important;
+  border-bottom: 1px solid var(--xe-border) !important;
+  border-radius: 0 !important;
+  background: var(--xe-header) !important;
+  backdrop-filter: blur(12px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+  box-shadow: none !important;
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -146,10 +150,13 @@ html[data-xe-ui='v5'] .xe-header-chip--breadcrumb {
   font-size: var(--xe-fs-secondary) !important;
   font-weight: 500 !important;
   color: var(--xe-muted) !important;
-  max-width: min(420px, 40vw);
+  max-width: min(720px, 60vw);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex !important;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 html[data-xe-ui='v5'] .xe-header-chip--breadcrumb strong {

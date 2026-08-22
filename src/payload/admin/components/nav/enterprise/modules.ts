@@ -8,6 +8,7 @@ import {
   QUICK_CREATES as REGISTRY_QUICK_CREATES,
   groupHasActiveLink,
   isLinkActive,
+  resolveNavigation,
   type NavGroup,
   type NavItem,
 } from '@/payload/admin/nav/registry'
@@ -54,7 +55,11 @@ export const QUICK_CREATES = REGISTRY_QUICK_CREATES.map((c) => ({
   icon: c.icon,
 }))
 
-export { isLinkActive }
+export { isLinkActive, resolveNavigation }
+
+export function resolveModuleNavigation(pathname: string) {
+  return resolveNavigation(pathname)
+}
 
 export function moduleHasActiveLink(pathname: string, mod: NavModule) {
   return groupHasActiveLink(pathname, {

@@ -7,6 +7,7 @@ import { WorkspaceProvider } from '@/payload/admin/workspace/WorkspaceContext'
 
 import { ApiViewPolish } from './api/ApiViewPolish'
 import { CommandPalette } from './CommandPalette'
+import { HeaderChip } from './HeaderChip'
 
 const STORAGE_KEY = 'payload-theme'
 const NAV_KEY = 'xe-nav-collapsed'
@@ -80,7 +81,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     root.setAttribute('data-xe-ui', 'v5')
 
     // Payload sets `inert` when navOpen is false (common below large breakpoint).
-    // Our floating sidebar stays visible on desktop — strip inert so it can scroll.
+    // Docked desktop sidebar must stay interactive — strip inert so it can scroll.
     const desktopMq = window.matchMedia('(min-width: 901px)')
     const syncNavInteractivity = () => {
       const aside = document.querySelector<HTMLElement>('aside.nav')
@@ -243,6 +244,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <WorkspaceProvider>
       {children}
+      <HeaderChip />
       <CommandPalette />
       <ApiViewPolish />
       <AdminPwa />

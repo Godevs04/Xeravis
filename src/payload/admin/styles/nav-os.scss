@@ -4,28 +4,49 @@
    ============================================================ */
 
 html[data-xe-ui='v5'] {
-  /* Width comes from tokens.scss — never override here */
+  /* Sync Payload's --nav-width so its grid never fights our sidebar */
+  --nav-width: var(--xe-sidebar-current, var(--xe-sidebar-w));
 }
 
-html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) {
+/* Payload injects header-height top padding + overflow-y on .nav__scroll.
+   Kill both when EnterpriseNav owns the rail. */
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]),
+html[data-xe-ui='v5'] aside.nav > .nav__scroll:has([data-xe-os-nav]) {
   display: flex !important;
   flex-direction: column !important;
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
   overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
   padding: 0 !important;
   gap: 0 !important;
+  /* neutralize Payload padding vars */
+  --nav-padding-block-start: 0px !important;
+  --nav-padding-block-end: 0px !important;
+  --nav-padding-inline-start: 0px !important;
+  --nav-padding-inline-end: 0px !important;
 }
 
 html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > .nav__wrap,
 html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > .nav__header,
 html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) .nav__controls,
-html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) .nav__log-out {
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) .nav__log-out,
+html[data-xe-ui='v5'] .nav > .nav__header {
   display: none !important;
 }
 
-html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-nav] {
-  flex: 1 1 auto;
-  min-height: 0;
-  height: 100%;
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-nav],
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > .xe-os-nav {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
 }
 
 /* Kill black UA / Payload focus boxes */
@@ -42,17 +63,93 @@ html[data-xe-ui='v5'] .nav .xe-os-nav a:focus:not(:focus-visible) {
   box-shadow: none !important;
 }
 
+/* Payload often styles `.nav a` / spans — lock our link chrome */
+html[data-xe-ui='v5'] .nav .xe-os-nav button.xe-os-mod,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod__link {
+  display: flex !important;
+  align-items: center !important;
+  position: static !important;
+  float: none !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod__link.is-active {
+  box-shadow: inset 2px 0 0 var(--xe-secondary) !important;
+}
+
+html[data-xe-ui='v5'] .nav .xe-os-nav button.xe-os-mod:hover,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod:hover,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod__link:hover,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod__link:focus,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod__link:focus-visible,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod__link.is-active {
+  text-decoration: none !important;
+}
+
+html[data-xe-ui='v5'] .nav .xe-os-nav button.xe-os-mod span,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod span,
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod__link span {
+  float: none !important;
+  position: static !important;
+  display: inline !important;
+  opacity: 1 !important;
+  height: auto !important;
+  max-width: none !important;
+}
+
+html[data-xe-ui='v5'] .nav .xe-os-nav .xe-os-mod__label,
+html[data-xe-ui='v5'] .nav .xe-os-nav .xe-os-mod__link-label {
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+html[data-xe-ui='v5'] .nav .xe-os-nav .xe-os-mod__link-dot {
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+html[data-xe-ui='v5'] .nav .nav__wrap,
+html[data-xe-ui='v5'] .nav .nav__controls,
+html[data-xe-ui='v5'] .nav .nav__log-out {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html[data-xe-ui='v5'] .nav .xe-os-nav a.xe-os-mod__link.is-active {
+  box-shadow: inset 2px 0 0 var(--xe-secondary) !important;
+}
+
 /* ── Root ── */
 .xe-os-nav {
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-height: 100%;
   min-height: 0;
   width: 100%;
-  padding: 14px 12px 12px;
+  max-width: 100%;
+  padding: 12px 10px 10px;
   box-sizing: border-box;
   background: var(--xe-sidebar-solid);
   color: var(--xe-sidebar-text);
+  overflow: hidden;
 }
 
 .xe-os-nav__top {
@@ -292,53 +389,67 @@ html[data-xe-ui='v5'] .nav .xe-os-nav a:focus:not(:focus-visible) {
   background: var(--xe-hover);
 }
 
-/* ── Modules scroll ── */
+/* ── Modules — flat accordion (no overlapping cards) ── */
 .xe-os-nav__modules {
-  flex: 1 1 auto;
+  flex: 1 1 0;
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 4px 0 12px;
+  gap: 0;
+  padding: 4px 0 10px;
   scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--xe-secondary) 30%, transparent) transparent;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+.xe-os-nav__modules::-webkit-scrollbar {
+  width: 3px;
+}
+
+.xe-os-nav__modules::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+}
+
+.xe-os-nav__modules > .xe-os-mod-wrap,
+.xe-os-nav__modules > .xe-os-mod {
+  flex: 0 0 auto;
+  position: relative;
 }
 
 .xe-os-mod-wrap {
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--xe-radius);
+  display: block;
+  width: 100%;
+  position: relative;
 }
 
-.xe-os-mod-wrap.is-open {
-  background: color-mix(in srgb, var(--xe-text) 2.5%, transparent);
-  padding-bottom: 4px;
-}
-
-.xe-os-mod {
+.xe-os-mod,
+a.xe-os-mod,
+button.xe-os-mod {
   position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
-  min-height: 40px;
-  padding: 8px 10px 8px var(--xe-nav-indent-1);
-  border: none !important;
-  border-radius: var(--xe-radius);
+  min-height: 36px;
+  padding: 7px 10px;
+  margin: 0;
+  border: none;
+  border-radius: 8px;
   background: transparent;
   color: var(--xe-sidebar-text);
   cursor: pointer;
   text-align: left;
   text-decoration: none;
   font: inherit;
-  box-shadow: none !important;
   appearance: none;
+  box-sizing: border-box;
   transition:
-    background var(--xe-dur-fast) ease,
-    color var(--xe-dur-fast) ease;
+    background 140ms ease,
+    color 140ms ease;
 }
 
 .xe-os-mod:hover {
@@ -347,63 +458,40 @@ html[data-xe-ui='v5'] .nav .xe-os-nav a:focus:not(:focus-visible) {
 }
 
 .xe-os-mod:focus-visible {
-  box-shadow: 0 0 0 2px var(--xe-active-child-bg) !important;
+  outline: none;
+  background: var(--xe-hover);
 }
 
-.xe-os-mod__rail {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 3px;
-  height: 0;
-  border-radius: 999px;
-  background: var(--xe-secondary);
-  transform: translateY(-50%);
-  opacity: 0;
-  transition:
-    height var(--xe-dur-nav) var(--xe-ease),
-    opacity var(--xe-dur-nav) ease;
-}
-
-.xe-os-mod.is-active .xe-os-mod__rail,
-.xe-os-mod.is-open .xe-os-mod__rail {
-  height: 18px;
-  opacity: 1;
-}
-
-.xe-os-mod.is-active {
-  background: var(--xe-active-parent-bg);
+.xe-os-mod.is-active,
+.xe-os-mod-wrap.is-active > .xe-os-mod {
   color: #0f766e;
+}
+
+.xe-os-mod.is-open {
+  color: var(--xe-text);
 }
 
 .xe-os-mod__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   flex-shrink: 0;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--xe-text) 4%, transparent);
+  border-radius: 7px;
   color: inherit;
 }
 
-.xe-os-mod.is-active .xe-os-mod__icon {
-  background: var(--xe-secondary-soft);
-  color: var(--xe-secondary);
-}
-
-.xe-os-mod__body {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  flex: 1;
-  min-width: 0;
+.xe-os-mod.is-active .xe-os-mod__icon,
+.xe-os-mod-wrap.is-active > .xe-os-mod .xe-os-mod__icon {
+  color: #0d9488;
 }
 
 .xe-os-mod__label {
-  font-size: var(--xe-nav-parent-fs);
-  font-weight: var(--xe-nav-parent-fw);
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.25;
   white-space: nowrap;
@@ -411,22 +499,10 @@ html[data-xe-ui='v5'] .nav .xe-os-nav a:focus:not(:focus-visible) {
   text-overflow: ellipsis;
 }
 
-.xe-os-mod__hint {
-  font-size: 11px;
-  font-weight: 450;
-  color: var(--xe-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.xe-os-mod.is-active .xe-os-mod__hint {
-  color: color-mix(in srgb, #0d9488 65%, #64748b);
-}
-
 .xe-os-mod__count {
+  flex: 0 0 auto;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 650;
   min-width: 18px;
   height: 18px;
   padding: 0 5px;
@@ -434,66 +510,57 @@ html[data-xe-ui='v5'] .nav .xe-os-nav a:focus:not(:focus-visible) {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--xe-text) 6%, transparent);
+  background: color-mix(in srgb, var(--xe-text) 5%, transparent);
   color: var(--xe-muted);
-  flex-shrink: 0;
 }
 
 .xe-os-mod.is-active .xe-os-mod__count,
-.xe-os-mod.is-open .xe-os-mod__count {
+.xe-os-mod-wrap.is-active .xe-os-mod__count {
   background: var(--xe-secondary-soft);
   color: #0f766e;
 }
 
 .xe-os-mod__chevron {
-  flex-shrink: 0;
+  flex: 0 0 auto;
   width: 14px;
   height: 14px;
-  opacity: 0.4;
-  transition: transform var(--xe-dur-nav) var(--xe-ease);
+  opacity: 0.45;
+  transition: transform 180ms var(--xe-ease);
 }
 
-.xe-os-mod.is-open .xe-os-mod__chevron {
+.xe-os-mod.is-open .xe-os-mod__chevron,
+.xe-os-mod-wrap.is-open > .xe-os-mod .xe-os-mod__chevron {
   transform: rotate(180deg);
   opacity: 0.7;
 }
 
 .xe-os-mod__links {
-  overflow: hidden;
-}
-
-.xe-os-mod__links-inner {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1px;
-  padding: 2px 0 4px;
-}
-
-.xe-os-mod__links-inner::before {
-  content: '';
-  position: absolute;
-  left: 22px;
-  top: 4px;
-  bottom: 4px;
-  width: 1px;
-  background: var(--xe-border);
+  margin: 2px 0 6px 21px;
+  padding: 2px 0 2px 10px;
+  border-left: 1px solid var(--xe-border);
+  position: relative;
 }
 
 .xe-os-mod__link {
-  position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
-  min-height: 34px;
-  padding: 6px 10px 6px var(--xe-nav-indent-2);
-  margin-right: 4px;
-  border-radius: 8px;
+  min-height: 30px;
+  padding: 5px 10px 5px 8px;
+  margin: 0;
+  border-radius: 6px;
   text-decoration: none;
   color: var(--xe-sidebar-text);
-  font-size: var(--xe-nav-child-fs);
-  font-weight: var(--xe-nav-child-fw);
-  transition: background var(--xe-dur-fast) ease;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.25;
+  box-sizing: border-box;
+  transition:
+    background 140ms ease,
+    color 140ms ease;
 }
 
 .xe-os-mod__link:hover {
@@ -501,69 +568,42 @@ html[data-xe-ui='v5'] .nav .xe-os-nav a:focus:not(:focus-visible) {
   color: var(--xe-text);
 }
 
-.xe-os-mod__link:focus-visible {
-  box-shadow: 0 0 0 2px var(--xe-active-child-bg);
-}
-
 .xe-os-mod__link.is-active {
   background: var(--xe-active-child-bg);
   color: #0f766e;
-}
-
-.xe-os-mod__link.is-active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 8px;
-  bottom: 8px;
-  width: 3px;
-  border-radius: 999px;
-  background: var(--xe-secondary);
-}
-
-.xe-os-mod__link-rail {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 12px;
-  padding-top: 6px;
-  position: relative;
-  z-index: 1;
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--xe-secondary);
 }
 
 .xe-os-mod__link-dot {
-  width: 5px;
-  height: 5px;
+  flex: 0 0 auto;
+  width: 4px;
+  height: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--xe-muted) 50%, transparent);
+  background: color-mix(in srgb, var(--xe-muted) 40%, transparent);
 }
 
 .xe-os-mod__link.is-active .xe-os-mod__link-dot {
   background: var(--xe-secondary);
-  box-shadow: 0 0 0 3px var(--xe-active-parent-bg);
-}
-
-.xe-os-mod__link-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
 }
 
 .xe-os-mod__link-label {
+  flex: 1 1 auto;
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.xe-os-mod__link-hint {
-  font-size: 11px;
-  font-weight: 450;
-  color: var(--xe-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Legacy nodes — hide if present */
+.xe-os-mod__rail,
+.xe-os-mod__body,
+.xe-os-mod__hint,
+.xe-os-mod__link-rail,
+.xe-os-mod__link-text,
+.xe-os-mod__link-hint,
+.xe-os-mod__links-inner {
+  display: none !important;
 }
 
 /* ── Bottom dock ── */
@@ -588,40 +628,43 @@ html[data-xe-ui='v5'] .nav .xe-os-nav a:focus:not(:focus-visible) {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--xe-muted);
-  margin-bottom: 6px;
-  padding-left: 4px;
+  margin-bottom: 4px;
+  padding-left: 2px;
 }
 
 .xe-os-nav__pins-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 3px;
 }
 
 .xe-os-nav__pin {
   display: inline-flex;
   align-items: center;
-  max-width: 100%;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 11px;
+  max-width: calc(50% - 2px);
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 10.5px;
   font-weight: 550;
-  text-decoration: none;
+  text-decoration: none !important;
   color: var(--xe-muted);
-  background: transparent;
+  background: color-mix(in srgb, var(--xe-text) 3%, transparent);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .xe-os-nav__pin:hover {
-  background: color-mix(in srgb, var(--xe-text) 4%, transparent);
+  background: var(--xe-hover);
   color: var(--xe-text);
+  text-decoration: none !important;
 }
 
 .xe-os-nav__pin.is-active {
   background: var(--xe-active-parent-bg);
   color: #0f766e;
+  font-weight: 600;
+  text-decoration: none !important;
 }
 
 .xe-os-nav__dock {
@@ -805,7 +848,7 @@ html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-nav__meta-row,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-nav__search-label,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-nav__kbd,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-nav__create-btn span,
-html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-mod__body,
+html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-mod__label,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-mod__count,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-mod__chevron,
 html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-mod__links,
@@ -906,7 +949,6 @@ html[data-xe-ui='v5'][data-xe-nav='collapsed'] .xe-os-mod {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .xe-os-mod__rail,
   .xe-os-mod__chevron,
   .xe-os-nav__create-btn svg {
     transition: none !important;

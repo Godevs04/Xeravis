@@ -288,16 +288,72 @@ export function findActiveGroup(pathname: string): NavGroup | null {
   return NAV_GROUPS.find((g) => groupHasActiveLink(pathname, g)) ?? null
 }
 
+/**
+ * Prefer the longest matching href so deep routes
+ * (/collections/blogs/:id/versions) stay on the collection item,
+ * not a shorter accidental sibling match.
+ */
 export function findActiveItem(pathname: string): { group: NavGroup; item: NavItem } | null {
+  let best: { group: NavGroup; item: NavItem; score: number } | null = null
+
   for (const group of NAV_GROUPS) {
     for (const item of group.items) {
-      if (isLinkActive(pathname, item.href)) return { group, item }
+      if (!isLinkActive(pathname, item.href)) continue
+      const score = item.href.length
+      if (!best || score > best.score) best = { group, item, score }
     }
     if (group.href && isLinkActive(pathname, group.href)) {
-      return { group, item: { id: group.id, label: group.label, href: group.href } }
+      const score = group.href.length
+      const item: NavItem = { id: group.id, label: group.label, href: group.href }
+      if (!best || score > best.score) best = { group, item, score }
     }
   }
-  return null
+
+  return best ? { group: best.group, item: best.item } : null
+}
+
+export type NavigationResolution = {
+  section: string | null
+  item: string | null
+  ancestors: string[]
+  breadcrumbs: BreadcrumbCrumb[]
+  group: NavGroup | null
+  navItem: NavItem | null
+}
+
+/**
+ * Single route → navigation resolver.
+ * Pathname is the source of truth for section, active item, ancestors, breadcrumbs.
+ * Matches collection list + create + document + api + versions + any deeper segments.
+ */
+export function resolveNavigation(
+  pathname: string,
+  options?: { documentLabel?: string | null },
+): NavigationResolution {
+  const active = findActiveItem(pathname)
+  const breadcrumbs = getBreadcrumbTrail(pathname, options)
+
+  if (!active) {
+    return {
+      section: null,
+      item: null,
+      ancestors: [],
+      breadcrumbs,
+      group: null,
+      navItem: null,
+    }
+  }
+
+  const ancestors = active.group.id === 'overview' ? [] : [active.group.id]
+
+  return {
+    section: active.group.id,
+    item: active.item.id,
+    ancestors,
+    breadcrumbs,
+    group: active.group,
+    navItem: active.item,
+  }
 }
 
 /** Flat list for command palette */
@@ -356,9 +412,13 @@ export function getCommandItems(): Array<{
 
 /**
  * Breadcrumb trail from pathname.
- * Uses human labels from the registry; falls back to slug / truncated id.
+ * Uses human labels from the registry. Document IDs are never shown raw —
+ * use optional documentLabel, else "Edit" / view segment labels.
  */
-export function getBreadcrumbTrail(pathname: string): BreadcrumbCrumb[] {
+export function getBreadcrumbTrail(
+  pathname: string,
+  options?: { documentLabel?: string | null },
+): BreadcrumbCrumb[] {
   const crumbs: BreadcrumbCrumb[] = [{ label: 'Xelarvis', href: '/admin' }]
   const active = findActiveItem(pathname)
 
@@ -386,15 +446,36 @@ export function getBreadcrumbTrail(pathname: string): BreadcrumbCrumb[] {
     crumbs.push({ label: active.item.label, href: active.item.href })
   }
 
-  // Document id segment after collection slug
-  const docMatch = pathname.match(/\/admin\/collections\/[^/]+\/([^/]+)/)
-  if (docMatch?.[1] && docMatch[1] !== 'create') {
-    const id = docMatch[1]
-    crumbs.push({
-      label: id === 'create' ? 'Create' : humanizeId(id),
-    })
-  } else if (pathname.endsWith('/create')) {
+  const collectionDeep = pathname.match(/^\/admin\/collections\/[^/]+\/(.+)$/)
+  if (collectionDeep?.[1]) {
+    const parts = collectionDeep[1].split('/').filter(Boolean)
+    const head = parts[0]
+
+    if (head === 'create') {
+      crumbs.push({ label: 'Create' })
+      return crumbs
+    }
+
+    // Document id — never display raw ObjectIds
+    const docLabel = options?.documentLabel?.trim() || 'Edit'
+    crumbs.push({ label: docLabel })
+
+    for (let i = 1; i < parts.length; i++) {
+      const part = parts[i]
+      if (part === 'api') crumbs.push({ label: 'API' })
+      else if (part === 'versions') crumbs.push({ label: 'Versions' })
+      else crumbs.push({ label: titleCase(part) })
+    }
+    return crumbs
+  }
+
+  if (pathname.endsWith('/create')) {
     crumbs.push({ label: 'Create' })
+  }
+
+  const globalDeep = pathname.match(/^\/admin\/globals\/[^/]+\/([^/]+)$/)
+  if (globalDeep?.[1]) {
+    crumbs.push({ label: titleCase(globalDeep[1]) })
   }
 
   return crumbs
@@ -405,11 +486,6 @@ function titleCase(value: string) {
     .split('-')
     .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
     .join(' ')
-}
-
-function humanizeId(id: string) {
-  if (id.length > 12 && /^[a-f0-9]+$/i.test(id)) return `…${id.slice(-6)}`
-  return titleCase(id)
 }
 
 /** Workspace path → group id (for WorkspaceContext compatibility) */

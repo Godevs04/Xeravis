@@ -46,7 +46,6 @@ export default buildConfig({
       beforeNav: ['./payload/admin/components/nav/BeforeNav#BeforeNav'],
       beforeNavLinks: ['./payload/admin/components/nav/BeforeNavLinks#BeforeNavLinks'],
       afterNavLinks: ['./payload/admin/components/nav/AfterNavLinks#AfterNavLinks'],
-      header: ['./payload/admin/components/HeaderChip#HeaderChip'],
       actions: [
         './payload/admin/components/QuickCreateAction#QuickCreateAction',
         './payload/admin/components/NotificationBell#NotificationBell',

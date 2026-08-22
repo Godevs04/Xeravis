@@ -28,7 +28,6 @@ import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c08
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
-import { HeaderChip as HeaderChip_7909306280128a750b6e8f2ab4e3d64b } from '../../../payload/admin/components/HeaderChip'
 import { Icon as Icon_4f090f1d512145da0a4cb8f745fcff9a } from '../../../payload/admin/components/graphics/Icon'
 import { Logo as Logo_9b451d48b7ff5becf1d58711b3ab64e7 } from '../../../payload/admin/components/graphics/Logo'
 import { QuickCreateAction as QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd } from '../../../payload/admin/components/QuickCreateAction'
@@ -111,7 +110,6 @@ export const importMap = {
     PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   '@payloadcms/plugin-search/client#LinkToDoc': LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   '@payloadcms/plugin-search/client#ReindexButton': ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
-  './payload/admin/components/HeaderChip#HeaderChip': HeaderChip_7909306280128a750b6e8f2ab4e3d64b,
   './payload/admin/components/graphics/Icon#Icon': Icon_4f090f1d512145da0a4cb8f745fcff9a,
   './payload/admin/components/graphics/Logo#Logo': Logo_9b451d48b7ff5becf1d58711b3ab64e7,
   './payload/admin/components/QuickCreateAction#QuickCreateAction':

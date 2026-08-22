@@ -1,6 +1,10 @@
 /* ============================================================
    XELARVIS ADMIN SHELL — CSS Grid layout (no margin-left hacks)
    Owns: template grid, sticky rail, content max-width, mobile drawer host
+
+   CRITICAL: Apply the SIDEBAR | MAIN grid ONLY to `.template-default`.
+   Never put the same 2-column grid on `body` — that reserves an empty
+   first column (ghost left region) while `.template-default` draws another.
    ============================================================ */
 
 html[data-xe-ui='v5'] {
@@ -11,12 +15,9 @@ html[data-xe-ui='v5'][data-xe-nav='collapsed'] {
   --xe-sidebar-current: var(--xe-sidebar-w-collapsed);
 }
 
-/* Kill Payload's default template grid fights */
-html[data-xe-ui='v5'] body:has(.template-default),
-html[data-xe-ui='v5'] .template-default {
-  display: grid !important;
-  grid-template-columns: var(--xe-sidebar-current) minmax(0, 1fr) !important;
-  grid-template-rows: minmax(0, 1fr) !important;
+/* Body: full-bleed canvas only — NOT a layout grid */
+html[data-xe-ui='v5'] body:has(.template-default) {
+  display: block !important;
   width: 100% !important;
   max-width: none !important;
   min-height: 100dvh !important;
@@ -27,11 +28,30 @@ html[data-xe-ui='v5'] .template-default {
   font-family: var(--xe-font) !important;
 }
 
+/* ONE admin grid: sidebar | main — always, including ≤1440 where Payload uses 0/auto */
+html[data-xe-ui='v5'] .template-default,
+html[data-xe-ui='v5'] .template-default--nav-hydrated,
+html[data-xe-ui='v5'] .template-default--nav-open,
+html[data-xe-ui='v5'] .template-default--nav-animate {
+  display: grid !important;
+  grid-template-columns: var(--xe-sidebar-current) minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: var(--xe-text) !important;
+  font-family: var(--xe-font) !important;
+}
+
 html[data-xe-ui='v5'] .template-default > .nav,
 html[data-xe-ui='v5'] .template-default > aside.nav {
   position: sticky !important;
   top: 0 !important;
   left: auto !important;
+  right: auto !important;
   bottom: auto !important;
   grid-column: 1 !important;
   grid-row: 1 !important;
@@ -56,6 +76,23 @@ html[data-xe-ui='v5'] .template-default > aside.nav {
   visibility: visible !important;
   display: flex !important;
   flex-direction: column !important;
+  /* Beat Payload ≤1440 display:none / opacity:0 until nav-open */
+  flex-shrink: 0 !important;
+  --nav-width: var(--xe-sidebar-current) !important;
+  --nav-padding-block-start: 0px !important;
+  --nav-padding-block-end: 0px !important;
+  --nav-padding-inline-start: 0px !important;
+  --nav-padding-inline-end: 0px !important;
+}
+
+/* Payload’s absolute 100vw header creates horizontal ghost space — hide it */
+html[data-xe-ui='v5'] .template-default > .nav > .nav__header,
+html[data-xe-ui='v5'] .template-default > aside.nav > .nav__header {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }
 
 html[data-xe-ui='v5'] .template-default__wrap {
@@ -73,7 +110,7 @@ html[data-xe-ui='v5'] .template-default__wrap {
   overflow-x: hidden !important;
 }
 
-/* Header — sticky, aligned controls */
+/* Header — sticky, aligned with content gutter. One breadcrumb system (HeaderChip). */
 html[data-xe-ui='v5'] .template-default__wrap > header,
 html[data-xe-ui='v5'] .app-header,
 html[data-xe-ui='v5'] .app-header.sticky {
@@ -94,6 +131,28 @@ html[data-xe-ui='v5'] .app-header.sticky {
   backdrop-filter: blur(12px) saturate(140%) !important;
   -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
   box-shadow: none !important;
+}
+
+/* StepNav slot hosts our portaled breadcrumb */
+html[data-xe-ui='v5'] .app-header__step-nav-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+html[data-xe-ui='v5'] .app-header .step-nav,
+html[data-xe-ui='v5'] .app-header__step-nav {
+  display: none !important;
+}
+
+html[data-xe-ui='v5'] .app-header__controls-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  gap: var(--xe-space-3) !important;
 }
 
 html[data-xe-ui='v5'] .template-default__wrap > header .btn,
@@ -160,7 +219,6 @@ html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-na
     --xe-sidebar-current: 0px;
   }
 
-  html[data-xe-ui='v5'] body:has(.template-default),
   html[data-xe-ui='v5'] .template-default {
     grid-template-columns: minmax(0, 1fr) !important;
   }
@@ -199,6 +257,13 @@ html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-na
   .xe-content-shell,
   .xe-page {
     padding: var(--xe-space-6) var(--xe-gutter) 48px !important;
+  }
+}
+
+/* Tablet: prefer compact icon rail so content stays usable (769–1024) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  html[data-xe-ui='v5']:not([data-xe-nav='expanded']) {
+    --xe-sidebar-current: var(--xe-sidebar-w-collapsed);
   }
 }
 

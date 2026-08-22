@@ -42,8 +42,9 @@ html[data-xe-ui='v5'] .nav {
   /* intentional no-op: layout owned by shell.scss / nav-os.scss */
 }
 
-/* Hard override — Payload scrolls on .nav__scroll, wrap must not clip */
-html[data-xe-ui='v5'] .nav > .nav__scroll {
+/* Payload default: scroll on .nav__scroll. Enterprise OS owns scroll inside
+   [data-xe-os-nav] — keep the Payload wrapper from nesting a second scrollbar. */
+html[data-xe-ui='v5'] .nav > .nav__scroll:not(:has([data-xe-os-nav])) {
   flex: 1 1 auto !important;
   min-height: 0 !important;
   height: 100% !important;
@@ -52,6 +53,10 @@ html[data-xe-ui='v5'] .nav > .nav__scroll {
   overflow-x: hidden !important;
   overscroll-behavior: contain !important;
   -webkit-overflow-scrolling: touch !important;
+}
+
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) {
+  overflow: hidden !important;
 }
 
 html[data-xe-ui='v5'] .nav > .nav__scroll > .nav__wrap {
@@ -63,9 +68,9 @@ html[data-xe-ui='v5'] .nav > .nav__scroll > .nav__wrap {
 
 html[data-xe-ui='v5'] .nav__link.active,
 html[data-xe-ui='v5'] .nav__link[aria-current='page'] {
-  background: linear-gradient(90deg, rgba(13, 148, 136, 0.18), rgba(6, 182, 212, 0.08)) !important;
-  box-shadow: inset 3px 0 0 #0d9488 !important;
-  color: var(--xe-sidebar-active) !important;
+  /* Payload default nav is hidden — neutralize inset bar leaking to custom links */
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
 /* ── Header glass — shell.scss owns sticky header ── */
@@ -1769,18 +1774,18 @@ html[data-xe-ui='v5'] .xe-nav-collapse__btn {
   margin: 0 !important;
 }
 
-/* Soft scrollbar — no thick teal rail eating nav width */
-html[data-xe-ui='v5'] .nav__scroll {
+/* Soft scrollbar — only for legacy Payload nav (no OS shell).
+   Enterprise OS scrolls inside .xe-os-nav__modules — do not pad .nav__scroll. */
+html[data-xe-ui='v5'] .nav__scroll:not(:has([data-xe-os-nav])) {
   scrollbar-width: thin !important;
   scrollbar-color: color-mix(in srgb, var(--xe-secondary) 28%, transparent) transparent !important;
-  padding-right: 2px !important;
 }
 
-html[data-xe-ui='v5'] .nav__scroll::-webkit-scrollbar {
+html[data-xe-ui='v5'] .nav__scroll:not(:has([data-xe-os-nav]))::-webkit-scrollbar {
   width: 4px !important;
 }
 
-html[data-xe-ui='v5'] .nav__scroll::-webkit-scrollbar-thumb {
+html[data-xe-ui='v5'] .nav__scroll:not(:has([data-xe-os-nav]))::-webkit-scrollbar-thumb {
   background: color-mix(in srgb, var(--xe-secondary) 30%, transparent) !important;
 }
 
