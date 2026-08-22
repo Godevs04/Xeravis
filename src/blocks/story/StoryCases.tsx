@@ -54,9 +54,9 @@ function enrichCase(
       technologies: ['Python', 'Azure', 'AI', 'Power BI', 'CDISC'],
       timeline: '14 weeks',
       metrics: [
-        { value: '98%', label: 'Prediction accuracy' },
-        { value: '45%', label: 'Less manual effort' },
-        { value: '3×', label: 'Faster reporting' },
+        { value: 'Faster', label: 'Clinical reporting' },
+        { value: 'Less', label: 'Manual effort' },
+        { value: 'Governed', label: 'Analytics delivery' },
       ],
     },
     {
@@ -66,9 +66,9 @@ function enrichCase(
       technologies: ['Next.js', 'Node.js', 'Kubernetes', 'AWS', 'Docker'],
       timeline: '20 weeks',
       metrics: [
-        { value: '3×', label: 'Deployment speed' },
-        { value: '70%', label: 'Infra cost down' },
-        { value: '99.9%', label: 'Availability' },
+        { value: 'Faster', label: 'Deployment cycles' },
+        { value: 'Lower', label: 'Infra overhead' },
+        { value: 'Stable', label: 'Platform uptime' },
       ],
     },
     {
@@ -78,9 +78,9 @@ function enrichCase(
       technologies: ['SAS', 'Python', 'CDISC', 'Spark', 'Azure'],
       timeline: '18 weeks',
       metrics: [
-        { value: '120M', label: 'Records processed' },
-        { value: '40%', label: 'Ops efficiency' },
-        { value: '2×', label: 'Faster cycles' },
+        { value: 'Clearer', label: 'Ops efficiency' },
+        { value: 'Faster', label: 'Analysis cycles' },
+        { value: 'Governed', label: 'Data standards' },
       ],
     },
     {
@@ -90,8 +90,8 @@ function enrichCase(
       technologies: ['LangChain', 'OpenAI', 'Python', 'Docker', 'Cloud'],
       timeline: '12 weeks',
       metrics: [
-        { value: '4×', label: 'Time to value' },
-        { value: '99%', label: 'Eval pass rate' },
+        { value: 'Faster', label: 'Time to value' },
+        { value: 'Evaluated', label: 'AI behaviour' },
         { value: '24/7', label: 'Monitoring' },
       ],
     },

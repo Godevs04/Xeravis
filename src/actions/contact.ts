@@ -1,9 +1,9 @@
 'use server'
 
 import { headers } from 'next/headers'
-import { Resend } from 'resend'
 import { z } from 'zod'
 
+import { sendEmail } from '@/lib/email'
 import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
 import { getPayload } from '@/lib/payload'
 
@@ -122,32 +122,24 @@ export async function submitContact(
       },
     })
 
-    const resendKey = process.env.RESEND_API_KEY
-    const notifyEmail = process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO
-    if (resendKey && notifyEmail) {
-      const resend = new Resend(resendKey)
-      await resend.emails.send({
-        from:
-          process.env.RESEND_FROM_EMAIL ||
-          process.env.EMAIL_FROM ||
-          'Xelarvis <onboarding@resend.dev>',
-        to: notifyEmail,
-        subject: `New contact enquiry from ${parsed.data.name}`,
-        text: [
-          `Name: ${parsed.data.name}`,
-          `Email: ${parsed.data.email}`,
-          parsed.data.company ? `Company: ${parsed.data.company}` : '',
-          parsed.data.jobTitle ? `Job title: ${parsed.data.jobTitle}` : '',
-          parsed.data.country ? `Country: ${parsed.data.country}` : '',
-          parsed.data.phone ? `Phone: ${parsed.data.phone}` : '',
-          `Area of interest: ${intent}`,
-          '',
-          parsed.data.message,
-        ]
-          .filter(Boolean)
-          .join('\n'),
-      })
-    }
+    await sendEmail({
+      to: process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO,
+      replyTo: parsed.data.email,
+      subject: `New contact enquiry from ${parsed.data.name}`,
+      text: [
+        `Name: ${parsed.data.name}`,
+        `Email: ${parsed.data.email}`,
+        parsed.data.company ? `Company: ${parsed.data.company}` : '',
+        parsed.data.jobTitle ? `Job title: ${parsed.data.jobTitle}` : '',
+        parsed.data.country ? `Country: ${parsed.data.country}` : '',
+        parsed.data.phone ? `Phone: ${parsed.data.phone}` : '',
+        `Area of interest: ${intent}`,
+        '',
+        parsed.data.message,
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    })
 
     return { ok: true, message: 'Thank you. Our team will respond within one business day.' }
   } catch {

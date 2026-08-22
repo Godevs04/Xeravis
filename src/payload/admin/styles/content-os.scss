@@ -1132,3 +1132,83 @@ html[data-xe-ui='v5'] .field-type__wrap {
   max-width: 100% !important;
   min-width: 0 !important;
 }
+
+/* ============================================================
+   ARCHITECTURE PASS — document edit + forms (sole authority)
+   ============================================================ */
+
+html[data-xe-ui='v5'] .document-fields--has-sidebar,
+html[data-xe-ui='v5'] .collection-edit .document-fields {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) var(--xe-doc-sidebar) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__main,
+html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  float: none !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+  position: sticky !important;
+  top: calc(var(--xe-header-h) + 16px) !important;
+}
+
+html[data-xe-ui='v5'] .field-type__wrap > input,
+html[data-xe-ui='v5'] .input > input,
+html[data-xe-ui='v5'] .field-type.text input,
+html[data-xe-ui='v5'] .field-type.email input,
+html[data-xe-ui='v5'] .field-type.number input {
+  min-height: var(--xe-input-h) !important;
+  height: var(--xe-input-h) !important;
+  border-radius: var(--xe-radius) !important;
+  border: 1px solid var(--xe-input-border, var(--xe-border)) !important;
+  background: var(--xe-input-bg) !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .field-type__wrap > input:focus,
+html[data-xe-ui='v5'] .input > input:focus,
+html[data-xe-ui='v5'] .textarea > textarea:focus {
+  outline: none !important;
+  border-color: var(--xe-secondary) !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1) !important;
+}
+
+html[data-xe-ui='v5'] .field-type .field-label,
+html[data-xe-ui='v5'] .field-type label {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--xe-text) !important;
+}
+
+/* Inline validation — no giant red banners */
+html[data-xe-ui='v5'] .field-error,
+html[data-xe-ui='v5'] .tooltip.tooltip--error,
+html[data-xe-ui='v5'] .error-message,
+html[data-xe-ui='v5'] .field-type .field-description.error {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 0 0 !important;
+  margin: 0 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: var(--xe-danger) !important;
+  border-radius: 0 !important;
+}
+
+@media (max-width: 1024px) {
+  html[data-xe-ui='v5'] .document-fields--has-sidebar,
+  html[data-xe-ui='v5'] .collection-edit .document-fields {
+    grid-template-columns: 1fr !important;
+  }
+
+  html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+    position: static !important;
+  }
+}

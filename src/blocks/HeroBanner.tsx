@@ -48,12 +48,12 @@ export function HeroBannerFallback() {
   return (
     <PageHero
       brand="Xelarvis"
-      eyebrow="AI Research · Consulting · Data Science · Healthcare"
-      title="Engineering Intelligent Systems for Healthcare, Enterprises, and the Future."
-      subtitle="We help organisations transform data into measurable business value through AI-powered decision intelligence—backed by research depth and enterprise delivery."
+      eyebrow="Artificial Intelligence · Data Science · IT Consulting"
+      title="Engineering Intelligence. Transforming Business."
+      subtitle="XELARVIS combines Artificial Intelligence, Data Science and IT Consulting to help organisations turn complex data and technology challenges into measurable business outcomes—with specialized expertise in Healthcare & Life Sciences."
       ctas={[
-        { label: "Let's Talk", href: '/contact?intent=business', variant: 'accent' },
-        { label: 'Explore services', href: '/services', variant: 'outline' },
+        { label: 'Explore Our Capabilities', href: '/services', variant: 'accent' },
+        { label: 'Talk to XELARVIS', href: '/contact?intent=business', variant: 'outline' },
       ]}
       variant="product"
     />

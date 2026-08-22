@@ -1,0 +1,210 @@
+/* ============================================================
+   XELARVIS ADMIN SHELL — CSS Grid layout (no margin-left hacks)
+   Owns: template grid, sticky rail, content max-width, mobile drawer host
+   ============================================================ */
+
+html[data-xe-ui='v5'] {
+  --xe-sidebar-current: var(--xe-sidebar-w);
+}
+
+html[data-xe-ui='v5'][data-xe-nav='collapsed'] {
+  --xe-sidebar-current: var(--xe-sidebar-w-collapsed);
+}
+
+/* Kill Payload's default template grid fights */
+html[data-xe-ui='v5'] body:has(.template-default),
+html[data-xe-ui='v5'] .template-default {
+  display: grid !important;
+  grid-template-columns: var(--xe-sidebar-current) minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: var(--xe-bg) !important;
+  color: var(--xe-text) !important;
+  font-family: var(--xe-font) !important;
+}
+
+html[data-xe-ui='v5'] .template-default > .nav,
+html[data-xe-ui='v5'] .template-default > aside.nav {
+  position: sticky !important;
+  top: 0 !important;
+  left: auto !important;
+  bottom: auto !important;
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: var(--xe-sidebar-current) !important;
+  min-width: var(--xe-sidebar-current) !important;
+  max-width: var(--xe-sidebar-current) !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-right: 1px solid var(--xe-border) !important;
+  border-radius: 0 !important;
+  background: var(--xe-sidebar-solid) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: hidden !important;
+  z-index: 40 !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+html[data-xe-ui='v5'] .template-default__wrap {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  overflow-x: hidden !important;
+}
+
+/* Header — sticky, aligned controls */
+html[data-xe-ui='v5'] .template-default__wrap > header,
+html[data-xe-ui='v5'] .app-header,
+html[data-xe-ui='v5'] .app-header.sticky {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 30 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--xe-space-3) !important;
+  min-height: var(--xe-header-h) !important;
+  height: var(--xe-header-h) !important;
+  margin: 0 !important;
+  padding: 0 var(--xe-gutter) !important;
+  border: none !important;
+  border-bottom: 1px solid var(--xe-border) !important;
+  border-radius: 0 !important;
+  background: var(--xe-header) !important;
+  backdrop-filter: blur(12px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .template-default__wrap > header .btn,
+html[data-xe-ui='v5'] .app-header .btn,
+html[data-xe-ui='v5'] .xe-action-btn,
+html[data-xe-ui='v5'] .xe-header-create .xe-action-btn {
+  min-height: 40px !important;
+  height: 40px !important;
+  border-radius: var(--xe-radius) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Content column */
+html[data-xe-ui='v5'] .template-default__wrap > .template-default__content,
+html[data-xe-ui='v5'] .collection-list,
+html[data-xe-ui='v5'] .collection-edit,
+html[data-xe-ui='v5'] .global-edit,
+html[data-xe-ui='v5'] .dashboard,
+html[data-xe-ui='v5'] .account {
+  width: 100% !important;
+  max-width: var(--xe-content-max) !important;
+  margin-inline: auto !important;
+  padding: var(--xe-section-gap) var(--xe-gutter) 64px !important;
+  box-sizing: border-box !important;
+}
+
+/* Shared content shell for custom React views */
+.xe-content-shell,
+.xe-page {
+  width: 100%;
+  max-width: var(--xe-content-max);
+  margin-inline: auto;
+  padding: var(--xe-section-gap) var(--xe-gutter) 64px;
+  box-sizing: border-box;
+}
+
+/* Hide Payload's default collection groups — EnterpriseNav owns nav */
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > .nav__wrap,
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > .nav__header,
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) .nav__controls,
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) .nav__log-out {
+  display: none !important;
+}
+
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-nav] {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+}
+
+/* Mobile drawer */
+@media (max-width: 768px) {
+  html[data-xe-ui='v5'] {
+    --xe-sidebar-current: 0px;
+  }
+
+  html[data-xe-ui='v5'] body:has(.template-default),
+  html[data-xe-ui='v5'] .template-default {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html[data-xe-ui='v5'] .template-default > .nav,
+  html[data-xe-ui='v5'] .template-default > aside.nav {
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    width: min(320px, 88vw) !important;
+    min-width: min(320px, 88vw) !important;
+    max-width: min(320px, 88vw) !important;
+    transform: translateX(-105%) !important;
+    transition: transform var(--xe-dur-nav) var(--xe-ease) !important;
+    z-index: 60 !important;
+    box-shadow: var(--xe-shadow-lg) !important;
+    border-right: 1px solid var(--xe-border) !important;
+  }
+
+  html[data-xe-ui='v5'] .nav.nav--nav-open,
+  html[data-xe-ui='v5'][data-xe-nav='open'] .template-default > .nav,
+  html[data-xe-ui='v5'][data-xe-nav='open'] .template-default > aside.nav {
+    transform: translateX(0) !important;
+  }
+
+  html[data-xe-ui='v5'] .template-default__wrap {
+    grid-column: 1 !important;
+    margin-left: 0 !important;
+  }
+
+  html[data-xe-ui='v5'] .template-default__wrap > .template-default__content,
+  html[data-xe-ui='v5'] .collection-list,
+  html[data-xe-ui='v5'] .collection-edit,
+  html[data-xe-ui='v5'] .global-edit,
+  html[data-xe-ui='v5'] .dashboard,
+  html[data-xe-ui='v5'] .account,
+  .xe-content-shell,
+  .xe-page {
+    padding: var(--xe-space-6) var(--xe-gutter) 48px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-xe-ui='v5'] .template-default > .nav,
+  html[data-xe-ui='v5'] .template-default > aside.nav {
+    transition: none !important;
+  }
+}

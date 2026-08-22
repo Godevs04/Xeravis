@@ -15,16 +15,17 @@ type ServiceDoc = {
 }
 
 export const metadata = buildMetadata({
-  title: 'AI Research, Consulting, Data Science & Healthcare Services',
+  title: 'Artificial Intelligence, Data Science & IT Consulting Services',
   description:
-    'AI research & innovation, enterprise technology consulting, data science, clinical data science, and cloud platforms—engineered for measurable business outcomes.',
+    'Artificial Intelligence, Data Science & Analytics, IT Consulting & Digital Transformation, Data Engineering & Cloud, and Healthcare & Clinical Data Science—engineered for measurable business outcomes.',
   path: '/services',
   keywords: [
-    'AI Research',
-    'Enterprise Technology Consulting',
+    'Artificial Intelligence',
     'Data Science',
-    'Healthcare AI',
     'IT Consulting',
+    'Digital Transformation',
+    'Data Engineering',
+    'Healthcare AI Specialty',
     'Xelarvis Services',
   ],
 })
@@ -37,7 +38,7 @@ export default async function ServicesPage() {
     <>
       <ServicesPageHero
         title="Our Core Services"
-        subtitle="AI Research & Innovation, Data Science, Enterprise Technology Consulting, Clinical Data Science, and Cloud—focused on measurable business outcomes."
+        subtitle="Artificial Intelligence, Data Science & Analytics, IT Consulting & Digital Transformation, Data Engineering & Cloud—plus Healthcare & Life Sciences as a specialty."
       />
       <ServicesIndexSection services={items} />
     </>

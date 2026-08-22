@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { ContentShell } from '@/payload/admin/components/layout/ContentShell'
 import { EmptyState } from '@/payload/admin/components/ui/EmptyState'
 import { PageHeader } from '@/payload/admin/components/ui/PageHeader'
 import { StatCard } from '@/payload/admin/components/ui/StatCard'
@@ -33,7 +34,7 @@ export function WorkspaceShell({
   children,
 }: WorkspaceShellProps) {
   return (
-    <div className="xe-content-shell xe-page xe-ws">
+    <ContentShell className="xe-ws">
       <PageHeader
         eyebrow="Xelarvis Admin"
         title={title}
@@ -73,7 +74,7 @@ export function WorkspaceShell({
       ) : null}
 
       <div className="xe-ws__body">{children}</div>
-    </div>
+    </ContentShell>
   )
 }
 

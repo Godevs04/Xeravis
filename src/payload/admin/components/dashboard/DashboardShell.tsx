@@ -1,5 +1,6 @@
 'use client'
 
+import { ContentShell } from '@/payload/admin/components/layout/ContentShell'
 import { motion, type Variants } from 'framer-motion'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -88,7 +89,7 @@ export const DashboardShell = ({
   const daypart = hour < 12 ? 'Morning' : hour < 18 ? 'Afternoon' : 'Evening'
 
   return (
-    <div className="xe-content-shell xe-page xe-dash xe-dash--os">
+    <ContentShell className="xe-dash xe-dash--os">
       {/* Hero */}
       <motion.header
         className="xe-os-hero xe-page__header"
@@ -308,7 +309,7 @@ export const DashboardShell = ({
           </div>
         </section>
       </div>
-    </div>
+    </ContentShell>
   )
 }
 

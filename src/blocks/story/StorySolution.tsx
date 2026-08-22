@@ -18,11 +18,11 @@ type StorySolutionProps = {
 const FALLBACK: Chapter[] = [
   {
     title: 'Intelligence that ships',
-    body: 'We design AI and analytics systems that survive audits, scale in production, and move real clinical and enterprise decisions.',
+    body: 'We design AI and analytics systems that survive audits, scale in production, and move real enterprise decisions.',
   },
   {
-    title: 'Healthcare-first engineering',
-    body: 'CDISC, SAS, and regulated workflows sit beside modern cloud and LLM stacks — not as afterthoughts.',
+    title: 'Research-driven engineering',
+    body: 'Evaluation, governance, and regulated workflows sit beside modern cloud and LLM stacks — not as afterthoughts. Healthcare is a specialty practice.',
   },
   {
     title: 'One narrative, many surfaces',

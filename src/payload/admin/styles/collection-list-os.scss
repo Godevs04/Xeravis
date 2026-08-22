@@ -627,3 +627,46 @@ html[data-xe-ui='v5'] .collection-list .query-preset-bar {
     padding: 36px 16px !important;
   }
 }
+
+/* ============================================================
+   ARCHITECTURE PASS — table density + empty states
+   ============================================================ */
+
+html[data-xe-ui='v5'] .collection-list table thead th,
+html[data-xe-ui='v5'] .collection-list .table thead th {
+  height: var(--xe-table-head-h, 52px) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--xe-muted) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list table tbody td,
+html[data-xe-ui='v5'] .collection-list .table tbody td {
+  height: var(--xe-row-h, 60px) !important;
+  vertical-align: middle !important;
+}
+
+html[data-xe-ui='v5'] .collection-list table tbody td a,
+html[data-xe-ui='v5'] .collection-list .table tbody td a {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html[data-xe-ui='v5'] .collection-list .no-results,
+html[data-xe-ui='v5'] .collection-list .collection-list__no-results {
+  min-height: 280px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  border: 1px dashed var(--xe-border) !important;
+  border-radius: var(--xe-card-radius) !important;
+  background: color-mix(in srgb, var(--xe-surface) 70%, transparent) !important;
+  padding: 40px 24px !important;
+}

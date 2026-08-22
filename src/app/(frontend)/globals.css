@@ -139,7 +139,7 @@
   }
 
   .font-display {
-    font-family: var(--font-display), 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   }
 
   .surface-navy {

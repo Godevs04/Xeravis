@@ -1,37 +1,44 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React, { useMemo } from 'react'
 
-/** Breadcrumb from URL — quiet on the home dashboard */
+import { getBreadcrumbTrail } from '@/payload/admin/nav/registry'
+
+/** Header breadcrumb trail — derived from the shared nav registry */
 export const HeaderChip = () => {
-  const [crumb, setCrumb] = useState('')
+  const pathname = usePathname() || '/admin'
+  const crumbs = useMemo(() => getBreadcrumbTrail(pathname), [pathname])
 
-  useEffect(() => {
-    const update = () => {
-      const path = window.location.pathname.replace(/^\/admin\/?/, '')
-      if (!path || path === '/') {
-        setCrumb('')
-        return
-      }
-      const parts = path.split('/').filter(Boolean)
-      const pretty = parts
-        .map((p) => p.replace(/-/g, ' '))
-        .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-        .join(' / ')
-      setCrumb(pretty)
-    }
-    update()
-    const id = window.setInterval(update, 800)
-    return () => window.clearInterval(id)
-  }, [])
-
-  if (!crumb) return null
+  if (crumbs.length <= 1) return null
 
   return (
-    <div className="xe-header-chip xe-header-chip--breadcrumb" title={crumb}>
-      <span className="xe-header-chip__dot" aria-hidden />
-      <strong>{crumb}</strong>
-    </div>
+    <nav className="xe-header-chip xe-header-chip--breadcrumb" aria-label="Breadcrumb">
+      <ol className="xe-breadcrumb">
+        {crumbs.map((crumb, index) => {
+          const last = index === crumbs.length - 1
+          return (
+            <li key={`${crumb.label}-${index}`} className="xe-breadcrumb__item">
+              {index > 0 ? (
+                <span className="xe-breadcrumb__sep" aria-hidden>
+                  /
+                </span>
+              ) : null}
+              {crumb.href && !last ? (
+                <Link href={crumb.href} className="xe-breadcrumb__link">
+                  {crumb.label}
+                </Link>
+              ) : (
+                <span className="xe-breadcrumb__current" aria-current={last ? 'page' : undefined}>
+                  {crumb.label}
+                </span>
+              )}
+            </li>
+          )
+        })}
+      </ol>
+    </nav>
   )
 }
 

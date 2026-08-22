@@ -31,6 +31,8 @@ type JobDetailViewProps = {
   job: JobDetailData
   descriptionSlot?: ReactNode
   requirementsSlot?: ReactNode
+  /** When false, show email apply CTA instead of the online form (fallback/demo jobs). */
+  applicationsOpen?: boolean
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -145,7 +147,12 @@ function SkillCloud({ items, accent }: { items: string[]; accent?: boolean }) {
   )
 }
 
-export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDetailViewProps) {
+export function JobDetailView({
+  job,
+  descriptionSlot,
+  requirementsSlot,
+  applicationsOpen = true,
+}: JobDetailViewProps) {
   const reduce = useReducedMotion()
   const responsibilities = listItems(job.responsibilities)
   const requiredSkills = listItems(job.requiredSkills)
@@ -253,7 +260,7 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
                   variant="outline"
                   className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-7 font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/40 hover:bg-[color:var(--color-hover)]"
                 >
-                  <Link href="/contact?intent=careers">Talk to recruiting</Link>
+                  <Link href="/contact?intent=career">Talk to recruiting</Link>
                 </Button>
               </motion.div>
             </div>
@@ -388,7 +395,29 @@ export function JobDetailView({ job, descriptionSlot, requirementsSlot }: JobDet
                   Apply for this Position
                 </h2>
                 <div className="mt-6">
-                  <CareerApplicationForm careerId={String(job.id)} jobTitle={job.title} />
+                  {applicationsOpen ? (
+                    <CareerApplicationForm careerId={String(job.id)} jobTitle={job.title} />
+                  ) : (
+                    <div className="space-y-4 text-sm leading-relaxed text-[color:var(--color-secondary)]">
+                      <p>
+                        Online applications for this listing will open once the role is published in
+                        our careers system. You can still reach recruiting directly:
+                      </p>
+                      <Button
+                        asChild
+                        className="w-full rounded-full bg-[color:var(--color-accent)] font-semibold text-white hover:bg-[color:var(--color-accent-hover)]"
+                      >
+                        <a
+                          href={`mailto:hr@xelarvis.in?subject=${encodeURIComponent(`Application: ${job.title}`)}`}
+                        >
+                          Email hr@xelarvis.in
+                        </a>
+                      </Button>
+                      <Button asChild variant="outline" className="w-full rounded-full">
+                        <Link href="/careers#open-roles">Browse open roles</Link>
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>

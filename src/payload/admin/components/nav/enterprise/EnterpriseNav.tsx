@@ -59,7 +59,7 @@ function openCommand() {
 
 function moduleToWorkspace(id: NavModuleId): WorkspaceId | null {
   if (id === 'overview' || id === 'media' || id === 'ai') return null
-  return id
+  return id as WorkspaceId
 }
 
 export function EnterpriseNav() {
@@ -174,7 +174,7 @@ export function EnterpriseNav() {
             />
             <span className="xe-os-nav__brand-copy">
               <span className="xe-os-nav__brand-name">Xelarvis</span>
-              <span className="xe-os-nav__brand-sub">Enterprise OS</span>
+              <span className="xe-os-nav__brand-sub">Admin</span>
             </span>
           </Link>
           <button
@@ -450,9 +450,10 @@ function ModuleCard({
                 const linkActive = isLinkActive(pathname, link.href)
                 return (
                   <Link
-                    key={link.href}
+                    key={`${mod.id}:${link.href}`}
                     href={link.href}
                     className={`xe-os-mod__link${linkActive ? 'is-active' : ''}`}
+                    aria-current={linkActive ? 'page' : undefined}
                   >
                     <span className="xe-os-mod__link-rail" aria-hidden>
                       <span className="xe-os-mod__link-dot" />

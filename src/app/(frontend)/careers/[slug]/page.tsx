@@ -4,7 +4,7 @@ import { JobDetailView } from '@/components/careers/JobDetailView'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
-import { FALLBACK_JOBS } from '@/lib/fallback-data'
+import { FALLBACK_JOB_DETAILS, FALLBACK_JOBS } from '@/lib/fallback-data'
 import { breadcrumbJsonLd, buildMetadata, graphJsonLd, jobPostingJsonLd } from '@/lib/seo'
 
 export const revalidate = 60
@@ -27,9 +27,11 @@ type CareerDoc = {
   preferredSkills?: { item?: string }[] | null
   qualifications?: string | null
   benefits?: { item?: string }[] | null
+  applicationDeadline?: string | null
   active?: boolean | null
   updatedAt?: string | null
   createdAt?: string | null
+  postedAt?: string | null
   meta?: { title?: string; description?: string; image?: unknown }
 }
 
@@ -52,7 +54,8 @@ export async function generateMetadata({ params }: Props) {
     description:
       job?.meta?.description ||
       job?.aboutRole ||
-      `Apply for ${job?.title || fallback?.title} at Xelarvis. Roles across Data Science, AI, and Healthcare.`,
+      FALLBACK_JOB_DETAILS[slug]?.aboutRole ||
+      `Apply for ${job?.title || fallback?.title || 'open roles'} at Xelarvis—AI, Data Science, and IT Consulting.`,
     path: `/careers/${slug}`,
   })
 }
@@ -61,71 +64,22 @@ export default async function CareerDetailPage({ params }: Props) {
   const { slug } = await params
   const job = await getPublishedBySlug<CareerDoc>('careers', slug)
   const fallback = FALLBACK_JOBS.find((j) => j.slug === slug)
+  const fallbackDetail = FALLBACK_JOB_DETAILS[slug]
 
   if (!job && !fallback) notFound()
 
+  const applicationsOpen = Boolean(job?.id && job.active !== false)
+
   const doc = job || {
     ...fallback!,
-    aboutRole:
-      'Design AI models, develop APIs, train ML models, deploy solutions, and collaborate with clients.',
-    description: {
-      root: {
-        children: [
-          {
-            type: 'paragraph',
-            children: [
-              {
-                type: 'text',
-                text: 'Join our team to build intelligent solutions across AI, healthcare, and enterprise technology.',
-              },
-            ],
-          },
-        ],
-      },
-    },
-    requirements: {
-      root: {
-        children: [
-          {
-            type: 'paragraph',
-            children: [
-              {
-                type: 'text',
-                text: 'Relevant experience, strong communication, and commitment to engineering excellence.',
-              },
-            ],
-          },
-        ],
-      },
-    },
-    responsibilities: [
-      { item: 'Design AI models' },
-      { item: 'Develop APIs' },
-      { item: 'Train ML models' },
-      { item: 'Deploy solutions' },
-      { item: 'Collaborate with clients' },
-    ],
-    requiredSkills: [
-      { item: 'Python' },
-      { item: 'Machine Learning' },
-      { item: 'SQL' },
-      { item: 'Cloud Platforms' },
-      { item: 'Git' },
-    ],
-    preferredSkills: [
-      { item: 'TensorFlow' },
-      { item: 'LangChain' },
-      { item: 'Azure AI' },
-      { item: 'Docker' },
-    ],
-    qualifications:
-      "Bachelor's or Master's degree in Computer Science, Data Science, AI, Statistics, or related field.",
-    benefits: [
-      { item: 'Flexible work' },
-      { item: 'Learning budget' },
-      { item: 'Paid leave' },
-      { item: 'Research opportunities' },
-    ],
+    aboutRole: fallbackDetail?.aboutRole,
+    description: undefined,
+    requirements: undefined,
+    responsibilities: fallbackDetail?.responsibilities,
+    requiredSkills: fallbackDetail?.requiredSkills,
+    preferredSkills: fallbackDetail?.preferredSkills,
+    qualifications: fallbackDetail?.qualifications,
+    benefits: fallbackDetail?.benefits,
   }
 
   const skills = [
@@ -138,7 +92,8 @@ export default async function CareerDetailPage({ params }: Props) {
       title: doc.title,
       description: doc.aboutRole || `Open role: ${doc.title} at Xelarvis Technologies.`,
       path: `/careers/${slug}`,
-      datePosted: doc.createdAt || doc.updatedAt || undefined,
+      datePosted: doc.postedAt || doc.createdAt || doc.updatedAt || undefined,
+      validThrough: doc.applicationDeadline || undefined,
       employmentType: doc.type,
       workMode: doc.workMode,
       location: doc.location,
@@ -156,6 +111,7 @@ export default async function CareerDetailPage({ params }: Props) {
     <>
       <JsonLd id="job-jsonld" data={jsonLd} />
       <JobDetailView
+        applicationsOpen={applicationsOpen}
         job={{
           id: String(doc.id),
           title: doc.title,

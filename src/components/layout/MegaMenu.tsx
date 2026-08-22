@@ -61,7 +61,7 @@ const CATEGORY_META: Record<string, { title: string; blurb: string; featuredLabe
   services: {
     title: 'Services',
     blurb:
-      'AI research, consulting, data science, and healthcare—capabilities that move research into production.',
+      'Artificial Intelligence, Data Science, and IT Consulting—capabilities that move strategy into production.',
     featuredLabel: 'Featured service',
   },
   industries: {
