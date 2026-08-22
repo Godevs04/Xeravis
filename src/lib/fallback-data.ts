@@ -343,30 +343,146 @@ export const FALLBACK_ABOUT_BLOCKS = [
 
 export const FALLBACK_JOBS = [
   {
-    id: '1',
+    id: 'fallback-ai-engineer',
     title: 'AI Engineer',
     slug: 'ai-engineer',
     department: 'Artificial Intelligence',
     location: 'Hyderabad / Remote',
     type: 'full-time',
     workMode: 'hybrid',
-    experienceRequired: '2–5 Years',
+    experienceRequired: '2–5 years',
     openings: 2,
     active: true,
   },
   {
-    id: '2',
-    title: 'Clinical SAS Programmer',
-    slug: 'clinical-sas-programmer',
-    department: 'Clinical Data Science',
-    location: 'Hyderabad / Hybrid',
+    id: 'fallback-data-scientist',
+    title: 'Data Scientist',
+    slug: 'data-scientist',
+    department: 'Data Science',
+    location: 'Hyderabad / Remote',
     type: 'full-time',
     workMode: 'hybrid',
-    experienceRequired: '3–6 Years',
+    experienceRequired: '0–2 years',
     openings: 1,
     active: true,
   },
-]
+  {
+    id: 'fallback-clinical-sas',
+    title: 'Clinical SAS Programmer',
+    slug: 'clinical-sas-programmer',
+    department: 'Healthcare Specialty',
+    location: 'Hyderabad / Hybrid',
+    type: 'full-time',
+    workMode: 'hybrid',
+    experienceRequired: '3–6 years',
+    openings: 1,
+    active: true,
+  },
+] as const
+
+export const FALLBACK_JOB_DETAILS: Record<
+  string,
+  {
+    aboutRole: string
+    responsibilities: { item: string }[]
+    requiredSkills: { item: string }[]
+    preferredSkills: { item: string }[]
+    qualifications: string
+    benefits: { item: string }[]
+  }
+> = {
+  'ai-engineer': {
+    aboutRole:
+      'Design, build and deploy production AI systems—machine learning, generative AI, evaluation and MLOps—working with consulting and engineering teams.',
+    responsibilities: [
+      { item: 'Develop and evaluate ML / generative AI solutions for client programmes' },
+      { item: 'Build APIs, pipelines and monitoring for production inference' },
+      { item: 'Collaborate with data scientists, architects and stakeholders' },
+      { item: 'Document models, assumptions and operational runbooks' },
+      { item: 'Contribute to responsible AI evaluation and governance practices' },
+    ],
+    requiredSkills: [
+      { item: 'Python' },
+      { item: 'Machine Learning' },
+      { item: 'SQL' },
+      { item: 'Cloud platforms' },
+      { item: 'Git' },
+    ],
+    preferredSkills: [
+      { item: 'PyTorch' },
+      { item: 'LangChain' },
+      { item: 'MLOps' },
+      { item: 'Docker' },
+    ],
+    qualifications:
+      "Bachelor's or Master's in Computer Science, AI, Data Science or a related field—or equivalent practical experience.",
+    benefits: [
+      { item: 'Flexible / hybrid work' },
+      { item: 'Learning & certification budget' },
+      { item: 'Mentorship and career paths' },
+      { item: 'Research and delivery exposure' },
+    ],
+  },
+  'data-scientist': {
+    aboutRole:
+      'Develop predictive models, perform statistical analysis, build ML pipelines, and communicate findings to engineering and business stakeholders.',
+    responsibilities: [
+      { item: 'Develop predictive and statistical models' },
+      { item: 'Perform exploratory analysis and feature engineering' },
+      { item: 'Build and maintain ML pipelines' },
+      { item: 'Collaborate with engineers on production handoff' },
+      { item: 'Communicate insights clearly to non-technical stakeholders' },
+    ],
+    requiredSkills: [
+      { item: 'Python' },
+      { item: 'SQL' },
+      { item: 'Statistics' },
+      { item: 'Machine Learning' },
+      { item: 'Pandas / Scikit-learn' },
+    ],
+    preferredSkills: [{ item: 'PyTorch' }, { item: 'Cloud' }, { item: 'MLOps' }, { item: 'NLP' }],
+    qualifications:
+      "Bachelor's or Master's in Statistics, Data Science, Computer Science or related field—or equivalent experience.",
+    benefits: [
+      { item: 'Flexible / hybrid work' },
+      { item: 'Learning budget' },
+      { item: 'Paid leave' },
+      { item: 'Clear hiring process and growth path' },
+    ],
+  },
+  'clinical-sas-programmer': {
+    aboutRole:
+      'Deliver SDTM/ADaM and TLF programming for clinical studies, with strong quality control and regulatory awareness—within our Healthcare specialty practice.',
+    responsibilities: [
+      { item: 'Program SDTM and ADaM datasets to study specifications' },
+      { item: 'Produce and validate TLFs for clinical study reports' },
+      { item: 'Support data standards, QC and submission readiness' },
+      { item: 'Collaborate with biostatistics and clinical data management' },
+      { item: 'Document programming decisions and validation evidence' },
+    ],
+    requiredSkills: [
+      { item: 'SAS' },
+      { item: 'SDTM' },
+      { item: 'ADaM' },
+      { item: 'Clinical trial data' },
+      { item: 'CDISC familiarity' },
+    ],
+    preferredSkills: [
+      { item: 'Python' },
+      { item: 'R' },
+      { item: 'Regulatory submissions' },
+      { item: 'TLF automation' },
+    ],
+    qualifications:
+      "Bachelor's or Master's in Statistics, Life Sciences, Computer Science or related field with clinical programming experience.",
+    benefits: [
+      { item: 'Flexible / hybrid work' },
+      { item: 'Learning budget' },
+      { item: 'Specialty mentorship' },
+      { item: 'Cross-practice AI / analytics exposure' },
+    ],
+  },
+}
 
 export const FALLBACK_OFFICES = {
   locations: [

@@ -9,7 +9,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { useEffect, useRef, useState, type MouseEvent } from 'react'
+import { useRef, useState, type MouseEvent } from 'react'
 
 import { Container } from '@/components/layout/Container'
 import { cn } from '@/lib/utils'
@@ -50,10 +50,10 @@ const TRUST_INDUSTRIES = [
 ]
 
 const TRUST_METRICS = [
-  { value: 98, suffix: '%', label: 'Client retention' },
-  { value: 120, suffix: '+', label: 'Projects' },
-  { value: 40, suffix: '+', label: 'Enterprise clients' },
-  { value: 99, suffix: '%', label: 'Would recommend' },
+  { value: 'AI', suffix: '', label: 'Artificial Intelligence' },
+  { value: 'Data', suffix: '', label: 'Data Science' },
+  { value: 'IT', suffix: '', label: 'IT Consulting' },
+  { value: 'Health', suffix: '', label: 'Healthcare Specialty' },
 ]
 
 const FALLBACK: PresenceQuote[] = [
@@ -100,9 +100,9 @@ const PRESETS = [
     year: '2025',
     technologies: ['Python', 'Azure', 'AI', 'Power BI'],
     metrics: [
-      { value: '42%', label: 'Faster workflows' },
-      { value: '98%', label: 'Prediction accuracy' },
-      { value: '3×', label: 'Deployment speed' },
+      { value: 'Faster', label: 'Clinical workflows' },
+      { value: 'Governed', label: 'Analytics delivery' },
+      { value: 'Production', label: 'Ready systems' },
     ],
   },
   {
@@ -113,9 +113,9 @@ const PRESETS = [
     year: '2025',
     technologies: ['Next.js', 'Kubernetes', 'AWS', 'Docker'],
     metrics: [
-      { value: '3×', label: 'Release cycles' },
-      { value: '65%', label: 'Less manual work' },
-      { value: '99.9%', label: 'Availability' },
+      { value: 'Faster', label: 'Release cycles' },
+      { value: 'Less', label: 'Manual work' },
+      { value: 'Stable', label: 'Platform uptime' },
     ],
   },
   {
@@ -126,9 +126,9 @@ const PRESETS = [
     year: '2024',
     technologies: ['SAS', 'Python', 'CDISC', 'Spark'],
     metrics: [
-      { value: '40%', label: 'Ops efficiency' },
-      { value: '2×', label: 'Faster cycles' },
-      { value: '120M', label: 'Records processed' },
+      { value: 'Clearer', label: 'Ops efficiency' },
+      { value: 'Faster', label: 'Analysis cycles' },
+      { value: 'Governed', label: 'Data standards' },
     ],
   },
   {
@@ -139,9 +139,9 @@ const PRESETS = [
     year: '2025',
     technologies: ['LangChain', 'OpenAI', 'Python', 'Cloud'],
     metrics: [
-      { value: '4×', label: 'Time to value' },
-      { value: '99%', label: 'Eval pass rate' },
-      { value: '40%', label: 'Cost savings' },
+      { value: 'Faster', label: 'Time to value' },
+      { value: 'Evaluated', label: 'AI behaviour' },
+      { value: 'Lower', label: 'Delivery risk' },
     ],
   },
 ]
@@ -164,38 +164,6 @@ function enrich(quotes: PresenceQuote[]): EnrichedVoice[] {
       initials,
     }
   })
-}
-
-function CountUp({ value, suffix, active }: { value: number; suffix: string; active: boolean }) {
-  const reduce = useReducedMotion()
-  const [n, setN] = useState(reduce ? value : 0)
-
-  useEffect(() => {
-    if (!active) {
-      setN(reduce ? value : 0)
-      return
-    }
-    if (reduce) {
-      setN(value)
-      return
-    }
-    let frame = 0
-    const start = performance.now()
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / 1100)
-      setN(Math.round(value * (1 - Math.pow(1 - t, 3))))
-      if (t < 1) frame = requestAnimationFrame(tick)
-    }
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [active, value, reduce])
-
-  return (
-    <span className="tabular-nums">
-      {n}
-      {suffix}
-    </span>
-  )
 }
 
 function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
@@ -369,7 +337,6 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
 export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: StoryPresenceProps) {
   const reduce = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
-  const inView = useInView(sectionRef, { once: true, amount: 0.2 })
   const voices = enrich(quotes?.length ? quotes : FALLBACK)
 
   return (
@@ -431,8 +398,9 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
               {heading || 'Trusted by leaders building the future.'}
             </motion.h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-[color:var(--color-secondary)]">
-              Enterprise teams choose Xelarvis when clinical rigor, AI craft, and production
-              delivery have to live in the same system.
+              Enterprise teams choose Xelarvis when Artificial Intelligence, Data Science, and IT
+              Consulting have to ship as governed, production systems—with Healthcare as a specialty
+              practice.
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
@@ -442,7 +410,7 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
                   className="rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-4 py-4 shadow-[var(--shadow-light)] backdrop-blur-xl"
                 >
                   <p className="font-display text-2xl font-bold tracking-[-0.04em] text-[color:var(--color-primary)]">
-                    <CountUp value={m.value} suffix={m.suffix} active={inView} />
+                    {m.value}
                   </p>
                   <p className="mt-1 text-[11px] tracking-wide text-[color:var(--color-muted)] uppercase">
                     {m.label}

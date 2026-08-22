@@ -1,37 +1,110 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React, { useEffect, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 
-/** Breadcrumb from URL — quiet on the home dashboard */
+import { resolveNavigation } from '@/payload/admin/nav/registry'
+
+const SLOT_SELECTOR = '.app-header__step-nav-wrapper'
+
+function readDocumentTitle(): string | null {
+  if (typeof document === 'undefined') return null
+  const selectors = [
+    '.doc-header__title',
+    '.doc-header h1',
+    '.collection-edit .doc-header__title',
+    '.render-title',
+    'h1.doc-header__title',
+  ]
+  for (const sel of selectors) {
+    const el = document.querySelector(sel)
+    const text = el?.textContent?.trim()
+    if (text && text.length > 0 && text.length < 120) return text
+  }
+  return null
+}
+
+/** Breadcrumb trail — portaled into AppHeader (Payload header slot sits outside the grid). */
 export const HeaderChip = () => {
-  const [crumb, setCrumb] = useState('')
+  const pathname = usePathname() || '/admin'
+  const [documentLabel, setDocumentLabel] = useState<string | null>(null)
+  const [slot, setSlot] = useState<HTMLElement | null>(null)
 
   useEffect(() => {
-    const update = () => {
-      const path = window.location.pathname.replace(/^\/admin\/?/, '')
-      if (!path || path === '/') {
-        setCrumb('')
-        return
-      }
-      const parts = path.split('/').filter(Boolean)
-      const pretty = parts
-        .map((p) => p.replace(/-/g, ' '))
-        .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-        .join(' / ')
-      setCrumb(pretty)
+    const sync = () => {
+      const el = document.querySelector<HTMLElement>(SLOT_SELECTOR)
+      if (el) setSlot(el)
     }
-    update()
-    const id = window.setInterval(update, 800)
-    return () => window.clearInterval(id)
-  }, [])
+    sync()
+    const obs = new MutationObserver(sync)
+    obs.observe(document.body, { childList: true, subtree: true })
+    return () => obs.disconnect()
+  }, [pathname])
 
-  if (!crumb) return null
+  useEffect(() => {
+    setDocumentLabel(null)
+    const isDoc =
+      /\/admin\/collections\/[^/]+\/(?!create$)[^/]+/.test(pathname) ||
+      /\/admin\/globals\/[^/]+/.test(pathname)
+    if (!isDoc) return
 
-  return (
-    <div className="xe-header-chip xe-header-chip--breadcrumb" title={crumb}>
-      <span className="xe-header-chip__dot" aria-hidden />
-      <strong>{crumb}</strong>
-    </div>
+    let cancelled = false
+    const apply = () => {
+      if (cancelled) return
+      const title = readDocumentTitle()
+      if (title) setDocumentLabel(title)
+    }
+
+    apply()
+    const t1 = window.setTimeout(apply, 120)
+    const t2 = window.setTimeout(apply, 400)
+    const obs = new MutationObserver(apply)
+    obs.observe(document.body, { childList: true, subtree: true, characterData: true })
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(t1)
+      window.clearTimeout(t2)
+      obs.disconnect()
+    }
+  }, [pathname])
+
+  const crumbs = useMemo(
+    () => resolveNavigation(pathname, { documentLabel }).breadcrumbs,
+    [pathname, documentLabel],
+  )
+
+  if (crumbs.length <= 1 || !slot) return null
+
+  return createPortal(
+    <nav className="xe-header-chip xe-header-chip--breadcrumb" aria-label="Breadcrumb">
+      <ol className="xe-breadcrumb">
+        {crumbs.map((crumb, index) => {
+          const last = index === crumbs.length - 1
+          return (
+            <li key={`${crumb.label}-${index}`} className="xe-breadcrumb__item">
+              {index > 0 ? (
+                <span className="xe-breadcrumb__sep" aria-hidden>
+                  /
+                </span>
+              ) : null}
+              {crumb.href && !last ? (
+                <Link href={crumb.href} className="xe-breadcrumb__link">
+                  {crumb.label}
+                </Link>
+              ) : (
+                <span className="xe-breadcrumb__current" aria-current={last ? 'page' : undefined}>
+                  {crumb.label}
+                </span>
+              )}
+            </li>
+          )
+        })}
+      </ol>
+    </nav>,
+    slot,
   )
 }
 

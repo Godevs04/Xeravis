@@ -3,17 +3,12 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 
-const TARGETS = [
-  { label: 'Blog', href: '/admin/collections/blogs/create' },
-  { label: 'Job', href: '/admin/collections/careers/create' },
-  { label: 'Service', href: '/admin/collections/services/create' },
-  { label: 'Media', href: '/admin/collections/media/create' },
-  { label: 'Lead inbox', href: '/admin/collections/contact-messages' },
-]
+import { getQuickCreates } from '@/payload/admin/nav/registry'
 
-/** Compact header quick-create */
+/** Compact header quick-create — driven by the nav registry */
 export const QuickCreateAction = () => {
   const [open, setOpen] = useState(false)
+  const targets = getQuickCreates()
 
   return (
     <div className="xe-header-create">
@@ -28,7 +23,7 @@ export const QuickCreateAction = () => {
       </button>
       {open ? (
         <div className="xe-header-create__menu">
-          {TARGETS.map((item) => (
+          {targets.map((item) => (
             <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
               {item.label}
             </Link>

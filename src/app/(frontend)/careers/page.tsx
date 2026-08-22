@@ -39,23 +39,52 @@ function departmentLabel(job: CareerDoc) {
 }
 
 export const metadata = buildMetadata({
-  title: 'Careers in AI Research, Consulting & Healthcare',
+  title: 'Careers in AI, Data Science & IT Consulting',
   description:
-    'Join Xelarvis—life at XELARVIS, hiring process, learning & development, internships, graduate programs, and open roles across AI research, data science, and healthcare.',
+    'Join Xelarvis—life at XELARVIS, hiring process, learning & development, internships, graduate programs, and open roles across Artificial Intelligence, Data Science, and IT Consulting.',
   path: '/careers',
 })
+
+const PROGRAMS = [
+  {
+    id: 'internships',
+    title: 'Internship Program',
+    body: 'Hands-on experience across Artificial Intelligence, Data Science, and IT Consulting with structured mentorship and real delivery work.',
+  },
+  {
+    id: 'graduates',
+    title: GRADUATE_PROGRAMS.title,
+    body: GRADUATE_PROGRAMS.body,
+  },
+  {
+    id: 'learning',
+    title: 'Learning & Development',
+    body: 'Certification support, research exposure, and continuous learning budgets so talent grows with the practice.',
+  },
+  {
+    id: 'research',
+    title: 'Research Opportunities',
+    body: 'Collaborate with the AI Research Lab on publications, benchmarks, open-source, and applied innovation projects.',
+  },
+  {
+    id: 'benefits',
+    title: 'Employee Benefits',
+    body: 'Flexible work, learning budget, paid leave, and growth-focused career paths.',
+  },
+] as const
 
 export default async function CareersPage() {
   const careers = await listPublished<CareerDoc>('careers', {
     where: { active: { equals: true } },
   })
-  const items = careers.length ? careers : FALLBACK_JOBS
+  const fromCms = careers.length > 0
+  const items = fromCms ? careers : FALLBACK_JOBS
 
   return (
     <>
       <CareersPageHero
-        title="Build careers in AI research, consulting, and healthcare technology"
-        subtitle="Join XELARVIS to work on programmes that turn data into measurable business value—across Artificial Intelligence, Data Science, Healthcare AI, and Enterprise Technology Consulting."
+        title="Build careers in AI, Data Science, and IT Consulting"
+        subtitle="Join XELARVIS to turn data and technology into measurable business value—across Artificial Intelligence, Data Science, IT Consulting, and Healthcare as a specialty."
       />
 
       <WhyJoinSection benefits={WHY_JOIN} />
@@ -79,7 +108,9 @@ export default async function CareersPage() {
         </Container>
       </Section>
 
-      <HiringProcessSection steps={HIRING_STEPS} />
+      <div id="hiring-process">
+        <HiringProcessSection steps={HIRING_STEPS} />
+      </div>
 
       <Section id="open-roles">
         <Container>
@@ -88,21 +119,37 @@ export default async function CareersPage() {
               <h2 className="font-display text-3xl font-bold tracking-tight text-[color:var(--color-primary)]">
                 Open Positions
               </h2>
-              <p className="mt-2 text-[color:var(--color-secondary)]">
-                Roles managed by HR from the admin dashboard.
+              <p className="mt-2 max-w-xl text-[color:var(--color-secondary)]">
+                {fromCms
+                  ? 'Select a role to review responsibilities, requirements, and apply online.'
+                  : 'Preview roles below. Online applications open when positions are published in careers admin—or email hr@xelarvis.in.'}
               </p>
             </div>
-            <Button
-              asChild
-              className="rounded-full bg-[color:var(--color-accent)] text-white hover:bg-[color:var(--color-accent-hover)]"
-            >
-              <Link href="/contact?intent=career">Apply Now</Link>
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                asChild
+                className="rounded-full bg-[color:var(--color-accent)] text-white hover:bg-[color:var(--color-accent-hover)]"
+              >
+                <Link href="#open-roles">Browse roles</Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full">
+                <a href="mailto:hr@xelarvis.in">Email recruiting</a>
+              </Button>
+            </div>
           </div>
           {items.length === 0 ? (
-            <p className="text-[color:var(--color-secondary)]">
-              No open roles at the moment. Check back soon.
-            </p>
+            <div className="rounded-[24px] border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] p-8 text-center">
+              <p className="text-[color:var(--color-secondary)]">
+                No open roles at the moment. Send your profile to{' '}
+                <a
+                  href="mailto:hr@xelarvis.in"
+                  className="font-semibold text-[color:var(--color-accent)] hover:underline"
+                >
+                  hr@xelarvis.in
+                </a>{' '}
+                and we will keep you in mind for future openings.
+              </p>
+            </div>
           ) : (
             <div className="grid gap-3">
               {items.map((job, index) => (
@@ -130,30 +177,10 @@ export default async function CareersPage() {
 
       <Section surface>
         <Container className="space-y-10">
-          {[
-            {
-              title: 'Internship Program',
-              body: 'Hands-on experience across AI research, analytics, and enterprise consulting with structured mentorship.',
-            },
-            {
-              title: GRADUATE_PROGRAMS.title,
-              body: GRADUATE_PROGRAMS.body,
-            },
-            {
-              title: 'Learning & Development',
-              body: 'Certification support, research exposure, and continuous learning budgets so talent grows with the practice.',
-            },
-            {
-              title: 'Research Opportunities',
-              body: 'Collaborate with the AI Research Lab on publications, benchmarks, open-source, and applied innovation projects.',
-            },
-            {
-              title: 'Employee Benefits',
-              body: 'Flexible work, learning budget, paid leave, and growth-focused career paths.',
-            },
-          ].map((card) => (
+          {PROGRAMS.map((card) => (
             <div
-              key={card.title}
+              key={card.id}
+              id={card.id}
               className="border-t border-[color:var(--color-border)] pt-8 first:border-t-0 first:pt-0"
             >
               <h3 className="font-display text-xl font-semibold text-[color:var(--color-primary)]">

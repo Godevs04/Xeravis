@@ -151,7 +151,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
   return (
     <div
       ref={ref}
-      className="relative mx-auto aspect-[5/4] w-full max-w-2xl overflow-visible [perspective:1600px] lg:max-w-none"
+      className="relative h-full w-full overflow-visible [perspective:1600px]"
       onMouseMove={(e) => {
         if (reduce) return
         const rect = ref.current?.getBoundingClientRect()
@@ -196,9 +196,8 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
       ) : null}
 
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 36, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.9, ease: EASE, delay: 0.12 }}
+        initial={false}
+        animate={{ opacity: 1 }}
         className="relative h-full w-full overflow-visible"
       >
         <motion.div

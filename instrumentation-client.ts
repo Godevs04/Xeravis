@@ -13,6 +13,9 @@ if (!projectToken || !host) {
   posthog.init(projectToken, {
     api_host: host,
     capture_exceptions: true,
+    // Session replay + surveys pull large unused chunks on first paint.
+    disable_session_recording: true,
+    disable_surveys: true,
     debug: process.env.NODE_ENV === 'development',
   })
 }

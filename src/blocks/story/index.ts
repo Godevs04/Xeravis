@@ -1,4 +1,5 @@
 export { StoryHero } from './StoryHero'
+export { StoryHeroEnhance } from './StoryHeroEnhance'
 export { StoryChallenge } from './StoryChallenge'
 export { StorySolution } from './StorySolution'
 export { StoryCapabilities } from './StoryCapabilities'

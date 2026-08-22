@@ -1,13 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useReducedMotion,
-  useInView,
-} from 'framer-motion'
+import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion'
 import {
   ArrowRight,
   Brain,
@@ -21,7 +15,7 @@ import {
   Users,
   type LucideIcon,
 } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
+import { useMemo, type PointerEvent as ReactPointerEvent } from 'react'
 
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
@@ -33,11 +27,11 @@ type WhyJoinSectionProps = {
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-const CULTURE_STATS = [
-  { value: 120, suffix: '+', label: 'Engineers' },
-  { value: 18, suffix: '+', label: 'Countries' },
-  { value: 95, suffix: '%', label: 'Employee Satisfaction' },
-  { value: 500, suffix: '+', label: 'Projects Delivered' },
+const CULTURE_PILLARS = [
+  { value: 'AI', label: 'Artificial Intelligence' },
+  { value: 'Data', label: 'Data Science' },
+  { value: 'IT', label: 'IT Consulting' },
+  { value: 'Learn', label: 'Growth culture' },
 ] as const
 
 const JOURNEY = ['Join', 'Learn', 'Build', 'Lead', 'Innovate'] as const
@@ -52,7 +46,7 @@ const CARD_META: {
   {
     match: /ai|healthcare project/i,
     icon: Brain,
-    description: 'Ship real clinical intelligence — not demos that fade after the pitch.',
+    description: 'Ship production AI systems — not demos that fade after the pitch.',
     accent: '#0D9488',
     featured: true,
   },
@@ -102,9 +96,9 @@ const CARD_META: {
 ]
 
 const HEADING_LINES = [
-  'Build the future of AI Research,',
-  'Healthcare Intelligence &',
-  'Enterprise Consulting.',
+  'Build careers in Artificial Intelligence,',
+  'Data Science &',
+  'IT Consulting.',
 ]
 
 function metaForBenefit(title: string) {
@@ -116,40 +110,6 @@ function metaForBenefit(title: string) {
       accent: '#0D9488',
       featured: false,
     }
-  )
-}
-
-function CountUp({ value, suffix, active }: { value: number; suffix: string; active: boolean }) {
-  const reduce = useReducedMotion()
-  const [n, setN] = useState(reduce ? value : 0)
-
-  useEffect(() => {
-    if (!active) {
-      setN(reduce ? value : 0)
-      return
-    }
-    if (reduce) {
-      setN(value)
-      return
-    }
-    let frame = 0
-    const start = performance.now()
-    const duration = 1100
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration)
-      const eased = 1 - Math.pow(1 - t, 3)
-      setN(Math.round(value * eased))
-      if (t < 1) frame = requestAnimationFrame(tick)
-    }
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [active, value, reduce])
-
-  return (
-    <span className="tabular-nums">
-      {n}
-      {suffix}
-    </span>
   )
 }
 
@@ -260,8 +220,6 @@ function BenefitCard({
 
 export function WhyJoinSection({ benefits }: WhyJoinSectionProps) {
   const reduce = useReducedMotion()
-  const statsRef = useRef<HTMLDivElement>(null)
-  const statsInView = useInView(statsRef, { once: true, margin: '-10% 0px' })
   const cards = useMemo(() => benefits.map((title, i) => ({ title, i })), [benefits])
 
   return (
@@ -384,13 +342,13 @@ export function WhyJoinSection({ benefits }: WhyJoinSectionProps) {
               </Button>
             </motion.div>
 
-            {/* Culture stats */}
-            <div ref={statsRef} className="mt-12">
+            {/* Culture pillars */}
+            <div className="mt-12">
               <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-muted)] uppercase">
-                Our Culture
+                Our focus
               </p>
               <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-                {CULTURE_STATS.map((stat, i) => (
+                {CULTURE_PILLARS.map((stat, i) => (
                   <motion.div
                     key={stat.label}
                     className="rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-3 py-3.5 backdrop-blur-md"
@@ -400,7 +358,7 @@ export function WhyJoinSection({ benefits }: WhyJoinSectionProps) {
                     transition={{ delay: 0.05 * i, duration: 0.45, ease: EASE }}
                   >
                     <p className="font-display text-xl font-bold tracking-tight text-[color:var(--color-primary)] sm:text-2xl">
-                      <CountUp value={stat.value} suffix={stat.suffix} active={statsInView} />
+                      {stat.value}
                     </p>
                     <p className="mt-1 text-[10px] leading-snug tracking-wide text-[color:var(--color-muted)] uppercase">
                       {stat.label}

@@ -90,7 +90,9 @@ html[data-xe-ui='v5'] .document-fields__edit > .render-fields .rich-text {
 }
 
 /* ────────────────────────────────────────────────────────────
-   2. APP HEADER
+   2. APP HEADER — shell.scss owns layout (full-bleed sticky bar).
+   Do NOT reintroduce floating pill margins / max-width here —
+   that misaligns breadcrumbs vs content and fights the grid.
    ──────────────────────────────────────────────────────────── */
 
 html[data-xe-ui='v5'] .app-header,
@@ -99,15 +101,17 @@ html[data-xe-ui='v5'] .template-default > .template-default__wrap > header {
   height: var(--xe-header-h) !important;
   min-height: var(--xe-header-h) !important;
   max-height: var(--xe-header-h) !important;
-  margin: 12px var(--xe-gutter) 0 !important;
-  padding: 0 16px !important;
-  max-width: calc(var(--xe-shell-max));
-  border: 1px solid var(--xe-border) !important;
-  border-radius: var(--xe-radius-lg) !important;
-  background: var(--xe-glass) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
-  box-shadow: var(--xe-card-shadow) !important;
+  margin: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 var(--xe-gutter) !important;
+  border: none !important;
+  border-bottom: 1px solid var(--xe-border) !important;
+  border-radius: 0 !important;
+  background: var(--xe-header) !important;
+  backdrop-filter: blur(12px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+  box-shadow: none !important;
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -146,10 +150,13 @@ html[data-xe-ui='v5'] .xe-header-chip--breadcrumb {
   font-size: var(--xe-fs-secondary) !important;
   font-weight: 500 !important;
   color: var(--xe-muted) !important;
-  max-width: min(420px, 40vw);
+  max-width: min(720px, 60vw);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex !important;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 html[data-xe-ui='v5'] .xe-header-chip--breadcrumb strong {
@@ -1131,4 +1138,84 @@ html[data-xe-ui='v5'] .field-type,
 html[data-xe-ui='v5'] .field-type__wrap {
   max-width: 100% !important;
   min-width: 0 !important;
+}
+
+/* ============================================================
+   ARCHITECTURE PASS — document edit + forms (sole authority)
+   ============================================================ */
+
+html[data-xe-ui='v5'] .document-fields--has-sidebar,
+html[data-xe-ui='v5'] .collection-edit .document-fields {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) var(--xe-doc-sidebar) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__main,
+html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  float: none !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+  position: sticky !important;
+  top: calc(var(--xe-header-h) + 16px) !important;
+}
+
+html[data-xe-ui='v5'] .field-type__wrap > input,
+html[data-xe-ui='v5'] .input > input,
+html[data-xe-ui='v5'] .field-type.text input,
+html[data-xe-ui='v5'] .field-type.email input,
+html[data-xe-ui='v5'] .field-type.number input {
+  min-height: var(--xe-input-h) !important;
+  height: var(--xe-input-h) !important;
+  border-radius: var(--xe-radius) !important;
+  border: 1px solid var(--xe-input-border, var(--xe-border)) !important;
+  background: var(--xe-input-bg) !important;
+  box-shadow: none !important;
+}
+
+html[data-xe-ui='v5'] .field-type__wrap > input:focus,
+html[data-xe-ui='v5'] .input > input:focus,
+html[data-xe-ui='v5'] .textarea > textarea:focus {
+  outline: none !important;
+  border-color: var(--xe-secondary) !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1) !important;
+}
+
+html[data-xe-ui='v5'] .field-type .field-label,
+html[data-xe-ui='v5'] .field-type label {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--xe-text) !important;
+}
+
+/* Inline validation — no giant red banners */
+html[data-xe-ui='v5'] .field-error,
+html[data-xe-ui='v5'] .tooltip.tooltip--error,
+html[data-xe-ui='v5'] .error-message,
+html[data-xe-ui='v5'] .field-type .field-description.error {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 0 0 !important;
+  margin: 0 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: var(--xe-danger) !important;
+  border-radius: 0 !important;
+}
+
+@media (max-width: 1024px) {
+  html[data-xe-ui='v5'] .document-fields--has-sidebar,
+  html[data-xe-ui='v5'] .collection-edit .document-fields {
+    grid-template-columns: 1fr !important;
+  }
+
+  html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+    position: static !important;
+  }
 }

@@ -13,6 +13,8 @@ import { cn } from '@/lib/utils'
 
 const initialState: CareerFormState = { ok: false, message: '' }
 
+const HR_EMAIL = 'hr@xelarvis.in'
+
 type CareerApplicationFormProps = {
   careerId: string
   jobTitle: string
@@ -49,14 +51,29 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
   if (state.ok) {
     return (
       <div className="space-y-4 rounded-[24px] border border-[color:var(--color-accent)]/30 bg-[color:var(--color-accent)]/10 p-6">
-        <p className="text-sm leading-relaxed text-[color:var(--color-primary)]">{state.message}</p>
+        <p className="font-display text-lg font-semibold text-[color:var(--color-primary)]">
+          Application received
+        </p>
+        <p className="text-sm leading-relaxed text-[color:var(--color-secondary)]">
+          {state.message}
+        </p>
         {state.applicationId ? (
-          <p className="font-display text-lg font-semibold text-[color:var(--color-accent)]">
-            Application ID: {state.applicationId}
+          <p className="text-sm text-[color:var(--color-primary)]">
+            Reference:{' '}
+            <span className="font-display font-semibold text-[color:var(--color-accent)]">
+              {state.applicationId}
+            </span>
           </p>
         ) : null}
+        <p className="text-xs text-[color:var(--color-muted)]">
+          Save this reference ID for your records. Questions? Email{' '}
+          <a href={`mailto:${HR_EMAIL}`} className="text-[color:var(--color-accent)] underline">
+            {HR_EMAIL}
+          </a>
+          .
+        </p>
         <Button asChild variant="outline" className="rounded-full">
-          <Link href="/careers">Back to careers</Link>
+          <Link href="/careers#open-roles">View other open roles</Link>
         </Button>
       </div>
     )
@@ -115,11 +132,36 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="linkedin">LinkedIn profile</Label>
-            <Input id="linkedin" name="linkedin" placeholder="https://" />
+            <Input
+              id="linkedin"
+              name="linkedin"
+              type="url"
+              placeholder="https://linkedin.com/in/…"
+            />
+            <FieldError errors={state.fieldErrors?.linkedin} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="portfolio">Portfolio / GitHub</Label>
-            <Input id="portfolio" name="portfolio" placeholder="https://" />
+            <Label htmlFor="portfolio">GitHub / Portfolio</Label>
+            <Input id="portfolio" name="portfolio" type="url" placeholder="https://github.com/…" />
+            <FieldError errors={state.fieldErrors?.portfolio} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="totalExperience">Years of experience *</Label>
+            <Input
+              id="totalExperience"
+              name="totalExperience"
+              required
+              placeholder="e.g. 0–2 years"
+            />
+            <FieldError errors={state.fieldErrors?.totalExperience} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="relevantExperience">Relevant experience</Label>
+            <Input
+              id="relevantExperience"
+              name="relevantExperience"
+              placeholder="e.g. 2 years ML"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="currentCompany">Current company</Label>
@@ -128,14 +170,6 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
           <div className="space-y-2">
             <Label htmlFor="currentDesignation">Current designation</Label>
             <Input id="currentDesignation" name="currentDesignation" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="totalExperience">Total experience</Label>
-            <Input id="totalExperience" name="totalExperience" placeholder="e.g. 4 years" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="relevantExperience">Relevant experience</Label>
-            <Input id="relevantExperience" name="relevantExperience" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="currentSalary">Current salary</Label>

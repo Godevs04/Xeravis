@@ -6,8 +6,8 @@ import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { getGlobal } from '@/lib/cms'
+import { buildMetadata, SOCIAL_PROFILES } from '@/lib/seo'
 import { CONTACT_INTENTS } from '@/lib/site-ia'
-import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
@@ -64,8 +64,20 @@ export default async function ContactPage() {
   const mapSrc = details.mapEmbedUrl || extractIframeSrc(details.mapEmbed)
 
   const socialLinks = [
-    { label: 'LinkedIn', href: social?.linkedin },
-    { label: 'X / Twitter', href: social?.twitter },
+    {
+      label: 'LinkedIn',
+      href:
+        social?.linkedin ||
+        SOCIAL_PROFILES.find((url) => url.includes('linkedin.com')) ||
+        'https://www.linkedin.com/company/xelarvis',
+    },
+    {
+      label: 'X / Twitter',
+      href:
+        social?.twitter ||
+        SOCIAL_PROFILES.find((url) => url.includes('x.com')) ||
+        'https://x.com/xelarvis_ai',
+    },
     { label: 'Instagram', href: social?.instagram },
     { label: 'Facebook', href: social?.facebook },
     { label: 'YouTube', href: social?.youtube },

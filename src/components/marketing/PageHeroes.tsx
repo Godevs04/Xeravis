@@ -210,13 +210,24 @@ export function CareersPageHero({ title, subtitle }: BaseHero) {
         {subtitle ? (
           <p className="mt-6 max-w-xl text-lg text-[color:var(--hero-muted)]">{subtitle}</p>
         ) : null}
-        <div className="mt-10">
+        <div className="mt-10 flex flex-wrap gap-3">
           <Button
             asChild
             size="lg"
             className="rounded-full bg-teal-500 text-white shadow-[0_0_40px_rgba(13,148,136,0.4)] hover:bg-cyan-400"
           >
-            <Link href="#open-roles">View open roles</Link>
+            <Link href="#open-roles">
+              View open roles
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/40"
+          >
+            <Link href="#hiring-process">Hiring process</Link>
           </Button>
         </div>
       </Container>

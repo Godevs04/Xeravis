@@ -5,6 +5,7 @@ import { Container } from '@/components/layout/Container'
 import { NewsletterForm } from '@/components/forms/NewsletterForm'
 import { getGlobal } from '@/lib/cms'
 import { BRAND, DEFAULT_FOOTER } from '@/lib/fallback-data'
+import { SOCIAL_PROFILES } from '@/lib/seo'
 
 type FooterGlobal = {
   columns?: { title: string; links: { label: string; href: string }[] }[]
@@ -23,6 +24,11 @@ type SiteSettingsGlobal = {
   }
 }
 
+const FALLBACK_SOCIAL = {
+  linkedin: SOCIAL_PROFILES.find((url) => url.includes('linkedin.com')) || '',
+  twitter: SOCIAL_PROFILES.find((url) => url.includes('x.com')) || 'https://x.com/xelarvis_ai',
+} as const
+
 export async function SiteFooter() {
   const [footer, settings] = await Promise.all([
     getGlobal<FooterGlobal>('footer'),
@@ -33,7 +39,12 @@ export async function SiteFooter() {
   const showNewsletter = footer?.showNewsletter ?? DEFAULT_FOOTER.showNewsletter
   const copyright = footer?.copyright || DEFAULT_FOOTER.copyright
   const tagline = settings?.tagline || BRAND.tagline
-  const social = settings?.social
+  const social = {
+    linkedin: settings?.social?.linkedin || FALLBACK_SOCIAL.linkedin,
+    twitter: settings?.social?.twitter || FALLBACK_SOCIAL.twitter,
+    github: settings?.social?.github || '',
+    youtube: settings?.social?.youtube || '',
+  }
 
   return (
     <footer className="relative overflow-hidden border-t border-[color:var(--glass-border-soft)]">

@@ -104,7 +104,7 @@ export const WORKSPACES: WorkspaceDef[] = [
       { label: 'Subscribers', href: col('newsletter-subscribers'), hint: 'Audience' },
       { label: 'Campaigns', href: col('newsletter-campaigns'), hint: 'Sends' },
       { label: 'Downloads', href: col('downloads'), hint: 'Lead magnets' },
-      { label: 'Social', href: col('social-media') },
+      { label: 'Social', href: glob('social-media'), hint: 'Social profiles' },
     ],
     creates: [{ label: 'Campaign', href: `${col('newsletter-campaigns')}/create` }],
   },

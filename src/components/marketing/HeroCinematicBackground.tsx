@@ -14,20 +14,14 @@ type HeroCinematicBackgroundProps = {
   cursorY: MotionValue<number>
 }
 
-const PARTICLES = Array.from({ length: 16 }, (_, i) => ({
+const PARTICLES = Array.from({ length: 6 }, (_, i) => ({
   id: i,
-  left: `${6 + ((i * 17) % 88)}%`,
-  top: `${10 + ((i * 23) % 78)}%`,
-  size: 1.5 + (i % 4) * 0.7,
-  delay: (i % 7) * 0.8,
-  duration: 10 + (i % 5) * 2.4,
+  left: `${10 + ((i * 29) % 80)}%`,
+  top: `${14 + ((i * 37) % 70)}%`,
+  size: 1.5 + (i % 3) * 0.7,
+  delay: (i % 5) * 0.9,
+  duration: 12 + (i % 4) * 2.2,
 }))
-
-const PATHS = [
-  'M 40 360 C 180 240, 280 300, 420 180',
-  'M 80 120 C 220 80, 320 200, 520 110',
-  'M 360 420 C 460 320, 540 360, 640 240',
-]
 
 export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackgroundProps) {
   const reduce = useReducedMotion()
@@ -68,16 +62,6 @@ export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackg
             animate={{ x: [0, -40, 0], y: [0, -28, 0], opacity: [0.3, 0.58, 0.3] }}
             transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
           />
-          <motion.div
-            className="absolute top-[38%] left-[42%] h-64 w-64 rounded-full bg-[radial-gradient(circle,var(--hero-glow-2),transparent_70%)] blur-2xl"
-            animate={{ scale: [1, 1.18, 1], opacity: [0.25, 0.5, 0.25] }}
-            transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute inset-y-[8%] left-[16%] w-px bg-gradient-to-b from-transparent via-[color:var(--color-cyan)]/30 to-transparent"
-            animate={{ opacity: [0.12, 0.42, 0.12], x: [0, 22, 0] }}
-            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-          />
         </>
       ) : null}
 
@@ -93,38 +77,30 @@ export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackg
       />
 
       <svg
-        className="absolute inset-0 h-full w-full opacity-50"
+        className="absolute inset-0 h-full w-full opacity-40"
         viewBox="0 0 720 480"
         preserveAspectRatio="xMidYMid slice"
       >
         <defs>
           <linearGradient id={`${uid}-line`} x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#0D9488" stopOpacity="0" />
-            <stop offset="50%" stopColor="#06B6D4" stopOpacity="0.6" />
+            <stop offset="50%" stopColor="#06B6D4" stopOpacity="0.55" />
             <stop offset="100%" stopColor="#0D9488" stopOpacity="0" />
           </linearGradient>
         </defs>
-        {PATHS.map((d, i) => (
-          <motion.path
-            key={d}
-            d={d}
-            fill="none"
-            stroke={`url(#${uid}-line)`}
-            strokeWidth="1.1"
-            initial={reduce ? false : { pathLength: 0.2, opacity: 0.2 }}
-            animate={
-              reduce
-                ? { pathLength: 1, opacity: 0.35 }
-                : { pathLength: [0.2, 1, 0.2], opacity: [0.12, 0.55, 0.12] }
-            }
-            transition={{
-              duration: 14 + i * 3,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: i * 1.2,
-            }}
-          />
-        ))}
+        <motion.path
+          d="M 40 360 C 180 240, 280 300, 420 180"
+          fill="none"
+          stroke={`url(#${uid}-line)`}
+          strokeWidth="1.1"
+          initial={reduce ? false : { pathLength: 0.25, opacity: 0.2 }}
+          animate={
+            reduce
+              ? { pathLength: 1, opacity: 0.35 }
+              : { pathLength: [0.25, 1, 0.25], opacity: [0.12, 0.5, 0.12] }
+          }
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        />
       </svg>
 
       {!reduce
@@ -133,7 +109,7 @@ export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackg
               key={p.id}
               className="absolute rounded-full bg-[color:var(--color-cyan)]/70 shadow-[0_0_10px_rgba(6,182,212,0.45)]"
               style={{ left: p.left, top: p.top, width: p.size, height: p.size }}
-              animate={{ y: [0, -14, 0], opacity: [0.15, 0.7, 0.15], scale: [1, 1.3, 1] }}
+              animate={{ y: [0, -14, 0], opacity: [0.15, 0.7, 0.15] }}
               transition={{
                 duration: p.duration,
                 delay: p.delay,

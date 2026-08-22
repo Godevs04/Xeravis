@@ -3,8 +3,16 @@
 import { headers } from 'next/headers'
 import { z } from 'zod'
 
+import { sendEmail } from '@/lib/email'
 import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
 import { getPayload } from '@/lib/payload'
+
+const optionalUrl = z
+  .string()
+  .max(300)
+  .optional()
+  .transform((v) => (v?.trim() ? v.trim() : undefined))
+  .refine((v) => !v || /^https?:\/\//i.test(v), 'Enter a full URL starting with https://')
 
 const careerSchema = z.object({
   careerId: z.string().min(1, 'Job reference is required').max(80),
@@ -14,11 +22,11 @@ const careerSchema = z.object({
   phone: z.string().min(7, 'Mobile number is required').max(40),
   country: z.string().min(1, 'Country is required').max(80),
   city: z.string().min(1, 'Current city is required').max(80),
-  linkedin: z.string().max(300).optional(),
-  portfolio: z.string().max(300).optional(),
+  linkedin: optionalUrl,
+  portfolio: optionalUrl,
   currentCompany: z.string().max(160).optional(),
   currentDesignation: z.string().max(160).optional(),
-  totalExperience: z.string().max(40).optional(),
+  totalExperience: z.string().min(1, 'Years of experience is required').max(40),
   relevantExperience: z.string().max(40).optional(),
   currentSalary: z.string().max(40).optional(),
   expectedSalary: z.string().max(40).optional(),
@@ -139,6 +147,24 @@ export async function submitCareerApplication(
 
   try {
     const payload = await getPayload()
+
+    const career = await payload
+      .findByID({
+        collection: 'careers',
+        id: parsed.data.careerId,
+        depth: 0,
+        overrideAccess: true,
+      })
+      .catch(() => null)
+
+    if (!career || career.active === false) {
+      return {
+        ok: false,
+        message:
+          'This role is no longer accepting applications. Please choose another open position or email hr@xelarvis.in.',
+      }
+    }
+
     const buffer = Buffer.from(await resume.arrayBuffer())
     const fullName = `${parsed.data.firstName} ${parsed.data.lastName}`.trim()
     const applicationId = nextApplicationId()
@@ -207,21 +233,51 @@ export async function submitCareerApplication(
       overrideAccess: true,
       data: {
         type: 'application',
-        path: '/careers',
-        meta: { applicationId, email: parsed.data.email },
+        path: `/careers/${career.slug || ''}`,
+        meta: {
+          applicationId,
+          email: parsed.data.email,
+          jobTitle: career.title,
+          careerId: parsed.data.careerId,
+        },
       },
+    })
+
+    await sendEmail({
+      to:
+        process.env.CAREERS_NOTIFY_EMAIL ||
+        process.env.CONTACT_NOTIFY_EMAIL ||
+        process.env.EMAIL_TO,
+      replyTo: parsed.data.email,
+      subject: `New application · ${career.title} · ${applicationId}`,
+      text: [
+        `Application ID: ${applicationId}`,
+        `Role: ${career.title}`,
+        `Name: ${fullName}`,
+        `Email: ${parsed.data.email}`,
+        `Phone: ${parsed.data.phone}`,
+        `Location: ${parsed.data.city}, ${parsed.data.country}`,
+        parsed.data.totalExperience ? `Experience: ${parsed.data.totalExperience}` : '',
+        parsed.data.linkedin ? `LinkedIn: ${parsed.data.linkedin}` : '',
+        parsed.data.portfolio ? `Portfolio: ${parsed.data.portfolio}` : '',
+        parsed.data.currentCompany ? `Current company: ${parsed.data.currentCompany}` : '',
+        '',
+        'Review in Payload Admin → Job Applications.',
+      ]
+        .filter(Boolean)
+        .join('\n'),
     })
 
     return {
       ok: true,
       applicationId,
       message:
-        'Thank you for applying to XELARVIS. Your application has been received successfully. Our recruitment team will review your profile and contact you if your qualifications match our current requirements.',
+        'Thank you for applying to XELARVIS. Your application has been received. Our recruitment team will review your profile and contact you if there is a match.',
     }
   } catch {
     return {
       ok: false,
-      message: 'Unable to submit application right now. Please email careers@xelarvis.in.',
+      message: 'Unable to submit application right now. Please email hr@xelarvis.in.',
     }
   }
 }

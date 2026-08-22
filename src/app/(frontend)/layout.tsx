@@ -1,42 +1,47 @@
 import { Manrope, Plus_Jakarta_Sans } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
+import type { ReactNode } from 'react'
 
+import { PageviewBeacon } from '@/components/analytics/PageviewBeacon'
 import { TrackingScripts } from '@/components/analytics/TrackingScripts'
 import { AmbientBackground } from '@/components/layout/AmbientBackground'
-import { SkipLink } from '@/components/layout/SkipLink'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
-import { PageviewBeacon } from '@/components/analytics/PageviewBeacon'
+import { SkipLink } from '@/components/layout/SkipLink'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { buildMetadata, graphJsonLd, organizationJsonLd, websiteJsonLd } from '@/lib/seo'
+import {
+  buildMetadata,
+  DEFAULT_DESCRIPTION,
+  graphJsonLd,
+  organizationJsonLd,
+  websiteJsonLd,
+} from '@/lib/seo'
 import { AppProviders } from '@/providers'
 
 import './globals.css'
 
-/** Heading font — enterprise tech (client brief: Manrope / Jakarta / max 2 families) */
+/** Display — Manrope (enterprise tech) */
 const display = Manrope({
   subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
-  weight: ['500', '600', '700', '800'],
+  weight: ['600', '700'],
   preload: true,
 })
 
-/** Body font */
+/** Body — Plus Jakarta Sans */
 const body = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600'],
   preload: true,
 })
 
 export const metadata: Metadata = {
   ...buildMetadata({
-    // Empty title → "Xelarvis | AI Research, Consulting, Data Science & Healthcare"
     title: '',
-    description:
-      'Xelarvis is a global AI research, IT consulting, data science, and healthcare AI company—helping organisations transform data into measurable business value.',
+    description: DEFAULT_DESCRIPTION,
     path: '/',
   }),
   verification: {
@@ -53,10 +58,11 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: 'cover',
-  colorScheme: 'light dark',
+  // Keep single scheme — Payload Critical-CH is stripped in next.config; avoid dual scheme re-negotiation.
+  colorScheme: 'light',
 }
 
-export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+export default function FrontendLayout({ children }: { children: ReactNode }) {
   const jsonLd = graphJsonLd(organizationJsonLd(), websiteJsonLd())
 
   return (

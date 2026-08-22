@@ -24,6 +24,7 @@ import {
   QUICK_CREATES,
   isLinkActive,
   moduleHasActiveLink,
+  resolveModuleNavigation,
   type NavModule,
   type NavModuleId,
 } from './modules'
@@ -59,7 +60,7 @@ function openCommand() {
 
 function moduleToWorkspace(id: NavModuleId): WorkspaceId | null {
   if (id === 'overview' || id === 'media' || id === 'ai') return null
-  return id
+  return id as WorkspaceId
 }
 
 export function EnterpriseNav() {
@@ -67,7 +68,9 @@ export function EnterpriseNav() {
   const ctx = useWorkspaceOptional()
   const { user } = useAuth()
   const reduce = useReducedMotion()
-  const [openId, setOpenId] = useState<NavModuleId | null>('website')
+  const routeNav = useMemo(() => resolveModuleNavigation(pathname), [pathname])
+  const [manualOpenId, setManualOpenId] = useState<NavModuleId | null>(null)
+  const openId = manualOpenId ?? routeNav.section ?? null
   const [createOpen, setCreateOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
@@ -105,12 +108,19 @@ export function EnterpriseNav() {
   }, [])
 
   useEffect(() => {
-    const active = NAV_MODULES.find((m) => moduleHasActiveLink(pathname, m))
-    if (active) {
-      setOpenId(active.id)
-      const ws = moduleToWorkspace(active.id)
-      if (ws) ctx?.setWorkspace(ws)
-    }
+    // Pathname is source of truth — clear manual accordion override on navigation
+    setManualOpenId(null)
+    const ws = routeNav.section ? moduleToWorkspace(routeNav.section) : null
+    if (ws) ctx?.setWorkspace(ws)
+
+    // Keep the active child visible inside the sidebar scrollport
+    const id = window.requestAnimationFrame(() => {
+      const active = document.querySelector<HTMLElement>(
+        '.xe-os-nav__modules a.xe-os-mod__link.is-active, .xe-os-nav__modules a.xe-os-mod.is-active',
+      )
+      active?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    })
+    return () => window.cancelAnimationFrame(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- route sync only
   }, [pathname])
 
@@ -136,11 +146,14 @@ export function EnterpriseNav() {
 
   const toggleModule = useCallback(
     (id: NavModuleId) => {
-      setOpenId((prev) => (prev === id ? null : id))
+      setManualOpenId((prev) => {
+        const current = prev ?? routeNav.section ?? null
+        return current === id ? null : id
+      })
       const ws = moduleToWorkspace(id)
       if (ws) ctx?.setWorkspace(ws)
     },
-    [ctx],
+    [ctx, routeNav.section],
   )
 
   const pinLabels = useMemo(() => {
@@ -174,7 +187,7 @@ export function EnterpriseNav() {
             />
             <span className="xe-os-nav__brand-copy">
               <span className="xe-os-nav__brand-name">Xelarvis</span>
-              <span className="xe-os-nav__brand-sub">Enterprise OS</span>
+              <span className="xe-os-nav__brand-sub">Admin</span>
             </span>
           </Link>
           <button
@@ -386,7 +399,6 @@ function ModuleCard({
   pathname,
   expanded,
   collapsed,
-  reduce,
   onToggle,
 }: {
   mod: NavModule
@@ -399,18 +411,20 @@ function ModuleCard({
   const Icon = mod.icon
   const active = moduleHasActiveLink(pathname, mod)
   const count = mod.links.length
+  const panelId = `xe-os-mod-panel-${mod.id}`
 
   if (mod.href && mod.links.length === 0) {
     return (
-      <Link href={mod.href} className={`xe-os-mod${active ? 'is-active' : ''}`} title={mod.label}>
-        <span className="xe-os-mod__rail" aria-hidden />
-        <span className="xe-os-mod__icon">
-          <Icon size={16} strokeWidth={active ? 2.25 : 1.75} />
+      <Link
+        href={mod.href}
+        className={`xe-os-mod xe-os-mod--solo${active ? 'is-active' : ''}`}
+        title={mod.description}
+        aria-current={active ? 'page' : undefined}
+      >
+        <span className="xe-os-mod__icon" aria-hidden>
+          <Icon size={17} strokeWidth={active ? 2.25 : 1.75} />
         </span>
-        <span className="xe-os-mod__body">
-          <span className="xe-os-mod__label">{mod.label}</span>
-          <span className="xe-os-mod__hint">{mod.description}</span>
-        </span>
+        <span className="xe-os-mod__label">{mod.label}</span>
       </Link>
     )
   }
@@ -421,53 +435,42 @@ function ModuleCard({
         type="button"
         className={`xe-os-mod${active ? 'is-active' : ''}${expanded ? 'is-open' : ''}`}
         aria-expanded={expanded}
-        title={mod.label}
+        aria-controls={panelId}
+        title={mod.description}
         onClick={onToggle}
       >
-        <span className="xe-os-mod__rail" aria-hidden />
-        <span className="xe-os-mod__icon">
-          <Icon size={16} strokeWidth={active || expanded ? 2.25 : 1.75} />
+        <span className="xe-os-mod__icon" aria-hidden>
+          <Icon size={17} strokeWidth={active || expanded ? 2.25 : 1.75} />
         </span>
-        <span className="xe-os-mod__body">
-          <span className="xe-os-mod__label">{mod.label}</span>
-          <span className="xe-os-mod__hint">{mod.description}</span>
-        </span>
+        <span className="xe-os-mod__label">{mod.label}</span>
         {count > 0 ? <span className="xe-os-mod__count">{count}</span> : null}
         <ChevronDown size={14} className="xe-os-mod__chevron" aria-hidden />
       </button>
 
-      <AnimatePresence initial={false}>
-        {expanded && !collapsed ? (
-          <motion.div
-            className="xe-os-mod__links"
-            initial={reduce ? false : { height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22, ease: EASE }}
-          >
-            <div className="xe-os-mod__links-inner">
-              {mod.links.map((link) => {
-                const linkActive = isLinkActive(pathname, link.href)
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`xe-os-mod__link${linkActive ? 'is-active' : ''}`}
-                  >
-                    <span className="xe-os-mod__link-rail" aria-hidden>
-                      <span className="xe-os-mod__link-dot" />
-                    </span>
-                    <span className="xe-os-mod__link-text">
-                      <span className="xe-os-mod__link-label">{link.label}</span>
-                      {link.hint ? <span className="xe-os-mod__link-hint">{link.hint}</span> : null}
-                    </span>
-                  </Link>
-                )
-              })}
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      {expanded && !collapsed ? (
+        <div
+          id={panelId}
+          className="xe-os-mod__links"
+          role="region"
+          aria-label={`${mod.label} links`}
+        >
+          {mod.links.map((link) => {
+            const linkActive = isLinkActive(pathname, link.href)
+            return (
+              <Link
+                key={`${mod.id}:${link.href}`}
+                href={link.href}
+                className={`xe-os-mod__link${linkActive ? 'is-active' : ''}`}
+                title={link.hint}
+                aria-current={linkActive ? 'page' : undefined}
+              >
+                <span className="xe-os-mod__link-dot" aria-hidden />
+                <span className="xe-os-mod__link-label">{link.label}</span>
+              </Link>
+            )
+          })}
+        </div>
+      ) : null}
     </div>
   )
 }

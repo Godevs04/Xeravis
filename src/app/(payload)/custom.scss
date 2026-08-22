@@ -1,7 +1,6 @@
 @import '../../payload/admin/styles/tokens.scss';
-@import '../../payload/admin/styles/layout-v5.scss';
+@import '../../payload/admin/styles/shell.scss';
 @import '../../payload/admin/styles/forms-v5.scss';
-@import '../../payload/admin/styles/polish-v5.scss';
 @import '../../payload/admin/styles/components.scss';
 @import '../../payload/admin/styles/login.scss';
 @import '../../payload/admin/styles/workspace.scss';
@@ -16,7 +15,6 @@
 /*
   FOUC guard: if data-xe-ui is missing for a frame (before boot / htmlProps),
   keep the shell invisible so the default Payload skin never flashes.
-  htmlProps + beforeInteractive boot set the attribute immediately.
 */
 html:not([data-xe-ui='v5']):has(.template-default),
 html:not([data-xe-ui='v5']):has(.login),

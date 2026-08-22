@@ -33,10 +33,10 @@ export default function OpenGraphImage() {
             maxWidth: 900,
           }}
         >
-          Engineering Intelligent Systems for Healthcare, Enterprises, and the Future.
+          Engineering Intelligence. Transforming Business.
         </div>
         <div style={{ fontSize: 24, color: '#94A3B8', maxWidth: 720 }}>
-          Global AI research, IT consulting, data science, and healthcare AI.
+          Artificial Intelligence, Data Science & IT Consulting—Healthcare as a specialty.
         </div>
       </div>
       <div style={{ display: 'flex', fontSize: 20, color: '#64748B' }}>xelarvis.in</div>

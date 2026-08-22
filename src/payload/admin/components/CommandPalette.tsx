@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
+import { getCommandItems } from '@/payload/admin/nav/registry'
+
 type CmdItem = {
   id: string
   label: string
@@ -13,91 +15,12 @@ type CmdItem = {
 }
 
 const STATIC_ITEMS: CmdItem[] = [
-  { id: 'pages', label: 'Pages', href: '/admin/collections/pages', group: 'Website' },
-  { id: 'blogs', label: 'Insights / Blogs', href: '/admin/collections/blogs', group: 'Insights' },
-  { id: 'research', label: 'Research', href: '/admin/collections/research', group: 'Insights' },
-  { id: 'services', label: 'Services', href: '/admin/collections/services', group: 'Website' },
-  {
-    id: 'solutions',
-    label: 'Solutions',
-    href: '/admin/collections/solutions',
-    group: 'Website',
-  },
-  {
-    id: 'industries',
-    label: 'Industries',
-    href: '/admin/collections/industries',
-    group: 'Website',
-  },
-  { id: 'careers', label: 'Jobs', href: '/admin/collections/careers', group: 'Recruitment' },
-  {
-    id: 'applications',
-    label: 'Candidates',
-    href: '/admin/collections/job-applications',
-    group: 'Recruitment',
-  },
-  {
-    id: 'interviews',
-    label: 'Interviews',
-    href: '/admin/collections/interviews',
-    group: 'Recruitment',
-  },
-  { id: 'leads', label: 'Leads', href: '/admin/collections/contact-messages', group: 'Growth' },
-  {
-    id: 'subscribers',
-    label: 'Newsletter subscribers',
-    href: '/admin/collections/newsletter-subscribers',
-    group: 'Growth',
-  },
-  {
-    id: 'campaigns',
-    label: 'Newsletter campaigns',
-    href: '/admin/collections/newsletter-campaigns',
-    group: 'Growth',
-  },
-  {
-    id: 'media',
-    label: 'Media',
-    href: '/admin/collections/media',
-    group: 'Website',
-  },
-  {
-    id: 'activity',
-    label: 'Activity logs',
-    href: '/admin/collections/activity-logs',
-    group: 'System',
-  },
-  { id: 'users', label: 'Users', href: '/admin/collections/users', group: 'System' },
-  {
-    id: 'seo',
-    label: 'SEO defaults',
-    href: '/admin/globals/seo-defaults',
-    group: 'Website',
-  },
-  {
-    id: 'settings',
-    label: 'Site settings',
-    href: '/admin/globals/site-settings',
-    group: 'System',
-  },
-  {
-    id: 'downloads',
-    label: 'Downloads',
-    href: '/admin/collections/downloads',
-    group: 'Insights',
-  },
-  {
-    id: 'create-blog',
-    label: 'Create blog post',
-    href: '/admin/collections/blogs/create',
-    group: 'Actions',
-  },
-  {
-    id: 'create-job',
-    label: 'Create job',
-    href: '/admin/collections/careers/create',
-    group: 'Actions',
-  },
+  ...getCommandItems().map((item) => ({
+    id: item.id,
+    label: item.label,
+    href: item.href,
+    group: item.section,
+  })),
   { id: 'account', label: 'Account', href: '/admin/account', group: 'Actions' },
   { id: 'website', label: 'View website', href: '/', group: 'Actions' },
 ]
@@ -115,7 +38,7 @@ export const CommandPalette = () => {
     const q = query.trim().toLowerCase()
     if (!q) return STATIC_ITEMS
     return STATIC_ITEMS.filter(
-      (item) => item.label.toLowerCase().includes(q) || item.group.includes(q),
+      (item) => item.label.toLowerCase().includes(q) || item.group.toLowerCase().includes(q),
     )
   }, [query])
 
@@ -243,7 +166,7 @@ export const CommandPalette = () => {
             <input
               ref={inputRef}
               className="xe-cmd__input"
-              placeholder="Search blogs, jobs, leads, media, candidates…"
+              placeholder="Search collections, globals, create actions…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={onKeyDown}
@@ -252,7 +175,7 @@ export const CommandPalette = () => {
             <div className="xe-cmd__list" role="listbox">
               {filtered.length === 0 ? (
                 <div className="xe-cmd__empty">
-                  {searching ? 'Searching…' : 'No matches. Try “blogs” or a candidate name.'}
+                  {searching ? 'Searching…' : 'No matches. Try “blogs” or “jobs”.'}
                 </div>
               ) : (
                 filtered.map((item, index) => (
