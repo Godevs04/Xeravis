@@ -28,12 +28,16 @@ export const metadata = buildMetadata({
 
 export default async function IndustriesPage() {
   const industries = await listPublished<IndustryDoc>('industries', { sort: 'order' })
-  const all = industries.length
-    ? industries
-    : FALLBACK_INDUSTRIES.map((i) => ({ ...i, tier: '1' as const }))
+  const all = industries.length ? industries : [...FALLBACK_INDUSTRIES]
 
-  const primary = all.filter((i) => !i.tier || i.tier === '1' || i.tier === '2')
-  const emerging = all.filter((i) => i.tier === '3')
+  const primary = all.filter((i) => {
+    const tier = i.tier ? String(i.tier) : '3'
+    return tier === '1' || tier === '2'
+  })
+  const emerging = all.filter((i) => {
+    const tier = i.tier ? String(i.tier) : '3'
+    return tier === '3'
+  })
 
   return (
     <>

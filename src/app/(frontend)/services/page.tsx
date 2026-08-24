@@ -102,12 +102,11 @@ export default async function ServicesPage() {
   ])
 
   const items = services.length ? services : FALLBACK_SERVICES
-  const industryItems = (
-    industries.length
-      ? industries
-      : FALLBACK_INDUSTRIES.map((i) => ({ ...i, tier: '1' as string | null }))
-  )
-    .filter((i) => !('tier' in i) || !i.tier || i.tier === '1' || i.tier === '2')
+  const industryItems = (industries.length ? industries : FALLBACK_INDUSTRIES)
+    .filter((i) => {
+      const tier = 'tier' in i && i.tier ? String(i.tier) : '3'
+      return tier === '1' || tier === '2'
+    })
     .slice(0, 6)
 
   return (

@@ -87,8 +87,8 @@ export async function SiteHeader() {
   const ctaHref = navigation?.cta?.href || navigation?.ctaHref || DEFAULT_NAV.ctaHref
 
   const industryMegaSource = (industries.length ? industries : FALLBACK_INDUSTRIES).filter((i) => {
-    const tier = 'tier' in i ? i.tier : '1'
-    return !tier || tier === '1' || tier === '2'
+    const tier = 'tier' in i && i.tier ? String(i.tier) : '3'
+    return tier === '1' || tier === '2'
   })
 
   const megaMenus: Record<string, MegaMenuItem[]> = {

@@ -257,6 +257,32 @@ async function seed() {
     if (found.docs[0]?.id) techIds.set(tech.title, String(found.docs[0].id))
   }
 
+  const keepTechSlugs = new Set(SEED_TECHNOLOGIES.map((t) => t.slug as string))
+  const clinicalTechSlugs = new Set(['sas', 'cdisc-standards', 'pinnacle-21'])
+  const allTechs = await payload.find({
+    collection: 'technologies',
+    limit: 200,
+    overrideAccess: true,
+  })
+  for (const doc of allTechs.docs) {
+    const slug = String(doc.slug)
+    if (!clinicalTechSlugs.has(slug) && keepTechSlugs.has(slug)) continue
+    if (!clinicalTechSlugs.has(slug)) continue
+    await payload.update({
+      collection: 'technologies',
+      id: doc.id,
+      data: {
+        featured: false,
+        category: 'other',
+        description:
+          'Clinical capability content—not listed in the engineering technology catalog.',
+      },
+      overrideAccess: true,
+      context: { disableRevalidate: true },
+    })
+    log.info(`technologies: demoted clinical catalog entry ${slug}`)
+  }
+
   const serviceIds = new Map<string, string>()
   for (const [index, service] of SEED_SERVICES.entries()) {
     const relatedTech = service.techLabels
@@ -369,6 +395,8 @@ async function seed() {
       title: solution.title,
       summary: solution.summary,
       body: richParagraph(solution.summary),
+      businessChallenges: solution.businessChallenges.map((c) => ({ ...c })),
+      whoIsThisFor: solution.whoIsThisFor,
       technologies: relatedTech,
       featured: index < 6,
       order: index + 1,
@@ -774,6 +802,14 @@ async function seed() {
       { item: 'Mentorship' },
       { item: 'Research exposure' },
     ],
+    relatedServices: [
+      serviceIds.get('data-science-advanced-analytics'),
+      serviceIds.get('artificial-intelligence-ai-research'),
+    ].filter(Boolean),
+    relatedSolutions: [
+      solutionIds.get('predictive-analytics-solutions'),
+      solutionIds.get('business-intelligence-solutions'),
+    ].filter(Boolean),
     active: true,
   })
 
@@ -824,6 +860,15 @@ async function seed() {
       { item: 'Paid leave' },
       { item: 'Research opportunities' },
     ],
+    relatedServices: [
+      serviceIds.get('artificial-intelligence-ai-research'),
+      serviceIds.get('data-engineering-cloud-solutions'),
+    ].filter(Boolean),
+    relatedSolutions: [
+      solutionIds.get('enterprise-ai-solutions'),
+      solutionIds.get('ai-agents'),
+      solutionIds.get('custom-ai-products'),
+    ].filter(Boolean),
     active: true,
   })
 
@@ -862,6 +907,12 @@ async function seed() {
       { item: 'Learning budget' },
       { item: 'Healthcare domain exposure' },
     ],
+    relatedServices: [serviceIds.get('clinical-data-science-healthcare-ai')].filter(Boolean),
+    relatedSolutions: [solutionIds.get('healthcare-clinical-intelligence')].filter(Boolean),
+    relatedIndustries: [
+      industryIds.get('healthcare-life-sciences'),
+      industryIds.get('pharmaceutical'),
+    ].filter(Boolean),
     active: true,
   })
 

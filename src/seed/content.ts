@@ -495,6 +495,19 @@ export const SEED_SOLUTIONS = [
     summary:
       'When AI pilots stall in production—governed enterprise AI systems that move from use-case selection to measurable operational outcomes.',
     techLabels: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'LangChain'],
+    businessChallenges: [
+      {
+        title: 'AI pilots that never reach production',
+        description:
+          'Proof-of-concepts lack governance, ownership, and a path to operational systems.',
+      },
+      {
+        title: 'Unclear ROI and success criteria',
+        description: 'Teams struggle to define measurable outcomes before model work begins.',
+      },
+    ],
+    whoIsThisFor:
+      'Technology and business leaders who need governed enterprise AI—not demos—across operations, customer, or decision workflows.',
   },
   {
     title: 'Intelligent Automation',
@@ -502,6 +515,14 @@ export const SEED_SOLUTIONS = [
     summary:
       'When manual handoffs slow the business—AI agents and automation that reduce cycle time across knowledge and operational workflows.',
     techLabels: ['LangChain', 'OpenAI', 'Python', 'Apache Kafka'],
+    businessChallenges: [
+      {
+        title: 'Manual, error-prone handoffs',
+        description: 'Repetitive knowledge work and process steps create delays and inconsistency.',
+      },
+    ],
+    whoIsThisFor:
+      'Operations and transformation leaders seeking AI-assisted automation with human oversight and auditability.',
   },
   {
     title: 'AI Agents',
@@ -509,6 +530,14 @@ export const SEED_SOLUTIONS = [
     summary:
       'When workflows need autonomous or semi-autonomous execution—agent systems that plan, tool-use, and escalate with human oversight.',
     techLabels: ['LangChain', 'OpenAI', 'Python', 'Hugging Face'],
+    businessChallenges: [
+      {
+        title: 'Workflows too complex for simple scripts',
+        description: 'Multi-step tasks need planning, tools, and escalation—not brittle RPA alone.',
+      },
+    ],
+    whoIsThisFor:
+      'Product and engineering leaders building agentic workflows with clear guardrails and escalation paths.',
   },
   {
     title: 'Predictive Analytics',
@@ -516,6 +545,14 @@ export const SEED_SOLUTIONS = [
     summary:
       'When leaders need foresight—not lagging reports—forecasting and risk models that anticipate demand, churn, and operational outcomes.',
     techLabels: ['Python', 'Apache Spark', 'Power BI', 'Databricks'],
+    businessChallenges: [
+      {
+        title: 'Decisions based on lagging reports',
+        description: 'Leaders need forecasts and risk signals before issues become costly.',
+      },
+    ],
+    whoIsThisFor:
+      'Analytics and business leaders who need forecasting and risk models tied to real KPIs.',
   },
   {
     title: 'Business Intelligence',
@@ -523,6 +560,14 @@ export const SEED_SOLUTIONS = [
     summary:
       'When metrics conflict across teams—trusted BI layers and executive dashboards that turn fragmented data into shared decisions.',
     techLabels: ['Power BI', 'Tableau', 'Python', 'Snowflake'],
+    businessChallenges: [
+      {
+        title: 'Conflicting metrics across teams',
+        description: 'Fragmented sources produce inconsistent KPIs and slow executive decisions.',
+      },
+    ],
+    whoIsThisFor:
+      'Data and executive teams that need a trusted BI layer and shared metric definitions.',
   },
   {
     title: 'Data Platforms',
@@ -530,6 +575,14 @@ export const SEED_SOLUTIONS = [
     summary:
       'When analytics and AI outgrow spreadsheets—scalable lakes, warehouses, and pipelines that become the enterprise data foundation.',
     techLabels: ['Apache Spark', 'Apache Kafka', 'Snowflake', 'Databricks', 'AWS'],
+    businessChallenges: [
+      {
+        title: 'Analytics and AI outgrowing spreadsheets',
+        description: 'Teams need governed pipelines, warehouses, and access patterns that scale.',
+      },
+    ],
+    whoIsThisFor:
+      'Data platform and engineering leaders building foundations for analytics and AI.',
   },
   {
     title: 'Custom AI Products',
@@ -537,6 +590,14 @@ export const SEED_SOLUTIONS = [
     summary:
       'When off-the-shelf tools fall short—productized AI experiences engineered for your customer, research, or operations workflows.',
     techLabels: ['Python', 'OpenAI', 'LangChain', 'Hugging Face', 'React'],
+    businessChallenges: [
+      {
+        title: 'Generic tools that miss the workflow',
+        description: 'Off-the-shelf AI products do not fit domain process, data, or UX needs.',
+      },
+    ],
+    whoIsThisFor:
+      'Product owners who need purpose-built AI experiences with engineering depth and governance.',
   },
   {
     title: 'Healthcare & Clinical Intelligence',
@@ -544,6 +605,15 @@ export const SEED_SOLUTIONS = [
     summary:
       'When regulated research needs speed without risk—clinical programming, CDISC delivery, and healthcare analytics under governance.',
     techLabels: ['Python', 'Power BI', 'AWS', 'Microsoft Azure'],
+    businessChallenges: [
+      {
+        title: 'Regulated research under time pressure',
+        description:
+          'Clinical and healthcare programs need speed without compromising quality or compliance.',
+      },
+    ],
+    whoIsThisFor:
+      'Life sciences and healthcare teams that need clinical intelligence and analytics under governance—a specialty practice, not the whole brand.',
   },
   {
     title: 'Application Modernization',
@@ -551,6 +621,15 @@ export const SEED_SOLUTIONS = [
     summary:
       'When legacy systems constrain growth—modernize applications, APIs, and delivery practices for security, scale, and longevity.',
     techLabels: ['Python', 'React', 'Node.js', 'Docker', 'Kubernetes', 'AWS'],
+    businessChallenges: [
+      {
+        title: 'Legacy systems constraining change',
+        description:
+          'Monoliths and brittle integrations slow delivery, security hardening, and cloud adoption.',
+      },
+    ],
+    whoIsThisFor:
+      'IT and engineering leaders modernizing applications, APIs, and delivery practices for scale and longevity.',
   },
 ] as const
 

@@ -119,6 +119,7 @@ export const FALLBACK_INDUSTRIES = [
     title: 'Healthcare & Life Sciences',
     slug: 'healthcare-life-sciences',
     summary: 'Clinical research, pharmaceutical, biotechnology, medical devices, and hospitals.',
+    tier: '1' as const,
   },
   {
     id: '2',
@@ -126,36 +127,42 @@ export const FALLBACK_INDUSTRIES = [
     slug: 'enterprise-technology',
     summary:
       'Platform modernization, AI adoption, and digital transformation for technology organizations.',
+    tier: '1' as const,
   },
   {
     id: '3',
     title: 'Banking & Financial Services',
     slug: 'banking-finance',
     summary: 'Risk analytics, fraud detection, and intelligent automation.',
+    tier: '1' as const,
   },
   {
     id: '4',
     title: 'Manufacturing',
     slug: 'manufacturing',
     summary: 'Predictive maintenance, quality analytics, and connected operations.',
+    tier: '1' as const,
   },
   {
     id: '5',
     title: 'Retail & E-Commerce',
     slug: 'retail',
     summary: 'Customer intelligence, forecasting, and recommendation systems.',
+    tier: '2' as const,
   },
   {
     id: '6',
     title: 'Logistics & Supply Chain',
     slug: 'logistics',
     summary: 'Supply chain analytics, forecasting, and operational optimization.',
+    tier: '2' as const,
   },
   {
     id: '7',
     title: 'Education',
     slug: 'education',
     summary: 'Learning platforms, analytics, and digital transformation for institutions.',
+    tier: '3' as const,
   },
   {
     id: '8',
@@ -163,6 +170,7 @@ export const FALLBACK_INDUSTRIES = [
     slug: 'government-public-sector',
     summary:
       'Areas we can support—modernization, automation, and data platforms under public-sector constraints.',
+    tier: '3' as const,
   },
   {
     id: '9',
@@ -170,6 +178,7 @@ export const FALLBACK_INDUSTRIES = [
     slug: 'energy-utilities',
     summary:
       'Areas we can support—predictive analytics, data platforms, and operational intelligence.',
+    tier: '3' as const,
   },
 ]
 
