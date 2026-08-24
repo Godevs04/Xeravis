@@ -122,52 +122,54 @@ export const FALLBACK_INDUSTRIES = [
   },
   {
     id: '2',
-    title: 'Pharmaceutical',
-    slug: 'pharmaceutical',
-    summary: 'Regulatory-ready analytics, clinical programming, and R&D intelligence.',
+    title: 'Technology',
+    slug: 'enterprise-technology',
+    summary:
+      'Platform modernization, AI adoption, and digital transformation for technology organizations.',
   },
   {
     id: '3',
-    title: 'Biotechnology',
-    slug: 'biotechnology',
-    summary: 'Data platforms and AI for discovery, trials, and translational research.',
-  },
-  {
-    id: '4',
     title: 'Banking & Financial Services',
     slug: 'banking-finance',
     summary: 'Risk analytics, fraud detection, and intelligent automation.',
   },
   {
-    id: '5',
+    id: '4',
     title: 'Manufacturing',
     slug: 'manufacturing',
     summary: 'Predictive maintenance, quality analytics, and connected operations.',
   },
   {
-    id: '6',
+    id: '5',
     title: 'Retail & E-Commerce',
     slug: 'retail',
     summary: 'Customer intelligence, forecasting, and recommendation systems.',
   },
   {
-    id: '7',
-    title: 'Logistics',
+    id: '6',
+    title: 'Logistics & Supply Chain',
     slug: 'logistics',
-    summary: 'Supply chain analytics and optimization.',
+    summary: 'Supply chain analytics, forecasting, and operational optimization.',
   },
   {
-    id: '8',
-    title: 'Education Technology',
+    id: '7',
+    title: 'Education',
     slug: 'education',
     summary: 'Learning platforms, analytics, and digital transformation for institutions.',
   },
   {
-    id: '9',
-    title: 'Enterprise Technology',
-    slug: 'enterprise-technology',
+    id: '8',
+    title: 'Government & Public Sector',
+    slug: 'government-public-sector',
     summary:
-      'Platform modernization, AI adoption, and digital transformation for technology organizations.',
+      'Areas we can support—modernization, automation, and data platforms under public-sector constraints.',
+  },
+  {
+    id: '9',
+    title: 'Energy & Utilities',
+    slug: 'energy-utilities',
+    summary:
+      'Areas we can support—predictive analytics, data platforms, and operational intelligence.',
   },
 ]
 

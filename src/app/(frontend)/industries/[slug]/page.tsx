@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { CTABand } from '@/blocks/CTABand'
+import { FAQAccordion } from '@/blocks/FAQAccordion'
 import { RelatedContent } from '@/components/content/RelatedContent'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
@@ -126,6 +127,28 @@ export default async function IndustryDetailPage({ params }: Props) {
       <RelatedContent
         heading="Capabilities, solutions & evidence for this sector"
         groups={relatedGroups}
+      />
+
+      <FAQAccordion
+        heading="Frequently asked questions"
+        seedFaqs={[
+          {
+            question: `How does XELARVIS approach ${industry.title}?`,
+            answer:
+              industry.summary ||
+              'We adapt AI, data science, and IT consulting patterns to sector constraints—regulation, scale, and operating models—without inventing proof claims.',
+          },
+          {
+            question: 'How do Services and Solutions relate for this industry?',
+            answer:
+              'Services are how we work (practice areas). Solutions are what we solve (outcome themes). Industries provide the operating context that shapes architecture and success criteria.',
+          },
+          {
+            question: 'Where should we start?',
+            answer:
+              'Start with Discover in the XELARVIS Delivery Framework—clarify the business problem, data readiness, and measurable outcomes before build.',
+          },
+        ]}
       />
 
       <CTABand

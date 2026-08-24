@@ -836,6 +836,9 @@ export interface Technology {
    * URL slug. Auto-generated from title when empty.
    */
   slug: string
+  /**
+   * Engineering stack categories only. Clinical standards (SAS/SDTM/CDISC) belong in Healthcare service capability content—not this catalog.
+   */
   category:
     | 'frontend'
     | 'backend'
@@ -844,7 +847,6 @@ export interface Technology {
     | 'ai'
     | 'database'
     | 'data'
-    | 'clinical'
     | 'bi'
     | 'cms'
     | 'other'

@@ -91,6 +91,8 @@ export const INDUSTRY_TIER_MAP: Record<string, '1' | '2' | '3'> = {
   retail: '2',
   logistics: '2',
   education: '3',
+  'government-public-sector': '3',
+  'energy-utilities': '3',
   pharmaceutical: '3',
   biotechnology: '3',
 }

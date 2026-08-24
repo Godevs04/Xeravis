@@ -477,14 +477,13 @@ export const SEED_SERVICES = [
       },
     ],
     techLabels: [
-      'SAS',
       'Python',
-      'CDISC Standards',
-      'Pinnacle 21',
       'Power BI',
       'Tableau',
       'TensorFlow',
       'PyTorch',
+      'AWS',
+      'Microsoft Azure',
     ],
   },
 ] as const
@@ -544,7 +543,7 @@ export const SEED_SOLUTIONS = [
     slug: 'healthcare-clinical-intelligence',
     summary:
       'When regulated research needs speed without risk—clinical programming, CDISC delivery, and healthcare analytics under governance.',
-    techLabels: ['SAS', 'CDISC Standards', 'Pinnacle 21', 'Python', 'Power BI'],
+    techLabels: ['Python', 'Power BI', 'AWS', 'Microsoft Azure'],
   },
   {
     title: 'Application Modernization',
@@ -562,14 +561,10 @@ export const SEED_INDUSTRIES = [
     summary: 'Clinical research, pharmaceutical, biotechnology, medical devices, and hospitals.',
   },
   {
-    title: 'Pharmaceutical',
-    slug: 'pharmaceutical',
-    summary: 'Regulatory-ready analytics, clinical programming, and R&D intelligence.',
-  },
-  {
-    title: 'Biotechnology',
-    slug: 'biotechnology',
-    summary: 'Data platforms and AI for discovery, trials, and translational research.',
+    title: 'Technology',
+    slug: 'enterprise-technology',
+    summary:
+      'Platform modernization, AI adoption, and digital transformation for technology organizations.',
   },
   {
     title: 'Banking & Financial Services',
@@ -586,17 +581,38 @@ export const SEED_INDUSTRIES = [
     slug: 'retail',
     summary: 'Customer intelligence, forecasting, and recommendation systems.',
   },
-  { title: 'Logistics', slug: 'logistics', summary: 'Supply chain analytics and optimization.' },
   {
-    title: 'Education Technology',
+    title: 'Logistics & Supply Chain',
+    slug: 'logistics',
+    summary: 'Supply chain analytics, forecasting, and operational optimization.',
+  },
+  {
+    title: 'Education',
     slug: 'education',
     summary: 'Learning platforms, analytics, and digital transformation for institutions.',
   },
   {
-    title: 'Enterprise Technology',
-    slug: 'enterprise-technology',
+    title: 'Government & Public Sector',
+    slug: 'government-public-sector',
     summary:
-      'Platform modernization, AI adoption, and digital transformation for technology organizations.',
+      'Areas we can support—modernization, automation, and data platforms under public-sector constraints.',
+  },
+  {
+    title: 'Energy & Utilities',
+    slug: 'energy-utilities',
+    summary:
+      'Areas we can support—predictive analytics, data platforms, and operational intelligence.',
+  },
+  // Specialty pages (gated Tier 3) — sit under Healthcare & Life Sciences context
+  {
+    title: 'Pharmaceutical',
+    slug: 'pharmaceutical',
+    summary: 'Regulatory-ready analytics, clinical programming, and R&D intelligence.',
+  },
+  {
+    title: 'Biotechnology',
+    slug: 'biotechnology',
+    summary: 'Data platforms and AI for discovery, trials, and translational research.',
   },
 ] as const
 
@@ -636,24 +652,6 @@ export const SEED_TECHNOLOGIES = [
     slug: 'langchain',
     category: 'ai',
     description: 'Orchestration for LLM applications and agents.',
-  },
-  {
-    title: 'SAS',
-    slug: 'sas',
-    category: 'clinical',
-    description: 'Clinical statistical programming and analytics.',
-  },
-  {
-    title: 'CDISC Standards',
-    slug: 'cdisc-standards',
-    category: 'clinical',
-    description: 'SDTM and ADaM for regulatory submissions.',
-  },
-  {
-    title: 'Pinnacle 21',
-    slug: 'pinnacle-21',
-    category: 'clinical',
-    description: 'Validation for CDISC datasets.',
   },
   {
     title: 'Power BI',
