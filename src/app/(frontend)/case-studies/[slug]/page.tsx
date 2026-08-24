@@ -2,15 +2,15 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { CTABand } from '@/blocks/CTABand'
+import { RelatedContent } from '@/components/content/RelatedContent'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { RelatedLinks } from '@/components/seo/RelatedLinks'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { FALLBACK_CASE_STUDIES } from '@/lib/fallback-data'
+import { buildRelatedGroups } from '@/lib/related-content'
 import { breadcrumbJsonLd, buildMetadata, caseStudyJsonLd, graphJsonLd } from '@/lib/seo'
-import { relatedLinksForCaseStudy } from '@/lib/seo-content'
 
 export const revalidate = 60
 
@@ -22,6 +22,10 @@ type CaseStudyDoc = {
   challenge: string
   outcome: string
   metrics?: { label: string; value: string }[]
+  services?: unknown
+  relatedSolutions?: unknown
+  technologies?: unknown
+  industry?: unknown
   meta?: { title?: string; description?: string; image?: unknown }
 }
 
@@ -59,6 +63,8 @@ export default async function CaseStudyDetailPage({ params }: Props) {
     challenge: fallback!.challenge,
     metrics: [],
   }
+
+  const relatedGroups = buildRelatedGroups(doc as unknown as Record<string, unknown>)
 
   const jsonLd = graphJsonLd(
     caseStudyJsonLd({
@@ -102,18 +108,16 @@ export default async function CaseStudyDetailPage({ params }: Props) {
               </div>
             </div>
           )}
-          <div>
-            <h2 className="text-2xl font-bold">Industry</h2>
-            <p className="text-secondary mt-4 leading-relaxed">{doc.client}</p>
-          </div>
         </Container>
       </Section>
-      <RelatedLinks links={relatedLinksForCaseStudy()} />
+
+      <RelatedContent heading="Related capabilities & solutions" groups={relatedGroups} />
+
       <CTABand
         heading="Discuss a similar initiative"
         subheading="Our teams can share relevant patterns and delivery models."
         ctaLabel="Talk to us"
-        ctaHref="/contact"
+        ctaHref="/contact?intent=business"
       />
       <div className="container-x pb-12">
         <Link href="/case-studies" className="text-accent text-sm font-semibold hover:underline">

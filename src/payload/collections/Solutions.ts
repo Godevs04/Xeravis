@@ -54,9 +54,48 @@ export const Solutions: CollectionConfig = {
       required: true,
     },
     {
+      name: 'businessChallenges',
+      type: 'array',
+      label: 'Business Challenges',
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        { name: 'description', type: 'textarea' },
+      ],
+    },
+    {
+      name: 'useCases',
+      type: 'array',
+      label: 'Use Cases',
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        { name: 'description', type: 'textarea' },
+      ],
+    },
+    {
+      name: 'outcomes',
+      type: 'array',
+      label: 'Outcomes',
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        { name: 'description', type: 'textarea' },
+      ],
+    },
+    {
+      name: 'whoIsThisFor',
+      type: 'textarea',
+      label: 'Who Is This For?',
+    },
+    {
       name: 'relatedServices',
       type: 'relationship',
       relationTo: 'services',
+      hasMany: true,
+      label: 'Related Services / Capabilities',
+    },
+    {
+      name: 'relatedIndustries',
+      type: 'relationship',
+      relationTo: 'industries',
       hasMany: true,
     },
     {
@@ -67,8 +106,33 @@ export const Solutions: CollectionConfig = {
       label: 'Technology Stack',
       admin: {
         description:
-          'Technologies specific to this solution. Overall capabilities live on /technologies.',
+          'Technologies specific to this solution — do not inherit the full service stack.',
       },
+    },
+    {
+      name: 'relatedCaseStudies',
+      type: 'relationship',
+      relationTo: 'case-studies',
+      hasMany: true,
+    },
+    {
+      name: 'relatedResearch',
+      type: 'relationship',
+      relationTo: 'research',
+      hasMany: true,
+    },
+    {
+      name: 'relatedInsights',
+      type: 'relationship',
+      relationTo: 'blogs',
+      hasMany: true,
+      label: 'Related Insights',
+    },
+    {
+      name: 'relatedFaqs',
+      type: 'relationship',
+      relationTo: 'faqs',
+      hasMany: true,
     },
     featuredField(),
     orderField(),

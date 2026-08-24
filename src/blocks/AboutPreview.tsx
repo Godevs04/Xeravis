@@ -23,8 +23,8 @@ type AboutPreviewProps = {
 const EASE = [0.22, 1, 0.36, 1] as const
 
 const HOW_WE_WORK = [
-  { step: '01', label: 'Research' },
-  { step: '02', label: 'Strategy' },
+  { step: '01', label: 'Discover' },
+  { step: '02', label: 'Strategize' },
   { step: '03', label: 'Design' },
   { step: '04', label: 'Build' },
   { step: '05', label: 'Deploy' },

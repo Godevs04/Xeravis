@@ -74,13 +74,14 @@ const DEFAULT_METRICS: MetricPanel[] = [
     value: 9,
     display: '9',
     suffix: '',
-    detail: 'Discover through Scale — the XELARVIS Delivery Framework.',
+    detail:
+      'Discover → Strategize → Design → Build → Deploy → Optimize — the XELARVIS Delivery Framework.',
     viz: 'pulse',
     nodeIds: [5, 6],
   },
 ]
 
-const PIPELINE = ['Research', 'Architecture', 'Build', 'Deploy', 'Monitor', 'Optimize', 'Results']
+const PIPELINE = ['Discover', 'Strategize', 'Design', 'Build', 'Deploy', 'Optimize']
 
 const EASE = [0.22, 1, 0.36, 1] as const
 

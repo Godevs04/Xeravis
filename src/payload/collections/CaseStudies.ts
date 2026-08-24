@@ -85,6 +85,20 @@ export const CaseStudies: CollectionConfig = {
       type: 'relationship',
       relationTo: 'services',
       hasMany: true,
+      label: 'Related Services',
+    },
+    {
+      name: 'relatedSolutions',
+      type: 'relationship',
+      relationTo: 'solutions',
+      hasMany: true,
+      label: 'Related Solutions',
+    },
+    {
+      name: 'technologies',
+      type: 'relationship',
+      relationTo: 'technologies',
+      hasMany: true,
     },
     {
       name: 'featuredImage',

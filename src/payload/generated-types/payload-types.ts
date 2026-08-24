@@ -792,9 +792,18 @@ export interface Service {
         id?: string | null
       }[]
     | null
+  /**
+   * Engineering stack for this capability (not clinical standards).
+   */
   technologies?: (string | Technology)[] | null
+  /**
+   * Business problems this capability helps solve.
+   */
+  relatedSolutions?: (string | Solution)[] | null
   relatedIndustries?: (string | Industry)[] | null
   relatedCaseStudies?: (string | CaseStudy)[] | null
+  relatedResearch?: (string | Research)[] | null
+  relatedInsights?: (string | Blog)[] | null
   relatedFaqs?: (string | Faq)[] | null
   /**
    * Show in featured lists and homepage modules.
@@ -854,6 +863,85 @@ export interface Technology {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "solutions".
+ */
+export interface Solution {
+  id: string
+  title: string
+  /**
+   * URL slug. Auto-generated from title when empty.
+   */
+  slug: string
+  summary: string
+  body: {
+    root: {
+      type: string
+      children: {
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  }
+  businessChallenges?:
+    | {
+        title: string
+        description?: string | null
+        id?: string | null
+      }[]
+    | null
+  useCases?:
+    | {
+        title: string
+        description?: string | null
+        id?: string | null
+      }[]
+    | null
+  outcomes?:
+    | {
+        title: string
+        description?: string | null
+        id?: string | null
+      }[]
+    | null
+  whoIsThisFor?: string | null
+  relatedServices?: (string | Service)[] | null
+  relatedIndustries?: (string | Industry)[] | null
+  /**
+   * Technologies specific to this solution — do not inherit the full service stack.
+   */
+  technologies?: (string | Technology)[] | null
+  relatedCaseStudies?: (string | CaseStudy)[] | null
+  relatedResearch?: (string | Research)[] | null
+  relatedInsights?: (string | Blog)[] | null
+  relatedFaqs?: (string | Faq)[] | null
+  /**
+   * Show in featured lists and homepage modules.
+   */
+  featured?: boolean | null
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null
+  meta?: {
+    title?: string | null
+    description?: string | null
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media
+  }
+  updatedAt: string
+  createdAt: string
+  _status?: ('draft' | 'published') | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "industries".
  */
 export interface Industry {
@@ -876,6 +964,9 @@ export interface Industry {
         id?: string | null
       }[]
     | null
+  /**
+   * Prefer Related Solutions relationship below.
+   */
   solutions?:
     | {
         title: string
@@ -899,7 +990,15 @@ export interface Industry {
     [k: string]: unknown
   } | null
   relatedServices?: (string | Service)[] | null
+  relatedSolutions?: (string | Solution)[] | null
+  relatedTechnologies?: (string | Technology)[] | null
   relatedCaseStudies?: (string | CaseStudy)[] | null
+  relatedResearch?: (string | Research)[] | null
+  relatedInsights?: (string | Blog)[] | null
+  /**
+   * Controls nav prominence. Tier 3 stays out of primary mega until content-ready.
+   */
+  tier?: ('1' | '2' | '3') | null
   /**
    * Show in featured lists and homepage modules.
    */
@@ -947,6 +1046,8 @@ export interface CaseStudy {
       }[]
     | null
   services?: (string | Service)[] | null
+  relatedSolutions?: (string | Solution)[] | null
+  technologies?: (string | Technology)[] | null
   featuredImage?: (string | null) | Media
   meta?: {
     title?: string | null
@@ -975,38 +1076,17 @@ export interface Client {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
+ * via the `definition` "research".
  */
-export interface Faq {
-  id: string
-  question: string
-  answer: string
-  /**
-   * Optional grouping label (e.g. Services, Careers)
-   */
-  group?: string | null
-  relatedServices?: (string | Service)[] | null
-  relatedPages?: (string | Page)[] | null
-  /**
-   * Lower numbers appear first.
-   */
-  order?: number | null
-  updatedAt: string
-  createdAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "solutions".
- */
-export interface Solution {
+export interface Research {
   id: string
   title: string
   /**
    * URL slug. Auto-generated from title when empty.
    */
   slug: string
-  summary: string
-  body: {
+  excerpt: string
+  content: {
     root: {
       type: string
       children: {
@@ -1021,30 +1101,36 @@ export interface Solution {
     }
     [k: string]: unknown
   }
+  cover?: (string | null) | Media
+  authors?: (string | Author)[] | null
   relatedServices?: (string | Service)[] | null
-  /**
-   * Technologies specific to this solution. Overall capabilities live on /technologies.
-   */
-  technologies?: (string | Technology)[] | null
+  relatedSolutions?: (string | Solution)[] | null
+  relatedIndustries?: (string | Industry)[] | null
   /**
    * Show in featured lists and homepage modules.
    */
   featured?: boolean | null
   /**
-   * Lower numbers appear first.
+   * Public publish timestamp.
    */
-  order?: number | null
-  meta?: {
-    title?: string | null
-    description?: string | null
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media
-  }
+  publishedAt?: string | null
   updatedAt: string
   createdAt: string
   _status?: ('draft' | 'published') | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors".
+ */
+export interface Author {
+  id: string
+  name: string
+  role?: string | null
+  bio?: string | null
+  avatar?: (string | null) | Media
+  linkedIn?: string | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1081,6 +1167,9 @@ export interface Blog {
   author?: (string | null) | Author
   categories?: (string | Category)[] | null
   tags?: (string | Tag)[] | null
+  relatedServices?: (string | Service)[] | null
+  relatedSolutions?: (string | Solution)[] | null
+  relatedIndustries?: (string | Industry)[] | null
   /**
    * Minutes. Auto-estimated on save if empty.
    */
@@ -1104,20 +1193,6 @@ export interface Blog {
   updatedAt: string
   createdAt: string
   _status?: ('draft' | 'published') | null
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "authors".
- */
-export interface Author {
-  id: string
-  name: string
-  role?: string | null
-  bio?: string | null
-  avatar?: (string | null) | Media
-  linkedIn?: string | null
-  updatedAt: string
-  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1154,44 +1229,24 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "research".
+ * via the `definition` "faqs".
  */
-export interface Research {
+export interface Faq {
   id: string
-  title: string
+  question: string
+  answer: string
   /**
-   * URL slug. Auto-generated from title when empty.
+   * Optional grouping label (e.g. Services, Careers)
    */
-  slug: string
-  excerpt: string
-  content: {
-    root: {
-      type: string
-      children: {
-        type: any
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  }
-  cover?: (string | null) | Media
-  authors?: (string | Author)[] | null
+  group?: string | null
+  relatedServices?: (string | Service)[] | null
+  relatedPages?: (string | Page)[] | null
   /**
-   * Show in featured lists and homepage modules.
+   * Lower numbers appear first.
    */
-  featured?: boolean | null
-  /**
-   * Public publish timestamp.
-   */
-  publishedAt?: string | null
+  order?: number | null
   updatedAt: string
   createdAt: string
-  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1279,6 +1334,9 @@ export interface Career {
     }
     [k: string]: unknown
   }
+  relatedServices?: (string | Service)[] | null
+  relatedSolutions?: (string | Solution)[] | null
+  relatedIndustries?: (string | Industry)[] | null
   active?: boolean | null
   meta?: {
     title?: string | null
@@ -2399,8 +2457,11 @@ export interface ServicesSelect<T extends boolean = true> {
         id?: T
       }
   technologies?: T
+  relatedSolutions?: T
   relatedIndustries?: T
   relatedCaseStudies?: T
+  relatedResearch?: T
+  relatedInsights?: T
   relatedFaqs?: T
   featured?: T
   order?: T
@@ -2441,7 +2502,12 @@ export interface IndustriesSelect<T extends boolean = true> {
       }
   approach?: T
   relatedServices?: T
+  relatedSolutions?: T
+  relatedTechnologies?: T
   relatedCaseStudies?: T
+  relatedResearch?: T
+  relatedInsights?: T
+  tier?: T
   featured?: T
   order?: T
   meta?:
@@ -2464,8 +2530,35 @@ export interface SolutionsSelect<T extends boolean = true> {
   slug?: T
   summary?: T
   body?: T
+  businessChallenges?:
+    | T
+    | {
+        title?: T
+        description?: T
+        id?: T
+      }
+  useCases?:
+    | T
+    | {
+        title?: T
+        description?: T
+        id?: T
+      }
+  outcomes?:
+    | T
+    | {
+        title?: T
+        description?: T
+        id?: T
+      }
+  whoIsThisFor?: T
   relatedServices?: T
+  relatedIndustries?: T
   technologies?: T
+  relatedCaseStudies?: T
+  relatedResearch?: T
+  relatedInsights?: T
+  relatedFaqs?: T
   featured?: T
   order?: T
   meta?:
@@ -2499,6 +2592,8 @@ export interface CaseStudiesSelect<T extends boolean = true> {
         id?: T
       }
   services?: T
+  relatedSolutions?: T
+  technologies?: T
   featuredImage?: T
   meta?:
     | T
@@ -2525,6 +2620,9 @@ export interface BlogsSelect<T extends boolean = true> {
   author?: T
   categories?: T
   tags?: T
+  relatedServices?: T
+  relatedSolutions?: T
+  relatedIndustries?: T
   readingTime?: T
   featured?: T
   publishedAt?: T
@@ -2550,6 +2648,9 @@ export interface ResearchSelect<T extends boolean = true> {
   content?: T
   cover?: T
   authors?: T
+  relatedServices?: T
+  relatedSolutions?: T
+  relatedIndustries?: T
   featured?: T
   publishedAt?: T
   updatedAt?: T
@@ -2636,6 +2737,9 @@ export interface CareersSelect<T extends boolean = true> {
         id?: T
       }
   requirements?: T
+  relatedServices?: T
+  relatedSolutions?: T
+  relatedIndustries?: T
   active?: T
   meta?:
     | T

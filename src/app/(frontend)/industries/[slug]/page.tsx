@@ -2,12 +2,14 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { CTABand } from '@/blocks/CTABand'
+import { RelatedContent } from '@/components/content/RelatedContent'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { getMediaUrl } from '@/lib/media'
+import { buildRelatedGroups } from '@/lib/related-content'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -21,6 +23,13 @@ type IndustryDoc = {
   problems?: { title: string; description: string }[] | null
   solutions?: { title: string; description: string }[] | null
   approach?: unknown
+  tier?: string | null
+  relatedServices?: unknown
+  relatedSolutions?: unknown
+  relatedTechnologies?: unknown
+  relatedCaseStudies?: unknown
+  relatedResearch?: unknown
+  relatedInsights?: unknown
   heroImage?: unknown
   meta?: { title?: string; description?: string; image?: unknown }
 }
@@ -51,21 +60,25 @@ export default async function IndustryDetailPage({ params }: Props) {
   if (!industry) notFound()
 
   const heroUrl = getMediaUrl(industry.heroImage as Parameters<typeof getMediaUrl>[0])
+  const relatedGroups = buildRelatedGroups(industry as unknown as Record<string, unknown>)
+  const isTier3 = industry.tier === '3'
 
   return (
     <>
       <PageHero
-        eyebrow="Industry"
+        eyebrow={isTier3 ? 'Area we can support' : 'Industry'}
         title={industry.title}
         subtitle={industry.summary}
         image={heroUrl || undefined}
         size="compact"
-        ctas={[{ label: 'Discuss your sector', href: '/contact', variant: 'accent' }]}
+        ctas={[
+          { label: 'Discuss your sector', href: '/contact?intent=business', variant: 'accent' },
+        ]}
       />
       {industry.problems && industry.problems.length > 0 ? (
         <Section>
           <Container>
-            <h2 className="text-2xl font-bold">Problems</h2>
+            <h2 className="text-2xl font-bold">Challenges</h2>
             <ul className="mt-8 grid gap-6 md:grid-cols-2">
               {industry.problems.map((item) => (
                 <li key={item.title} className="border-border border-b pb-6">
@@ -109,11 +122,17 @@ export default async function IndustryDetailPage({ params }: Props) {
           </Container>
         </Section>
       ) : null}
+
+      <RelatedContent
+        heading="Capabilities, solutions & evidence for this sector"
+        groups={relatedGroups}
+      />
+
       <CTABand
-        heading="See services for this industry"
-        subheading="Explore capabilities aligned to your operating model."
-        ctaLabel="View services"
-        ctaHref="/services"
+        heading="Discuss an initiative in this sector"
+        subheading="We will map services and solutions to your operating model—without invented proof claims."
+        ctaLabel="Talk to XELARVIS"
+        ctaHref="/contact?intent=business"
       />
       <div className="container-x pb-12">
         <Link href="/industries" className="text-accent text-sm font-semibold hover:underline">

@@ -505,6 +505,13 @@ export const SEED_SOLUTIONS = [
     techLabels: ['LangChain', 'OpenAI', 'Python', 'Apache Kafka'],
   },
   {
+    title: 'AI Agents',
+    slug: 'ai-agents',
+    summary:
+      'When workflows need autonomous or semi-autonomous execution—agent systems that plan, tool-use, and escalate with human oversight.',
+    techLabels: ['LangChain', 'OpenAI', 'Python', 'Hugging Face'],
+  },
+  {
     title: 'Predictive Analytics',
     slug: 'predictive-analytics-solutions',
     summary:

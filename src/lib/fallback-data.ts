@@ -186,37 +186,44 @@ export const FALLBACK_SOLUTIONS = [
   },
   {
     id: '3',
+    title: 'AI Agents',
+    slug: 'ai-agents',
+    summary:
+      'Governed agentic workflows that assist teams across research, ops, and customer journeys.',
+  },
+  {
+    id: '4',
     title: 'Predictive Analytics',
     slug: 'predictive-analytics-solutions',
     summary: 'Forecasting and risk models that help teams anticipate outcomes.',
   },
   {
-    id: '4',
+    id: '5',
     title: 'Business Intelligence',
     slug: 'business-intelligence-solutions',
     summary: 'Executive dashboards and reporting that turn data into decisions.',
   },
   {
-    id: '5',
+    id: '6',
     title: 'Data Platforms',
     slug: 'data-platforms',
     summary:
       'Modern data foundations—pipelines, warehouses, and governed access for analytics and AI.',
   },
   {
-    id: '6',
+    id: '7',
     title: 'Custom AI Products',
     slug: 'custom-ai-products',
     summary: 'Productized AI experiences for customer, research, and operations workflows.',
   },
   {
-    id: '7',
+    id: '8',
     title: 'Healthcare & Clinical Intelligence',
     slug: 'healthcare-clinical-intelligence',
     summary: 'Specialized analytics and intelligence for clinical research and care delivery.',
   },
   {
-    id: '8',
+    id: '9',
     title: 'Application Modernization',
     slug: 'application-modernization',
     summary:

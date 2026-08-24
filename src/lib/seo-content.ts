@@ -44,11 +44,11 @@ export function serviceFaqsFor(title: string, summary: string): FaqItem[] {
     },
     {
       question: `Who is ${name} for?`,
-      answer: `${name} is for healthcare organizations, life sciences teams, and enterprises that need reliable AI, data, or cloud capabilities with measurable operational outcomes.`,
+      answer: `${name} is for technology leaders, data and analytics teams, and enterprises that need reliable AI, data science, or IT consulting with measurable operational outcomes.`,
     },
     {
       question: `Why choose Xelarvis for ${name}?`,
-      answer: `Xelarvis combines data science, AI, and healthcare expertise so ${name} can move from concept into audited, production systems.`,
+      answer: `Xelarvis combines Artificial Intelligence, Data Science, and IT Consulting so ${name} can move from concept into governed, production systems.`,
     },
     ...DEFAULT_SERVICE_FAQS.slice(2),
   ]
@@ -60,57 +60,29 @@ export function quickAnswerForService(title: string, summary: string) {
     what: title,
     summary,
     forWhom:
-      'Healthcare executives, CTOs, CIOs, Healthcare IT leaders, enterprise buyers, and research organizations',
-    why: 'Production-grade AI and cloud engineering with healthcare and enterprise delivery depth',
-    how: 'Discovery → architecture → build → validate → deploy → operate',
+      'CTOs, CIOs, data and analytics leaders, enterprise buyers—and teams in specialized domains including Healthcare & Life Sciences',
+    why: 'Production-grade AI, data science, and IT consulting with governed delivery',
+    how: 'Discover → Strategize → Design → Build → Deploy → Optimize',
   }
 }
 
-export function relatedLinksForService(slug: string): RelatedLink[] {
-  const base: RelatedLink[] = [
+/** @deprecated Prefer CMS-driven RelatedContent via buildRelatedGroups. */
+export function relatedLinksForService(_slug: string): RelatedLink[] {
+  return [
+    { label: 'Solutions', href: '/solutions', description: 'Outcome themes this practice unlocks' },
     {
       label: 'Case studies',
       href: '/case-studies',
-      description: 'Outcomes from healthcare AI and enterprise delivery programs',
+      description: 'Evidence from delivery programs',
     },
-    {
-      label: 'Technologies',
-      href: '/technologies',
-      description: 'AI, cloud, clinical, and data stack we put into production',
-    },
-    {
-      label: 'AI Research Lab',
-      href: '/ai-research-lab',
-      description: 'Research areas, publications, and innovation projects',
-    },
-    {
-      label: 'Insights',
-      href: '/insights',
-      description: 'Articles, white papers, and industry analysis',
-    },
-    {
-      label: 'Careers',
-      href: '/careers',
-      description: 'Join engineering and research teams at Xelarvis',
-    },
-    {
-      label: 'Contact',
-      href: '/contact?intent=business',
-      description: 'Talk with architects about fit, scope, and timeline',
-    },
+    { label: 'Technologies', href: '/technologies', description: 'Engineering stack' },
+    { label: 'Research', href: '/ai-research-lab', description: 'Methods behind delivery' },
+    { label: 'Insights', href: '/insights', description: 'Articles and resources' },
+    { label: 'Contact', href: '/contact?intent=business', description: 'Talk with architects' },
   ]
-
-  if (slug.includes('healthcare') || slug.includes('clinical') || slug.includes('ai')) {
-    base.unshift({
-      label: 'Healthcare industry',
-      href: '/industries/healthcare',
-      description: 'How we serve hospitals and life sciences organizations',
-    })
-  }
-
-  return base
 }
 
+/** @deprecated Prefer CMS-driven RelatedContent via buildRelatedGroups. */
 export function relatedLinksForCaseStudy(): RelatedLink[] {
   return [
     { label: 'Services', href: '/services', description: 'Capabilities used across engagements' },
@@ -120,6 +92,7 @@ export function relatedLinksForCaseStudy(): RelatedLink[] {
   ]
 }
 
+/** @deprecated Prefer CMS-driven RelatedContent via buildRelatedGroups. */
 export function relatedLinksForArticle(): RelatedLink[] {
   return [
     { label: 'Services', href: '/services' },
@@ -132,6 +105,7 @@ export function relatedLinksForArticle(): RelatedLink[] {
 /** Static sitemap paths beyond the core list. */
 export const EXTRA_STATIC_ROUTES = [
   '/technologies',
+  '/research',
   '/search',
   '/about/company-overview',
   '/about/vision-mission',

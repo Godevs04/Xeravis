@@ -76,15 +76,20 @@ function isMainplanAlignedNav(
 export async function SiteHeader() {
   const [navigation, solutions, services, industries] = await Promise.all([
     getGlobal<NavigationGlobal>('navigation'),
-    listPublished<CmsNavDoc>('solutions', { limit: 8, sort: 'order' }),
+    listPublished<CmsNavDoc>('solutions', { limit: 9, sort: 'order' }),
     listPublished<CmsNavDoc>('services', { limit: 8, sort: 'order' }),
-    listPublished<CmsNavDoc>('industries', { limit: 8, sort: 'order' }),
+    listPublished<CmsNavDoc & { tier?: string | null }>('industries', { limit: 12, sort: 'order' }),
   ])
 
   const cmsLinks = navigation?.primaryLinks ?? []
   const links = isMainplanAlignedNav(cmsLinks) ? cmsLinks : DEFAULT_NAV.primaryLinks
   const ctaLabel = navigation?.cta?.label || navigation?.ctaLabel || DEFAULT_NAV.ctaLabel
   const ctaHref = navigation?.cta?.href || navigation?.ctaHref || DEFAULT_NAV.ctaHref
+
+  const industryMegaSource = (industries.length ? industries : FALLBACK_INDUSTRIES).filter((i) => {
+    const tier = 'tier' in i ? i.tier : '1'
+    return !tier || tier === '1' || tier === '2'
+  })
 
   const megaMenus: Record<string, MegaMenuItem[]> = {
     about: ABOUT_MENU,
@@ -100,7 +105,7 @@ export async function SiteHeader() {
       href: '/services',
       description: 'Full capability catalog.',
     }),
-    industries: toMegaItems(industries.length ? industries : FALLBACK_INDUSTRIES, '/industries', {
+    industries: toMegaItems(industryMegaSource, '/industries', {
       label: 'All industries',
       href: '/industries',
       description: 'Sector experience.',

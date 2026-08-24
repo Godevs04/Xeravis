@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { CTABand } from '@/blocks/CTABand'
+import { FAQAccordion } from '@/blocks/FAQAccordion'
+import { RelatedContent } from '@/components/content/RelatedContent'
 import { TechnologyCard } from '@/components/domain/TechnologyCard'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
@@ -9,6 +11,7 @@ import { Section } from '@/components/layout/Section'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
+import { buildRelatedGroups } from '@/lib/related-content'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -28,7 +31,17 @@ type SolutionDoc = {
   slug: string
   summary: string
   body?: unknown
+  businessChallenges?: { title?: string; description?: string }[] | null
+  useCases?: { title?: string; description?: string }[] | null
+  outcomes?: { title?: string; description?: string }[] | null
+  whoIsThisFor?: string | null
   technologies?: RelatedTech[] | (string | number)[]
+  relatedServices?: unknown
+  relatedIndustries?: unknown
+  relatedCaseStudies?: unknown
+  relatedResearch?: unknown
+  relatedInsights?: unknown
+  relatedFaqs?: unknown
   meta?: { title?: string; description?: string; image?: unknown }
 }
 
@@ -75,28 +88,102 @@ export default async function SolutionDetailPage({ params }: Props) {
   }
 
   const technologies = asRelatedTechs(doc.technologies)
+  const relatedGroups = buildRelatedGroups(doc as unknown as Record<string, unknown>)
+  const seedFaqs = [
+    {
+      question: `Who is ${doc.title} for?`,
+      answer:
+        doc.whoIsThisFor ||
+        'Organizations that need a governed path from business problem to production outcomes across AI, data, and IT consulting.',
+    },
+    {
+      question: 'How does this relate to Services?',
+      answer:
+        'Services are how we work (practice areas). This solution packages those services into an outcome theme for a specific class of business problems.',
+    },
+    {
+      question: 'What is the typical starting point?',
+      answer:
+        'We begin with Discover in the XELARVIS Delivery Framework—aligning problem, data readiness, and success criteria before architecture and build.',
+    },
+  ]
 
   return (
     <>
       <PageHero eyebrow="Solution" title={doc.title} subtitle={doc.summary} size="compact" />
-      <Section>
+
+      {doc.businessChallenges && doc.businessChallenges.length > 0 ? (
+        <Section>
+          <Container>
+            <h2 className="text-2xl font-bold">Problem</h2>
+            <ul className="mt-8 grid gap-6 md:grid-cols-2">
+              {doc.businessChallenges.map((item, i) => (
+                <li key={item.title || i} className="border-border border-b pb-6">
+                  <h3 className="text-primary font-semibold">{item.title}</h3>
+                  {item.description ? (
+                    <p className="text-secondary mt-2 text-sm">{item.description}</p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      ) : null}
+
+      <Section surface={Boolean(doc.businessChallenges?.length)}>
         <Container className="max-w-3xl">
-          <RichText content={doc.body as Parameters<typeof RichText>[0]['content']} />
+          <h2 className="text-2xl font-bold">Solution</h2>
+          <div className="mt-6">
+            <RichText content={doc.body as Parameters<typeof RichText>[0]['content']} />
+          </div>
         </Container>
       </Section>
-      {technologies.length > 0 ? (
+
+      {doc.useCases && doc.useCases.length > 0 ? (
+        <Section>
+          <Container>
+            <h2 className="text-2xl font-bold">Use cases</h2>
+            <ul className="mt-8 grid gap-6 md:grid-cols-2">
+              {doc.useCases.map((item, i) => (
+                <li key={item.title || i} className="border-border border-b pb-6">
+                  <h3 className="text-primary font-semibold">{item.title}</h3>
+                  {item.description ? (
+                    <p className="text-secondary mt-2 text-sm">{item.description}</p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      ) : null}
+
+      {doc.outcomes && doc.outcomes.length > 0 ? (
         <Section surface>
+          <Container>
+            <h2 className="text-2xl font-bold">Outcomes</h2>
+            <ul className="mt-8 grid gap-6 md:grid-cols-2">
+              {doc.outcomes.map((item, i) => (
+                <li key={item.title || i} className="border-border border-b pb-6">
+                  <h3 className="text-primary font-semibold">{item.title}</h3>
+                  {item.description ? (
+                    <p className="text-secondary mt-2 text-sm">{item.description}</p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      ) : null}
+
+      {technologies.length > 0 ? (
+        <Section>
           <Container>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="text-muted text-xs font-semibold tracking-[0.12em] uppercase">
-                  Technology Stack
+                  Technology stack
                 </p>
                 <h2 className="text-primary mt-2 text-2xl font-bold">Built for this solution</h2>
-                <p className="text-secondary mt-2 max-w-2xl text-sm">
-                  Tools and platforms we use specifically for {doc.title}. See our full capability
-                  set on the Technologies page.
-                </p>
               </div>
               <Link
                 href="/technologies"
@@ -118,11 +205,27 @@ export default async function SolutionDetailPage({ params }: Props) {
           </Container>
         </Section>
       ) : null}
+
+      {doc.whoIsThisFor ? (
+        <Section surface>
+          <Container className="max-w-3xl">
+            <h2 className="text-2xl font-bold">Who is this for?</h2>
+            <p className="text-secondary mt-4 leading-relaxed whitespace-pre-line">
+              {doc.whoIsThisFor}
+            </p>
+          </Container>
+        </Section>
+      ) : null}
+
+      <RelatedContent heading="Services, industries & evidence" groups={relatedGroups} />
+
+      <FAQAccordion heading="Frequently asked questions" seedFaqs={seedFaqs} />
+
       <CTABand
         heading="Start a solution assessment"
         subheading="We will map capabilities, timeline, and team structure for your context."
         ctaLabel="Contact us"
-        ctaHref="/contact"
+        ctaHref="/contact?intent=business"
       />
       <div className="container-x pb-12">
         <Link href="/solutions" className="text-accent text-sm font-semibold hover:underline">

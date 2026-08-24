@@ -335,7 +335,7 @@ export function AboutPageHero({ title, subtitle }: BaseHero) {
               ))}
             </ul>
             <p className="mt-6 border-t border-[color:var(--hero-panel-border)] pt-5 text-xs leading-relaxed text-[color:var(--hero-muted)]">
-              Research → Strategy → Design → Build → Deploy → Optimize
+              Discover → Strategize → Design → Build → Deploy → Optimize
             </p>
           </motion.div>
         </div>

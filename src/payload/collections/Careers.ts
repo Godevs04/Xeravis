@@ -173,6 +173,25 @@ export const Careers: CollectionConfig = {
       label: 'Requirements (legacy rich text)',
     },
     {
+      name: 'relatedServices',
+      type: 'relationship',
+      relationTo: 'services',
+      hasMany: true,
+      label: 'Related Practice Areas',
+    },
+    {
+      name: 'relatedSolutions',
+      type: 'relationship',
+      relationTo: 'solutions',
+      hasMany: true,
+    },
+    {
+      name: 'relatedIndustries',
+      type: 'relationship',
+      relationTo: 'industries',
+      hasMany: true,
+    },
+    {
       name: 'active',
       type: 'checkbox',
       defaultValue: true,

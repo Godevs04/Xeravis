@@ -232,39 +232,27 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     sections: [
       {
         heading: '01 — Discover',
-        body: 'Understand the business problem.',
+        body: 'Understand the business problem, stakeholders, constraints, and success criteria.',
       },
       {
-        heading: '02 — Assess',
-        body: 'Evaluate data, technology and organizational readiness.',
+        heading: '02 — Strategize',
+        body: 'Define the AI, data and technology roadmap aligned to outcomes and readiness.',
       },
       {
-        heading: '03 — Strategize',
-        body: 'Define the AI, data and technology roadmap.',
+        heading: '03 — Design',
+        body: 'Architect scalable solutions, data flows, governance, and delivery plans.',
       },
       {
-        heading: '04 — Architect',
-        body: 'Design scalable architecture.',
+        heading: '04 — Build',
+        body: 'Develop models, platforms, and applications with quality and security built in.',
       },
       {
-        heading: '05 — Build',
-        body: 'Develop the solution.',
+        heading: '05 — Deploy',
+        body: 'Ship to production with monitoring, documentation, and operational readiness.',
       },
       {
-        heading: '06 — Validate',
-        body: 'Evaluate quality, security, performance and AI behavior.',
-      },
-      {
-        heading: '07 — Deploy',
-        body: 'Production implementation.',
-      },
-      {
-        heading: '08 — Operate',
-        body: 'Monitor, maintain and optimize.',
-      },
-      {
-        heading: '09 — Scale',
-        body: 'Expand successful solutions across the organization.',
+        heading: '06 — Optimize',
+        body: 'Measure outcomes, refine performance, and expand what works across the organization.',
       },
     ],
   },
@@ -306,10 +294,10 @@ export const ABOUT_PAGES: ContentPageDef[] = [
         bullets: [
           'Clarity — honest positioning across AI, data science, and IT consulting',
           'Evidence — rigorous evaluation and delivery you can inspect',
-          'Expertise — practitioners who stay accountable from strategy to operate',
+          'Expertise — practitioners who stay accountable from strategy to optimize',
           'Governance — responsible AI, security, and quality built into delivery',
           'Specialty depth — Healthcare & Clinical Data Science when regulated work demands it',
-          'End-to-end path — from discovery and architecture to production and scale',
+          'End-to-end path — Discover → Strategize → Design → Build → Deploy → Optimize',
         ],
       },
     ],

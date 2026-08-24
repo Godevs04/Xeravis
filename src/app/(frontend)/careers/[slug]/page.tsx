@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation'
 
+import { RelatedContent } from '@/components/content/RelatedContent'
 import { JobDetailView } from '@/components/careers/JobDetailView'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { FALLBACK_JOB_DETAILS, FALLBACK_JOBS } from '@/lib/fallback-data'
+import { buildRelatedGroups } from '@/lib/related-content'
 import { breadcrumbJsonLd, buildMetadata, graphJsonLd, jobPostingJsonLd } from '@/lib/seo'
 
 export const revalidate = 60
@@ -32,6 +34,9 @@ type CareerDoc = {
   updatedAt?: string | null
   createdAt?: string | null
   postedAt?: string | null
+  relatedServices?: unknown
+  relatedSolutions?: unknown
+  relatedIndustries?: unknown
   meta?: { title?: string; description?: string; image?: unknown }
 }
 
@@ -139,6 +144,12 @@ export default async function CareerDetailPage({ params }: Props) {
           ) : null
         }
       />
+      {job ? (
+        <RelatedContent
+          heading="Related practice areas"
+          groups={buildRelatedGroups(job as unknown as Record<string, unknown>)}
+        />
+      ) : null}
     </>
   )
 }

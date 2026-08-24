@@ -91,6 +91,24 @@ export const Blogs: CollectionConfig = {
       hasMany: true,
     },
     {
+      name: 'relatedServices',
+      type: 'relationship',
+      relationTo: 'services',
+      hasMany: true,
+    },
+    {
+      name: 'relatedSolutions',
+      type: 'relationship',
+      relationTo: 'solutions',
+      hasMany: true,
+    },
+    {
+      name: 'relatedIndustries',
+      type: 'relationship',
+      relationTo: 'industries',
+      hasMany: true,
+    },
+    {
       name: 'readingTime',
       type: 'number',
       admin: {

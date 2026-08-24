@@ -39,20 +39,6 @@ const FALLBACK_TECH: TechDoc[] = [
     description: 'Research-friendly neural network frameworks.',
   },
   {
-    id: '4',
-    title: 'SAS',
-    slug: 'sas',
-    category: 'clinical',
-    description: 'Clinical statistical programming and analytics.',
-  },
-  {
-    id: '5',
-    title: 'CDISC Standards',
-    slug: 'cdisc',
-    category: 'clinical',
-    description: 'SDTM and ADaM for regulatory submissions.',
-  },
-  {
     id: '6',
     title: 'AWS',
     slug: 'aws',
@@ -90,28 +76,36 @@ const FALLBACK_TECH: TechDoc[] = [
 ]
 
 export const metadata = buildMetadata({
-  title: 'AI Cloud & Clinical Tech Stack',
+  title: 'AI, Data & Cloud Technology Stack',
   description:
-    'AI, clinical, cloud, and data technologies Xelarvis uses to deliver healthcare and enterprise production systems.',
+    'Engineering technologies XELARVIS uses across AI, data platforms, cloud, DevOps, and application delivery.',
   path: '/technologies',
 })
 
+function isEngineeringStack(item: TechDoc) {
+  const cat = (item.category || '').toLowerCase()
+  return cat !== 'clinical' && !['sas', 'cdisc', 'sdtm', 'adam'].includes(item.slug)
+}
+
 export default async function TechnologiesPage() {
   const tech = await listPublished<TechDoc>('technologies', { sort: 'order', limit: 48 })
-  const items = tech.length ? tech : FALLBACK_TECH
+  const items = (tech.length ? tech : FALLBACK_TECH).filter(isEngineeringStack)
 
   return (
     <>
       <TechnologiesPageHero
-        title="Modern stacks for intelligent delivery."
-        subtitle="Our overall capability set across AI, clinical, cloud, and data. Each Solution page also lists the Technology Stack specific to that offering."
+        title="Engineering stack for intelligent delivery."
+        subtitle="AI, data, cloud, and DevOps tools used in service and solution programs. Clinical standards remain capability content—not vanity technology entries."
       />
       <Section>
         <Container>
           <div className="flex flex-col gap-8">
             {items.map((item, index) => (
               <AnimateIn key={item.id} delay={index * 0.03}>
-                <div className="grid items-start gap-4 border-t border-[color:var(--color-navy)]/10 pt-8 sm:grid-cols-[10rem_1fr]">
+                <div
+                  id={item.slug}
+                  className="grid scroll-mt-28 items-start gap-4 border-t border-[color:var(--color-navy)]/10 pt-8 sm:grid-cols-[10rem_1fr]"
+                >
                   <p className="text-xs font-semibold tracking-[0.14em] text-teal-700 uppercase">
                     {item.category || 'stack'}
                   </p>
