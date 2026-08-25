@@ -58,7 +58,7 @@ const glob = (slug: string) => `/admin/globals/${slug}`
 export const NAV_GROUPS: NavGroup[] = [
   {
     id: 'overview',
-    label: 'Command Center',
+    label: 'Overview',
     description: 'Executive dashboard',
     icon: LayoutDashboard,
     href: '/admin',

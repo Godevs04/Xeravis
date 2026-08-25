@@ -16,9 +16,31 @@
   --xe-space-9: 48px;
   --xe-space-10: 64px;
 
-  /* Shell */
-  --xe-sidebar-w: 248px;
-  --xe-sidebar-w-collapsed: 72px;
+  /* Shell — Linear/Vercel enterprise sidebar */
+  --xe-sidebar-w: 288px;
+  --xe-sidebar-w-collapsed: 84px;
+  --xe-sidebar-pad: 16px;
+  --xe-sidebar-radius: 28px;
+  --xe-sidebar-item-h: 48px;
+  --xe-sidebar-item-radius: 14px;
+  --xe-sidebar-icon: 36px;
+  --xe-sidebar-icon-glyph: 18px;
+  --xe-sidebar-gap: 12px;
+  --xe-sidebar-indent: 16px;
+  --xe-sidebar-sub-indent: 48px;
+  --xe-sidebar-section-gap: 32px;
+  --xe-sidebar-search-h: 44px;
+  --xe-sidebar-badge-h: 22px;
+  --xe-sidebar-avatar: 40px;
+  --xe-sidebar-glass: rgba(255, 255, 255, 0.88);
+  --xe-sidebar-border: rgba(15, 23, 42, 0.08);
+  --xe-sidebar-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  --xe-sidebar-accent: #0ea5a4;
+  --xe-sidebar-accent-2: #14b8a6;
+  --xe-sidebar-hover: rgba(14, 165, 164, 0.08);
+  --xe-sidebar-active: rgba(14, 165, 164, 0.12);
+  --xe-sidebar-badge-bg: #eef6f6;
+  --xe-sidebar-connector: #e2e8f0;
   --xe-header-h: 56px;
   --xe-content-max: 1440px;
   --xe-shell-max: 1440px;
@@ -41,19 +63,17 @@
   --xe-api-config: 42%;
   --xe-api-preview: 58%;
 
-  /* Nav indent */
   --xe-nav-indent-0: 0px;
-  --xe-nav-indent-1: 12px;
-  --xe-nav-indent-2: 36px;
-  --xe-nav-indent-3: 56px;
+  --xe-nav-indent-1: 16px;
+  --xe-nav-indent-2: 48px;
+  --xe-nav-indent-3: 64px;
 
-  /* Radius */
   --xe-radius-sm: 8px;
-  --xe-radius: 10px;
-  --xe-radius-md: 12px;
-  --xe-radius-lg: 16px;
-  --xe-radius-xl: 16px;
-  --xe-card-radius: 16px;
+  --xe-radius: 14px;
+  --xe-radius-md: 16px;
+  --xe-radius-lg: 20px;
+  --xe-radius-xl: 28px;
+  --xe-card-radius: 20px;
   --xe-radius-pill: 999px;
 
   /* Type */
@@ -101,22 +121,22 @@
   /* Motion */
   --xe-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --xe-dur-fast: 150ms;
-  --xe-dur: 200ms;
-  --xe-dur-nav: 200ms;
+  --xe-dur: 220ms;
+  --xe-dur-nav: 220ms;
   --xe-dur-page: 280ms;
 
   /* Brand */
   --xe-primary: #0f172a;
-  --xe-secondary: #0d9488;
-  --xe-accent: #06b6d4;
+  --xe-secondary: #0ea5a4;
+  --xe-accent: #14b8a6;
   --xe-success: #10b981;
   --xe-warning: #f59e0b;
   --xe-danger: #dc2626;
   --xe-primary-soft: rgba(15, 23, 42, 0.06);
-  --xe-secondary-soft: rgba(13, 148, 136, 0.08);
-  --xe-accent-soft: rgba(6, 182, 212, 0.12);
-  --xe-active-parent-bg: rgba(13, 148, 136, 0.08);
-  --xe-active-child-bg: rgba(13, 148, 136, 0.12);
+  --xe-secondary-soft: rgba(14, 165, 164, 0.08);
+  --xe-accent-soft: rgba(20, 184, 166, 0.12);
+  --xe-active-parent-bg: rgba(14, 165, 164, 0.08);
+  --xe-active-child-bg: rgba(14, 165, 164, 0.12);
 
   --font-body: var(--xe-font);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -137,30 +157,29 @@ html[data-theme='light'] {
   --xe-surface: #ffffff;
   --xe-card: #ffffff;
   --xe-elevated: #ffffff;
-  --xe-sidebar: #f8fafc;
-  --xe-sidebar-solid: #f8fafc;
+  --xe-sidebar: var(--xe-sidebar-glass);
+  --xe-sidebar-solid: var(--xe-sidebar-glass);
   --xe-header: rgba(255, 255, 255, 0.92);
   --xe-text: #0f172a;
-  --xe-text-secondary: #475569;
+  --xe-text-secondary: #64748b;
   --xe-muted: #64748b;
   --xe-faint: #94a3b8;
-  --xe-border: #e2e8f0;
+  --xe-border: var(--xe-sidebar-border);
   --xe-border-strong: #cbd5e1;
   --xe-input-bg: #ffffff;
   --xe-input-border: #d9e2ec;
-  --xe-hover: rgba(13, 148, 136, 0.08);
+  --xe-hover: var(--xe-sidebar-hover);
   --xe-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 28px rgba(15, 23, 42, 0.06);
-  --xe-shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.08);
+  --xe-shadow-lg: var(--xe-sidebar-shadow);
   --xe-shadow-float: 0 4px 20px rgba(15, 23, 42, 0.04);
   --xe-card-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
   --xe-card-shadow-hover: 0 8px 28px rgba(15, 23, 42, 0.08);
-  --xe-glow: rgba(6, 182, 212, 0.18);
-  --xe-mesh-1: rgba(13, 148, 136, 0.04);
-  --xe-mesh-2: rgba(6, 182, 212, 0.03);
+  --xe-glow: rgba(14, 165, 164, 0.22);
+  --xe-mesh-1: rgba(14, 165, 164, 0.04);
+  --xe-mesh-2: rgba(20, 184, 166, 0.03);
   --xe-mesh-3: rgba(15, 23, 42, 0.02);
-  --xe-sidebar-text: #475569;
-  --xe-sidebar-active: #0d9488;
-  --xe-sidebar-hover: rgba(13, 148, 136, 0.08);
+  --xe-sidebar-text: #64748b;
+  --xe-sidebar-active: var(--xe-sidebar-accent);
   --xe-field-desc: #64748b;
   --xe-option-text: #0f172a;
   --xe-pill-bg: rgba(13, 148, 136, 0.1);
