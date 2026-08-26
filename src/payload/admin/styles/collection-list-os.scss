@@ -10,7 +10,7 @@ html[data-xe-ui='v5'] .collection-list {
   max-width: var(--xe-shell-max) !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding: 28px var(--xe-gutter) 64px !important;
+  padding: var(--xe-section-gap) var(--xe-gutter) 64px !important;
   box-sizing: border-box !important;
   background: transparent !important;
   border: 0 !important;
@@ -669,4 +669,71 @@ html[data-xe-ui='v5'] .collection-list .collection-list__no-results {
   border-radius: var(--xe-card-radius) !important;
   background: color-mix(in srgb, var(--xe-surface) 70%, transparent) !important;
   padding: 40px 24px !important;
+}
+
+/* Website catalog title cell */
+.xe-cell-catalog__link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  max-width: 420px;
+}
+
+.xe-cell-catalog {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.xe-cell-catalog__mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 168, 150, 0.12);
+  color: #0f766e;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.xe-cell-catalog__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.xe-cell-catalog__title {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--xe-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.xe-cell-catalog__slug {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--xe-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-xe-ui='v5'] .collection-list .table thead th {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--xe-muted) !important;
+  background: color-mix(in srgb, var(--xe-bg) 55%, var(--xe-surface)) !important;
+}
+
+html[data-xe-ui='v5'] .collection-list .table tbody tr:hover {
+  background: rgba(0, 168, 150, 0.04) !important;
 }

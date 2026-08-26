@@ -1,3 +1,4 @@
+import { CatalogTitleCell as CatalogTitleCell_07eecf1167406f91121c856374ccb6b7 } from '../../../payload/admin/components/cells/CatalogTitleCell'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -26,14 +27,19 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
+import { BlogTitleCell as BlogTitleCell_94ab0df32e6c9f6571b3211a488751bf } from '../../../payload/admin/components/cells/BlogTitleCell'
+import { BlogAuthorCell as BlogAuthorCell_a142899964074c0393480de584daf52a } from '../../../payload/admin/components/cells/BlogAuthorCell'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
+import { ContactDetailsAside as ContactDetailsAside_213760cafe583ea5f162ca160e854ac9 } from '../../../payload/admin/components/contact/ContactDetailsAside'
+import { AnnouncementPreviewAside as AnnouncementPreviewAside_bc89b6a916b67ae9a2966e3a8aff7d72 } from '../../../payload/admin/components/settings/MarketingPreviewAside'
+import { CookiePreviewAside as CookiePreviewAside_bc89b6a916b67ae9a2966e3a8aff7d72 } from '../../../payload/admin/components/settings/MarketingPreviewAside'
 import { Icon as Icon_4f090f1d512145da0a4cb8f745fcff9a } from '../../../payload/admin/components/graphics/Icon'
 import { Logo as Logo_9b451d48b7ff5becf1d58711b3ab64e7 } from '../../../payload/admin/components/graphics/Logo'
-import { QuickCreateAction as QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd } from '../../../payload/admin/components/QuickCreateAction'
-import { NotificationBell as NotificationBell_74fcf33514bb1f87e1e1bcf3339ed7d2 } from '../../../payload/admin/components/NotificationBell'
-import { CommandAction as CommandAction_8e711201309cba2687ecc4ae7869caa0 } from '../../../payload/admin/components/CommandAction'
 import { AdminThemeToggle as AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f } from '../../../payload/admin/components/AdminThemeToggle'
+import { CommandAction as CommandAction_8e711201309cba2687ecc4ae7869caa0 } from '../../../payload/admin/components/CommandAction'
+import { NotificationBell as NotificationBell_74fcf33514bb1f87e1e1bcf3339ed7d2 } from '../../../payload/admin/components/NotificationBell'
+import { QuickCreateAction as QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd } from '../../../payload/admin/components/QuickCreateAction'
 import { AfterNavLinks as AfterNavLinks_59b0951428604bd2924d91920fe33245 } from '../../../payload/admin/components/nav/AfterNavLinks'
 import { BeforeLogin as BeforeLogin_6834cc0e5183808a75cbc16f726667d5 } from '../../../payload/admin/components/BeforeLogin'
 import { BeforeNav as BeforeNav_7975ec3298ed9bf6caeea012226eafcd } from '../../../payload/admin/components/nav/BeforeNav'
@@ -52,6 +58,8 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell':
+    CatalogTitleCell_07eecf1167406f91121c856374ccb6b7,
   '@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell':
     RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   '@payloadcms/richtext-lexical/rsc#RscEntryLexicalField':
@@ -108,18 +116,28 @@ export const importMap = {
     MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   '@payloadcms/plugin-seo/client#PreviewComponent':
     PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
+  './payload/admin/components/cells/BlogTitleCell#BlogTitleCell':
+    BlogTitleCell_94ab0df32e6c9f6571b3211a488751bf,
+  './payload/admin/components/cells/BlogAuthorCell#BlogAuthorCell':
+    BlogAuthorCell_a142899964074c0393480de584daf52a,
   '@payloadcms/plugin-search/client#LinkToDoc': LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   '@payloadcms/plugin-search/client#ReindexButton': ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
+  './payload/admin/components/contact/ContactDetailsAside#ContactDetailsAside':
+    ContactDetailsAside_213760cafe583ea5f162ca160e854ac9,
+  './payload/admin/components/settings/MarketingPreviewAside#AnnouncementPreviewAside':
+    AnnouncementPreviewAside_bc89b6a916b67ae9a2966e3a8aff7d72,
+  './payload/admin/components/settings/MarketingPreviewAside#CookiePreviewAside':
+    CookiePreviewAside_bc89b6a916b67ae9a2966e3a8aff7d72,
   './payload/admin/components/graphics/Icon#Icon': Icon_4f090f1d512145da0a4cb8f745fcff9a,
   './payload/admin/components/graphics/Logo#Logo': Logo_9b451d48b7ff5becf1d58711b3ab64e7,
-  './payload/admin/components/QuickCreateAction#QuickCreateAction':
-    QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd,
-  './payload/admin/components/NotificationBell#NotificationBell':
-    NotificationBell_74fcf33514bb1f87e1e1bcf3339ed7d2,
-  './payload/admin/components/CommandAction#CommandAction':
-    CommandAction_8e711201309cba2687ecc4ae7869caa0,
   './payload/admin/components/AdminThemeToggle#AdminThemeToggle':
     AdminThemeToggle_a28e0ea2c70a50ba482314f9fd98c66f,
+  './payload/admin/components/CommandAction#CommandAction':
+    CommandAction_8e711201309cba2687ecc4ae7869caa0,
+  './payload/admin/components/NotificationBell#NotificationBell':
+    NotificationBell_74fcf33514bb1f87e1e1bcf3339ed7d2,
+  './payload/admin/components/QuickCreateAction#QuickCreateAction':
+    QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd,
   './payload/admin/components/nav/AfterNavLinks#AfterNavLinks':
     AfterNavLinks_59b0951428604bd2924d91920fe33245,
   './payload/admin/components/BeforeLogin#BeforeLogin':

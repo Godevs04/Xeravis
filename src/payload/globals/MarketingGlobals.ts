@@ -50,6 +50,7 @@ export const AnnouncementBar: GlobalConfig = {
   label: 'Announcement Bar',
   admin: {
     group: 'Settings',
+    description: 'Site-wide announcement strip with optional CTA and expiry.',
   },
   access: {
     read: anyone,
@@ -59,14 +60,39 @@ export const AnnouncementBar: GlobalConfig = {
     afterChange: [revalidateGlobal(['/'], ['announcement'])],
   },
   fields: [
-    { name: 'enabled', type: 'checkbox', defaultValue: false },
-    { name: 'message', type: 'text', maxLength: 160 },
-    { name: 'ctaLabel', type: 'text', maxLength: 40 },
-    { name: 'ctaLink', type: 'text' },
     {
-      name: 'expiresAt',
-      type: 'date',
-      admin: { date: { pickerAppearance: 'dayAndTime' } },
+      type: 'ui',
+      name: 'announcementAside',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field:
+            './payload/admin/components/settings/MarketingPreviewAside#AnnouncementPreviewAside',
+        },
+      },
+    },
+    {
+      type: 'collapsible',
+      label: 'Visibility',
+      admin: { initCollapsed: false },
+      fields: [
+        { name: 'enabled', type: 'checkbox', defaultValue: false, label: 'Enable announcement' },
+        {
+          name: 'expiresAt',
+          type: 'date',
+          admin: { date: { pickerAppearance: 'dayAndTime' } },
+        },
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: 'Message & CTA',
+      admin: { initCollapsed: false },
+      fields: [
+        { name: 'message', type: 'text', maxLength: 160 },
+        { name: 'ctaLabel', type: 'text', maxLength: 40 },
+        { name: 'ctaLink', type: 'text' },
+      ],
     },
   ],
 }
@@ -76,15 +102,40 @@ export const CookieBanner: GlobalConfig = {
   label: 'Cookie Banner',
   admin: {
     group: 'Settings',
+    description: 'Consent banner copy, accept label, and privacy policy link.',
   },
   access: {
     read: anyone,
     update: isAdmin,
   },
   fields: [
-    { name: 'enabled', type: 'checkbox', defaultValue: false },
-    { name: 'message', type: 'textarea', maxLength: 320 },
-    { name: 'policyHref', type: 'text', defaultValue: '/privacy-policy' },
-    { name: 'acceptLabel', type: 'text', defaultValue: 'Accept' },
+    {
+      type: 'ui',
+      name: 'cookieAside',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: './payload/admin/components/settings/MarketingPreviewAside#CookiePreviewAside',
+        },
+      },
+    },
+    {
+      type: 'collapsible',
+      label: 'Visibility',
+      admin: { initCollapsed: false },
+      fields: [
+        { name: 'enabled', type: 'checkbox', defaultValue: false, label: 'Enable cookie banner' },
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: 'Copy & Actions',
+      admin: { initCollapsed: false },
+      fields: [
+        { name: 'message', type: 'textarea', maxLength: 320, admin: { rows: 3 } },
+        { name: 'policyHref', type: 'text', defaultValue: '/privacy-policy' },
+        { name: 'acceptLabel', type: 'text', defaultValue: 'Accept' },
+      ],
+    },
   ],
 }

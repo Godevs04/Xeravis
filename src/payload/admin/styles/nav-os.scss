@@ -570,7 +570,7 @@ html[data-xe-ui='v5'] .nav .xe-sb a.xe-sb-sub__link.is-active {
   }
 }
 
-/* Submenu — 48px from sidebar edge */
+/* Submenu — 44px from sidebar edge (token --xe-sidebar-sub-indent) */
 .xe-sb-group {
   display: flex;
   flex-direction: column;

@@ -3,13 +3,15 @@
 import { ContentShell } from '@/payload/admin/components/layout/ContentShell'
 import { motion, type Variants } from 'framer-motion'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 export type DashStat = {
   label: string
   value: number
   meta: string
   href: string
+  tone?: 'up' | 'down' | 'flat'
+  icon?: string
 }
 
 export type DashRow = {
@@ -29,12 +31,20 @@ export type DashTask = {
   tone?: 'default' | 'warn' | 'accent'
 }
 
+export type TrafficPoint = { date: string; label: string; views: number }
+export type TopPage = { path: string; views: number }
+export type SystemStatus = { id: string; label: string; status: 'operational' | 'degraded' }
+
 type Props = {
   userName?: string
   summary: string
+  dateRangeLabel: string
   stats: DashStat[]
-  tasks: DashTask[]
+  traffic: TrafficPoint[]
+  topPages: TopPage[]
   activity: DashRow[]
+  systemStatus: SystemStatus[]
+  tasks: DashTask[]
   messages: DashRow[]
   applications: DashRow[]
   quickActions: { label: string; href: string }[]
@@ -67,6 +77,50 @@ function AnimatedValue({ value }: { value: number }) {
   return <>{n.toLocaleString()}</>
 }
 
+function TrafficChart({ series }: { series: TrafficPoint[] }) {
+  const { path, max } = useMemo(() => {
+    const maxViews = Math.max(1, ...series.map((p) => p.views))
+    const w = 640
+    const h = 180
+    const pad = 8
+    if (series.length === 0) return { path: '', max: 1 }
+    const coords = series.map((p, i) => {
+      const x = pad + (i / Math.max(series.length - 1, 1)) * (w - pad * 2)
+      const y = h - pad - (p.views / maxViews) * (h - pad * 2)
+      return `${x},${y}`
+    })
+    return { path: `M ${coords.join(' L ')}`, max: maxViews }
+  }, [series])
+
+  if (series.length === 0) {
+    return (
+      <div className="xe-os-chart xe-os-chart--empty">
+        <p>No pageviews in this period yet. Browse the public site to start collecting.</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="xe-os-chart" aria-label={`Traffic chart, peak ${max} views`}>
+      <svg viewBox="0 0 640 180" preserveAspectRatio="none" className="xe-os-chart__svg">
+        <defs>
+          <linearGradient id="xeTrafficFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="rgba(14,165,164,0.28)" />
+            <stop offset="100%" stopColor="rgba(14,165,164,0)" />
+          </linearGradient>
+        </defs>
+        <path d={`${path} L 632,172 L 8,172 Z`} fill="url(#xeTrafficFill)" stroke="none" />
+        <path d={path} fill="none" stroke="#0ea5a4" strokeWidth="2.5" strokeLinejoin="round" />
+      </svg>
+      <div className="xe-os-chart__axis">
+        <span>{series[0]?.label}</span>
+        <span>{series[Math.floor(series.length / 2)]?.label}</span>
+        <span>{series[series.length - 1]?.label}</span>
+      </div>
+    </div>
+  )
+}
+
 const ACTION_META: Record<string, { icon: string; hint: string }> = {
   'New blog': { icon: '✦', hint: 'Publish insight' },
   'New job': { icon: '▣', hint: 'Open a role' },
@@ -77,9 +131,13 @@ const ACTION_META: Record<string, { icon: string; hint: string }> = {
 export const DashboardShell = ({
   userName,
   summary,
+  dateRangeLabel,
   stats,
-  tasks,
+  traffic,
+  topPages,
   activity,
+  systemStatus,
+  tasks,
   messages,
   applications,
   quickActions,
@@ -89,8 +147,7 @@ export const DashboardShell = ({
   const daypart = hour < 12 ? 'Morning' : hour < 18 ? 'Afternoon' : 'Evening'
 
   return (
-    <ContentShell className="xe-dash xe-dash--os">
-      {/* Hero */}
+    <ContentShell className="xe-dash xe-dash--os xe-dash--collage">
       <motion.header
         className="xe-os-hero xe-page__header"
         initial={{ opacity: 0, y: 6 }}
@@ -106,7 +163,10 @@ export const DashboardShell = ({
           <p className="xe-os-hero__subtitle">{summary}</p>
         </div>
         <div className="xe-os-hero__aside">
-          <Link href="/admin/collections/blogs" className="xe-os-hero__ai">
+          <div className="xe-os-hero__range" aria-label="Reporting period">
+            <span>{dateRangeLabel}</span>
+          </div>
+          <Link href="/admin/workspace/ai" className="xe-os-hero__ai">
             <span className="xe-os-hero__ai-icon" aria-hidden>
               ✶
             </span>
@@ -115,13 +175,9 @@ export const DashboardShell = ({
               <em>Draft, SEO, summarize</em>
             </span>
           </Link>
-          <Link href="/admin/collections/activity-logs" className="xe-os-hero__link">
-            Activity feed →
-          </Link>
         </div>
       </motion.header>
 
-      {/* Quick actions */}
       <section className="xe-os-actions" aria-label="Quick actions">
         {quickActions.map((item, i) => {
           const meta = ACTION_META[item.label] || { icon: '→', hint: 'Open' }
@@ -145,7 +201,6 @@ export const DashboardShell = ({
         })}
       </section>
 
-      {/* KPI strip */}
       <section className="xe-os-kpis" aria-label="Key metrics">
         {stats.map((stat, index) => (
           <motion.a
@@ -159,67 +214,64 @@ export const DashboardShell = ({
           >
             <div className="xe-os-kpi__top">
               <span className="xe-os-kpi__label">{stat.label}</span>
-              <span className="xe-os-kpi__chevron" aria-hidden>
-                ↗
+              <span className="xe-os-kpi__icon" aria-hidden>
+                {stat.icon || '↗'}
               </span>
             </div>
             <div className="xe-os-kpi__value">
               <AnimatedValue value={stat.value} />
             </div>
-            <div className="xe-os-kpi__meta">{stat.meta}</div>
-            <div className="xe-os-kpi__bar" aria-hidden>
-              <span style={{ width: `${Math.min(92, 28 + (stat.value % 60))}%` }} />
+            <div className={`xe-os-kpi__meta xe-os-kpi__meta--${stat.tone || 'flat'}`}>
+              {stat.meta}
             </div>
           </motion.a>
         ))}
       </section>
 
-      {/* Attention + timeline row */}
-      <div className="xe-os-main">
-        <section className="xe-os-card xe-os-card--attention" aria-label="Needs attention">
+      <div className="xe-os-collage-main">
+        <section className="xe-os-card xe-os-card--chart" aria-label="Traffic overview">
           <div className="xe-os-card__head">
             <div>
-              <h2>Needs attention</h2>
-              <p>Prioritized work for today</p>
+              <h2>Traffic Overview</h2>
+              <p>First-party pageviews · last 30 days</p>
             </div>
-            <span className="xe-os-card__count">{tasks.length}</span>
+            <Link className="xe-os-card__link" href="/admin/workspace/analytics">
+              Analytics →
+            </Link>
           </div>
-          <div className="xe-os-tasks">
-            {tasks.length === 0 ? (
-              <div className="xe-os-empty">
-                <strong>All clear</strong>
-                <span>Nothing urgent — pick a workspace and ship.</span>
-              </div>
-            ) : (
-              tasks.map((task, i) => (
-                <motion.a
-                  key={task.id}
-                  href={task.href}
-                  className={`xe-os-task xe-os-task--${task.tone || 'default'}`}
-                  custom={i}
-                  variants={fadeUp}
-                  initial="hidden"
-                  animate="show"
-                >
-                  <span className="xe-os-task__dot" aria-hidden />
-                  <span className="xe-os-task__body">
-                    <strong>{task.title}</strong>
-                    <em>{task.meta}</em>
-                  </span>
-                  <span className="xe-os-task__go" aria-hidden>
-                    →
-                  </span>
-                </motion.a>
-              ))
-            )}
-          </div>
+          <TrafficChart series={traffic} />
         </section>
 
+        <section className="xe-os-card xe-os-card--pages" aria-label="Top pages">
+          <div className="xe-os-card__head">
+            <div>
+              <h2>Top Pages</h2>
+              <p>Most viewed paths</p>
+            </div>
+          </div>
+          {topPages.length === 0 ? (
+            <div className="xe-os-empty">No pageviews yet.</div>
+          ) : (
+            <ul className="xe-os-top-pages">
+              {topPages.map((page) => (
+                <li key={page.path}>
+                  <span className="xe-os-top-pages__path" title={page.path}>
+                    {page.path}
+                  </span>
+                  <span className="xe-os-top-pages__views">{page.views.toLocaleString()}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
+
+      <div className="xe-os-collage-secondary">
         <section className="xe-os-card xe-os-card--timeline" aria-label="Recent activity">
           <div className="xe-os-card__head">
             <div>
-              <h2>Live activity</h2>
-              <p>Recent system events</p>
+              <h2>Recent Activity</h2>
+              <p>Live CMS events</p>
             </div>
             <Link className="xe-os-card__link" href="/admin/collections/activity-logs">
               View all
@@ -246,9 +298,38 @@ export const DashboardShell = ({
             )}
           </ol>
         </section>
+
+        <section className="xe-os-card xe-os-card--status" aria-label="System status">
+          <div className="xe-os-card__head">
+            <div>
+              <h2>System Status</h2>
+              <p>Platform health</p>
+            </div>
+          </div>
+          <ul className="xe-os-status">
+            {systemStatus.map((item) => (
+              <li key={item.id} className={`xe-os-status__item is-${item.status}`}>
+                <span className="xe-os-status__dot" aria-hidden />
+                <span className="xe-os-status__label">{item.label}</span>
+                <span className="xe-os-status__pill">
+                  {item.status === 'operational' ? 'Operational' : 'Degraded'}
+                </span>
+              </li>
+            ))}
+          </ul>
+          {tasks.length > 0 ? (
+            <div className="xe-os-status__tasks">
+              <p className="xe-os-status__tasks-label">Needs attention</p>
+              {tasks.slice(0, 3).map((task) => (
+                <Link key={task.id} href={task.href} className="xe-os-status__task">
+                  {task.title}
+                </Link>
+              ))}
+            </div>
+          ) : null}
+        </section>
       </div>
 
-      {/* Pipeline panels */}
       <div className="xe-os-panels">
         <section className="xe-os-card xe-os-card--panel">
           <div className="xe-os-card__head">

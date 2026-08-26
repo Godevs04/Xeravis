@@ -19,12 +19,12 @@ export const QuickCreateAction = () => {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        Create
+        + Create
       </button>
       {open ? (
         <div className="xe-header-create__menu">
           {targets.map((item) => (
-            <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
+            <Link key={item.href} href={item.href} scroll={false} onClick={() => setOpen(false)}>
               {item.label}
             </Link>
           ))}

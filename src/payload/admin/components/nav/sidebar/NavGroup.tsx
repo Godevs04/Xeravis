@@ -98,6 +98,7 @@ export function NavGroup({
                   >
                     <Link
                       href={child.href}
+                      scroll={false}
                       className={`xe-sb-sub__link${child.active ? 'is-active' : ''}`}
                       title={child.description || child.label}
                       aria-current={child.active ? 'page' : undefined}

@@ -14,8 +14,15 @@ export const Blogs: CollectionConfig = {
   slug: 'blogs',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'insightType', 'slug', 'publishedAt', '_status', 'updatedAt'],
+    defaultColumns: ['title', 'author', 'publishedAt', '_status', 'updatedAt'],
     group: 'Website',
+  },
+  defaultPopulate: {
+    title: true,
+    slug: true,
+    author: true,
+    cover: true,
+    publishedAt: true,
   },
   versions: {
     drafts: {
@@ -40,6 +47,11 @@ export const Blogs: CollectionConfig = {
       type: 'text',
       required: true,
       maxLength: 140,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/BlogTitleCell#BlogTitleCell',
+        },
+      },
     },
     slugField(),
     {
@@ -77,6 +89,11 @@ export const Blogs: CollectionConfig = {
       name: 'author',
       type: 'relationship',
       relationTo: 'authors',
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/BlogAuthorCell#BlogAuthorCell',
+        },
+      },
     },
     {
       name: 'categories',

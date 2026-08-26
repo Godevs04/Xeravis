@@ -142,12 +142,6 @@ export const NAV_GROUPS: NavGroup[] = [
         href: col('newsletter-campaigns'),
         description: 'Sends',
       },
-      {
-        id: 'downloads-mkt',
-        label: 'Downloads',
-        href: col('downloads'),
-        description: 'Lead magnets',
-      },
       /** social-media is a GLOBAL — never a collection */
       { id: 'social-media', label: 'Social', href: glob('social-media') },
     ],
@@ -194,15 +188,7 @@ export const NAV_GROUPS: NavGroup[] = [
     label: 'Media',
     description: 'Assets and library',
     icon: Image,
-    items: [
-      { id: 'media-lib', label: 'Library', href: col('media'), description: 'All assets' },
-      {
-        id: 'media-downloads',
-        label: 'Downloads',
-        href: col('downloads'),
-        description: 'Lead magnets',
-      },
-    ],
+    items: [{ id: 'media-lib', label: 'Library', href: col('media'), description: 'All assets' }],
   },
   {
     id: 'analytics',
@@ -237,8 +223,6 @@ export const NAV_GROUPS: NavGroup[] = [
         href: '/admin/workspace/ai',
         description: 'Assist hub',
       },
-      { id: 'ai-research', label: 'Research', href: col('research'), description: 'Papers' },
-      { id: 'ai-blogs', label: 'Blogs', href: col('blogs'), description: 'Content' },
     ],
   },
   {
@@ -249,9 +233,6 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { id: 'users', label: 'Users', href: col('users'), description: 'Access' },
       { id: 'notifications', label: 'Notifications', href: col('notifications') },
-      { id: 'admin-site-settings', label: 'Site Settings', href: glob('site-settings') },
-      { id: 'admin-contact', label: 'Contact Details', href: glob('contact-details') },
-      { id: 'admin-cookie', label: 'Cookie Banner', href: glob('cookie-banner') },
     ],
   },
 ]

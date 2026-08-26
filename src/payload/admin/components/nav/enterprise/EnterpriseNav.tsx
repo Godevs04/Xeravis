@@ -124,10 +124,17 @@ export function EnterpriseNav() {
     }
 
     const id = window.requestAnimationFrame(() => {
-      const active = document.querySelector<HTMLElement>(
+      const body = document.querySelector<HTMLElement>('.xe-sb__body')
+      const active = body?.querySelector<HTMLElement>(
         '.xe-sb-item.is-active, .xe-sb-sub__link.is-active',
       )
-      active?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+      if (!body || !active) return
+      // Contain scroll to sidebar body — never bubble to main/window
+      const bodyRect = body.getBoundingClientRect()
+      const activeRect = active.getBoundingClientRect()
+      if (activeRect.top < bodyRect.top || activeRect.bottom > bodyRect.bottom) {
+        active.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+      }
     })
     return () => window.cancelAnimationFrame(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- route sync only
@@ -170,7 +177,7 @@ export function EnterpriseNav() {
   }, [ctx?.workspace.links])
 
   const envLabel =
-    typeof process !== 'undefined' && process.env.NODE_ENV === 'production' ? 'Production' : 'Local'
+    typeof process !== 'undefined' && process.env.NODE_ENV === 'production' ? 'PROD' : 'LOCAL'
 
   const overview = NAV_MODULES.filter((m) => m.id === 'overview')
   const modules = NAV_MODULES.filter((m) => m.id !== 'overview')
@@ -191,6 +198,7 @@ export function EnterpriseNav() {
                   <Link
                     key={p.href}
                     href={p.href}
+                    scroll={false}
                     className={`xe-sb-pin${isLinkActive(pathname, p.href) ? 'is-active' : ''}`}
                     title={p.label}
                   >
@@ -214,7 +222,7 @@ export function EnterpriseNav() {
         </>
       }
     >
-      <SidebarSection label="Overview">
+      <SidebarSection label="Command Center">
         {overview.map((mod) => {
           if (mod.href && mod.links.length === 0) {
             return (
@@ -231,9 +239,6 @@ export function EnterpriseNav() {
           }
           return null
         })}
-      </SidebarSection>
-
-      <SidebarSection label="Workspace">
         {modules.map((mod) => {
           const active = moduleHasActiveLink(pathname, mod)
           if (mod.href && mod.links.length === 0) {

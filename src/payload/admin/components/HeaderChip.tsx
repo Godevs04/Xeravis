@@ -91,7 +91,7 @@ export const HeaderChip = () => {
                 </span>
               ) : null}
               {crumb.href && !last ? (
-                <Link href={crumb.href} className="xe-breadcrumb__link">
+                <Link href={crumb.href} scroll={false} className="xe-breadcrumb__link">
                   {crumb.label}
                 </Link>
               ) : (

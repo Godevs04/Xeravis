@@ -83,7 +83,7 @@ export function UserProfile({
             <strong className="is-online">Online</strong>
           </div>
           <hr className="xe-sb-rule" />
-          <Link href="/admin/account" role="menuitem" onClick={() => setOpen(false)}>
+          <Link href="/admin/account" scroll={false} role="menuitem" onClick={() => setOpen(false)}>
             Account settings
           </Link>
           <button
@@ -111,6 +111,7 @@ export function UserProfile({
           </a>
           <Link
             href="/admin/logout"
+            scroll={false}
             role="menuitem"
             className="is-danger"
             onClick={() => {

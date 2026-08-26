@@ -47,6 +47,11 @@ export const Pages: CollectionConfig = {
       type: 'text',
       required: true,
       maxLength: 120,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     slugField(),
     {

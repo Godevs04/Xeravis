@@ -38,6 +38,8 @@ export function Sidebar({
   const reduce = useReducedMotion()
   const [createOpen, setCreateOpen] = useState(false)
   const createRef = useRef<HTMLDivElement>(null)
+  const bodyRef = useRef<HTMLElement | null>(null)
+  const SCROLL_KEY = 'xe-sb-body-scroll'
 
   useEffect(() => {
     const onDoc = (e: MouseEvent) => {
@@ -54,11 +56,39 @@ export function Sidebar({
     }
   }, [])
 
+  useEffect(() => {
+    const el = bodyRef.current
+    if (!el) return
+    try {
+      const saved = Number(sessionStorage.getItem(SCROLL_KEY) || '0')
+      if (saved > 0) el.scrollTop = saved
+    } catch {
+      /* ignore */
+    }
+    const onScroll = () => {
+      try {
+        sessionStorage.setItem(SCROLL_KEY, String(el.scrollTop))
+      } catch {
+        /* ignore */
+      }
+    }
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const closeMobileDrawer = () => {
+    const root = document.documentElement
+    if (root.getAttribute('data-xe-nav') === 'open') {
+      root.setAttribute('data-xe-nav', 'expanded')
+      document.querySelector('aside.nav')?.classList.remove('nav--nav-open')
+    }
+  }
+
   return (
     <div className={`xe-sb${collapsed ? 'is-collapsed' : ''}`} data-xe-os-nav data-xe-sidebar>
       <div className="xe-sb__top">
         <div className="xe-sb__brand-row">
-          <Link href="/admin" className="xe-sb__brand" title="Xelarvis Admin">
+          <Link href="/admin" scroll={false} className="xe-sb__brand" title="Xelarvis Admin">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/xel-mark.png" alt="" width={32} height={32} className="xe-sb__mark" />
             <span className="xe-sb__brand-copy">
@@ -113,9 +143,13 @@ export function Sidebar({
                     <Link
                       key={item.href}
                       href={item.href}
+                      scroll={false}
                       role="menuitem"
                       className="xe-sb__create-item"
-                      onClick={() => setCreateOpen(false)}
+                      onClick={() => {
+                        setCreateOpen(false)
+                        closeMobileDrawer()
+                      }}
                     >
                       <Icon size={14} aria-hidden />
                       {item.label}
@@ -128,7 +162,15 @@ export function Sidebar({
         </div>
       </div>
 
-      <nav className="xe-sb__body" aria-label="Admin modules">
+      <nav
+        ref={bodyRef}
+        className="xe-sb__body"
+        aria-label="Admin modules"
+        onClick={(e) => {
+          const t = e.target as HTMLElement
+          if (t.closest('a[href]')) closeMobileDrawer()
+        }}
+      >
         {children}
       </nav>
 

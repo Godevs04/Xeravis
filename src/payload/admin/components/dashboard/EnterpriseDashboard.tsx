@@ -1,10 +1,21 @@
 import type { AdminViewServerProps } from 'payload'
 import React from 'react'
 
-import { countCollection, listRecent } from '@/payload/admin/workspace/lib'
+import {
+  countCollection,
+  formatDelta,
+  getTrafficOverview,
+  listRecent,
+} from '@/payload/admin/workspace/lib'
 
 import { AfterDashboard } from './AfterDashboard'
-import { DashboardShell, type DashRow, type DashStat, type DashTask } from './DashboardShell'
+import {
+  DashboardShell,
+  type DashRow,
+  type DashStat,
+  type DashTask,
+  type SystemStatus,
+} from './DashboardShell'
 
 function toDashRows(rows: Awaited<ReturnType<typeof listRecent>>): DashRow[] {
   return rows.map((row) => ({
@@ -16,29 +27,37 @@ function toDashRows(rows: Awaited<ReturnType<typeof listRecent>>): DashRow[] {
   }))
 }
 
+function formatRange(days = 30) {
+  const end = new Date()
+  const start = new Date()
+  start.setDate(end.getDate() - (days - 1))
+  const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' }
+  return `${start.toLocaleDateString(undefined, opts)} – ${end.toLocaleDateString(undefined, opts)}`
+}
+
 export async function EnterpriseDashboard(props: AdminViewServerProps) {
   const { payload, user } = props
 
   const [
+    traffic,
     newLeads,
     newApps,
     draftBlogs,
-    pageviews,
     messagesCount,
     applicationsCount,
-    blogsCount,
+    uniqueLeadsPeriod,
     messages,
     applications,
     activity,
     interviewsUpcoming,
   ] = await Promise.all([
+    getTrafficOverview(payload, 30),
     countCollection(payload, 'contact-messages', { status: { equals: 'new' } }),
     countCollection(payload, 'job-applications', { status: { equals: 'new' } }),
     countCollection(payload, 'blogs', { _status: { equals: 'draft' } }),
-    countCollection(payload, 'analytics-events', { type: { equals: 'pageview' } }),
     countCollection(payload, 'contact-messages'),
     countCollection(payload, 'job-applications'),
-    countCollection(payload, 'blogs'),
+    countCollection(payload, 'analytics-events', { type: { equals: 'lead' } }),
     listRecent(payload, 'contact-messages', {
       titleField: 'name',
       sort: '-createdAt',
@@ -63,30 +82,44 @@ export async function EnterpriseDashboard(props: AdminViewServerProps) {
     }),
   ])
 
+  const viewsDelta = formatDelta(traffic.pageviews, traffic.priorPageviews)
+  const leadsDelta = formatDelta(messagesCount, Math.max(0, messagesCount - newLeads))
+
   const stats: DashStat[] = [
+    {
+      label: 'Total Visitors',
+      value: traffic.distinctPaths,
+      meta:
+        traffic.distinctPaths > 0
+          ? `${traffic.distinctPaths} unique paths · 30d`
+          : 'Awaiting first visits',
+      href: '/admin/workspace/analytics',
+      tone: traffic.distinctPaths > 0 ? 'up' : 'flat',
+      icon: '◎',
+    },
+    {
+      label: 'Page Views',
+      value: traffic.pageviews,
+      meta: viewsDelta.text,
+      href: '/admin/collections/analytics-events',
+      tone: viewsDelta.tone,
+      icon: '◈',
+    },
     {
       label: 'Leads',
       value: messagesCount,
-      meta: newLeads ? `${newLeads} need reply` : 'Inbox clear',
+      meta: newLeads ? `${newLeads} need reply` : leadsDelta.text,
       href: '/admin/collections/contact-messages',
+      tone: newLeads > 0 ? 'up' : 'flat',
+      icon: '✉',
     },
     {
       label: 'Applications',
       value: applicationsCount,
-      meta: newApps ? `${newApps} new` : 'No new apps',
+      meta: newApps ? `${newApps} new` : `${uniqueLeadsPeriod} lead events tracked`,
       href: '/admin/collections/job-applications',
-    },
-    {
-      label: 'Traffic',
-      value: pageviews,
-      meta: 'Page views',
-      href: '/admin/collections/analytics-events',
-    },
-    {
-      label: 'Insights',
-      value: blogsCount,
-      meta: draftBlogs ? `${draftBlogs} drafts` : 'Published library',
-      href: '/admin/collections/blogs',
+      tone: newApps > 0 ? 'up' : 'flat',
+      icon: '▣',
     },
   ]
 
@@ -133,6 +166,17 @@ export async function EnterpriseDashboard(props: AdminViewServerProps) {
       ? `${pending} item${pending === 1 ? '' : 's'} need attention.`
       : 'Nothing blocking — open a collection and ship.'
 
+  const systemStatus: SystemStatus[] = [
+    { id: 'website', label: 'Website', status: 'operational' },
+    { id: 'api', label: 'API', status: 'operational' },
+    {
+      id: 'database',
+      label: 'Database',
+      status: traffic.pageviews >= 0 ? 'operational' : 'degraded',
+    },
+    { id: 'storage', label: 'Storage', status: 'operational' },
+  ]
+
   const userRecord = user as { email?: string; name?: string } | null
   const userName =
     (typeof userRecord?.email === 'string' ? userRecord.email.split('@')[0] : undefined) ||
@@ -143,9 +187,13 @@ export async function EnterpriseDashboard(props: AdminViewServerProps) {
       <DashboardShell
         userName={userName}
         summary={summary}
+        dateRangeLabel={formatRange(30)}
         stats={stats}
-        tasks={tasks}
+        traffic={traffic.series}
+        topPages={traffic.topPages}
         activity={toDashRows(activity)}
+        systemStatus={systemStatus}
+        tasks={tasks}
         messages={toDashRows(messages)}
         applications={toDashRows(applications)}
         quickActions={[

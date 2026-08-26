@@ -22,7 +22,8 @@ html[data-theme='dark'][data-xe-ui='v5'] {
 html[data-xe-ui='v5'] .template-default__wrap {
   --spacing-view-bottom: 64px;
   min-width: 0 !important;
-  overflow-x: clip !important;
+  /* overflow-y is owned by shell.scss (main scroller). Do not override. */
+  overflow-x: hidden !important;
 }
 
 html[data-xe-ui='v5'] .collection-list,
@@ -1150,6 +1151,19 @@ html[data-xe-ui='v5'] .collection-edit .document-fields {
   grid-template-columns: minmax(0, 1fr) var(--xe-doc-sidebar) !important;
   gap: 24px !important;
   align-items: start !important;
+}
+
+@media (max-width: 1100px) {
+  html[data-xe-ui='v5'] .document-fields--has-sidebar,
+  html[data-xe-ui='v5'] .collection-edit .document-fields {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+    order: 2 !important;
+    position: static !important;
+    top: auto !important;
+  }
 }
 
 html[data-xe-ui='v5'] .document-fields__main,

@@ -7,6 +7,7 @@ export const SeoDefaults: GlobalConfig = {
   label: 'SEO Defaults',
   admin: {
     group: 'Settings',
+    description: 'Default meta, Open Graph, and social sharing for public pages.',
   },
   access: {
     read: anyone,
@@ -14,26 +15,41 @@ export const SeoDefaults: GlobalConfig = {
   },
   fields: [
     {
-      name: 'titleTemplate',
-      type: 'text',
-      admin: {
-        description: 'Use %s as page title placeholder (e.g. "%s | Xelarvis")',
-      },
+      type: 'collapsible',
+      label: 'General SEO',
+      admin: { initCollapsed: false },
+      fields: [
+        {
+          name: 'titleTemplate',
+          type: 'text',
+          admin: {
+            description: 'Use %s as page title placeholder (e.g. "%s | Xelarvis")',
+          },
+        },
+        {
+          name: 'defaultDescription',
+          type: 'textarea',
+          admin: { rows: 3 },
+        },
+      ],
     },
     {
-      name: 'defaultDescription',
-      type: 'textarea',
-    },
-    {
-      name: 'ogImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Default OG Image',
-    },
-    {
-      name: 'twitterHandle',
-      type: 'text',
-      label: 'Twitter / X handle',
+      type: 'collapsible',
+      label: 'Social Sharing',
+      admin: { initCollapsed: false },
+      fields: [
+        {
+          name: 'ogImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Default OG Image',
+        },
+        {
+          name: 'twitterHandle',
+          type: 'text',
+          label: 'Twitter / X handle',
+        },
+      ],
     },
   ],
 }
