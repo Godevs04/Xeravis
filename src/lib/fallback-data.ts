@@ -119,55 +119,66 @@ export const FALLBACK_INDUSTRIES = [
     title: 'Healthcare & Life Sciences',
     slug: 'healthcare-life-sciences',
     summary: 'Clinical research, pharmaceutical, biotechnology, medical devices, and hospitals.',
+    tier: '1' as const,
   },
   {
     id: '2',
-    title: 'Pharmaceutical',
-    slug: 'pharmaceutical',
-    summary: 'Regulatory-ready analytics, clinical programming, and R&D intelligence.',
-  },
-  {
-    id: '3',
-    title: 'Biotechnology',
-    slug: 'biotechnology',
-    summary: 'Data platforms and AI for discovery, trials, and translational research.',
-  },
-  {
-    id: '4',
-    title: 'Banking & Financial Services',
-    slug: 'banking-finance',
-    summary: 'Risk analytics, fraud detection, and intelligent automation.',
-  },
-  {
-    id: '5',
-    title: 'Manufacturing',
-    slug: 'manufacturing',
-    summary: 'Predictive maintenance, quality analytics, and connected operations.',
-  },
-  {
-    id: '6',
-    title: 'Retail & E-Commerce',
-    slug: 'retail',
-    summary: 'Customer intelligence, forecasting, and recommendation systems.',
-  },
-  {
-    id: '7',
-    title: 'Logistics',
-    slug: 'logistics',
-    summary: 'Supply chain analytics and optimization.',
-  },
-  {
-    id: '8',
-    title: 'Education Technology',
-    slug: 'education',
-    summary: 'Learning platforms, analytics, and digital transformation for institutions.',
-  },
-  {
-    id: '9',
-    title: 'Enterprise Technology',
+    title: 'Technology',
     slug: 'enterprise-technology',
     summary:
       'Platform modernization, AI adoption, and digital transformation for technology organizations.',
+    tier: '1' as const,
+  },
+  {
+    id: '3',
+    title: 'Banking & Financial Services',
+    slug: 'banking-finance',
+    summary: 'Risk analytics, fraud detection, and intelligent automation.',
+    tier: '1' as const,
+  },
+  {
+    id: '4',
+    title: 'Manufacturing',
+    slug: 'manufacturing',
+    summary: 'Predictive maintenance, quality analytics, and connected operations.',
+    tier: '1' as const,
+  },
+  {
+    id: '5',
+    title: 'Retail & E-Commerce',
+    slug: 'retail',
+    summary: 'Customer intelligence, forecasting, and recommendation systems.',
+    tier: '2' as const,
+  },
+  {
+    id: '6',
+    title: 'Logistics & Supply Chain',
+    slug: 'logistics',
+    summary: 'Supply chain analytics, forecasting, and operational optimization.',
+    tier: '2' as const,
+  },
+  {
+    id: '7',
+    title: 'Education',
+    slug: 'education',
+    summary: 'Learning platforms, analytics, and digital transformation for institutions.',
+    tier: '3' as const,
+  },
+  {
+    id: '8',
+    title: 'Government & Public Sector',
+    slug: 'government-public-sector',
+    summary:
+      'Areas we can support—modernization, automation, and data platforms under public-sector constraints.',
+    tier: '3' as const,
+  },
+  {
+    id: '9',
+    title: 'Energy & Utilities',
+    slug: 'energy-utilities',
+    summary:
+      'Areas we can support—predictive analytics, data platforms, and operational intelligence.',
+    tier: '3' as const,
   },
 ]
 
@@ -186,37 +197,44 @@ export const FALLBACK_SOLUTIONS = [
   },
   {
     id: '3',
+    title: 'AI Agents',
+    slug: 'ai-agents',
+    summary:
+      'Governed agentic workflows that assist teams across research, ops, and customer journeys.',
+  },
+  {
+    id: '4',
     title: 'Predictive Analytics',
     slug: 'predictive-analytics-solutions',
     summary: 'Forecasting and risk models that help teams anticipate outcomes.',
   },
   {
-    id: '4',
+    id: '5',
     title: 'Business Intelligence',
     slug: 'business-intelligence-solutions',
     summary: 'Executive dashboards and reporting that turn data into decisions.',
   },
   {
-    id: '5',
+    id: '6',
     title: 'Data Platforms',
     slug: 'data-platforms',
     summary:
       'Modern data foundations—pipelines, warehouses, and governed access for analytics and AI.',
   },
   {
-    id: '6',
+    id: '7',
     title: 'Custom AI Products',
     slug: 'custom-ai-products',
     summary: 'Productized AI experiences for customer, research, and operations workflows.',
   },
   {
-    id: '7',
+    id: '8',
     title: 'Healthcare & Clinical Intelligence',
     slug: 'healthcare-clinical-intelligence',
     summary: 'Specialized analytics and intelligence for clinical research and care delivery.',
   },
   {
-    id: '8',
+    id: '9',
     title: 'Application Modernization',
     slug: 'application-modernization',
     summary:

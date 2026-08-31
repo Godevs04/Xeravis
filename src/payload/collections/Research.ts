@@ -35,8 +35,8 @@ export const Research: CollectionConfig = {
   hooks: {
     beforeValidate: [autoSlugFromTitle('title')],
     beforeChange: [enforcePublishRole],
-    afterChange: [revalidateSlugPath('/ai-research-lab', 'research'), trackActivity('research')],
-    afterDelete: [revalidateOnDelete(['/ai-research-lab'], ['research'])],
+    afterChange: [revalidateSlugPath('/research', 'research'), trackActivity('research')],
+    afterDelete: [revalidateOnDelete(['/research', '/ai-research-lab'], ['research'])],
   },
   fields: [
     {
@@ -66,6 +66,24 @@ export const Research: CollectionConfig = {
       name: 'authors',
       type: 'relationship',
       relationTo: 'authors',
+      hasMany: true,
+    },
+    {
+      name: 'relatedServices',
+      type: 'relationship',
+      relationTo: 'services',
+      hasMany: true,
+    },
+    {
+      name: 'relatedSolutions',
+      type: 'relationship',
+      relationTo: 'solutions',
+      hasMany: true,
+    },
+    {
+      name: 'relatedIndustries',
+      type: 'relationship',
+      relationTo: 'industries',
       hasMany: true,
     },
     featuredField(),

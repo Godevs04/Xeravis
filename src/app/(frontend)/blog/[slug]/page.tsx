@@ -1,16 +1,16 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { RelatedContent } from '@/components/content/RelatedContent'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { RelatedLinks } from '@/components/seo/RelatedLinks'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { FALLBACK_BLOG_POSTS } from '@/lib/fallback-data'
+import { buildRelatedGroups } from '@/lib/related-content'
 import { articleJsonLd, breadcrumbJsonLd, buildMetadata, graphJsonLd } from '@/lib/seo'
-import { relatedLinksForArticle } from '@/lib/seo-content'
 
 export const revalidate = 60
 
@@ -22,6 +22,9 @@ type BlogDoc = {
   content?: unknown
   publishedAt?: string | null
   updatedAt?: string | null
+  relatedServices?: unknown
+  relatedSolutions?: unknown
+  relatedIndustries?: unknown
   meta?: { title?: string; description?: string; image?: unknown }
 }
 
@@ -65,6 +68,8 @@ export default async function BlogPostPage({ params }: Props) {
     },
   }
 
+  const relatedGroups = buildRelatedGroups(doc as unknown as Record<string, unknown>)
+
   const jsonLd = graphJsonLd(
     articleJsonLd({
       title: doc.title,
@@ -106,7 +111,9 @@ export default async function BlogPostPage({ params }: Props) {
           </article>
         </Container>
       </Section>
-      <RelatedLinks heading="Continue exploring" links={relatedLinksForArticle()} />
+
+      <RelatedContent heading="Continue exploring" groups={relatedGroups} />
+
       <div className="container-x pb-12">
         <Link href="/blog" className="text-accent text-sm font-semibold hover:underline">
           ← All articles

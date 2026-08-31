@@ -93,6 +93,20 @@ export const Services: CollectionConfig = {
       type: 'relationship',
       relationTo: 'technologies',
       hasMany: true,
+      label: 'Technologies',
+      admin: {
+        description: 'Engineering stack for this capability (not clinical standards).',
+      },
+    },
+    {
+      name: 'relatedSolutions',
+      type: 'relationship',
+      relationTo: 'solutions',
+      hasMany: true,
+      label: 'Related Solutions',
+      admin: {
+        description: 'Business problems this capability helps solve.',
+      },
     },
     {
       name: 'relatedIndustries',
@@ -105,6 +119,19 @@ export const Services: CollectionConfig = {
       type: 'relationship',
       relationTo: 'case-studies',
       hasMany: true,
+    },
+    {
+      name: 'relatedResearch',
+      type: 'relationship',
+      relationTo: 'research',
+      hasMany: true,
+    },
+    {
+      name: 'relatedInsights',
+      type: 'relationship',
+      relationTo: 'blogs',
+      hasMany: true,
+      label: 'Related Insights',
     },
     {
       name: 'relatedFaqs',

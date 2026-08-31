@@ -1,4 +1,5 @@
 import { RenderBlocks, type PageBlock } from '@/blocks/RenderBlocks'
+import { HomeGatewayStrip } from '@/components/home/HomeGatewayStrip'
 import { safePayload } from '@/lib/cms'
 
 export const revalidate = 60
@@ -48,25 +49,33 @@ export default async function HomePage() {
   const page = await loadHomePage()
 
   if (page?.layout?.length) {
-    return <RenderBlocks blocks={page.layout} />
+    return (
+      <>
+        <RenderBlocks blocks={page.layout} />
+        <HomeGatewayStrip />
+      </>
+    )
   }
 
   // Build/runtime fallback when CMS is unreachable — keeps LCP/CLS stable vs empty shell.
   return (
-    <RenderBlocks
-      blocks={[
-        {
-          blockType: 'storyHero',
-          heading: 'Engineering Intelligence. Transforming Business.',
-          subheading:
-            'Artificial Intelligence, Data Science, and IT Consulting—with Healthcare AI as a specialty.',
-          ctaLabel: "Let's Talk",
-          ctaHref: '/contact?intent=business',
-          secondaryCtaLabel: 'Explore services',
-          secondaryCtaHref: '/services',
-          brand: 'Xelarvis',
-        },
-      ]}
-    />
+    <>
+      <RenderBlocks
+        blocks={[
+          {
+            blockType: 'storyHero',
+            heading: 'Engineering Intelligence. Transforming Business.',
+            subheading:
+              'Artificial Intelligence, Data Science, and IT Consulting—with Healthcare AI as a specialty.',
+            ctaLabel: "Let's Talk",
+            ctaHref: '/contact?intent=business',
+            secondaryCtaLabel: 'Explore services',
+            secondaryCtaHref: '/services',
+            brand: 'Xelarvis',
+          },
+        ]}
+      />
+      <HomeGatewayStrip />
+    </>
   )
 }

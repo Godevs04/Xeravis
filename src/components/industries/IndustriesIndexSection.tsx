@@ -13,6 +13,7 @@ import {
   Pill,
   ShoppingBag,
   Truck,
+  Zap,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -42,6 +43,8 @@ const ICONS: Record<string, LucideIcon> = {
   logistics: Truck,
   education: GraduationCap,
   'enterprise-technology': Building2,
+  'government-public-sector': Landmark,
+  'energy-utilities': Zap,
 }
 
 function iconFor(slug: string): LucideIcon {
@@ -55,7 +58,7 @@ export function IndustriesIndexSection({ industries }: IndustriesIndexSectionPro
   return (
     <section
       className="relative overflow-hidden bg-[color:var(--color-background)] py-16 sm:py-20 lg:py-28"
-      aria-label="Industries we serve"
+      aria-label="Industry sectors"
     >
       <div
         aria-hidden
@@ -91,7 +94,7 @@ export function IndustriesIndexSection({ industries }: IndustriesIndexSectionPro
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
             >
-              Built for regulated and high-scale industries
+              Built for regulated and high-scale operating contexts
             </motion.h2>
           </div>
           <motion.p
@@ -101,7 +104,8 @@ export function IndustriesIndexSection({ industries }: IndustriesIndexSectionPro
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: 0.1, ease: EASE }}
           >
-            {items.length} domains where platform patterns meet sector reality.
+            Industry-focused solutions for organizations navigating complex data, technology and AI
+            challenges.
           </motion.p>
         </div>
 

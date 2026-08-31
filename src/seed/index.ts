@@ -3,6 +3,12 @@ import { getPayload, type Payload } from 'payload'
 
 import { logger } from '../lib/logger'
 import { SEED_INDUSTRIES, SEED_SERVICES, SEED_SOLUTIONS, SEED_TECHNOLOGIES } from './content'
+import {
+  INDUSTRY_TIER_MAP,
+  SERVICE_INDUSTRY_MAP,
+  SERVICE_SOLUTION_MAP,
+  SOLUTION_INDUSTRY_MAP,
+} from './relations'
 
 loadEnv({ path: '.env' })
 loadEnv({ path: '.env.local', override: true })
@@ -251,6 +257,33 @@ async function seed() {
     if (found.docs[0]?.id) techIds.set(tech.title, String(found.docs[0].id))
   }
 
+  const keepTechSlugs = new Set(SEED_TECHNOLOGIES.map((t) => t.slug as string))
+  const clinicalTechSlugs = new Set(['sas', 'cdisc-standards', 'pinnacle-21'])
+  const allTechs = await payload.find({
+    collection: 'technologies',
+    limit: 200,
+    overrideAccess: true,
+  })
+  for (const doc of allTechs.docs) {
+    const slug = String(doc.slug)
+    if (!clinicalTechSlugs.has(slug) && keepTechSlugs.has(slug)) continue
+    if (!clinicalTechSlugs.has(slug)) continue
+    await payload.update({
+      collection: 'technologies',
+      id: doc.id,
+      data: {
+        featured: false,
+        category: 'other',
+        description:
+          'Clinical capability content—not listed in the engineering technology catalog.',
+      },
+      overrideAccess: true,
+      context: { disableRevalidate: true },
+    })
+    log.info(`technologies: demoted clinical catalog entry ${slug}`)
+  }
+
+  const serviceIds = new Map<string, string>()
   for (const [index, service] of SEED_SERVICES.entries()) {
     const relatedTech = service.techLabels
       .map((label) => techIds.get(label))
@@ -268,6 +301,13 @@ async function seed() {
       featured: true,
       order: index + 1,
     })
+    const found = await payload.find({
+      collection: 'services',
+      where: { slug: { equals: service.slug } },
+      limit: 1,
+      overrideAccess: true,
+    })
+    if (found.docs[0]?.id) serviceIds.set(service.slug, String(found.docs[0].id))
   }
 
   const keepServiceSlugs = new Set(SEED_SERVICES.map((s) => s.slug as string))
@@ -298,15 +338,24 @@ async function seed() {
     }
   }
 
+  const industryIds = new Map<string, string>()
   for (const [index, industry] of SEED_INDUSTRIES.entries()) {
     await upsertBySlug(payload, 'industries', industry.slug, {
       title: industry.title,
       summary: industry.summary,
       challenges: industry.summary,
       approach: richParagraph(industry.summary),
-      featured: index < 4,
+      tier: INDUSTRY_TIER_MAP[industry.slug] ?? '3',
+      featured: (INDUSTRY_TIER_MAP[industry.slug] ?? '3') === '1',
       order: index + 1,
     })
+    const found = await payload.find({
+      collection: 'industries',
+      where: { slug: { equals: industry.slug } },
+      limit: 1,
+      overrideAccess: true,
+    })
+    if (found.docs[0]?.id) industryIds.set(industry.slug, String(found.docs[0].id))
   }
 
   const keepIndustrySlugs = new Set(SEED_INDUSTRIES.map((i) => i.slug as string))
@@ -336,6 +385,7 @@ async function seed() {
     }
   }
 
+  const solutionIds = new Map<string, string>()
   for (const [index, solution] of SEED_SOLUTIONS.entries()) {
     const relatedTech = solution.techLabels
       .map((label) => techIds.get(label))
@@ -345,11 +395,78 @@ async function seed() {
       title: solution.title,
       summary: solution.summary,
       body: richParagraph(solution.summary),
+      businessChallenges: solution.businessChallenges.map((c) => ({ ...c })),
+      whoIsThisFor: solution.whoIsThisFor,
       technologies: relatedTech,
-      featured: index < 4,
+      featured: index < 6,
       order: index + 1,
     })
+    const found = await payload.find({
+      collection: 'solutions',
+      where: { slug: { equals: solution.slug } },
+      limit: 1,
+      overrideAccess: true,
+    })
+    if (found.docs[0]?.id) solutionIds.set(solution.slug, String(found.docs[0].id))
   }
+
+  // Wire bidirectional Service ↔ Solution ↔ Industry relationships
+  for (const [serviceSlug, solutionSlugs] of Object.entries(SERVICE_SOLUTION_MAP)) {
+    const serviceId = serviceIds.get(serviceSlug)
+    if (!serviceId) continue
+    const relatedSolutions = solutionSlugs
+      .map((s) => solutionIds.get(s))
+      .filter(Boolean) as string[]
+    const relatedIndustries = (SERVICE_INDUSTRY_MAP[serviceSlug] || [])
+      .map((s) => industryIds.get(s))
+      .filter(Boolean) as string[]
+    await payload.update({
+      collection: 'services',
+      id: serviceId,
+      data: { relatedSolutions, relatedIndustries },
+      overrideAccess: true,
+      context: { disableRevalidate: true },
+    })
+  }
+
+  for (const [solutionSlug, industrySlugs] of Object.entries(SOLUTION_INDUSTRY_MAP)) {
+    const solutionId = solutionIds.get(solutionSlug)
+    if (!solutionId) continue
+    const relatedIndustries = industrySlugs
+      .map((s) => industryIds.get(s))
+      .filter(Boolean) as string[]
+    const relatedServices = Object.entries(SERVICE_SOLUTION_MAP)
+      .filter(([, sols]) => sols.includes(solutionSlug))
+      .map(([svc]) => serviceIds.get(svc))
+      .filter(Boolean) as string[]
+    await payload.update({
+      collection: 'solutions',
+      id: solutionId,
+      data: { relatedIndustries, relatedServices },
+      overrideAccess: true,
+      context: { disableRevalidate: true },
+    })
+  }
+
+  for (const [industrySlug, industryId] of industryIds.entries()) {
+    const relatedServices = Object.entries(SERVICE_INDUSTRY_MAP)
+      .filter(([, inds]) => inds.includes(industrySlug))
+      .map(([svc]) => serviceIds.get(svc))
+      .filter(Boolean) as string[]
+    const relatedSolutions = Object.entries(SOLUTION_INDUSTRY_MAP)
+      .filter(([, inds]) => inds.includes(industrySlug))
+      .map(([sol]) => solutionIds.get(sol))
+      .filter(Boolean) as string[]
+    await payload.update({
+      collection: 'industries',
+      id: industryId,
+      data: { relatedServices, relatedSolutions },
+      overrideAccess: true,
+      context: { disableRevalidate: true },
+    })
+  }
+
+  log.info('Wired service ↔ solution ↔ industry relationships')
 
   const keepSolutionSlugs = new Set(SEED_SOLUTIONS.map((s) => s.slug as string))
   const allSolutions = await payload.find({
@@ -454,7 +571,7 @@ async function seed() {
       heading: 'Clarity, evidence and governed delivery.',
       stats: [
         { label: 'Core services', value: '5' },
-        { label: 'Solution areas', value: '8' },
+        { label: 'Solution areas', value: '9' },
         { label: 'Delivery pillars', value: 'AI · Data · IT' },
         { label: 'Specialty', value: 'Healthcare' },
       ],
@@ -471,39 +588,27 @@ async function seed() {
       steps: [
         {
           title: 'Discover',
-          description: 'Understand the business problem.',
-        },
-        {
-          title: 'Assess',
-          description: 'Evaluate data, technology and organizational readiness.',
+          description: 'Understand the business problem, stakeholders, and success criteria.',
         },
         {
           title: 'Strategize',
-          description: 'Define the AI, data and technology roadmap.',
+          description: 'Define the AI, data and technology roadmap aligned to outcomes.',
         },
         {
-          title: 'Architect',
-          description: 'Design scalable architecture.',
+          title: 'Design',
+          description: 'Architect scalable solutions, data flows, and governance.',
         },
         {
           title: 'Build',
-          description: 'Develop the solution.',
-        },
-        {
-          title: 'Validate',
-          description: 'Evaluate quality, security, performance and AI behavior.',
+          description: 'Develop models, platforms, and applications with quality built in.',
         },
         {
           title: 'Deploy',
-          description: 'Production implementation.',
+          description: 'Ship to production with monitoring and operational readiness.',
         },
         {
-          title: 'Operate',
-          description: 'Monitor, maintain and optimize.',
-        },
-        {
-          title: 'Scale',
-          description: 'Expand successful solutions across the organization.',
+          title: 'Optimize',
+          description: 'Measure outcomes, refine performance, and expand what works.',
         },
       ],
     },
@@ -697,6 +802,14 @@ async function seed() {
       { item: 'Mentorship' },
       { item: 'Research exposure' },
     ],
+    relatedServices: [
+      serviceIds.get('data-science-advanced-analytics'),
+      serviceIds.get('artificial-intelligence-ai-research'),
+    ].filter(Boolean),
+    relatedSolutions: [
+      solutionIds.get('predictive-analytics-solutions'),
+      solutionIds.get('business-intelligence-solutions'),
+    ].filter(Boolean),
     active: true,
   })
 
@@ -747,6 +860,15 @@ async function seed() {
       { item: 'Paid leave' },
       { item: 'Research opportunities' },
     ],
+    relatedServices: [
+      serviceIds.get('artificial-intelligence-ai-research'),
+      serviceIds.get('data-engineering-cloud-solutions'),
+    ].filter(Boolean),
+    relatedSolutions: [
+      solutionIds.get('enterprise-ai-solutions'),
+      solutionIds.get('ai-agents'),
+      solutionIds.get('custom-ai-products'),
+    ].filter(Boolean),
     active: true,
   })
 
@@ -785,6 +907,12 @@ async function seed() {
       { item: 'Learning budget' },
       { item: 'Healthcare domain exposure' },
     ],
+    relatedServices: [serviceIds.get('clinical-data-science-healthcare-ai')].filter(Boolean),
+    relatedSolutions: [solutionIds.get('healthcare-clinical-intelligence')].filter(Boolean),
+    relatedIndustries: [
+      industryIds.get('healthcare-life-sciences'),
+      industryIds.get('pharmaceutical'),
+    ].filter(Boolean),
     active: true,
   })
 

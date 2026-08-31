@@ -36,11 +36,14 @@ export const Technologies: CollectionConfig = {
         { label: 'AI', value: 'ai' },
         { label: 'Database', value: 'database' },
         { label: 'Data', value: 'data' },
-        { label: 'Clinical', value: 'clinical' },
         { label: 'Business Intelligence', value: 'bi' },
         { label: 'CMS', value: 'cms' },
         { label: 'Other', value: 'other' },
       ],
+      admin: {
+        description:
+          'Engineering stack categories only. Clinical standards (SAS/SDTM/CDISC) belong in Healthcare service capability content—not this catalog.',
+      },
     },
     {
       name: 'logo',

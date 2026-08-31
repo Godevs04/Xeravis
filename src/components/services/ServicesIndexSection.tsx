@@ -106,7 +106,8 @@ export function ServicesIndexSection({ services }: ServicesIndexSectionProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: 0.1, ease: EASE }}
           >
-            {items.length} practice areas spanning AI, data, clinical, and cloud delivery.
+            {items.length} practice areas spanning AI, data science, IT consulting, and cloud
+            delivery.
           </motion.p>
         </div>
 

@@ -17,11 +17,11 @@ type ServiceAnswerBlockProps = {
 export function ServiceAnswerBlock({
   title,
   summary,
-  whoFor = 'Healthcare executives, CTOs, CIOs, Healthcare IT leaders, enterprise buyers, and research organizations',
-  whyChoose = 'Xelarvis combines data science, AI, and healthcare expertise for production systems operators can trust.',
-  howDeliver = 'Discovery, solution architecture, implementation, validation, cloud deployment, and ongoing optimization.',
-  industries = 'Healthcare, life sciences, finance, manufacturing, and regulated enterprises',
-  outcomes = 'Faster decision cycles, audit-ready workflows, scalable platforms, and measurable operational lift',
+  whoFor = 'CTOs, CIOs, data and analytics leaders, enterprise buyers—and teams in specialized domains including Healthcare & Life Sciences',
+  whyChoose = 'Xelarvis combines Artificial Intelligence, Data Science, and IT Consulting for production systems operators can trust.',
+  howDeliver = 'Discover → Strategize → Design → Build → Deploy → Optimize',
+  industries = 'Technology, banking & financial services, manufacturing, retail, logistics, and Healthcare & Life Sciences as a specialty',
+  outcomes = 'Governed delivery, clearer decisions, scalable platforms, and measurable operational outcomes',
 }: ServiceAnswerBlockProps) {
   return (
     <Section>
@@ -35,11 +35,11 @@ export function ServiceAnswerBlock({
             { q: 'Who is this for?', a: whoFor },
             { q: 'Why choose Xelarvis?', a: whyChoose },
             { q: 'How do we deliver?', a: howDeliver },
-            { q: 'Industries served', a: industries },
+            { q: 'Where we apply this', a: industries },
             { q: 'Expected outcomes', a: outcomes },
             {
               q: 'What technologies are involved?',
-              a: 'AI/ML stacks, clinical data standards where applicable, cloud platforms, data pipelines, analytics, and secure enterprise software.',
+              a: 'AI/ML stacks, data platforms, cloud, DevOps, analytics, and secure enterprise software—plus clinical standards only where Healthcare specialty programs require them.',
             },
           ].map((item) => (
             <div key={item.q}>

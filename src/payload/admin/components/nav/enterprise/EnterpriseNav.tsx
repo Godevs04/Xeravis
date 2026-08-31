@@ -1,36 +1,26 @@
 'use client'
 
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import {
-  Bell,
-  ChevronDown,
-  ChevronsLeft,
-  ChevronsRight,
-  Plus,
-  Search,
-  Settings,
-} from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@payloadcms/ui'
 import posthog from 'posthog-js'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useWorkspaceOptional } from '@/payload/admin/workspace/WorkspaceContext'
 import type { WorkspaceId } from '@/payload/admin/workspace/definitions'
 
+import { NavGroup, NavItem, Sidebar, SidebarSection, UserProfile } from '../sidebar'
 import {
   NAV_MODULES,
   QUICK_CREATES,
   isLinkActive,
   moduleHasActiveLink,
   resolveModuleNavigation,
-  type NavModule,
   type NavModuleId,
 } from './modules'
 
 const NAV_KEY = 'xe-nav-collapsed'
-const EASE = [0.22, 1, 0.36, 1] as const
+const OPEN_KEY = 'xe-nav-open-modules'
 
 function roleLabel(roles: unknown): string {
   if (!Array.isArray(roles) || roles.length === 0) return 'Member'
@@ -63,19 +53,29 @@ function moduleToWorkspace(id: NavModuleId): WorkspaceId | null {
   return id as WorkspaceId
 }
 
+function readRememberedOpen(): Set<string> {
+  try {
+    const raw = window.localStorage.getItem(OPEN_KEY)
+    if (!raw) return new Set()
+    const parsed = JSON.parse(raw) as unknown
+    return Array.isArray(parsed) ? new Set(parsed.map(String)) : new Set()
+  } catch {
+    return new Set()
+  }
+}
+
+function writeRememberedOpen(ids: Set<string>) {
+  window.localStorage.setItem(OPEN_KEY, JSON.stringify([...ids]))
+}
+
+/** Single Enterprise OS sidebar — Linear / Vercel / Salesforce quality. */
 export function EnterpriseNav() {
   const pathname = usePathname() || '/admin'
   const ctx = useWorkspaceOptional()
   const { user } = useAuth()
-  const reduce = useReducedMotion()
   const routeNav = useMemo(() => resolveModuleNavigation(pathname), [pathname])
-  const [manualOpenId, setManualOpenId] = useState<NavModuleId | null>(null)
-  const openId = manualOpenId ?? routeNav.section ?? null
-  const [createOpen, setCreateOpen] = useState(false)
-  const [profileOpen, setProfileOpen] = useState(false)
+  const [manualOpen, setManualOpen] = useState<Set<string>>(() => new Set())
   const [collapsed, setCollapsed] = useState(false)
-  const createRef = useRef<HTMLDivElement>(null)
-  const profileRef = useRef<HTMLDivElement>(null)
 
   const email =
     user && typeof user === 'object' && 'email' in user && typeof user.email === 'string'
@@ -95,6 +95,7 @@ export function EnterpriseNav() {
   }, [email, role, userId])
 
   useEffect(() => {
+    setManualOpen(readRememberedOpen())
     const sync = () => {
       setCollapsed(document.documentElement.getAttribute('data-xe-nav') === 'collapsed')
     }
@@ -108,15 +109,23 @@ export function EnterpriseNav() {
   }, [])
 
   useEffect(() => {
-    // Pathname is source of truth — clear manual accordion override on navigation
-    setManualOpenId(null)
     const ws = routeNav.section ? moduleToWorkspace(routeNav.section) : null
     if (ws) ctx?.setWorkspace(ws)
 
-    // Keep the active child visible inside the sidebar scrollport
+    // Auto-expand the route-active module and remember it
+    if (routeNav.section) {
+      setManualOpen((prev) => {
+        if (prev.has(routeNav.section!)) return prev
+        const next = new Set(prev)
+        next.add(routeNav.section!)
+        writeRememberedOpen(next)
+        return next
+      })
+    }
+
     const id = window.requestAnimationFrame(() => {
       const active = document.querySelector<HTMLElement>(
-        '.xe-os-nav__modules a.xe-os-mod__link.is-active, .xe-os-nav__modules a.xe-os-mod.is-active',
+        '.xe-sb-item.is-active, .xe-sb-sub__link.is-active',
       )
       active?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
     })
@@ -124,36 +133,27 @@ export function EnterpriseNav() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- route sync only
   }, [pathname])
 
-  useEffect(() => {
-    const onDoc = (e: MouseEvent) => {
-      const t = e.target as Node
-      if (createRef.current && !createRef.current.contains(t)) setCreateOpen(false)
-      if (profileRef.current && !profileRef.current.contains(t)) setProfileOpen(false)
-    }
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setCreateOpen(false)
-        setProfileOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', onDoc)
-    document.addEventListener('keydown', onKey)
-    return () => {
-      document.removeEventListener('mousedown', onDoc)
-      document.removeEventListener('keydown', onKey)
-    }
-  }, [])
+  const isExpanded = useCallback(
+    (id: string) => {
+      if (manualOpen.has(id)) return true
+      return routeNav.section === id
+    },
+    [manualOpen, routeNav.section],
+  )
 
   const toggleModule = useCallback(
     (id: NavModuleId) => {
-      setManualOpenId((prev) => {
-        const current = prev ?? routeNav.section ?? null
-        return current === id ? null : id
+      setManualOpen((prev) => {
+        const next = new Set(prev)
+        if (next.has(id)) next.delete(id)
+        else next.add(id)
+        writeRememberedOpen(next)
+        return next
       })
       const ws = moduleToWorkspace(id)
       if (ws) ctx?.setWorkspace(ws)
     },
-    [ctx, routeNav.section],
+    [ctx],
   )
 
   const pinLabels = useMemo(() => {
@@ -172,306 +172,106 @@ export function EnterpriseNav() {
   const envLabel =
     typeof process !== 'undefined' && process.env.NODE_ENV === 'production' ? 'Production' : 'Local'
 
+  const overview = NAV_MODULES.filter((m) => m.id === 'overview')
+  const modules = NAV_MODULES.filter((m) => m.id !== 'overview')
+
   return (
-    <div className={`xe-os-nav${collapsed ? 'is-collapsed' : ''}`} data-xe-os-nav>
-      <div className="xe-os-nav__top">
-        <div className="xe-os-nav__brand-row">
-          <Link href="/admin" className="xe-os-nav__brand" title="Xelarvis Admin">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/brand/xel-mark.png"
-              alt=""
-              width={28}
-              height={28}
-              className="xe-os-nav__mark"
-            />
-            <span className="xe-os-nav__brand-copy">
-              <span className="xe-os-nav__brand-name">Xelarvis</span>
-              <span className="xe-os-nav__brand-sub">Admin</span>
-            </span>
-          </Link>
-          <button
-            type="button"
-            className="xe-os-nav__collapse"
-            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            title="Toggle sidebar (⌘B)"
-            onClick={toggleCollapse}
-          >
-            {collapsed ? <ChevronsRight size={16} /> : <ChevronsLeft size={16} />}
-          </button>
-        </div>
-
-        <div className="xe-os-nav__meta-row">
-          <span className="xe-os-nav__company">XELARVIS Pvt Ltd</span>
-          <span className={`xe-os-nav__env xe-os-nav__env--${envLabel.toLowerCase()}`}>
-            {envLabel}
-          </span>
-        </div>
-
-        <button type="button" className="xe-os-nav__search" onClick={openCommand}>
-          <Search size={15} aria-hidden />
-          <span className="xe-os-nav__search-label">Search</span>
-          <kbd className="xe-os-nav__kbd">⌘K</kbd>
-        </button>
-
-        <div className="xe-os-nav__create" ref={createRef}>
-          <button
-            type="button"
-            className={`xe-os-nav__create-btn${createOpen ? 'is-open' : ''}`}
-            aria-expanded={createOpen}
-            aria-haspopup="menu"
-            onClick={() => setCreateOpen((v) => !v)}
-          >
-            <Plus size={16} aria-hidden />
-            <span>Create</span>
-          </button>
-          <AnimatePresence>
-            {createOpen ? (
-              <motion.div
-                className="xe-os-nav__create-menu"
-                role="menu"
-                initial={reduce ? false : { opacity: 0, y: 6, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 4, scale: 0.98 }}
-                transition={{ duration: 0.18, ease: EASE }}
-              >
-                {QUICK_CREATES.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      role="menuitem"
-                      className="xe-os-nav__create-item"
-                      onClick={() => setCreateOpen(false)}
-                    >
-                      <Icon size={14} aria-hidden />
-                      {item.label}
-                    </Link>
-                  )
-                })}
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      <nav className="xe-os-nav__modules" aria-label="Admin modules">
-        {NAV_MODULES.map((mod) => (
-          <ModuleCard
-            key={mod.id}
-            mod={mod}
-            pathname={pathname}
-            expanded={openId === mod.id}
+    <Sidebar
+      collapsed={collapsed}
+      onToggleCollapse={toggleCollapse}
+      onOpenCommand={openCommand}
+      quickCreates={QUICK_CREATES}
+      envLabel={envLabel}
+      footer={
+        <>
+          {pinLabels.length > 0 ? (
+            <SidebarSection label="Pinned" className="xe-sb-section--pins">
+              <div className="xe-sb-pins" aria-label="Pinned">
+                {pinLabels.map((p) => (
+                  <Link
+                    key={p.href}
+                    href={p.href}
+                    className={`xe-sb-pin${isLinkActive(pathname, p.href) ? 'is-active' : ''}`}
+                    title={p.label}
+                  >
+                    {p.label}
+                  </Link>
+                ))}
+              </div>
+            </SidebarSection>
+          ) : null}
+          <UserProfile
+            name={name}
+            email={email}
+            role={role}
+            initials={initials}
+            envLabel={envLabel}
             collapsed={collapsed}
-            reduce={!!reduce}
-            onToggle={() => toggleModule(mod.id)}
+            onOpenCommand={openCommand}
+            onToggleTheme={toggleTheme}
+            onLogout={() => posthog.reset()}
           />
-        ))}
-      </nav>
-
-      <div className="xe-os-nav__bottom">
-        {pinLabels.length > 0 ? (
-          <div className="xe-os-nav__pins" aria-label="Pinned">
-            <div className="xe-os-nav__pins-label">Pinned</div>
-            <div className="xe-os-nav__pins-row">
-              {pinLabels.map((p) => (
-                <Link
-                  key={p.href}
-                  href={p.href}
-                  className={`xe-os-nav__pin${isLinkActive(pathname, p.href) ? 'is-active' : ''}`}
-                  title={p.label}
-                >
-                  {p.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        ) : null}
-
-        <div className="xe-os-nav__dock">
-          <Link
-            href="/admin/collections/notifications"
-            className="xe-os-nav__dock-btn"
-            title="Notifications"
-            aria-label="Notifications"
-          >
-            <Bell size={16} />
-          </Link>
-          <Link
-            href="/admin/account"
-            className="xe-os-nav__dock-btn"
-            title="Settings"
-            aria-label="Account settings"
-          >
-            <Settings size={16} />
-          </Link>
-        </div>
-
-        <div className="xe-os-nav__profile" ref={profileRef}>
-          <button
-            type="button"
-            className={`xe-os-nav__profile-card${profileOpen ? 'is-open' : ''}`}
-            aria-expanded={profileOpen}
-            onClick={() => setProfileOpen((v) => !v)}
-          >
-            <span className="xe-os-nav__avatar" aria-hidden>
-              {initials}
-              <span className="xe-os-nav__presence" title="Online" />
-            </span>
-            <span className="xe-os-nav__profile-meta">
-              <span className="xe-os-nav__profile-name">{name}</span>
-              <span className="xe-os-nav__profile-role" style={{ textTransform: 'capitalize' }}>
-                {role} · Online
-              </span>
-            </span>
-            <ChevronDown size={14} className="xe-os-nav__profile-chevron" aria-hidden />
-          </button>
-          <AnimatePresence>
-            {profileOpen ? (
-              <motion.div
-                className="xe-os-nav__profile-menu"
-                role="menu"
-                initial={reduce ? false : { opacity: 0, y: 6, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 4, scale: 0.98 }}
-                transition={{ duration: 0.18, ease: EASE }}
-              >
-                <div className="xe-os-nav__profile-email">{email}</div>
-                <div className="xe-os-nav__profile-row">
-                  <span>Workspace</span>
-                  <strong>{envLabel}</strong>
-                </div>
-                <div className="xe-os-nav__profile-row">
-                  <span>Role</span>
-                  <strong style={{ textTransform: 'capitalize' }}>{role}</strong>
-                </div>
-                <div className="xe-os-nav__profile-row">
-                  <span>Status</span>
-                  <strong className="is-online">Online</strong>
-                </div>
-                <hr className="xe-os-nav__rule" />
-                <Link href="/admin/account" role="menuitem" onClick={() => setProfileOpen(false)}>
-                  Account settings
-                </Link>
-                <button
-                  type="button"
-                  role="menuitem"
-                  onClick={() => {
-                    setProfileOpen(false)
-                    openCommand()
-                  }}
-                >
-                  Keyboard shortcuts ⌘K
-                </button>
-                <button
-                  type="button"
-                  role="menuitem"
-                  onClick={() => {
-                    toggleTheme()
-                    setProfileOpen(false)
-                  }}
-                >
-                  Toggle theme
-                </button>
-                <a href="/" target="_blank" rel="noreferrer" role="menuitem">
-                  View website
-                </a>
-                <Link
-                  href="/admin/logout"
-                  role="menuitem"
-                  className="is-danger"
-                  onClick={() => posthog.reset()}
-                >
-                  Log out
-                </Link>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function ModuleCard({
-  mod,
-  pathname,
-  expanded,
-  collapsed,
-  onToggle,
-}: {
-  mod: NavModule
-  pathname: string
-  expanded: boolean
-  collapsed: boolean
-  reduce: boolean
-  onToggle: () => void
-}) {
-  const Icon = mod.icon
-  const active = moduleHasActiveLink(pathname, mod)
-  const count = mod.links.length
-  const panelId = `xe-os-mod-panel-${mod.id}`
-
-  if (mod.href && mod.links.length === 0) {
-    return (
-      <Link
-        href={mod.href}
-        className={`xe-os-mod xe-os-mod--solo${active ? 'is-active' : ''}`}
-        title={mod.description}
-        aria-current={active ? 'page' : undefined}
-      >
-        <span className="xe-os-mod__icon" aria-hidden>
-          <Icon size={17} strokeWidth={active ? 2.25 : 1.75} />
-        </span>
-        <span className="xe-os-mod__label">{mod.label}</span>
-      </Link>
-    )
-  }
-
-  return (
-    <div className={`xe-os-mod-wrap${expanded ? 'is-open' : ''}${active ? 'is-active' : ''}`}>
-      <button
-        type="button"
-        className={`xe-os-mod${active ? 'is-active' : ''}${expanded ? 'is-open' : ''}`}
-        aria-expanded={expanded}
-        aria-controls={panelId}
-        title={mod.description}
-        onClick={onToggle}
-      >
-        <span className="xe-os-mod__icon" aria-hidden>
-          <Icon size={17} strokeWidth={active || expanded ? 2.25 : 1.75} />
-        </span>
-        <span className="xe-os-mod__label">{mod.label}</span>
-        {count > 0 ? <span className="xe-os-mod__count">{count}</span> : null}
-        <ChevronDown size={14} className="xe-os-mod__chevron" aria-hidden />
-      </button>
-
-      {expanded && !collapsed ? (
-        <div
-          id={panelId}
-          className="xe-os-mod__links"
-          role="region"
-          aria-label={`${mod.label} links`}
-        >
-          {mod.links.map((link) => {
-            const linkActive = isLinkActive(pathname, link.href)
+        </>
+      }
+    >
+      <SidebarSection label="Overview">
+        {overview.map((mod) => {
+          if (mod.href && mod.links.length === 0) {
             return (
-              <Link
-                key={`${mod.id}:${link.href}`}
-                href={link.href}
-                className={`xe-os-mod__link${linkActive ? 'is-active' : ''}`}
-                title={link.hint}
-                aria-current={linkActive ? 'page' : undefined}
-              >
-                <span className="xe-os-mod__link-dot" aria-hidden />
-                <span className="xe-os-mod__link-label">{link.label}</span>
-              </Link>
+              <NavItem
+                key={mod.id}
+                href={mod.href}
+                label={mod.label}
+                description={mod.description}
+                icon={mod.icon}
+                active={moduleHasActiveLink(pathname, mod)}
+                collapsed={collapsed}
+              />
             )
-          })}
-        </div>
-      ) : null}
-    </div>
+          }
+          return null
+        })}
+      </SidebarSection>
+
+      <SidebarSection label="Workspace">
+        {modules.map((mod) => {
+          const active = moduleHasActiveLink(pathname, mod)
+          if (mod.href && mod.links.length === 0) {
+            return (
+              <NavItem
+                key={mod.id}
+                href={mod.href}
+                label={mod.label}
+                description={mod.description}
+                icon={mod.icon}
+                active={active}
+                collapsed={collapsed}
+              />
+            )
+          }
+          return (
+            <NavGroup
+              key={mod.id}
+              id={mod.id}
+              label={mod.label}
+              description={mod.description}
+              icon={mod.icon}
+              expanded={isExpanded(mod.id)}
+              active={active}
+              collapsed={collapsed}
+              onToggle={() => toggleModule(mod.id)}
+              items={mod.links.map((link) => ({
+                id: `${mod.id}:${link.href}`,
+                label: link.label,
+                href: link.href,
+                description: link.hint,
+                active: isLinkActive(pathname, link.href),
+              }))}
+            />
+          )
+        })}
+      </SidebarSection>
+    </Sidebar>
   )
 }
 

@@ -3,21 +3,22 @@ import { notFound } from 'next/navigation'
 
 import { CTABand } from '@/blocks/CTABand'
 import { FAQAccordion } from '@/blocks/FAQAccordion'
+import { RelatedContent } from '@/components/content/RelatedContent'
 import { TechnologyCard } from '@/components/domain/TechnologyCard'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
-import { RelatedLinks } from '@/components/seo/RelatedLinks'
 import { ServiceAnswerBlock } from '@/components/seo/ServiceAnswerBlock'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { ServiceDetailNarrative } from '@/components/services/ServiceDetailNarrative'
 import { RichText } from '@/components/RichText'
 import { getMediaUrl } from '@/lib/media'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
+import { buildRelatedGroups } from '@/lib/related-content'
 import { SERVICE_CAPABILITIES, SERVICE_PAGE_EXTRAS } from '@/lib/site-ia'
 import { breadcrumbJsonLd, buildMetadata, graphJsonLd, serviceJsonLd } from '@/lib/seo'
-import { relatedLinksForService, serviceFaqsFor } from '@/lib/seo-content'
+import { serviceFaqsFor } from '@/lib/seo-content'
 
 export const revalidate = 60
 
@@ -28,6 +29,7 @@ type RelatedDoc = {
   slug?: string
   category?: string | null
   description?: string | null
+  summary?: string | null
 }
 
 type ServiceDoc = {
@@ -40,6 +42,11 @@ type ServiceDoc = {
   benefits?: { title: string; description: string }[]
   process?: { title: string; description: string }[]
   technologies?: RelatedDoc[] | (string | number)[]
+  relatedSolutions?: RelatedDoc[] | (string | number)[]
+  relatedIndustries?: RelatedDoc[] | (string | number)[]
+  relatedCaseStudies?: RelatedDoc[] | (string | number)[]
+  relatedResearch?: RelatedDoc[] | (string | number)[]
+  relatedInsights?: RelatedDoc[] | (string | number)[]
   relatedFaqs?: RelatedDoc[] | (string | number)[]
   heroImage?: unknown
   meta?: { title?: string; description?: string; image?: unknown }
@@ -95,6 +102,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   const capabilities = SERVICE_CAPABILITIES[service.slug] ?? []
   const extras = SERVICE_PAGE_EXTRAS[service.slug]
   const seedFaqs = serviceFaqsFor(service.title, service.summary)
+  const relatedGroups = buildRelatedGroups(service as unknown as Record<string, unknown>)
 
   const jsonLd = graphJsonLd(
     serviceJsonLd({
@@ -135,10 +143,8 @@ export default async function ServiceDetailPage({ params }: Props) {
         />
       </Container>
 
-      {/* Overview */}
       <ServiceAnswerBlock title={service.title} summary={service.summary} />
 
-      {/* Challenges → Capabilities → Approach narrative */}
       <ServiceDetailNarrative challenges={service.challenges} benefits={service.benefits}>
         {service.body ? (
           <RichText content={service.body as Parameters<typeof RichText>[0]['content']} />
@@ -185,48 +191,6 @@ export default async function ServiceDetailPage({ params }: Props) {
         </Section>
       ) : null}
 
-      {extras?.relatedSolutions?.length ? (
-        <Section>
-          <Container>
-            <h2 className="text-2xl font-bold">Solutions</h2>
-            <p className="text-secondary mt-3 max-w-2xl text-sm sm:text-base">
-              Business problems this service commonly unlocks. Services are how we help; solutions
-              are what we solve.
-            </p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {extras.relatedSolutions.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="hover:border-accent/40 block rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-4 py-4 text-sm font-semibold text-[color:var(--color-primary)] transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </Section>
-      ) : null}
-
-      {technologies.length > 0 ? (
-        <Section surface>
-          <Container>
-            <h2 className="text-2xl font-bold">Technologies</h2>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {technologies.map((tech) => (
-                <TechnologyCard
-                  key={tech.id}
-                  name={tech.title || tech.name || 'Technology'}
-                  category={tech.category}
-                  description={tech.description}
-                />
-              ))}
-            </div>
-          </Container>
-        </Section>
-      ) : null}
-
       {extras?.deliverables?.length ? (
         <Section>
           <Container>
@@ -246,26 +210,8 @@ export default async function ServiceDetailPage({ params }: Props) {
         </Section>
       ) : null}
 
-      {extras?.industries?.length ? (
-        <Section surface>
-          <Container>
-            <h2 className="text-2xl font-bold">Industries</h2>
-            <ul className="mt-6 flex flex-wrap gap-2">
-              {extras.industries.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-full border border-[color:var(--glass-border)] px-3.5 py-1.5 text-sm text-[color:var(--color-secondary)]"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </Section>
-      ) : null}
-
       {extras?.outcomes?.length ? (
-        <Section>
+        <Section surface>
           <Container>
             <h2 className="text-2xl font-bold">Outcomes</h2>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -283,12 +229,30 @@ export default async function ServiceDetailPage({ params }: Props) {
         </Section>
       ) : null}
 
+      {technologies.length > 0 ? (
+        <Section>
+          <Container>
+            <h2 className="text-2xl font-bold">Technologies</h2>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {technologies.map((tech) => (
+                <TechnologyCard
+                  key={tech.id}
+                  name={tech.title || tech.name || 'Technology'}
+                  category={tech.category}
+                  description={tech.description}
+                />
+              ))}
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
+      <RelatedContent heading="Explore related capabilities" groups={relatedGroups} />
+
       <FAQAccordion
         heading="Frequently asked questions"
         seedFaqs={hasCmsFaqs ? seedFaqs.slice(0, 3) : seedFaqs}
       />
-
-      <RelatedLinks links={relatedLinksForService(service.slug)} />
 
       <CTABand
         heading="Plan your next initiative"

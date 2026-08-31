@@ -31,55 +31,55 @@ type JourneyStage = {
   metrics?: { label: string; trend: 'up' | 'down' }[]
 }
 
-/** Canonical business → results pipeline */
+/** Canonical XELARVIS Delivery Framework (6 steps) */
 const JOURNEY: JourneyStage[] = [
   {
-    title: 'Business Problem',
-    description: 'Every engagement starts with a real constraint — not a technology preference.',
-    items: ['Stakeholder friction', 'Data silos', 'Outcome gaps'],
-    transitionLabel: 'Discovery begins',
+    title: 'Discover',
+    description:
+      'Understand the business problem, stakeholders, constraints, and success criteria.',
+    items: ['Stakeholders', 'Constraints', 'Success criteria'],
+    transitionLabel: 'Strategy begins',
     visual: 'problem',
   },
   {
-    title: 'Discovery',
-    description: 'Workshops and research turn the problem into a shared, actionable frame.',
-    items: ['Stakeholders', 'Research', 'Workshops'],
-    transitionLabel: 'Animated flow',
+    title: 'Strategize',
+    description: 'Define the AI, data and technology roadmap aligned to outcomes and readiness.',
+    items: ['Roadmap', 'Priorities', 'Readiness'],
+    transitionLabel: 'Design begins',
     visual: 'discovery',
   },
   {
-    title: 'Solution Architecture',
-    description: 'The blueprint assembles — AI, cloud, and APIs designed to survive production.',
-    items: ['AI Models', 'Cloud Design', 'APIs'],
-    transitionLabel: 'Blueprint assembles',
+    title: 'Design',
+    description: 'Architect scalable solutions, data flows, governance, and delivery plans.',
+    items: ['Architecture', 'Governance', 'Delivery plan'],
+    transitionLabel: 'Build begins',
     visual: 'architecture',
   },
   {
-    title: 'Development',
-    description: 'Code appears. Components connect. Tests run. Operators stay in the loop.',
-    items: ['Code appears', 'Components connect', 'Tests run'],
-    transitionLabel: 'Deployment pipeline animates',
+    title: 'Build',
+    description: 'Develop models, platforms, and applications with quality and security built in.',
+    items: ['Models', 'Platforms', 'Applications'],
+    transitionLabel: 'Deploy begins',
     visual: 'development',
   },
   {
-    title: 'Cloud Infrastructure',
-    description:
-      'Secure, observable infrastructure — Kubernetes, monitoring, and hardened controls.',
-    items: ['Kubernetes', 'Monitoring', 'Security'],
-    transitionLabel: 'Live analytics activate',
+    title: 'Deploy',
+    description: 'Ship to production with monitoring, documentation, and operational readiness.',
+    items: ['Production', 'Monitoring', 'Documentation'],
+    transitionLabel: 'Optimize begins',
     visual: 'cloud',
   },
   {
-    title: 'Business Results',
-    description: 'The system pays for itself — measurable ROI, performance, cost, and growth.',
-    items: ['ROI', 'Performance', 'Cost', 'Growth'],
+    title: 'Optimize',
+    description:
+      'Measure outcomes, refine performance, and expand what works across the organization.',
+    items: ['Outcomes', 'Performance', 'Expansion'],
     transitionLabel: 'Journey complete',
     visual: 'results',
     metrics: [
-      { label: 'ROI', trend: 'up' },
+      { label: 'Outcomes', trend: 'up' },
       { label: 'Performance', trend: 'up' },
-      { label: 'Cost', trend: 'down' },
-      { label: 'Growth', trend: 'up' },
+      { label: 'Adoption', trend: 'up' },
     ],
   },
 ]

@@ -74,7 +74,10 @@ export const Industries: CollectionConfig = {
     {
       name: 'solutions',
       type: 'array',
-      label: 'Solutions',
+      label: 'Solutions (legacy inline)',
+      admin: {
+        description: 'Prefer Related Solutions relationship below.',
+      },
       fields: [
         { name: 'title', type: 'text', required: true },
         { name: 'description', type: 'textarea', required: true },
@@ -90,12 +93,54 @@ export const Industries: CollectionConfig = {
       type: 'relationship',
       relationTo: 'services',
       hasMany: true,
+      label: 'Related Services / Capabilities',
+    },
+    {
+      name: 'relatedSolutions',
+      type: 'relationship',
+      relationTo: 'solutions',
+      hasMany: true,
+      label: 'Related Solutions',
+    },
+    {
+      name: 'relatedTechnologies',
+      type: 'relationship',
+      relationTo: 'technologies',
+      hasMany: true,
     },
     {
       name: 'relatedCaseStudies',
       type: 'relationship',
       relationTo: 'case-studies',
       hasMany: true,
+    },
+    {
+      name: 'relatedResearch',
+      type: 'relationship',
+      relationTo: 'research',
+      hasMany: true,
+    },
+    {
+      name: 'relatedInsights',
+      type: 'relationship',
+      relationTo: 'blogs',
+      hasMany: true,
+      label: 'Related Insights',
+    },
+    {
+      name: 'tier',
+      type: 'select',
+      defaultValue: '3',
+      options: [
+        { label: 'Tier 1 — Primary', value: '1' },
+        { label: 'Tier 2 — Secondary', value: '2' },
+        { label: 'Tier 3 — Emerging', value: '3' },
+      ],
+      admin: {
+        description:
+          'Controls nav prominence. Tier 3 stays out of primary mega until content-ready.',
+        position: 'sidebar',
+      },
     },
     featuredField(),
     orderField(),

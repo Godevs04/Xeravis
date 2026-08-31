@@ -49,26 +49,25 @@ html[data-xe-ui='v5'] .template-default--nav-animate {
 html[data-xe-ui='v5'] .template-default > .nav,
 html[data-xe-ui='v5'] .template-default > aside.nav {
   position: sticky !important;
-  top: 0 !important;
+  top: 12px !important;
   left: auto !important;
   right: auto !important;
   bottom: auto !important;
   grid-column: 1 !important;
   grid-row: 1 !important;
-  width: var(--xe-sidebar-current) !important;
-  min-width: var(--xe-sidebar-current) !important;
-  max-width: var(--xe-sidebar-current) !important;
-  height: 100dvh !important;
-  max-height: 100dvh !important;
-  margin: 0 !important;
+  width: calc(var(--xe-sidebar-current) - 12px) !important;
+  min-width: calc(var(--xe-sidebar-current) - 12px) !important;
+  max-width: calc(var(--xe-sidebar-current) - 12px) !important;
+  height: calc(100dvh - 24px) !important;
+  max-height: calc(100dvh - 24px) !important;
+  margin: 12px 0 12px 12px !important;
   padding: 0 !important;
-  border: none !important;
-  border-right: 1px solid var(--xe-border) !important;
-  border-radius: 0 !important;
-  background: var(--xe-sidebar-solid) !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  border: 1px solid var(--xe-sidebar-border) !important;
+  border-radius: var(--xe-sidebar-radius) !important;
+  background: var(--xe-sidebar-glass) !important;
+  box-shadow: var(--xe-sidebar-shadow) !important;
+  backdrop-filter: blur(18px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
   overflow: hidden !important;
   z-index: 40 !important;
   transform: none !important;
@@ -76,7 +75,6 @@ html[data-xe-ui='v5'] .template-default > aside.nav {
   visibility: visible !important;
   display: flex !important;
   flex-direction: column !important;
-  /* Beat Payload ≤1440 display:none / opacity:0 until nav-open */
   flex-shrink: 0 !important;
   --nav-width: var(--xe-sidebar-current) !important;
   --nav-padding-block-start: 0px !important;
@@ -227,20 +225,40 @@ html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-na
   html[data-xe-ui='v5'] .template-default > aside.nav {
     position: fixed !important;
     inset: 0 auto 0 0 !important;
-    width: min(320px, 88vw) !important;
-    min-width: min(320px, 88vw) !important;
-    max-width: min(320px, 88vw) !important;
+    top: 0 !important;
+    width: min(288px, 88vw) !important;
+    min-width: min(288px, 88vw) !important;
+    max-width: min(288px, 88vw) !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 var(--xe-sidebar-radius) var(--xe-sidebar-radius) 0 !important;
     transform: translateX(-105%) !important;
     transition: transform var(--xe-dur-nav) var(--xe-ease) !important;
     z-index: 60 !important;
-    box-shadow: var(--xe-shadow-lg) !important;
-    border-right: 1px solid var(--xe-border) !important;
+    box-shadow: var(--xe-sidebar-shadow) !important;
+    border: 1px solid var(--xe-sidebar-border) !important;
+    background: var(--xe-sidebar-glass) !important;
+    backdrop-filter: blur(18px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
   }
 
   html[data-xe-ui='v5'] .nav.nav--nav-open,
   html[data-xe-ui='v5'][data-xe-nav='open'] .template-default > .nav,
   html[data-xe-ui='v5'][data-xe-nav='open'] .template-default > aside.nav {
     transform: translateX(0) !important;
+  }
+
+  /* Scrim when drawer open */
+  html[data-xe-ui='v5'][data-xe-nav='open'] .template-default__wrap::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(15, 23, 42, 0.28);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    pointer-events: none;
   }
 
   html[data-xe-ui='v5'] .template-default__wrap {
