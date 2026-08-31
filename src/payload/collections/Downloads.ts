@@ -13,7 +13,7 @@ export const Downloads: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'gated', 'downloadCount', 'updatedAt'],
-    group: 'Marketing',
+    group: 'Website',
   },
   access: {
     read: anyone,
@@ -30,6 +30,11 @@ export const Downloads: CollectionConfig = {
       type: 'text',
       required: true,
       maxLength: 140,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     slugField(),
     {

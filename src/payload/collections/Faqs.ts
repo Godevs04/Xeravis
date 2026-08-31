@@ -8,7 +8,7 @@ export const Faqs: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'question',
-    defaultColumns: ['question', 'group', 'updatedAt'],
+    defaultColumns: ['question', 'group', 'order', 'updatedAt'],
   },
   access: {
     read: anyone,
@@ -21,6 +21,11 @@ export const Faqs: CollectionConfig = {
       name: 'question',
       type: 'text',
       required: true,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     {
       name: 'answer',

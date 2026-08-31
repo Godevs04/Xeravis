@@ -53,6 +53,7 @@ export const QUICK_CREATES = REGISTRY_QUICK_CREATES.map((c) => ({
   label: c.label,
   href: c.href,
   icon: c.icon,
+  section: c.section,
 }))
 
 export { isLinkActive, resolveNavigation }

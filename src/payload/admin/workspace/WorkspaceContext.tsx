@@ -105,21 +105,25 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     applyNavFilter(workspace)
 
-    const observer = new MutationObserver(() => applyNavFilter(workspace))
+    let debounceId: number | undefined
+    const schedule = () => {
+      if (debounceId !== undefined) window.clearTimeout(debounceId)
+      debounceId = window.setTimeout(() => applyNavFilter(workspace), 120)
+    }
+
+    const observer = new MutationObserver(schedule)
     const nav = document.querySelector('.nav')
     if (nav) {
       observer.observe(nav, { childList: true, subtree: true })
     }
 
-    const onRoute = () => applyNavFilter(workspace)
+    const onRoute = () => schedule()
     window.addEventListener('popstate', onRoute)
 
-    const interval = window.setInterval(() => applyNavFilter(workspace), 1200)
-
     return () => {
+      if (debounceId !== undefined) window.clearTimeout(debounceId)
       observer.disconnect()
       window.removeEventListener('popstate', onRoute)
-      window.clearInterval(interval)
     }
   }, [workspace])
 

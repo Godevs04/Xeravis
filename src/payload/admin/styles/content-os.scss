@@ -7,6 +7,10 @@
 html[data-xe-ui='v5'] {
   --xe-glass: color-mix(in srgb, var(--xe-surface, #fff) 82%, transparent);
   --xe-glass-strong: color-mix(in srgb, var(--xe-surface, #fff) 94%, transparent);
+}
+
+/* Payload gutter — scope to main shell only; drawers/modals need default --gutter-h */
+html[data-xe-ui='v5'] .template-default__wrap {
   --gutter-h: 0;
 }
 
@@ -428,7 +432,7 @@ html[data-xe-ui='v5'] .document-fields--no-sidebar {
 
 html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
   position: sticky !important;
-  top: calc(var(--xe-header-h) + 80px) !important;
+  top: var(--xe-space-4) !important;
   max-width: none !important;
   width: 100% !important;
   align-self: start !important;
@@ -487,7 +491,7 @@ html[data-xe-ui='v5'] .group-field:not(.array-field .group-field):hover,
 html[data-xe-ui='v5'] .xe-card:hover {
   box-shadow: var(--xe-card-shadow-hover) !important;
   border-color: color-mix(in srgb, var(--xe-secondary) 22%, var(--xe-border)) !important;
-  transform: translateY(-2px);
+  transform: none !important;
 }
 
 html[data-xe-ui='v5'] .array-field .render-fields,
@@ -1002,10 +1006,12 @@ html[data-xe-ui='v5'] .drawer__content,
 html[data-xe-ui='v5'] .modal,
 html[data-xe-ui='v5'] .popup__content,
 html[data-xe-ui='v5'] .confirmation-modal {
-  border-radius: var(--xe-radius-lg) !important;
+  /* Do not override width — Payload sets drawer width via --gutter-h + inline style */
+  border-radius: var(--xe-radius-lg) 0 0 var(--xe-radius-lg) !important;
   border: 1px solid var(--xe-border) !important;
+  border-right: 0 !important;
   background: var(--xe-glass-strong) !important;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14) !important;
+  box-shadow: -12px 0 48px rgba(15, 23, 42, 0.14) !important;
 }
 
 html[data-xe-ui='v5'] .xe-dash--os,
@@ -1057,12 +1063,9 @@ html[data-xe-ui='v5'] .xe-page__desc {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html[data-xe-ui='v5'] .collection-list,
-  html[data-xe-ui='v5'] .collection-edit,
-  html[data-xe-ui='v5'] .global-edit,
-  html[data-xe-ui='v5'] .account,
-  html[data-xe-ui='v5'] .query-inspector,
-  html[data-xe-ui='v5'] .xe-dash,
+  html[data-xe-ui='v5'] .dashboard:has(.xe-dash),
+  html[data-xe-ui='v5'] .xe-dash--os,
+  html[data-xe-ui='v5'] .xe-ws,
   html[data-xe-ui='v5'] .xe-page {
     animation: xe-content-fade-in var(--xe-dur-page) var(--xe-ease) both;
   }
@@ -1176,7 +1179,7 @@ html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
 
 html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
   position: sticky !important;
-  top: calc(var(--xe-header-h) + 16px) !important;
+  top: var(--xe-space-4) !important;
 }
 
 html[data-xe-ui='v5'] .field-type__wrap > input,
@@ -1233,3 +1236,103 @@ html[data-xe-ui='v5'] .field-type .field-description.error {
     position: static !important;
   }
 }
+
+/* ============================================================
+   DOCUMENT EDIT — alignment, uploads, stable layout
+   ============================================================ */
+
+html[data-xe-ui='v5'] .collection-edit,
+html[data-xe-ui='v5'] .global-edit {
+  animation: none !important;
+}
+
+html[data-xe-ui='v5'] .document-fields--has-sidebar {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, var(--xe-doc-sidebar)) !important;
+  gap: var(--xe-card-gap) !important;
+  align-items: start !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__main,
+html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__edit > .render-fields,
+html[data-xe-ui='v5'] .document-fields__sidebar-fields > .render-fields {
+  margin-top: 0 !important;
+}
+
+html[data-xe-ui='v5'] .document-fields__sidebar-fields > .render-fields > .field-type:first-child,
+html[data-xe-ui='v5'] .document-fields__edit > .render-fields > .field-type:first-child {
+  padding-top: var(--xe-field-gap) !important;
+}
+
+/* Upload / media field — clean action row */
+html[data-xe-ui='v5'] .field-type.upload,
+html[data-xe-ui='v5'] .upload.field-type {
+  overflow: visible !important;
+}
+
+html[data-xe-ui='v5'] .upload__dropzone,
+html[data-xe-ui='v5'] .file-field__upload,
+html[data-xe-ui='v5'] .dropzone,
+html[data-xe-ui='v5'] .field-type.upload .upload {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--xe-space-3) !important;
+  padding: var(--xe-space-6) var(--xe-space-4) !important;
+  text-align: center !important;
+}
+
+html[data-xe-ui='v5'] .upload__dropzoneContent,
+html[data-xe-ui='v5'] .file-field__upload .upload__buttons,
+html[data-xe-ui='v5'] .upload .btn--upload,
+html[data-xe-ui='v5'] .field-type.upload .btn {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--xe-space-2) var(--xe-space-3) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+html[data-xe-ui='v5'] .field-type.upload .btn,
+html[data-xe-ui='v5'] .upload .btn--style-secondary,
+html[data-xe-ui='v5'] .upload .btn--style-primary {
+  min-height: var(--xe-btn-h) !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+
+html[data-xe-ui='v5'] .field-type.upload .field-description,
+html[data-xe-ui='v5'] .upload__drag-and-drop-text,
+html[data-xe-ui='v5'] .file-field__upload p {
+  margin: 0 !important;
+  width: 100% !important;
+  text-align: center !important;
+  font-size: var(--xe-fs-secondary) !important;
+  color: var(--xe-muted) !important;
+}
+
+/* Doc controls stick below header without pushing sidebar down */
+html[data-xe-ui='v5'] .doc-controls {
+  top: calc(var(--xe-header-h) + var(--xe-space-2)) !important;
+}
+
+html[data-xe-ui='v5'] .collection-edit__main,
+html[data-xe-ui='v5'] .global-edit__main {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Prevent edit view from feeling like a narrow slide-over panel */
+html[data-xe-ui='v5'] .template-default__wrap > .collection-edit,
+html[data-xe-ui='v5'] .template-default__wrap > .global-edit {
+  max-width: var(--xe-shell-max) !important;
+  width: 100% !important;
+}
+

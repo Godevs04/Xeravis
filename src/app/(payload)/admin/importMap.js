@@ -27,8 +27,8 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
-import { BlogTitleCell as BlogTitleCell_94ab0df32e6c9f6571b3211a488751bf } from '../../../payload/admin/components/cells/BlogTitleCell'
 import { BlogAuthorCell as BlogAuthorCell_a142899964074c0393480de584daf52a } from '../../../payload/admin/components/cells/BlogAuthorCell'
+import { ClientLogoCell as ClientLogoCell_8631f0ee8b8ff18706d7f9125fcecd3e } from '../../../payload/admin/components/cells/ClientLogoCell'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ContactDetailsAside as ContactDetailsAside_213760cafe583ea5f162ca160e854ac9 } from '../../../payload/admin/components/contact/ContactDetailsAside'
@@ -116,10 +116,10 @@ export const importMap = {
     MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   '@payloadcms/plugin-seo/client#PreviewComponent':
     PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
-  './payload/admin/components/cells/BlogTitleCell#BlogTitleCell':
-    BlogTitleCell_94ab0df32e6c9f6571b3211a488751bf,
   './payload/admin/components/cells/BlogAuthorCell#BlogAuthorCell':
     BlogAuthorCell_a142899964074c0393480de584daf52a,
+  './payload/admin/components/cells/ClientLogoCell#ClientLogoCell':
+    ClientLogoCell_8631f0ee8b8ff18706d7f9125fcecd3e,
   '@payloadcms/plugin-search/client#LinkToDoc': LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   '@payloadcms/plugin-search/client#ReindexButton': ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   './payload/admin/components/contact/ContactDetailsAside#ContactDetailsAside':

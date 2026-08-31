@@ -1,19 +1,31 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 
 import { resolveNavigation } from '@/payload/admin/nav/registry'
 
-const MAIN_SCROLL_SEL = '.template-default__wrap'
+import {
+  bindMainScrollPersistence,
+  getCollectionListKey,
+  isDocumentRoute,
+  resetMainScrollTop,
+  restoreCollectionListScroll,
+  getMainScroll,
+  saveCollectionListScroll,
+} from './mainScroll'
 
-function getMainScroll(): HTMLElement | null {
-  return document.querySelector<HTMLElement>(MAIN_SCROLL_SEL)
+function restoreListWithRetry(pathname: string) {
+  restoreCollectionListScroll(pathname)
+  requestAnimationFrame(() => restoreCollectionListScroll(pathname))
+  requestAnimationFrame(() => restoreCollectionListScroll(pathname))
 }
 
 /**
  * Owns main-content scroll only — never window/document.
- * Same nav section → preserve scroll; different section → reset to top.
+ * List → list (same section): restore list position.
+ * List → edit/create/global: reset to top.
+ * Section change: reset to top.
  */
 export function MainScrollController() {
   const pathname = usePathname() || '/admin'
@@ -21,19 +33,45 @@ export function MainScrollController() {
   const prevPath = useRef<string | null>(null)
 
   useEffect(() => {
-    const { section } = resolveNavigation(pathname)
-    const wrap = getMainScroll()
-    if (!wrap) {
-      prevSection.current = section
-      prevPath.current = pathname
-      return
+    let wrap: HTMLElement | null = null
+    let unbind: (() => void) | null = null
+
+    const bind = () => {
+      const next = getMainScroll()
+      if (next === wrap) return
+      unbind?.()
+      wrap = next
+      unbind = wrap ? bindMainScrollPersistence(wrap) : null
     }
 
-    const pathChanged = prevPath.current !== null && prevPath.current !== pathname
+    bind()
+    const observer = new MutationObserver(bind)
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+      unbind?.()
+    }
+  }, [])
+
+  useLayoutEffect(() => {
+    const { section } = resolveNavigation(pathname)
+    const prev = prevPath.current
+    const pathChanged = prev !== null && prev !== pathname
     const sectionChanged = prevSection.current !== null && prevSection.current !== section
 
-    if (pathChanged && (sectionChanged || prevSection.current === null)) {
-      wrap.scrollTop = 0
+    if (pathChanged && prev) {
+      if (getCollectionListKey(prev)) {
+        saveCollectionListScroll(prev)
+      }
+
+      if (sectionChanged || isDocumentRoute(pathname)) {
+        resetMainScrollTop()
+      } else if (getCollectionListKey(pathname)) {
+        restoreListWithRetry(pathname)
+      } else {
+        resetMainScrollTop()
+      }
     }
 
     prevSection.current = section

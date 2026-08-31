@@ -22,6 +22,11 @@ export const Tags: CollectionConfig = {
       type: 'text',
       required: true,
       maxLength: 80,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     slugField(),
     {

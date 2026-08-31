@@ -40,6 +40,7 @@ export type QuickCreate = {
   label: string
   href: string
   icon: LucideIcon
+  section: string
 }
 
 export type BreadcrumbCrumb = {
@@ -115,13 +116,23 @@ export const NAV_GROUPS: NavGroup[] = [
         description: 'Outcomes',
       },
       { id: 'downloads', label: 'Downloads', href: col('downloads'), description: 'Resources' },
-      { id: 'faqs', label: 'FAQs', href: col('faqs') },
-      { id: 'testimonials', label: 'Testimonials', href: col('testimonials') },
-      { id: 'clients', label: 'Clients', href: col('clients') },
-      { id: 'team-members', label: 'Team', href: col('team-members') },
-      { id: 'authors', label: 'Authors', href: col('authors') },
-      { id: 'categories', label: 'Categories', href: col('categories') },
-      { id: 'tags', label: 'Tags', href: col('tags') },
+      { id: 'faqs', label: 'FAQs', href: col('faqs'), description: 'Q&A library' },
+      {
+        id: 'testimonials',
+        label: 'Testimonials',
+        href: col('testimonials'),
+        description: 'Social proof',
+      },
+      { id: 'clients', label: 'Clients', href: col('clients'), description: 'Logo wall' },
+      { id: 'team-members', label: 'Team', href: col('team-members'), description: 'People' },
+      { id: 'authors', label: 'Authors', href: col('authors'), description: 'Byline credits' },
+      {
+        id: 'categories',
+        label: 'Categories',
+        href: col('categories'),
+        description: 'Taxonomy',
+      },
+      { id: 'tags', label: 'Tags', href: col('tags'), description: 'Labels' },
     ],
   },
   {
@@ -238,14 +249,148 @@ export const NAV_GROUPS: NavGroup[] = [
 ]
 
 export const QUICK_CREATES: QuickCreate[] = [
-  { id: 'page', label: 'Page', href: `${col('pages')}/create`, icon: FileText },
-  { id: 'blog', label: 'Blog', href: `${col('blogs')}/create`, icon: Newspaper },
-  { id: 'job', label: 'Job', href: `${col('careers')}/create`, icon: Briefcase },
-  { id: 'service', label: 'Service', href: `${col('services')}/create`, icon: FolderOpen },
-  { id: 'case-study', label: 'Case Study', href: `${col('case-studies')}/create`, icon: Layers },
-  { id: 'media', label: 'Media', href: `${col('media')}/create`, icon: Image },
-  { id: 'interview', label: 'Interview', href: `${col('interviews')}/create`, icon: Users },
+  { id: 'page', label: 'Page', href: `${col('pages')}/create`, icon: FileText, section: 'Website' },
+  {
+    id: 'service',
+    label: 'Service',
+    href: `${col('services')}/create`,
+    icon: FolderOpen,
+    section: 'Website',
+  },
+  {
+    id: 'solution',
+    label: 'Solution',
+    href: `${col('solutions')}/create`,
+    icon: Layers,
+    section: 'Website',
+  },
+  {
+    id: 'industry',
+    label: 'Industry',
+    href: `${col('industries')}/create`,
+    icon: Building2,
+    section: 'Website',
+  },
+  {
+    id: 'technology',
+    label: 'Technology',
+    href: `${col('technologies')}/create`,
+    icon: Sparkles,
+    section: 'Website',
+  },
+  {
+    id: 'blog',
+    label: 'Blog post',
+    href: `${col('blogs')}/create`,
+    icon: Newspaper,
+    section: 'Insights',
+  },
+  {
+    id: 'research',
+    label: 'Research',
+    href: `${col('research')}/create`,
+    icon: FileText,
+    section: 'Insights',
+  },
+  {
+    id: 'case-study',
+    label: 'Case study',
+    href: `${col('case-studies')}/create`,
+    icon: Layers,
+    section: 'Insights',
+  },
+  {
+    id: 'download',
+    label: 'Download',
+    href: `${col('downloads')}/create`,
+    icon: FolderOpen,
+    section: 'Insights',
+  },
+  { id: 'faq', label: 'FAQ', href: `${col('faqs')}/create`, icon: FileText, section: 'Insights' },
+  {
+    id: 'testimonial',
+    label: 'Testimonial',
+    href: `${col('testimonials')}/create`,
+    icon: Users,
+    section: 'Insights',
+  },
+  {
+    id: 'client',
+    label: 'Client',
+    href: `${col('clients')}/create`,
+    icon: Building2,
+    section: 'Insights',
+  },
+  {
+    id: 'team-member',
+    label: 'Team member',
+    href: `${col('team-members')}/create`,
+    icon: Users,
+    section: 'Insights',
+  },
+  {
+    id: 'author',
+    label: 'Author',
+    href: `${col('authors')}/create`,
+    icon: Users,
+    section: 'Insights',
+  },
+  {
+    id: 'media',
+    label: 'Media asset',
+    href: `${col('media')}/create`,
+    icon: Image,
+    section: 'Media',
+  },
+  {
+    id: 'campaign',
+    label: 'Campaign',
+    href: `${col('newsletter-campaigns')}/create`,
+    icon: Mail,
+    section: 'Marketing',
+  },
+  {
+    id: 'job',
+    label: 'Job opening',
+    href: `${col('careers')}/create`,
+    icon: Briefcase,
+    section: 'Recruitment',
+  },
+  {
+    id: 'interview',
+    label: 'Interview',
+    href: `${col('interviews')}/create`,
+    icon: Users,
+    section: 'Recruitment',
+  },
+  {
+    id: 'notification',
+    label: 'Notification',
+    href: `${col('notifications')}/create`,
+    icon: Settings2,
+    section: 'Administration',
+  },
 ]
+
+export type QuickCreateGroup = {
+  section: string
+  items: QuickCreate[]
+}
+
+export function getGroupedQuickCreates(): QuickCreateGroup[] {
+  const order: string[] = []
+  const map = new Map<string, QuickCreate[]>()
+
+  for (const item of QUICK_CREATES) {
+    if (!map.has(item.section)) {
+      map.set(item.section, [])
+      order.push(item.section)
+    }
+    map.get(item.section)!.push(item)
+  }
+
+  return order.map((section) => ({ section, items: map.get(section)! }))
+}
 
 export function getNavGroups(): NavGroup[] {
   return NAV_GROUPS

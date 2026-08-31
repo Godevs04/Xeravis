@@ -14,7 +14,7 @@ export const CaseStudies: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'clientRef', 'slug', '_status', 'updatedAt'],
+    defaultColumns: ['title', 'client', 'industry', '_status', 'updatedAt'],
   },
   versions: {
     drafts: {
@@ -40,6 +40,11 @@ export const CaseStudies: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     slugField(),
     {

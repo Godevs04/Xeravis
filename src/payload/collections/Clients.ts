@@ -7,7 +7,7 @@ export const Clients: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'featured', 'updatedAt'],
+    defaultColumns: ['name', 'url', 'featured', 'updatedAt'],
   },
   access: {
     read: anyone,
@@ -20,6 +20,11 @@ export const Clients: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/ClientLogoCell#ClientLogoCell',
+        },
+      },
     },
     {
       name: 'logo',

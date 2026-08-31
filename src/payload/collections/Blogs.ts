@@ -49,7 +49,7 @@ export const Blogs: CollectionConfig = {
       maxLength: 140,
       admin: {
         components: {
-          Cell: './payload/admin/components/cells/BlogTitleCell#BlogTitleCell',
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
         },
       },
     },

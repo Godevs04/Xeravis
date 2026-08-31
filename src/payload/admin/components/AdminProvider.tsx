@@ -9,6 +9,7 @@ import { ApiViewPolish } from './api/ApiViewPolish'
 import { CommandPalette } from './CommandPalette'
 import { HeaderChip } from './HeaderChip'
 import { MainScrollController } from './layout/MainScrollController'
+import { SidebarScrollController } from './layout/SidebarScrollController'
 import { NavAudit } from './nav/NavAudit'
 
 const STORAGE_KEY = 'payload-theme'
@@ -298,6 +299,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     <WorkspaceProvider>
       {children}
       <MainScrollController />
+      <SidebarScrollController />
       <HeaderChip />
       <CommandPalette />
       <ApiViewPolish />
