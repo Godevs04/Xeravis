@@ -12,7 +12,8 @@ import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
 import { buildRelatedGroups } from '@/lib/related-content'
-import { buildMetadata } from '@/lib/seo'
+import { buildMetadata, breadcrumbJsonLd, graphJsonLd } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 
 export const revalidate = 60
 
@@ -108,8 +109,17 @@ export default async function SolutionDetailPage({ params }: Props) {
     },
   ]
 
+  const jsonLd = graphJsonLd(
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Solutions', path: '/solutions' },
+      { name: doc.title, path: `/solutions/${slug}` },
+    ]),
+  )
+
   return (
     <>
+      <JsonLd id="solution-jsonld" data={jsonLd} />
       <PageHero eyebrow="Solution" title={doc.title} subtitle={doc.summary} size="compact" />
 
       {doc.businessChallenges && doc.businessChallenges.length > 0 ? (

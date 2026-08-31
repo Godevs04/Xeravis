@@ -38,7 +38,10 @@ export const Blogs: CollectionConfig = {
   hooks: {
     beforeValidate: [autoSlugFromTitle('title')],
     beforeChange: [enforcePublishRole],
-    afterChange: [revalidateSlugPath('/blog', 'blogs'), trackActivity('blogs')],
+    afterChange: [
+      revalidateSlugPath('/blog', 'blogs', ['/', '/insights', '/insights/blogs']),
+      trackActivity('blogs'),
+    ],
     afterDelete: [revalidateOnDelete(['/blog'], ['blogs'])],
   },
   fields: [

@@ -37,11 +37,12 @@ export const revalidateGlobal =
   }
 
 export const revalidateSlugPath =
-  (basePath: string, tag?: string): CollectionAfterChangeHook =>
+  (basePath: string, tag?: string, extraPaths: string[] = []): CollectionAfterChangeHook =>
   ({ doc, req: { context } }) => {
     if (context?.disableRevalidate) return doc
     const slug = typeof doc?.slug === 'string' ? doc.slug : null
     safeRevalidatePath(basePath)
+    for (const path of extraPaths) safeRevalidatePath(path)
     if (slug) safeRevalidatePath(`${basePath}/${slug}`)
     if (tag) safeRevalidateTag(tag)
     return doc

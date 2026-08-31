@@ -16,7 +16,7 @@ const COLLECTION_PATHS: Record<string, string> = {
 }
 
 const generateTitle = ({ doc }: { doc: { title?: string } }) =>
-  doc?.title || process.env.SITE_NAME || 'GoDevs Enterprise'
+  doc?.title || process.env.SITE_NAME || 'Xelarvis'
 
 const generateURL = ({
   doc,

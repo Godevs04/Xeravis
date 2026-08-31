@@ -207,8 +207,27 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     bindMainScroll()
-    const wrapObserver = new MutationObserver(() => bindMainScroll())
-    wrapObserver.observe(document.body, { childList: true, subtree: true })
+    let wrapDebounce: number | undefined
+    const scheduleBindMainScroll = () => {
+      if (wrapDebounce !== undefined) window.clearTimeout(wrapDebounce)
+      wrapDebounce = window.setTimeout(bindMainScroll, 80)
+    }
+    const wrapObserver = new MutationObserver(scheduleBindMainScroll)
+    const observeShell = () => {
+      const shell = document.querySelector('.template-default')
+      if (shell) {
+        wrapObserver.observe(shell, { childList: true, subtree: true })
+        return true
+      }
+      return false
+    }
+    if (!observeShell()) {
+      const bootShell = new MutationObserver(() => {
+        if (observeShell()) bootShell.disconnect()
+      })
+      bootShell.observe(document.body, { childList: true, subtree: true })
+      window.setTimeout(() => bootShell.disconnect(), 8000)
+    }
 
     /** Mobile drawer: lock main scroll and restore exactly on close. */
     const syncDrawerScrollLock = () => {
@@ -281,6 +300,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
 
     window.addEventListener('keydown', onSave)
     return () => {
+      if (wrapDebounce !== undefined) window.clearTimeout(wrapDebounce)
       themeObserver.disconnect()
       navObserver.disconnect()
       wrapObserver.disconnect()

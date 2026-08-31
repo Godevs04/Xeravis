@@ -105,8 +105,6 @@ export function relatedLinksForArticle(): RelatedLink[] {
 /** Static sitemap paths beyond the core list. */
 export const EXTRA_STATIC_ROUTES = [
   '/technologies',
-  '/research',
-  '/search',
   '/about/company-overview',
   '/about/vision-mission',
   '/about/leadership',

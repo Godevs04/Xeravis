@@ -22,9 +22,9 @@ type BlogDoc = {
 }
 
 export const metadata = buildMetadata({
-  title: 'Data Science, AI & Healthcare Insights',
+  title: 'Data Science, AI & IT Consulting Insights',
   description:
-    'Blogs, white papers, news, and resources from Xelarvis on data science, AI research, Healthcare AI, and clinical intelligence.',
+    'Articles, white papers, and resources on artificial intelligence, data science, and IT consulting—from Xelarvis, with specialty depth in healthcare and clinical intelligence.',
   path: '/insights',
 })
 
@@ -36,7 +36,7 @@ export default async function InsightsPage() {
     <>
       <InsightsPageHero
         title="Knowledge for intelligent organizations."
-        subtitle="Perspective on AI research, clinical data science, analytics, and enterprise technology."
+        subtitle="Perspective on AI, data science, IT consulting, and enterprise technology—with healthcare and clinical intelligence as a specialty practice."
       />
       <InsightsIndexSection items={INSIGHTS_MEGA} />
       <Section>

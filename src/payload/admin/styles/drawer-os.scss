@@ -59,7 +59,11 @@ html[data-xe-ui='v5'] .drawer .document-fields,
 html[data-xe-ui='v5'] .drawer .document-fields--has-sidebar,
 html[data-xe-ui='v5'] .drawer .document-fields--no-sidebar,
 html[data-xe-ui='v5'] .modal .document-fields,
-html[data-xe-ui='v5'] .modal .document-fields--has-sidebar {
+html[data-xe-ui='v5'] .modal .document-fields--has-sidebar,
+html[data-xe-ui='v5'] .payload__modal-item .document-fields,
+html[data-xe-ui='v5'] .payload__modal-item .document-fields--has-sidebar,
+html[data-xe-ui='v5'] .doc-drawer .document-fields,
+html[data-xe-ui='v5'] .doc-drawer .document-fields--has-sidebar {
   display: flex !important;
   flex-direction: column !important;
   grid-template-columns: 1fr !important;
@@ -72,7 +76,11 @@ html[data-xe-ui='v5'] .modal .document-fields--has-sidebar {
 html[data-xe-ui='v5'] .drawer .document-fields__main,
 html[data-xe-ui='v5'] .drawer .document-fields__sidebar-wrap,
 html[data-xe-ui='v5'] .modal .document-fields__main,
-html[data-xe-ui='v5'] .modal .document-fields__sidebar-wrap {
+html[data-xe-ui='v5'] .modal .document-fields__sidebar-wrap,
+html[data-xe-ui='v5'] .payload__modal-item .document-fields__main,
+html[data-xe-ui='v5'] .payload__modal-item .document-fields__sidebar-wrap,
+html[data-xe-ui='v5'] .doc-drawer .document-fields__main,
+html[data-xe-ui='v5'] .doc-drawer .document-fields__sidebar-wrap {
   position: static !important;
   top: auto !important;
   width: 100% !important;
@@ -101,7 +109,11 @@ html[data-xe-ui='v5'] .drawer .field-type,
 html[data-xe-ui='v5'] .drawer .field-type__wrap,
 html[data-xe-ui='v5'] .drawer .render-fields,
 html[data-xe-ui='v5'] .modal .field-type,
-html[data-xe-ui='v5'] .modal .field-type__wrap {
+html[data-xe-ui='v5'] .modal .field-type__wrap,
+html[data-xe-ui='v5'] .payload__modal-item .field-type,
+html[data-xe-ui='v5'] .payload__modal-item .field-type__wrap,
+html[data-xe-ui='v5'] .doc-drawer .field-type,
+html[data-xe-ui='v5'] .doc-drawer .field-type__wrap {
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;
@@ -112,7 +124,11 @@ html[data-xe-ui='v5'] .drawer .field-type__wrap > input:not([type='checkbox']):n
 html[data-xe-ui='v5'] .drawer .field-type.text input,
 html[data-xe-ui='v5'] .drawer .field-type.textarea textarea,
 html[data-xe-ui='v5'] .drawer .field-type.number input,
-html[data-xe-ui='v5'] .drawer .field-type.email input {
+html[data-xe-ui='v5'] .drawer .field-type.email input,
+html[data-xe-ui='v5'] .payload__modal-item .field-type__wrap > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5'] .payload__modal-item .field-type.text input,
+html[data-xe-ui='v5'] .doc-drawer .field-type__wrap > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5'] .doc-drawer .field-type.text input {
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;

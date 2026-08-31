@@ -147,9 +147,6 @@ export function buildMetadata({
     },
     alternates: {
       canonical: url,
-      types: {
-        'application/rss+xml': absoluteUrl('/blog'),
-      },
     },
     openGraph: {
       type,

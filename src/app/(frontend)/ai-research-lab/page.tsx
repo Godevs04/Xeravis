@@ -10,9 +10,12 @@ export const metadata = buildMetadata({
   path: page.path,
   keywords: [
     'AI Research',
+    'Generative AI',
+    'Machine Learning Research',
+    'MLOps',
+    'Responsible AI',
     'Healthcare AI Research',
     'Clinical Intelligence',
-    'Machine Learning Research',
     'Xelarvis Research Lab',
   ],
 })
