@@ -83,8 +83,13 @@ html[data-xe-ui='v5'] .template-default__wrap > .doc-header {
   width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding: var(--xe-space-5) var(--xe-gutter) 0 !important;
+  padding: var(--xe-space-4) var(--xe-gutter) 0 !important;
   box-sizing: border-box !important;
+}
+
+/* Hide redundant [Untitled] row when doc-controls already shows the create title */
+html[data-xe-ui='v5'] .collection-edit:has(.doc-controls) > .doc-header:not(:has(.doc-tabs, .document-tabs)) {
+  display: none !important;
 }
 
 /* Readable line length for long-form fields */
@@ -109,7 +114,7 @@ html[data-xe-ui='v5'] .template-default > .template-default__wrap > header {
   margin: 0 !important;
   max-width: none !important;
   width: 100% !important;
-  padding: 0 var(--xe-gutter) !important;
+  padding: 0 !important;
   border: none !important;
   border-bottom: 1px solid var(--xe-border) !important;
   border-radius: 0 !important;
@@ -160,8 +165,12 @@ html[data-xe-ui='v5'] .xe-header-chip--breadcrumb {
   text-overflow: ellipsis;
   white-space: nowrap;
   display: flex !important;
+  align-items: center !important;
   flex: 1 1 auto;
   min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 html[data-xe-ui='v5'] .xe-header-chip--breadcrumb strong {

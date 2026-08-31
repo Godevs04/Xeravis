@@ -148,7 +148,7 @@ html[data-xe-ui='v5'] .app-header.sticky {
   min-height: var(--xe-header-h) !important;
   height: var(--xe-header-h) !important;
   margin: 0 !important;
-  padding: 0 var(--xe-gutter) !important;
+  padding: 0 !important;
   border: none !important;
   border-bottom: 1px solid var(--xe-border) !important;
   border-radius: 0 !important;
@@ -178,7 +178,7 @@ html[data-xe-ui='v5'] .app-header__controls-wrapper {
   align-items: center !important;
   width: 100% !important;
   min-width: 0 !important;
-  gap: var(--xe-space-3) !important;
+  gap: var(--xe-space-4) !important;
 }
 
 html[data-xe-ui='v5'] .template-default__wrap > header .btn,

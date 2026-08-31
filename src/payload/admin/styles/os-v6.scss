@@ -2031,6 +2031,7 @@ html[data-xe-ui='v5'] .template-default > .template-default__wrap > header {
   display: flex !important;
   align-items: center !important;
   overflow: visible !important;
+  padding: 0 !important;
 }
 
 html[data-xe-ui='v5'] .app-header__content,
@@ -2046,9 +2047,26 @@ html[data-xe-ui='v5'] .app-header__step-nav-wrapper {
   overflow: visible !important;
 }
 
+html[data-xe-ui='v5'] .app-header__controls-wrapper {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  max-width: var(--xe-shell-max) !important;
+  margin-inline: auto !important;
+  padding-inline: var(--xe-gutter) !important;
+  box-sizing: border-box !important;
+  gap: var(--xe-space-4) !important;
+  min-height: var(--xe-header-h) !important;
+}
+
+html[data-xe-ui='v5'] .app-header__step-nav-wrapper {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
 html[data-xe-ui='v5'] .app-header__actions {
-  gap: 10px !important;
+  gap: var(--xe-space-2) !important;
   flex: 0 0 auto !important;
+  margin-left: auto !important;
 }
 
 html[data-xe-ui='v5'] .app-header .xe-action-btn,
@@ -2059,11 +2077,12 @@ html[data-xe-ui='v5'] .app-header .xe-header-create > .xe-action-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 36px !important;
-  height: 36px !important;
+  min-height: 40px !important;
+  height: 40px !important;
   box-sizing: border-box !important;
   line-height: 1 !important;
   border-radius: 10px !important;
+  margin: 0 !important;
 }
 
 html[data-xe-ui='v5'] .app-header__account,

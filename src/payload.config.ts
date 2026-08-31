@@ -47,10 +47,10 @@ export default buildConfig({
       beforeNavLinks: ['./payload/admin/components/nav/BeforeNavLinks#BeforeNavLinks'],
       afterNavLinks: ['./payload/admin/components/nav/AfterNavLinks#AfterNavLinks'],
       actions: [
-        './payload/admin/components/AdminThemeToggle#AdminThemeToggle',
-        './payload/admin/components/CommandAction#CommandAction',
-        './payload/admin/components/NotificationBell#NotificationBell',
         './payload/admin/components/QuickCreateAction#QuickCreateAction',
+        './payload/admin/components/NotificationBell#NotificationBell',
+        './payload/admin/components/CommandAction#CommandAction',
+        './payload/admin/components/AdminThemeToggle#AdminThemeToggle',
       ],
       views: {
         dashboard: {

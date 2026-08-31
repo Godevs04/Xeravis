@@ -358,6 +358,35 @@ html[data-xe-ui='v5'] .field-type.relationship:not(.relationship--has-many) .rea
   max-width: min(100%, 560px) !important;
 }
 
+/* Relationship add (+) button — vertically centered with select */
+html[data-xe-ui='v5'] .relationship__wrap {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  max-width: min(100%, 560px) !important;
+}
+
+html[data-xe-ui='v5'] .relationship--allow-create .relationship__wrap > .react-select-container,
+html[data-xe-ui='v5'] .relationship--allow-create .relationship__wrap > div.react-select {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+html[data-xe-ui='v5'] .relationship-add-new__add-button,
+html[data-xe-ui='v5'] .relationship__wrap > .btn,
+html[data-xe-ui='v5'] .relationship__wrap > button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: stretch !important;
+  flex: 0 0 var(--xe-input-h) !important;
+  width: var(--xe-input-h) !important;
+  min-height: var(--xe-input-h) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 var(--xe-radius) var(--xe-radius) 0 !important;
+}
+
 /* Radios / checkboxes */
 html[data-xe-ui='v5'] .radio-group,
 html[data-xe-ui='v5'] .radio-input,
