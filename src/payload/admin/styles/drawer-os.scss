@@ -1,0 +1,175 @@
+/* ============================================================
+   PAYLOAD DRAWERS — relationship create, document drawer, modals
+   Never apply main-page document grid inside narrow drawers.
+   ============================================================ */
+
+/* Restore Payload gutter math for portaled overlays (not in .template-default__wrap) */
+html[data-xe-ui='v5'] .drawer,
+html[data-xe-ui='v5'] .modal,
+html[data-xe-ui='v5'] .popup,
+html[data-xe-ui='v5'] .payload__modal-item {
+  --gutter-h: calc(var(--base) * 3);
+}
+
+@media (max-width: 1024px) {
+  html[data-xe-ui='v5'] .drawer,
+  html[data-xe-ui='v5'] .modal {
+    --gutter-h: calc(var(--base) * 2);
+  }
+}
+
+@media (max-width: 768px) {
+  html[data-xe-ui='v5'] .drawer,
+  html[data-xe-ui='v5'] .modal {
+    --gutter-h: calc(var(--base) * 0.8);
+  }
+}
+
+html[data-xe-ui='v5'] .drawer {
+  z-index: 120 !important;
+}
+
+html[data-xe-ui='v5'] .drawer__content {
+  flex: 0 0 auto !important;
+  min-width: min(520px, calc(100vw - var(--gutter-h))) !important;
+  max-width: calc(100vw - var(--gutter-h)) !important;
+}
+
+html[data-xe-ui='v5'] .drawer__content-children,
+html[data-xe-ui='v5'] .drawer-content-container {
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+  overscroll-behavior: contain !important;
+}
+
+html[data-xe-ui='v5'] .drawer .collection-edit,
+html[data-xe-ui='v5'] .drawer .global-edit,
+html[data-xe-ui='v5'] .drawer .doc-drawer {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  animation: none !important;
+}
+
+/* Single column — stack main + sidebar fields (fixes crushed Title / Slug grid) */
+html[data-xe-ui='v5'] .drawer .document-fields,
+html[data-xe-ui='v5'] .drawer .document-fields--has-sidebar,
+html[data-xe-ui='v5'] .drawer .document-fields--no-sidebar,
+html[data-xe-ui='v5'] .modal .document-fields,
+html[data-xe-ui='v5'] .modal .document-fields--has-sidebar,
+html[data-xe-ui='v5'] .payload__modal-item .document-fields,
+html[data-xe-ui='v5'] .payload__modal-item .document-fields--has-sidebar,
+html[data-xe-ui='v5'] .doc-drawer .document-fields,
+html[data-xe-ui='v5'] .doc-drawer .document-fields--has-sidebar {
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: 1fr !important;
+  gap: var(--xe-space-4) !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+html[data-xe-ui='v5'] .drawer .document-fields__main,
+html[data-xe-ui='v5'] .drawer .document-fields__sidebar-wrap,
+html[data-xe-ui='v5'] .modal .document-fields__main,
+html[data-xe-ui='v5'] .modal .document-fields__sidebar-wrap,
+html[data-xe-ui='v5'] .payload__modal-item .document-fields__main,
+html[data-xe-ui='v5'] .payload__modal-item .document-fields__sidebar-wrap,
+html[data-xe-ui='v5'] .doc-drawer .document-fields__main,
+html[data-xe-ui='v5'] .doc-drawer .document-fields__sidebar-wrap {
+  position: static !important;
+  top: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  flex: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  order: unset !important;
+}
+
+html[data-xe-ui='v5'] .drawer .document-fields__sidebar-wrap {
+  display: block !important;
+}
+
+html[data-xe-ui='v5'] .drawer .document-fields__edit,
+html[data-xe-ui='v5'] .drawer .document-fields__sidebar-fields,
+html[data-xe-ui='v5'] .drawer .collection-edit__main,
+html[data-xe-ui='v5'] .drawer .collection-edit__main-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+html[data-xe-ui='v5'] .drawer .field-type,
+html[data-xe-ui='v5'] .drawer .field-type__wrap,
+html[data-xe-ui='v5'] .drawer .render-fields,
+html[data-xe-ui='v5'] .modal .field-type,
+html[data-xe-ui='v5'] .modal .field-type__wrap,
+html[data-xe-ui='v5'] .payload__modal-item .field-type,
+html[data-xe-ui='v5'] .payload__modal-item .field-type__wrap,
+html[data-xe-ui='v5'] .doc-drawer .field-type,
+html[data-xe-ui='v5'] .doc-drawer .field-type__wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html[data-xe-ui='v5'] .drawer .field-type__wrap > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5'] .drawer .field-type.text input,
+html[data-xe-ui='v5'] .drawer .field-type.textarea textarea,
+html[data-xe-ui='v5'] .drawer .field-type.number input,
+html[data-xe-ui='v5'] .drawer .field-type.email input,
+html[data-xe-ui='v5'] .payload__modal-item .field-type__wrap > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5'] .payload__modal-item .field-type.text input,
+html[data-xe-ui='v5'] .doc-drawer .field-type__wrap > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5'] .doc-drawer .field-type.text input {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+html[data-xe-ui='v5'] .drawer .document-fields__edit > .render-fields .field-type.textarea,
+html[data-xe-ui='v5'] .drawer .document-fields__edit > .render-fields .rich-text-lexical,
+html[data-xe-ui='v5'] .drawer .document-fields__edit > .render-fields .rich-text {
+  max-width: 100% !important;
+}
+
+html[data-xe-ui='v5'] .drawer .field-type.select .react-select-container,
+html[data-xe-ui='v5'] .drawer .field-type.relationship .react-select-container {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+html[data-xe-ui='v5'] .drawer .doc-controls {
+  position: static !important;
+  top: auto !important;
+  margin-bottom: var(--xe-space-4) !important;
+}
+
+html[data-xe-ui='v5'] .drawer .doc-drawer__header {
+  margin-top: 0 !important;
+  padding-bottom: var(--xe-space-3) !important;
+  border-bottom: 1px solid var(--xe-border) !important;
+}
+
+html[data-xe-ui='v5'] .drawer .document-fields__edit > .render-fields,
+html[data-xe-ui='v5'] .drawer .document-fields__sidebar-fields > .render-fields {
+  transform: none !important;
+}
+
+html[data-xe-ui='v5'] .drawer .document-fields__edit > .render-fields:hover,
+html[data-xe-ui='v5'] .drawer .document-fields__sidebar-fields > .render-fields:hover {
+  transform: none !important;
+}
+
+@media (max-width: 640px) {
+  html[data-xe-ui='v5'] .drawer__content {
+    min-width: calc(100vw - var(--gutter-h)) !important;
+  }
+}

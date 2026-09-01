@@ -7,7 +7,7 @@ export const Testimonials: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'authorName',
-    defaultColumns: ['authorName', 'company', 'featured', 'updatedAt'],
+    defaultColumns: ['authorName', 'company', 'authorRole', 'featured', 'updatedAt'],
   },
   access: {
     read: anyone,
@@ -25,6 +25,11 @@ export const Testimonials: CollectionConfig = {
       name: 'authorName',
       type: 'text',
       required: true,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     {
       name: 'authorRole',

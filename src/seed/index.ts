@@ -8,6 +8,7 @@ import {
   SERVICE_INDUSTRY_MAP,
   SERVICE_SOLUTION_MAP,
   SOLUTION_INDUSTRY_MAP,
+  SOLUTION_TECHNOLOGY_MAP,
 } from './relations'
 
 loadEnv({ path: '.env' })
@@ -258,7 +259,15 @@ async function seed() {
   }
 
   const keepTechSlugs = new Set(SEED_TECHNOLOGIES.map((t) => t.slug as string))
-  const clinicalTechSlugs = new Set(['sas', 'cdisc-standards', 'pinnacle-21'])
+  const clinicalTechSlugs = new Set([
+    'sas',
+    'cdisc',
+    'sdtm',
+    'adam',
+    'tlf',
+    'cdisc-standards',
+    'pinnacle-21',
+  ])
   const allTechs = await payload.find({
     collection: 'technologies',
     limit: 200,
@@ -266,7 +275,7 @@ async function seed() {
   })
   for (const doc of allTechs.docs) {
     const slug = String(doc.slug)
-    if (!clinicalTechSlugs.has(slug) && keepTechSlugs.has(slug)) continue
+    if (keepTechSlugs.has(slug)) continue
     if (!clinicalTechSlugs.has(slug)) continue
     await payload.update({
       collection: 'technologies',
@@ -387,7 +396,7 @@ async function seed() {
 
   const solutionIds = new Map<string, string>()
   for (const [index, solution] of SEED_SOLUTIONS.entries()) {
-    const relatedTech = solution.techLabels
+    const relatedTech = (SOLUTION_TECHNOLOGY_MAP[solution.slug] ?? solution.techLabels ?? [])
       .map((label) => techIds.get(label))
       .filter(Boolean) as string[]
 
@@ -398,7 +407,7 @@ async function seed() {
       businessChallenges: solution.businessChallenges.map((c) => ({ ...c })),
       whoIsThisFor: solution.whoIsThisFor,
       technologies: relatedTech,
-      featured: index < 6,
+      featured: true,
       order: index + 1,
     })
     const found = await payload.find({

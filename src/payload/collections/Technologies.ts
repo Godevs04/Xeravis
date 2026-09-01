@@ -7,7 +7,7 @@ export const Technologies: CollectionConfig = {
   slug: 'technologies',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'featured', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'category', 'featured', 'updatedAt'],
     group: 'Website',
   },
   access: {
@@ -22,6 +22,11 @@ export const Technologies: CollectionConfig = {
       type: 'text',
       required: true,
       maxLength: 80,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     slugField(),
     {

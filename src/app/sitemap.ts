@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 import { listPublished } from '@/lib/cms'
+import { CANONICAL_SOLUTION_SLUGS } from '@/seed/relations'
 import { EXTRA_STATIC_ROUTES } from '@/lib/seo-content'
 import { absoluteUrl } from '@/lib/utils'
 
@@ -15,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/solutions',
     '/case-studies',
     '/insights',
-    '/blog',
+    '/insights/blogs',
     '/careers',
     '/contact',
     '/privacy-policy',
@@ -60,12 +61,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
-    ...solutions.map((item) => ({
-      url: absoluteUrl(`/solutions/${item.slug}`),
-      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    })),
+    ...CANONICAL_SOLUTION_SLUGS.map((slug) => {
+      const item = solutions.find((s) => s.slug === slug)
+      return {
+        url: absoluteUrl(`/solutions/${slug}`),
+        lastModified: item?.updatedAt ? new Date(item.updatedAt) : now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      }
+    }),
     ...caseStudies.map((item) => ({
       url: absoluteUrl(`/case-studies/${item.slug}`),
       lastModified: item.updatedAt ? new Date(item.updatedAt) : now,

@@ -91,6 +91,7 @@ export function NotificationBell() {
                 <Link
                   key={item.id}
                   href={item.href}
+                  scroll={false}
                   className={`xe-bell__item${item.read ? '' : 'is-unread'}`}
                   onClick={() => {
                     void markOne(item.id)

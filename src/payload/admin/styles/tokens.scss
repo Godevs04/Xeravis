@@ -27,7 +27,8 @@
   --xe-sidebar-icon-glyph: 18px;
   --xe-sidebar-gap: 12px;
   --xe-sidebar-indent: 16px;
-  --xe-sidebar-sub-indent: 48px;
+  --xe-sidebar-sub-indent: 44px;
+  --xe-sidebar-tree-col: 40px;
   --xe-sidebar-section-gap: 32px;
   --xe-sidebar-search-h: 44px;
   --xe-sidebar-badge-h: 22px;
@@ -35,15 +36,15 @@
   --xe-sidebar-glass: rgba(255, 255, 255, 0.88);
   --xe-sidebar-border: rgba(15, 23, 42, 0.08);
   --xe-sidebar-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
-  --xe-sidebar-accent: #0ea5a4;
-  --xe-sidebar-accent-2: #14b8a6;
+  --xe-sidebar-accent: #00a896;
+  --xe-sidebar-accent-2: #0ea5a4;
   --xe-sidebar-hover: rgba(14, 165, 164, 0.08);
   --xe-sidebar-active: rgba(14, 165, 164, 0.12);
   --xe-sidebar-badge-bg: #eef6f6;
   --xe-sidebar-connector: #e2e8f0;
   --xe-header-h: 56px;
-  --xe-content-max: 1440px;
   --xe-shell-max: 1440px;
+  --xe-content-max: var(--xe-shell-max);
   --xe-readable-max: 800px;
   --xe-gutter: 32px;
   --xe-section-gap: 32px;
@@ -65,8 +66,8 @@
 
   --xe-nav-indent-0: 0px;
   --xe-nav-indent-1: 16px;
-  --xe-nav-indent-2: 48px;
-  --xe-nav-indent-3: 64px;
+  --xe-nav-indent-2: 44px;
+  --xe-nav-indent-3: 68px;
 
   --xe-radius-sm: 8px;
   --xe-radius: 14px;
@@ -90,8 +91,8 @@
   --xe-lh-display: 40px;
   --xe-fs-heading: 28px;
   --xe-lh-heading: 36px;
-  --xe-fs-page-title: 24px;
-  --xe-lh-page-title: 32px;
+  --xe-fs-page-title: 32px;
+  --xe-lh-page-title: 40px;
   --xe-fs-subheading: 18px;
   --xe-lh-subheading: 26px;
   --xe-fs-section: 18px;

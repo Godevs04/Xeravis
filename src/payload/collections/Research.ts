@@ -18,7 +18,7 @@ export const Research: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'publishedAt', '_status', 'updatedAt'],
+    defaultColumns: ['title', 'publishedAt', '_status', 'updatedAt'],
     group: 'Website',
   },
   versions: {
@@ -44,6 +44,11 @@ export const Research: CollectionConfig = {
       type: 'text',
       required: true,
       maxLength: 160,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     slugField(),
     {

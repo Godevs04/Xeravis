@@ -810,4 +810,52 @@ export const SEED_TECHNOLOGIES = [
     category: 'backend',
     description: 'APIs and services with JavaScript/TypeScript.',
   },
+  {
+    title: 'R',
+    slug: 'r',
+    category: 'data',
+    description: 'Statistical computing and advanced analytics.',
+  },
+  {
+    title: 'SQL',
+    slug: 'sql',
+    category: 'data',
+    description: 'Relational data modeling and analytics queries.',
+  },
+  {
+    title: 'REST APIs',
+    slug: 'rest-apis',
+    category: 'backend',
+    description: 'Integration and service interfaces across systems.',
+  },
+  {
+    title: 'SAS',
+    slug: 'sas',
+    category: 'other',
+    description: 'Clinical programming and regulated analytics delivery.',
+  },
+  {
+    title: 'CDISC',
+    slug: 'cdisc',
+    category: 'other',
+    description: 'Clinical data standards for submission-ready programs.',
+  },
+  {
+    title: 'SDTM',
+    slug: 'sdtm',
+    category: 'other',
+    description: 'Study Data Tabulation Model for clinical datasets.',
+  },
+  {
+    title: 'ADaM',
+    slug: 'adam',
+    category: 'other',
+    description: 'Analysis Data Model for statistical analysis datasets.',
+  },
+  {
+    title: 'TLF',
+    slug: 'tlf',
+    category: 'other',
+    description: 'Tables, listings, and figures for clinical reporting.',
+  },
 ] as const

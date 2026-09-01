@@ -169,9 +169,6 @@ export async function SiteFooter() {
             <Link href="/contact" className="hover:text-primary">
               Contact
             </Link>
-            <Link href="/admin" className="hover:text-accent font-medium">
-              CMS Login
-            </Link>
           </div>
         </div>
       </Container>

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { CTABand } from '@/blocks/CTABand'
 import { FAQAccordion } from '@/blocks/FAQAccordion'
+import { HubLinkStrip } from '@/components/content/HubLinkStrip'
 import { RelatedContent } from '@/components/content/RelatedContent'
 import { TechnologyCard } from '@/components/domain/TechnologyCard'
 import { Container } from '@/components/layout/Container'
@@ -10,9 +11,18 @@ import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
-import { FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
+import { FALLBACK_SERVICES, FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
 import { buildRelatedGroups } from '@/lib/related-content'
-import { buildMetadata } from '@/lib/seo'
+import { resolveLinkedServices } from '@/lib/solution-service-links'
+import {
+  resolveSolutionTechnologies,
+  type TechnologyLinkDoc,
+} from '@/lib/solution-technology-links'
+import { mergePublishedSolutions } from '@/lib/solutions-catalog'
+import { buildMetadata, breadcrumbJsonLd, graphJsonLd } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { CANONICAL_SOLUTION_SLUGS } from '@/seed/relations'
+import { SEED_TECHNOLOGIES } from '@/seed/content'
 
 export const revalidate = 60
 
@@ -47,15 +57,8 @@ type SolutionDoc = {
 
 type Props = { params: Promise<{ slug: string }> }
 
-function asRelatedTechs(value: SolutionDoc['technologies']): RelatedTech[] {
-  if (!Array.isArray(value)) return []
-  return value.filter((item): item is RelatedTech => typeof item === 'object' && item !== null)
-}
-
 export async function generateStaticParams() {
-  const solutions = await listPublished<SolutionDoc>('solutions')
-  const slugs = solutions.length ? solutions : FALLBACK_SOLUTIONS
-  return slugs.map((s) => ({ slug: s.slug }))
+  return CANONICAL_SOLUTION_SLUGS.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -73,7 +76,13 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function SolutionDetailPage({ params }: Props) {
   const { slug } = await params
-  const solution = await getPublishedBySlug<SolutionDoc>('solutions', slug)
+  const [solution, services, technologies] = await Promise.all([
+    getPublishedBySlug<SolutionDoc>('solutions', slug),
+    listPublished<{ id: string; title: string; slug: string; summary: string }>('services', {
+      sort: 'order',
+    }),
+    listPublished<RelatedTech>('technologies', { sort: 'order', limit: 64 }),
+  ])
   const fallback = FALLBACK_SOLUTIONS.find((s) => s.slug === slug)
 
   if (!solution && !fallback) notFound()
@@ -87,8 +96,39 @@ export default async function SolutionDetailPage({ params }: Props) {
     },
   }
 
-  const technologies = asRelatedTechs(doc.technologies)
-  const relatedGroups = buildRelatedGroups(doc as unknown as Record<string, unknown>)
+  const serviceCatalog = services.length ? services : FALLBACK_SERVICES
+  const techCatalog: TechnologyLinkDoc[] = (
+    technologies.length > 0
+      ? technologies
+      : SEED_TECHNOLOGIES.map((t, index) => ({
+          id: String(index + 1),
+          title: t.title,
+          slug: t.slug,
+          category: t.category,
+          description: t.description,
+        }))
+  )
+    .map((t) => ({
+      id: String(t.id ?? t.slug),
+      slug: String(t.slug ?? ''),
+      title: String(t.title ?? t.name ?? ''),
+      category: t.category ?? null,
+      description: t.description ?? null,
+    }))
+    .filter((t) => t.slug && t.title)
+  const linkedServices = resolveLinkedServices(slug, doc.relatedServices, serviceCatalog)
+  const solutionTechnologies = resolveSolutionTechnologies(slug, techCatalog)
+  const docForRelated = {
+    ...(doc as unknown as Record<string, unknown>),
+    relatedServices: linkedServices,
+  }
+
+  const relatedGroups = buildRelatedGroups(
+    docForRelated,
+    { services: 6 },
+    { omitTitles: ['Services', 'Technologies'] },
+  )
+  const serviceNames = linkedServices.map((s) => s.title).join(', ')
   const seedFaqs = [
     {
       question: `Who is ${doc.title} for?`,
@@ -97,9 +137,10 @@ export default async function SolutionDetailPage({ params }: Props) {
         'Organizations that need a governed path from business problem to production outcomes across AI, data, and IT consulting.',
     },
     {
-      question: 'How does this relate to Services?',
-      answer:
-        'Services are how we work (practice areas). This solution packages those services into an outcome theme for a specific class of business problems.',
+      question: 'Which XELARVIS services deliver this solution?',
+      answer: serviceNames
+        ? `${doc.title} is delivered through our ${serviceNames} practice areas—combining the capabilities needed for discovery, build, and production operations.`
+        : 'This solution combines AI, Data Science, IT Consulting, and engineering services from the XELARVIS catalog.',
     },
     {
       question: 'What is the typical starting point?',
@@ -108,8 +149,17 @@ export default async function SolutionDetailPage({ params }: Props) {
     },
   ]
 
+  const jsonLd = graphJsonLd(
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Solutions', path: '/solutions' },
+      { name: doc.title, path: `/solutions/${slug}` },
+    ]),
+  )
+
   return (
     <>
+      <JsonLd id="solution-jsonld" data={jsonLd} />
       <PageHero eyebrow="Solution" title={doc.title} subtitle={doc.summary} size="compact" />
 
       {doc.businessChallenges && doc.businessChallenges.length > 0 ? (
@@ -138,6 +188,21 @@ export default async function SolutionDetailPage({ params }: Props) {
           </div>
         </Container>
       </Section>
+
+      {linkedServices.length > 0 ? (
+        <HubLinkStrip
+          eyebrow="Practice areas"
+          heading="Delivered through our services"
+          subheading="This solution combines the following XELARVIS service capabilities—each links to how we staff, engineer, and govern delivery."
+          surface
+          items={linkedServices.map((s) => ({
+            href: `/services/${s.slug}`,
+            label: s.title,
+            description: s.summary || undefined,
+          }))}
+          viewAll={{ href: '/services', label: 'All services →' }}
+        />
+      ) : null}
 
       {doc.useCases && doc.useCases.length > 0 ? (
         <Section>
@@ -175,7 +240,7 @@ export default async function SolutionDetailPage({ params }: Props) {
         </Section>
       ) : null}
 
-      {technologies.length > 0 ? (
+      {solutionTechnologies.length > 0 ? (
         <Section>
           <Container>
             <div className="flex flex-wrap items-end justify-between gap-4">
@@ -183,7 +248,12 @@ export default async function SolutionDetailPage({ params }: Props) {
                 <p className="text-muted text-xs font-semibold tracking-[0.12em] uppercase">
                   Technology stack
                 </p>
-                <h2 className="text-primary mt-2 text-2xl font-bold">Built for this solution</h2>
+                <h2 className="text-primary mt-2 text-2xl font-bold">
+                  Technologies for this solution
+                </h2>
+                <p className="text-secondary mt-2 max-w-2xl text-sm">
+                  Curated for this outcome theme—not inherited from the full service catalog.
+                </p>
               </div>
               <Link
                 href="/technologies"
@@ -193,10 +263,10 @@ export default async function SolutionDetailPage({ params }: Props) {
               </Link>
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {technologies.map((tech) => (
+              {solutionTechnologies.map((tech) => (
                 <TechnologyCard
                   key={tech.id}
-                  name={tech.title || tech.name || 'Technology'}
+                  name={tech.title}
                   category={tech.category}
                   description={tech.description}
                 />
@@ -217,7 +287,7 @@ export default async function SolutionDetailPage({ params }: Props) {
         </Section>
       ) : null}
 
-      <RelatedContent heading="Services, industries & evidence" groups={relatedGroups} />
+      <RelatedContent heading="Industries, evidence & insights" groups={relatedGroups} />
 
       <FAQAccordion heading="Frequently asked questions" seedFaqs={seedFaqs} />
 

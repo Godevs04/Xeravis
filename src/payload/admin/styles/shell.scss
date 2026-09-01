@@ -1,10 +1,11 @@
 /* ============================================================
-   XELARVIS ADMIN SHELL — CSS Grid layout (no margin-left hacks)
-   Owns: template grid, sticky rail, content max-width, mobile drawer host
+   XELARVIS ADMIN SHELL — ONE locked viewport architecture
 
-   CRITICAL: Apply the SIDEBAR | MAIN grid ONLY to `.template-default`.
-   Never put the same 2-column grid on `body` — that reserves an empty
-   first column (ghost left region) while `.template-default` draws another.
+   BODY / HTML        → height 100dvh, overflow hidden (NOT the scroller)
+   .template-default  → grid sidebar | main, height 100dvh, overflow hidden
+   aside.nav          → sidebar column, overflow hidden
+   .xe-sb__body       → sidebar scroller (nav-os.scss)
+   .template-default__wrap → MAIN scroller (header sticky inside)
    ============================================================ */
 
 html[data-xe-ui='v5'] {
@@ -15,12 +16,26 @@ html[data-xe-ui='v5'][data-xe-nav='collapsed'] {
   --xe-sidebar-current: var(--xe-sidebar-w-collapsed);
 }
 
-/* Body: full-bleed canvas only — NOT a layout grid */
+/* Kill document scrolling on desktop admin — main wrap owns scroll */
+html[data-xe-ui='v5']:has(.template-default),
+html[data-xe-ui='v5']:has(.template-default) body {
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  overflow: hidden !important;
+}
+
+html[data-xe-ui='v5']:has(.template-default) body > div:has(.template-default) {
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
 html[data-xe-ui='v5'] body:has(.template-default) {
   display: block !important;
   width: 100% !important;
   max-width: none !important;
-  min-height: 100dvh !important;
+  min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
   background: var(--xe-bg) !important;
@@ -28,7 +43,7 @@ html[data-xe-ui='v5'] body:has(.template-default) {
   font-family: var(--xe-font) !important;
 }
 
-/* ONE admin grid: sidebar | main — always, including ≤1440 where Payload uses 0/auto */
+/* ONE admin grid: sidebar | main */
 html[data-xe-ui='v5'] .template-default,
 html[data-xe-ui='v5'] .template-default--nav-hydrated,
 html[data-xe-ui='v5'] .template-default--nav-open,
@@ -38,28 +53,34 @@ html[data-xe-ui='v5'] .template-default--nav-animate {
   grid-template-rows: minmax(0, 1fr) !important;
   width: 100% !important;
   max-width: none !important;
-  min-height: 100dvh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
   color: var(--xe-text) !important;
   font-family: var(--xe-font) !important;
+  overflow: hidden !important;
 }
 
+/* Sidebar rail — fills grid cell; independent of main scroll */
 html[data-xe-ui='v5'] .template-default > .nav,
 html[data-xe-ui='v5'] .template-default > aside.nav {
-  position: sticky !important;
-  top: 12px !important;
+  position: relative !important;
+  top: auto !important;
   left: auto !important;
   right: auto !important;
   bottom: auto !important;
   grid-column: 1 !important;
   grid-row: 1 !important;
-  width: calc(var(--xe-sidebar-current) - 12px) !important;
-  min-width: calc(var(--xe-sidebar-current) - 12px) !important;
-  max-width: calc(var(--xe-sidebar-current) - 12px) !important;
-  height: calc(100dvh - 24px) !important;
-  max-height: calc(100dvh - 24px) !important;
+  align-self: stretch !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: calc(100% - 24px) !important;
+  max-height: calc(100% - 24px) !important;
+  min-height: 0 !important;
   margin: 12px 0 12px 12px !important;
   padding: 0 !important;
   border: 1px solid var(--xe-sidebar-border) !important;
@@ -83,7 +104,6 @@ html[data-xe-ui='v5'] .template-default > aside.nav {
   --nav-padding-inline-end: 0px !important;
 }
 
-/* Payload’s absolute 100vw header creates horizontal ghost space — hide it */
 html[data-xe-ui='v5'] .template-default > .nav > .nav__header,
 html[data-xe-ui='v5'] .template-default > aside.nav > .nav__header {
   display: none !important;
@@ -93,22 +113,29 @@ html[data-xe-ui='v5'] .template-default > aside.nav > .nav__header {
   pointer-events: none !important;
 }
 
+/* MAIN SHELL — the only vertical scroller for page content */
 html[data-xe-ui='v5'] .template-default__wrap {
   grid-column: 2 !important;
   grid-row: 1 !important;
   display: flex !important;
   flex-direction: column !important;
   min-width: 0 !important;
+  min-height: 0 !important;
   width: auto !important;
   max-width: none !important;
+  height: 100% !important;
+  max-height: 100% !important;
   margin: 0 !important;
   margin-left: 0 !important;
   padding: 0 !important;
   background: transparent !important;
   overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
-/* Header — sticky, aligned with content gutter. One breadcrumb system (HeaderChip). */
+/* Header sticky inside MainShell scrollport */
 html[data-xe-ui='v5'] .template-default__wrap > header,
 html[data-xe-ui='v5'] .app-header,
 html[data-xe-ui='v5'] .app-header.sticky {
@@ -121,7 +148,7 @@ html[data-xe-ui='v5'] .app-header.sticky {
   min-height: var(--xe-header-h) !important;
   height: var(--xe-header-h) !important;
   margin: 0 !important;
-  padding: 0 var(--xe-gutter) !important;
+  padding: 0 !important;
   border: none !important;
   border-bottom: 1px solid var(--xe-border) !important;
   border-radius: 0 !important;
@@ -129,6 +156,7 @@ html[data-xe-ui='v5'] .app-header.sticky {
   backdrop-filter: blur(12px) saturate(140%) !important;
   -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
   box-shadow: none !important;
+  flex-shrink: 0 !important;
 }
 
 /* StepNav slot hosts our portaled breadcrumb */
@@ -150,7 +178,7 @@ html[data-xe-ui='v5'] .app-header__controls-wrapper {
   align-items: center !important;
   width: 100% !important;
   min-width: 0 !important;
-  gap: var(--xe-space-3) !important;
+  gap: var(--xe-space-4) !important;
 }
 
 html[data-xe-ui='v5'] .template-default__wrap > header .btn,
@@ -172,7 +200,7 @@ html[data-xe-ui='v5'] .global-edit,
 html[data-xe-ui='v5'] .dashboard,
 html[data-xe-ui='v5'] .account {
   width: 100% !important;
-  max-width: var(--xe-content-max) !important;
+  max-width: var(--xe-shell-max) !important;
   margin-inline: auto !important;
   padding: var(--xe-section-gap) var(--xe-gutter) 64px !important;
   box-sizing: border-box !important;
@@ -182,7 +210,7 @@ html[data-xe-ui='v5'] .account {
 .xe-content-shell,
 .xe-page {
   width: 100%;
-  max-width: var(--xe-content-max);
+  max-width: var(--xe-shell-max);
   margin-inline: auto;
   padding: var(--xe-section-gap) var(--xe-gutter) 64px;
   box-sizing: border-box;
@@ -249,21 +277,26 @@ html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-na
     transform: translateX(0) !important;
   }
 
-  /* Scrim when drawer open */
+  /* Scrim when drawer open — clickable to dismiss */
   html[data-xe-ui='v5'][data-xe-nav='open'] .template-default__wrap::before {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 50;
-    background: rgba(15, 23, 42, 0.28);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    pointer-events: none;
+    background: rgba(15, 23, 42, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    pointer-events: auto;
+    cursor: pointer;
   }
 
   html[data-xe-ui='v5'] .template-default__wrap {
     grid-column: 1 !important;
     margin-left: 0 !important;
+  }
+
+  html[data-xe-ui='v5'][data-xe-nav='open'] .template-default__wrap {
+    overflow-y: hidden !important;
   }
 
   html[data-xe-ui='v5'] .template-default__wrap > .template-default__content,

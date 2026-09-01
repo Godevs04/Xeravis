@@ -155,3 +155,112 @@ export const WORKSPACE_NAV = [
 ] as const
 
 /** @deprecated Horizontal tabs removed — sidebar BusinessNav is the source of truth */
+
+export type TrafficPoint = { date: string; label: string; views: number }
+export type TopPage = { path: string; views: number }
+
+function dayKey(d: Date) {
+  return d.toISOString().slice(0, 10)
+}
+
+/** Last N days of pageviews + prior window for real deltas (no invented %). */
+export async function getTrafficOverview(
+  payload: Payload,
+  days = 30,
+): Promise<{
+  series: TrafficPoint[]
+  pageviews: number
+  priorPageviews: number
+  topPages: TopPage[]
+  distinctPaths: number
+}> {
+  const now = new Date()
+  const start = new Date(now)
+  start.setDate(start.getDate() - (days - 1))
+  start.setHours(0, 0, 0, 0)
+  const priorStart = new Date(start)
+  priorStart.setDate(priorStart.getDate() - days)
+
+  const empty = {
+    series: [] as TrafficPoint[],
+    pageviews: 0,
+    priorPageviews: 0,
+    topPages: [] as TopPage[],
+    distinctPaths: 0,
+  }
+
+  try {
+    const result = await payload.find({
+      collection: 'analytics-events',
+      depth: 0,
+      limit: 2000,
+      overrideAccess: true,
+      sort: '-createdAt',
+      where: {
+        and: [
+          { type: { equals: 'pageview' } },
+          { createdAt: { greater_than_equal: priorStart.toISOString() } },
+        ],
+      } as never,
+    })
+
+    const byDay = new Map<string, number>()
+    const byPath = new Map<string, number>()
+    let pageviews = 0
+    let priorPageviews = 0
+    const paths = new Set<string>()
+
+    for (const doc of result.docs) {
+      const created =
+        typeof (doc as { createdAt?: string }).createdAt === 'string'
+          ? new Date((doc as { createdAt: string }).createdAt)
+          : null
+      if (!created || Number.isNaN(created.getTime())) continue
+      const path =
+        typeof (doc as { path?: string }).path === 'string' ? (doc as { path: string }).path : '/'
+      const key = dayKey(created)
+      if (created >= start) {
+        pageviews += 1
+        byDay.set(key, (byDay.get(key) || 0) + 1)
+        byPath.set(path, (byPath.get(path) || 0) + 1)
+        paths.add(path)
+      } else {
+        priorPageviews += 1
+      }
+    }
+
+    const series: TrafficPoint[] = []
+    for (let i = 0; i < days; i++) {
+      const d = new Date(start)
+      d.setDate(start.getDate() + i)
+      const key = dayKey(d)
+      series.push({
+        date: key,
+        label: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+        views: byDay.get(key) || 0,
+      })
+    }
+
+    const topPages = [...byPath.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([path, views]) => ({ path, views }))
+
+    return { series, pageviews, priorPageviews, topPages, distinctPaths: paths.size }
+  } catch {
+    return empty
+  }
+}
+
+export function formatDelta(
+  current: number,
+  prior: number,
+): { text: string; tone: 'up' | 'down' | 'flat' } {
+  if (prior === 0 && current === 0) return { text: 'No prior data', tone: 'flat' }
+  if (prior === 0) return { text: 'New this period', tone: 'up' }
+  const pct = ((current - prior) / prior) * 100
+  const rounded = Math.round(pct * 10) / 10
+  if (rounded === 0) return { text: '0% vs prior period', tone: 'flat' }
+  if (rounded > 0) return { text: `↑ ${rounded}% vs prior period`, tone: 'up' }
+  return { text: `↓ ${Math.abs(rounded)}% vs prior period`, tone: 'down' }
+}

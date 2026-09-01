@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 
 import { getCommandItems } from '@/payload/admin/nav/registry'
+import { saveMainScroll } from '@/payload/admin/components/layout/mainScroll'
+import { saveSidebarScroll } from '@/payload/admin/components/nav/sidebar/sidebarScroll'
 
 type CmdItem = {
   id: string
@@ -120,7 +122,9 @@ export const CommandPalette = () => {
   const go = React.useCallback(
     (href: string) => {
       setOpen(false)
-      router.push(href)
+      saveSidebarScroll()
+      saveMainScroll()
+      router.push(href, { scroll: false })
     },
     [router],
   )
@@ -199,7 +203,12 @@ export const CommandPalette = () => {
               <span>↑↓ navigate</span>
               <span>↵ open</span>
               <span>esc close</span>
-              <Link href="/admin" className="xe-cmd__dash" onClick={() => setOpen(false)}>
+              <Link
+                href="/admin"
+                scroll={false}
+                className="xe-cmd__dash"
+                onClick={() => setOpen(false)}
+              >
                 Dashboard
               </Link>
             </div>

@@ -15,7 +15,7 @@ export const Solutions: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'featured', '_status', 'updatedAt'],
   },
   versions: {
     drafts: {
@@ -41,6 +41,11 @@ export const Solutions: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     slugField(),
     {
@@ -106,7 +111,7 @@ export const Solutions: CollectionConfig = {
       label: 'Technology Stack',
       admin: {
         description:
-          'Technologies specific to this solution — do not inherit the full service stack.',
+          'Technologies specific to this solution—use the canonical Solution → Technology matrix (not inherited from services).',
       },
     },
     {

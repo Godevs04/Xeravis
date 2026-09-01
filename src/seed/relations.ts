@@ -139,3 +139,119 @@ export const SOLUTION_INDUSTRY_MAP: Record<string, string[]> = {
     'biotechnology',
   ],
 }
+
+/**
+ * Canonical solution slugs in display order (9 programs).
+ * Kept in sync with SEED_SOLUTIONS / FALLBACK_SOLUTIONS.
+ */
+export const CANONICAL_SOLUTION_SLUGS = [
+  'enterprise-ai-solutions',
+  'intelligent-automation',
+  'ai-agents',
+  'predictive-analytics-solutions',
+  'business-intelligence-solutions',
+  'data-platforms',
+  'custom-ai-products',
+  'healthcare-clinical-intelligence',
+  'application-modernization',
+] as const
+
+/**
+ * Solution → Technology matrix (separate from Service → Technology).
+ * Solutions do NOT inherit service technology stacks.
+ */
+export const SOLUTION_TECHNOLOGY_MAP: Record<string, readonly string[]> = {
+  'enterprise-ai-solutions': [
+    'Python',
+    'PyTorch',
+    'TensorFlow',
+    'OpenAI',
+    'Hugging Face',
+    'LangChain',
+    'Docker',
+    'Kubernetes',
+    'AWS',
+    'Microsoft Azure',
+    'Google Cloud Platform',
+  ],
+  'ai-agents': [
+    'Python',
+    'OpenAI',
+    'Hugging Face',
+    'LangChain',
+    'REST APIs',
+    'Docker',
+    'Kubernetes',
+  ],
+  'custom-ai-products': [
+    'Python',
+    'PyTorch',
+    'TensorFlow',
+    'OpenAI',
+    'React',
+    'Node.js',
+    'REST APIs',
+    'Docker',
+    'Kubernetes',
+    'AWS',
+    'Microsoft Azure',
+    'Google Cloud Platform',
+  ],
+  'predictive-analytics-solutions': [
+    'Python',
+    'R',
+    'SQL',
+    'Apache Spark',
+    'Databricks',
+    'Snowflake',
+    'Power BI',
+    'Tableau',
+  ],
+  'business-intelligence-solutions': ['SQL', 'Power BI', 'Tableau', 'Snowflake', 'Databricks'],
+  'intelligent-automation': [
+    'Python',
+    'OpenAI',
+    'LangChain',
+    'REST APIs',
+    'Docker',
+    'Kubernetes',
+    'AWS',
+    'Microsoft Azure',
+    'Google Cloud Platform',
+  ],
+  'data-platforms': [
+    'Python',
+    'SQL',
+    'Apache Spark',
+    'Apache Kafka',
+    'Databricks',
+    'Snowflake',
+    'AWS',
+    'Microsoft Azure',
+    'Google Cloud Platform',
+    'Docker',
+    'Kubernetes',
+  ],
+  'application-modernization': [
+    'Python',
+    'React',
+    'Node.js',
+    'REST APIs',
+    'Docker',
+    'Kubernetes',
+    'AWS',
+    'Microsoft Azure',
+    'Google Cloud Platform',
+  ],
+  'healthcare-clinical-intelligence': [
+    'SAS',
+    'Python',
+    'SQL',
+    'Power BI',
+    'Tableau',
+    'CDISC',
+    'SDTM',
+    'ADaM',
+    'TLF',
+  ],
+}

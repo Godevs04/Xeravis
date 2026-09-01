@@ -12,6 +12,7 @@ export type SolutionChallengeItem = {
   slug: string
   summary: string
   challenge?: string | null
+  services?: { href: string; label: string }[]
 }
 
 const CHALLENGES = [
@@ -54,11 +55,11 @@ export function SolutionsChallengeSelector({ solutions }: SolutionsChallengeSele
           Choose your challenge
         </p>
         <h2 className="mt-2 max-w-2xl text-2xl font-bold tracking-tight text-[color:var(--color-primary)] md:text-3xl">
-          Outcome-oriented solution themes—not a duplicate of Services
+          Outcome themes delivered through our services
         </h2>
         <p className="mt-3 max-w-2xl text-sm text-[color:var(--color-secondary)] sm:text-base">
-          Services are how we work. Solutions are what we solve. Pick a business challenge to see
-          matching programs.
+          Each solution packages one or more XELARVIS services—AI, Data Science, IT Consulting, data
+          engineering, and healthcare specialty programs—into a focused business outcome.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-2" role="tablist" aria-label="Challenge filters">
@@ -83,8 +84,8 @@ export function SolutionsChallengeSelector({ solutions }: SolutionsChallengeSele
 
         <ul className="mt-10 divide-y divide-[color:var(--color-border)] border-t border-[color:var(--color-border)]">
           {filtered.map((solution, index) => (
-            <li key={solution.id}>
-              <Link href={`/solutions/${solution.slug}`} className="group block py-10">
+            <li key={solution.id} className="py-10">
+              <Link href={`/solutions/${solution.slug}`} className="group block">
                 <p className="font-display text-xs tracking-[0.16em] text-teal-600">
                   {String(index + 1).padStart(2, '0')}
                 </p>
@@ -95,6 +96,22 @@ export function SolutionsChallengeSelector({ solutions }: SolutionsChallengeSele
                   {solution.challenge || solution.summary}
                 </p>
               </Link>
+              {solution.services && solution.services.length > 0 ? (
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-semibold tracking-[0.08em] text-[color:var(--color-secondary)] uppercase">
+                    Delivered via
+                  </span>
+                  {solution.services.map((svc) => (
+                    <Link
+                      key={svc.href}
+                      href={svc.href}
+                      className="rounded-full border border-[color:var(--color-border)] bg-[color:var(--glass-bg)] px-3 py-1 text-xs font-semibold text-[color:var(--color-primary)] transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
+                    >
+                      {svc.label}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
             </li>
           ))}
           {!filtered.length ? (

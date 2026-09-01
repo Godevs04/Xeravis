@@ -4,12 +4,19 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@payloadcms/ui'
 import posthog from 'posthog-js'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useWorkspaceOptional } from '@/payload/admin/workspace/WorkspaceContext'
 import type { WorkspaceId } from '@/payload/admin/workspace/definitions'
 
 import { NavGroup, NavItem, Sidebar, SidebarSection, UserProfile } from '../sidebar'
+import {
+  getSidebarBody,
+  restoreSidebarScroll,
+  revealActiveInSidebar,
+  saveSidebarScroll,
+} from '../sidebar/sidebarScroll'
+import { saveMainScroll } from '@/payload/admin/components/layout/mainScroll'
 import {
   NAV_MODULES,
   QUICK_CREATES,
@@ -76,6 +83,8 @@ export function EnterpriseNav() {
   const routeNav = useMemo(() => resolveModuleNavigation(pathname), [pathname])
   const [manualOpen, setManualOpen] = useState<Set<string>>(() => new Set())
   const [collapsed, setCollapsed] = useState(false)
+  const [animatedModule, setAnimatedModule] = useState<string | null>(null)
+  const deepLinkRevealDone = useRef(false)
 
   const email =
     user && typeof user === 'object' && 'email' in user && typeof user.email === 'string'
@@ -112,7 +121,6 @@ export function EnterpriseNav() {
     const ws = routeNav.section ? moduleToWorkspace(routeNav.section) : null
     if (ws) ctx?.setWorkspace(ws)
 
-    // Auto-expand the route-active module and remember it
     if (routeNav.section) {
       setManualOpen((prev) => {
         if (prev.has(routeNav.section!)) return prev
@@ -123,15 +131,27 @@ export function EnterpriseNav() {
       })
     }
 
-    const id = window.requestAnimationFrame(() => {
-      const active = document.querySelector<HTMLElement>(
-        '.xe-sb-item.is-active, .xe-sb-sub__link.is-active',
-      )
-      active?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    // Preserve sidebar position — never scrollIntoView on route change (causes jump).
+    requestAnimationFrame(() => {
+      restoreSidebarScroll()
+      requestAnimationFrame(restoreSidebarScroll)
     })
-    return () => window.cancelAnimationFrame(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- route sync only
   }, [pathname])
+
+  /** Cold load / deep link only — reveal active item once if off-screen. */
+  useEffect(() => {
+    if (deepLinkRevealDone.current) return
+    deepLinkRevealDone.current = true
+
+    requestAnimationFrame(() => {
+      const body = getSidebarBody()
+      const active = body?.querySelector<HTMLElement>(
+        '.xe-sb-item.is-active, .xe-sb-sub__link.is-active',
+      )
+      if (body && active) revealActiveInSidebar(body, active)
+    })
+  }, [])
 
   const isExpanded = useCallback(
     (id: string) => {
@@ -143,6 +163,8 @@ export function EnterpriseNav() {
 
   const toggleModule = useCallback(
     (id: NavModuleId) => {
+      setAnimatedModule(id)
+      window.setTimeout(() => setAnimatedModule(null), 260)
       setManualOpen((prev) => {
         const next = new Set(prev)
         if (next.has(id)) next.delete(id)
@@ -170,7 +192,7 @@ export function EnterpriseNav() {
   }, [ctx?.workspace.links])
 
   const envLabel =
-    typeof process !== 'undefined' && process.env.NODE_ENV === 'production' ? 'Production' : 'Local'
+    typeof process !== 'undefined' && process.env.NODE_ENV === 'production' ? 'PROD' : 'LOCAL'
 
   const overview = NAV_MODULES.filter((m) => m.id === 'overview')
   const modules = NAV_MODULES.filter((m) => m.id !== 'overview')
@@ -191,8 +213,13 @@ export function EnterpriseNav() {
                   <Link
                     key={p.href}
                     href={p.href}
+                    scroll={false}
                     className={`xe-sb-pin${isLinkActive(pathname, p.href) ? 'is-active' : ''}`}
                     title={p.label}
+                    onClick={() => {
+                      saveSidebarScroll(getSidebarBody())
+                      saveMainScroll()
+                    }}
                   >
                     {p.label}
                   </Link>
@@ -214,7 +241,7 @@ export function EnterpriseNav() {
         </>
       }
     >
-      <SidebarSection label="Overview">
+      <SidebarSection label="Command Center">
         {overview.map((mod) => {
           if (mod.href && mod.links.length === 0) {
             return (
@@ -231,9 +258,6 @@ export function EnterpriseNav() {
           }
           return null
         })}
-      </SidebarSection>
-
-      <SidebarSection label="Workspace">
         {modules.map((mod) => {
           const active = moduleHasActiveLink(pathname, mod)
           if (mod.href && mod.links.length === 0) {
@@ -259,6 +283,7 @@ export function EnterpriseNav() {
               expanded={isExpanded(mod.id)}
               active={active}
               collapsed={collapsed}
+              animate={animatedModule === mod.id}
               onToggle={() => toggleModule(mod.id)}
               items={mod.links.map((link) => ({
                 id: `${mod.id}:${link.href}`,

@@ -11,7 +11,8 @@ import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { getMediaUrl } from '@/lib/media'
 import { buildRelatedGroups } from '@/lib/related-content'
-import { buildMetadata } from '@/lib/seo'
+import { buildMetadata, breadcrumbJsonLd, graphJsonLd } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 
 export const revalidate = 60
 
@@ -64,8 +65,17 @@ export default async function IndustryDetailPage({ params }: Props) {
   const relatedGroups = buildRelatedGroups(industry as unknown as Record<string, unknown>)
   const isTier3 = industry.tier === '3'
 
+  const jsonLd = graphJsonLd(
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Industries', path: '/industries' },
+      { name: industry.title, path: `/industries/${slug}` },
+    ]),
+  )
+
   return (
     <>
+      <JsonLd id="industry-jsonld" data={jsonLd} />
       <PageHero
         eyebrow={isTier3 ? 'Area we can support' : 'Industry'}
         title={industry.title}

@@ -31,6 +31,7 @@ export function NavItem({
   return (
     <Link
       href={href}
+      scroll={false}
       className={`xe-sb-item${active ? 'is-active' : ''}${collapsed ? 'is-rail' : ''}`}
       title={collapsed ? label : description || label}
       aria-current={active ? 'page' : undefined}

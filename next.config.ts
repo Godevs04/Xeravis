@@ -93,6 +93,13 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(dirname),
   },
+  async redirects() {
+    return [
+      { source: '/research', destination: '/ai-research-lab', permanent: true },
+      { source: '/approach', destination: '/about/our-approach', permanent: true },
+      { source: '/blog', destination: '/insights/blogs', permanent: true },
+    ]
+  },
 }
 
 const withPayloadConfig = withPayload(nextConfig, { devBundleServerPackages: false })

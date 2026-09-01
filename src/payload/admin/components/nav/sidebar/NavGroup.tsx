@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ChevronDown, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import React, { useId } from 'react'
@@ -26,6 +26,8 @@ type NavGroupProps = {
   expanded: boolean
   active: boolean
   collapsed?: boolean
+  /** Animate only on manual toggle — route-driven expand is instant to avoid scroll jump. */
+  animate?: boolean
   onToggle: () => void
 }
 
@@ -42,12 +44,14 @@ export function NavGroup({
   expanded,
   active,
   collapsed,
+  animate = false,
   onToggle,
 }: NavGroupProps) {
   const reduce = useReducedMotion()
   const panelId = useId()
   const count = items.length
   const showPanel = expanded && !collapsed && count > 0
+  const motionEnabled = animate && !reduce
 
   return (
     <div
@@ -74,14 +78,14 @@ export function NavGroup({
         <ChevronDown size={14} className="xe-sb-item__chevron" aria-hidden />
       </button>
 
-      <AnimatePresence initial={false}>
-        {showPanel ? (
+      {showPanel ? (
+        motionEnabled ? (
           <motion.div
             id={panelId}
             className="xe-sb-sub"
             role="region"
             aria-label={`${label} links`}
-            initial={reduce ? false : { height: 0, opacity: 0 }}
+            initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.22, ease: EASE }}
@@ -89,15 +93,11 @@ export function NavGroup({
             <div className="xe-sb-sub__inner">
               <span className="xe-sb-sub__rail" aria-hidden />
               <ul className="xe-sb-sub__list">
-                {items.map((child, index) => (
-                  <motion.li
-                    key={child.id}
-                    initial={reduce ? false : { opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2, delay: index * 0.02, ease: EASE }}
-                  >
+                {items.map((child) => (
+                  <li key={child.id}>
                     <Link
                       href={child.href}
+                      scroll={false}
                       className={`xe-sb-sub__link${child.active ? 'is-active' : ''}`}
                       title={child.description || child.label}
                       aria-current={child.active ? 'page' : undefined}
@@ -110,13 +110,40 @@ export function NavGroup({
                         ) : null}
                       </span>
                     </Link>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             </div>
           </motion.div>
-        ) : null}
-      </AnimatePresence>
+        ) : (
+          <div id={panelId} className="xe-sb-sub" role="region" aria-label={`${label} links`}>
+            <div className="xe-sb-sub__inner">
+              <span className="xe-sb-sub__rail" aria-hidden />
+              <ul className="xe-sb-sub__list">
+                {items.map((child) => (
+                  <li key={child.id}>
+                    <Link
+                      href={child.href}
+                      scroll={false}
+                      className={`xe-sb-sub__link${child.active ? 'is-active' : ''}`}
+                      title={child.description || child.label}
+                      aria-current={child.active ? 'page' : undefined}
+                    >
+                      <span className="xe-sb-sub__dot" aria-hidden />
+                      <span className="xe-sb-sub__copy">
+                        <span className="xe-sb-sub__label">{child.label}</span>
+                        {child.description ? (
+                          <span className="xe-sb-sub__desc">{child.description}</span>
+                        ) : null}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )
+      ) : null}
     </div>
   )
 }

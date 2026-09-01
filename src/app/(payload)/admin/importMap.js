@@ -1,3 +1,4 @@
+import { CatalogTitleCell as CatalogTitleCell_07eecf1167406f91121c856374ccb6b7 } from '../../../payload/admin/components/cells/CatalogTitleCell'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -26,8 +27,13 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
+import { BlogAuthorCell as BlogAuthorCell_a142899964074c0393480de584daf52a } from '../../../payload/admin/components/cells/BlogAuthorCell'
+import { ClientLogoCell as ClientLogoCell_8631f0ee8b8ff18706d7f9125fcecd3e } from '../../../payload/admin/components/cells/ClientLogoCell'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
+import { ContactDetailsAside as ContactDetailsAside_213760cafe583ea5f162ca160e854ac9 } from '../../../payload/admin/components/contact/ContactDetailsAside'
+import { AnnouncementPreviewAside as AnnouncementPreviewAside_bc89b6a916b67ae9a2966e3a8aff7d72 } from '../../../payload/admin/components/settings/MarketingPreviewAside'
+import { CookiePreviewAside as CookiePreviewAside_bc89b6a916b67ae9a2966e3a8aff7d72 } from '../../../payload/admin/components/settings/MarketingPreviewAside'
 import { Icon as Icon_4f090f1d512145da0a4cb8f745fcff9a } from '../../../payload/admin/components/graphics/Icon'
 import { Logo as Logo_9b451d48b7ff5becf1d58711b3ab64e7 } from '../../../payload/admin/components/graphics/Logo'
 import { QuickCreateAction as QuickCreateAction_a4341760752c65045bc4d13d4c8cb5fd } from '../../../payload/admin/components/QuickCreateAction'
@@ -52,6 +58,8 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell':
+    CatalogTitleCell_07eecf1167406f91121c856374ccb6b7,
   '@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell':
     RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   '@payloadcms/richtext-lexical/rsc#RscEntryLexicalField':
@@ -108,8 +116,18 @@ export const importMap = {
     MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   '@payloadcms/plugin-seo/client#PreviewComponent':
     PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
+  './payload/admin/components/cells/BlogAuthorCell#BlogAuthorCell':
+    BlogAuthorCell_a142899964074c0393480de584daf52a,
+  './payload/admin/components/cells/ClientLogoCell#ClientLogoCell':
+    ClientLogoCell_8631f0ee8b8ff18706d7f9125fcecd3e,
   '@payloadcms/plugin-search/client#LinkToDoc': LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   '@payloadcms/plugin-search/client#ReindexButton': ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
+  './payload/admin/components/contact/ContactDetailsAside#ContactDetailsAside':
+    ContactDetailsAside_213760cafe583ea5f162ca160e854ac9,
+  './payload/admin/components/settings/MarketingPreviewAside#AnnouncementPreviewAside':
+    AnnouncementPreviewAside_bc89b6a916b67ae9a2966e3a8aff7d72,
+  './payload/admin/components/settings/MarketingPreviewAside#CookiePreviewAside':
+    CookiePreviewAside_bc89b6a916b67ae9a2966e3a8aff7d72,
   './payload/admin/components/graphics/Icon#Icon': Icon_4f090f1d512145da0a4cb8f745fcff9a,
   './payload/admin/components/graphics/Logo#Logo': Logo_9b451d48b7ff5becf1d58711b3ab64e7,
   './payload/admin/components/QuickCreateAction#QuickCreateAction':

@@ -915,7 +915,7 @@ export interface Solution {
   relatedServices?: (string | Service)[] | null
   relatedIndustries?: (string | Industry)[] | null
   /**
-   * Technologies specific to this solution — do not inherit the full service stack.
+   * Technologies specific to this solution—use the canonical Solution → Technology matrix (not inherited from services).
    */
   technologies?: (string | Technology)[] | null
   relatedCaseStudies?: (string | CaseStudy)[] | null
@@ -3074,6 +3074,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T
 }
 /**
+ * Brand identity, theme tokens, and legacy social links.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -3081,6 +3083,7 @@ export interface SiteSetting {
   id: string
   siteName: string
   tagline?: string | null
+  footerCopyright?: string | null
   logo?: (string | null) | Media
   logoDark?: (string | null) | Media
   favicon?: (string | null) | Media
@@ -3089,7 +3092,6 @@ export interface SiteSetting {
     secondaryColor?: string | null
     accentColor?: string | null
   }
-  footerCopyright?: string | null
   /**
    * Prefer Social Media global for new projects.
    */
@@ -3103,11 +3105,16 @@ export interface SiteSetting {
   createdAt?: string | null
 }
 /**
+ * Primary desktop menu, header CTA, and sticky header behavior.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
 export interface Navigation {
   id: string
+  /**
+   * Drag to reorder. Mega selects open the matching mega panel.
+   */
   primaryLinks?:
     | {
         label: string
@@ -3143,11 +3150,16 @@ export interface Navigation {
   createdAt?: string | null
 }
 /**
+ * Footer link columns, newsletter toggle, and copyright.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer".
  */
 export interface Footer {
   id: string
+  /**
+   * Each column is a group (Company, Services, …) with nested links.
+   */
   columns?:
     | {
         title: string
@@ -3167,6 +3179,8 @@ export interface Footer {
   createdAt?: string | null
 }
 /**
+ * Public contact channels shown on the Contact page and site footer.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-details".
  */
@@ -3191,17 +3205,22 @@ export interface ContactDetail {
   createdAt?: string | null
 }
 /**
+ * Physical offices shown on Contact and About pages.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "office-locations".
  */
 export interface OfficeLocation {
   id: string
+  /**
+   * Each office appears as a card on the public Contact page.
+   */
   locations?:
     | {
         name: string
-        address: string
         city: string
         country: string
+        address: string
         hours?: string | null
         id?: string | null
       }[]
@@ -3210,6 +3229,8 @@ export interface OfficeLocation {
   createdAt?: string | null
 }
 /**
+ * Default meta, Open Graph, and social sharing for public pages.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "seo-defaults".
  */
@@ -3255,20 +3276,24 @@ export interface Analytics {
   createdAt?: string | null
 }
 /**
+ * Site-wide announcement strip with optional CTA and expiry.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "announcement-bar".
  */
 export interface AnnouncementBar {
   id: string
   enabled?: boolean | null
+  expiresAt?: string | null
   message?: string | null
   ctaLabel?: string | null
   ctaLink?: string | null
-  expiresAt?: string | null
   updatedAt?: string | null
   createdAt?: string | null
 }
 /**
+ * Consent banner copy, accept label, and privacy policy link.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cookie-banner".
  */
@@ -3288,6 +3313,7 @@ export interface CookieBanner {
 export interface SiteSettingsSelect<T extends boolean = true> {
   siteName?: T
   tagline?: T
+  footerCopyright?: T
   logo?: T
   logoDark?: T
   favicon?: T
@@ -3298,7 +3324,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         secondaryColor?: T
         accentColor?: T
       }
-  footerCopyright?: T
   social?:
     | T
     | {
@@ -3387,9 +3412,9 @@ export interface OfficeLocationsSelect<T extends boolean = true> {
     | T
     | {
         name?: T
-        address?: T
         city?: T
         country?: T
+        address?: T
         hours?: T
         id?: T
       }
@@ -3445,10 +3470,10 @@ export interface AnalyticsSelect<T extends boolean = true> {
  */
 export interface AnnouncementBarSelect<T extends boolean = true> {
   enabled?: T
+  expiresAt?: T
   message?: T
   ctaLabel?: T
   ctaLink?: T
-  expiresAt?: T
   updatedAt?: T
   createdAt?: T
   globalType?: T

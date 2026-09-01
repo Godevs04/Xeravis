@@ -82,7 +82,7 @@ export default async function BlogPostPage({ params }: Props) {
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
       { name: 'Insights', path: '/insights' },
-      { name: 'Blog', path: '/blog' },
+      { name: 'Blog', path: '/insights/blogs' },
       { name: doc.title, path: `/blog/${slug}` },
     ]),
   )
@@ -115,7 +115,7 @@ export default async function BlogPostPage({ params }: Props) {
       <RelatedContent heading="Continue exploring" groups={relatedGroups} />
 
       <div className="container-x pb-12">
-        <Link href="/blog" className="text-accent text-sm font-semibold hover:underline">
+        <Link href="/insights/blogs" className="text-accent text-sm font-semibold hover:underline">
           ← All articles
         </Link>
       </div>

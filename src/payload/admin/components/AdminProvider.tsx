@@ -8,6 +8,9 @@ import { WorkspaceProvider } from '@/payload/admin/workspace/WorkspaceContext'
 import { ApiViewPolish } from './api/ApiViewPolish'
 import { CommandPalette } from './CommandPalette'
 import { HeaderChip } from './HeaderChip'
+import { MainScrollController } from './layout/MainScrollController'
+import { SidebarScrollController } from './layout/SidebarScrollController'
+import { NavAudit } from './nav/NavAudit'
 
 const STORAGE_KEY = 'payload-theme'
 const NAV_KEY = 'xe-nav-collapsed'
@@ -183,12 +186,79 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     mq.addEventListener('change', onSystemTheme)
 
-    const onScroll = () => {
-      if (window.scrollY > 8) root.classList.add('is-scrolled')
+    /** Main shell scroller — never listen on window (document scroll is locked). */
+    let mainScroll: HTMLElement | null = null
+    let savedMainScroll = 0
+
+    const onMainScroll = () => {
+      const top = mainScroll?.scrollTop ?? 0
+      if (top > 8) root.classList.add('is-scrolled')
       else root.classList.remove('is-scrolled')
     }
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
+
+    const bindMainScroll = () => {
+      const next = document.querySelector<HTMLElement>('.template-default__wrap')
+      if (next === mainScroll) return
+      if (mainScroll) mainScroll.removeEventListener('scroll', onMainScroll)
+      mainScroll = next
+      if (mainScroll) {
+        mainScroll.addEventListener('scroll', onMainScroll, { passive: true })
+        onMainScroll()
+      }
+    }
+    bindMainScroll()
+    let wrapDebounce: number | undefined
+    const scheduleBindMainScroll = () => {
+      if (wrapDebounce !== undefined) window.clearTimeout(wrapDebounce)
+      wrapDebounce = window.setTimeout(bindMainScroll, 80)
+    }
+    const wrapObserver = new MutationObserver(scheduleBindMainScroll)
+    const observeShell = () => {
+      const shell = document.querySelector('.template-default')
+      if (shell) {
+        wrapObserver.observe(shell, { childList: true, subtree: true })
+        return true
+      }
+      return false
+    }
+    if (!observeShell()) {
+      const bootShell = new MutationObserver(() => {
+        if (observeShell()) bootShell.disconnect()
+      })
+      bootShell.observe(document.body, { childList: true, subtree: true })
+      window.setTimeout(() => bootShell.disconnect(), 8000)
+    }
+
+    /** Mobile drawer: lock main scroll and restore exactly on close. */
+    const syncDrawerScrollLock = () => {
+      const wrap = document.querySelector<HTMLElement>('.template-default__wrap')
+      if (!wrap) return
+      const open = root.getAttribute('data-xe-nav') === 'open'
+      if (open) {
+        if (!wrap.hasAttribute('data-xe-scroll-locked')) {
+          savedMainScroll = wrap.scrollTop
+          wrap.setAttribute('data-xe-scroll-locked', '1')
+          wrap.style.overflowY = 'hidden'
+        }
+      } else if (wrap.hasAttribute('data-xe-scroll-locked')) {
+        wrap.removeAttribute('data-xe-scroll-locked')
+        wrap.style.overflowY = ''
+        wrap.scrollTop = savedMainScroll
+      }
+    }
+    const drawerObserver = new MutationObserver(syncDrawerScrollLock)
+    drawerObserver.observe(root, { attributes: true, attributeFilter: ['data-xe-nav'] })
+    syncDrawerScrollLock()
+
+    /** Mobile scrim — close drawer when tapping the dimmed main area */
+    const onScrimClick = (e: MouseEvent) => {
+      if (root.getAttribute('data-xe-nav') !== 'open') return
+      const wrap = document.querySelector('.template-default__wrap')
+      if (!wrap || e.target !== wrap) return
+      root.setAttribute('data-xe-nav', 'expanded')
+      document.querySelector('aside.nav')?.classList.remove('nav--nav-open')
+    }
+    document.addEventListener('click', onScrimClick, true)
 
     const onSave = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
@@ -230,24 +300,31 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
 
     window.addEventListener('keydown', onSave)
     return () => {
+      if (wrapDebounce !== undefined) window.clearTimeout(wrapDebounce)
       themeObserver.disconnect()
       navObserver.disconnect()
+      wrapObserver.disconnect()
+      drawerObserver.disconnect()
       desktopMq.removeEventListener('change', syncNavInteractivity)
       document.removeEventListener('change', onThemePreferenceChange, true)
       document.removeEventListener('click', onThemePreferenceClick, true)
       mq.removeEventListener('change', onSystemTheme)
       window.removeEventListener('keydown', onSave)
-      window.removeEventListener('scroll', onScroll)
+      document.removeEventListener('click', onScrimClick, true)
+      if (mainScroll) mainScroll.removeEventListener('scroll', onMainScroll)
     }
   }, [])
 
   return (
     <WorkspaceProvider>
       {children}
+      <MainScrollController />
+      <SidebarScrollController />
       <HeaderChip />
       <CommandPalette />
       <ApiViewPolish />
       <AdminPwa />
+      {process.env.NODE_ENV !== 'production' ? <NavAudit /> : null}
     </WorkspaceProvider>
   )
 }

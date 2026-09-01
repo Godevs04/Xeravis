@@ -20,6 +20,11 @@ export const Authors: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      admin: {
+        components: {
+          Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
+        },
+      },
     },
     {
       name: 'role',
