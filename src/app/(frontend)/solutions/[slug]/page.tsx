@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { CTABand } from '@/blocks/CTABand'
 import { FAQAccordion } from '@/blocks/FAQAccordion'
+import { HubLinkStrip } from '@/components/content/HubLinkStrip'
 import { RelatedContent } from '@/components/content/RelatedContent'
 import { TechnologyCard } from '@/components/domain/TechnologyCard'
 import { Container } from '@/components/layout/Container'
@@ -10,8 +11,9 @@ import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
-import { FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
+import { FALLBACK_SERVICES, FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
 import { buildRelatedGroups } from '@/lib/related-content'
+import { resolveLinkedServices } from '@/lib/solution-service-links'
 import { buildMetadata, breadcrumbJsonLd, graphJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 
@@ -74,7 +76,12 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function SolutionDetailPage({ params }: Props) {
   const { slug } = await params
-  const solution = await getPublishedBySlug<SolutionDoc>('solutions', slug)
+  const [solution, services] = await Promise.all([
+    getPublishedBySlug<SolutionDoc>('solutions', slug),
+    listPublished<{ id: string; title: string; slug: string; summary: string }>('services', {
+      sort: 'order',
+    }),
+  ])
   const fallback = FALLBACK_SOLUTIONS.find((s) => s.slug === slug)
 
   if (!solution && !fallback) notFound()
@@ -88,8 +95,20 @@ export default async function SolutionDetailPage({ params }: Props) {
     },
   }
 
+  const serviceCatalog = services.length ? services : FALLBACK_SERVICES
+  const linkedServices = resolveLinkedServices(slug, doc.relatedServices, serviceCatalog)
+  const docForRelated = {
+    ...(doc as unknown as Record<string, unknown>),
+    relatedServices: linkedServices,
+  }
+
   const technologies = asRelatedTechs(doc.technologies)
-  const relatedGroups = buildRelatedGroups(doc as unknown as Record<string, unknown>)
+  const relatedGroups = buildRelatedGroups(
+    docForRelated,
+    { services: 6 },
+    { omitTitles: ['Services'] },
+  )
+  const serviceNames = linkedServices.map((s) => s.title).join(', ')
   const seedFaqs = [
     {
       question: `Who is ${doc.title} for?`,
@@ -98,9 +117,10 @@ export default async function SolutionDetailPage({ params }: Props) {
         'Organizations that need a governed path from business problem to production outcomes across AI, data, and IT consulting.',
     },
     {
-      question: 'How does this relate to Services?',
-      answer:
-        'Services are how we work (practice areas). This solution packages those services into an outcome theme for a specific class of business problems.',
+      question: 'Which XELARVIS services deliver this solution?',
+      answer: serviceNames
+        ? `${doc.title} is delivered through our ${serviceNames} practice areas—combining the capabilities needed for discovery, build, and production operations.`
+        : 'This solution combines AI, Data Science, IT Consulting, and engineering services from the XELARVIS catalog.',
     },
     {
       question: 'What is the typical starting point?',
@@ -148,6 +168,21 @@ export default async function SolutionDetailPage({ params }: Props) {
           </div>
         </Container>
       </Section>
+
+      {linkedServices.length > 0 ? (
+        <HubLinkStrip
+          eyebrow="Practice areas"
+          heading="Delivered through our services"
+          subheading="This solution combines the following XELARVIS service capabilities—each links to how we staff, engineer, and govern delivery."
+          surface
+          items={linkedServices.map((s) => ({
+            href: `/services/${s.slug}`,
+            label: s.title,
+            description: s.summary || undefined,
+          }))}
+          viewAll={{ href: '/services', label: 'All services →' }}
+        />
+      ) : null}
 
       {doc.useCases && doc.useCases.length > 0 ? (
         <Section>
@@ -227,7 +262,7 @@ export default async function SolutionDetailPage({ params }: Props) {
         </Section>
       ) : null}
 
-      <RelatedContent heading="Services, industries & evidence" groups={relatedGroups} />
+      <RelatedContent heading="Industries, evidence & insights" groups={relatedGroups} />
 
       <FAQAccordion heading="Frequently asked questions" seedFaqs={seedFaqs} />
 

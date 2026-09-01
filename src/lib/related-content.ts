@@ -70,10 +70,11 @@ const DEFAULT_CAPS: Required<RelatedCaps> = {
 export function buildRelatedGroups(
   doc: Record<string, unknown>,
   caps: RelatedCaps = {},
+  options?: { omitTitles?: string[]; servicesFirst?: boolean },
 ): RelatedContentGroup[] {
   const c = { ...DEFAULT_CAPS, ...caps }
 
-  return [
+  const groups = [
     mapGroup('Solutions', doc.relatedSolutions, '/solutions', c.solutions),
     mapGroup('Services', doc.relatedServices ?? doc.services, '/services', c.services),
     mapGroup(
@@ -96,6 +97,18 @@ export function buildRelatedGroups(
     mapGroup('Research', doc.relatedResearch, '/research', c.research, 'excerpt'),
     mapGroup('Insights', doc.relatedInsights, '/blog', c.insights, 'excerpt'),
   ].filter((g) => g.items.length > 0)
+
+  let visible = groups
+  if (options?.omitTitles?.length) {
+    const omit = new Set(options.omitTitles)
+    visible = visible.filter((g) => !omit.has(g.title))
+  }
+  if (options?.servicesFirst) {
+    const services = visible.find((g) => g.title === 'Services')
+    const rest = visible.filter((g) => g.title !== 'Services')
+    visible = services ? [services, ...rest] : rest
+  }
+  return visible
 }
 
 /** Normalize a single industry relation that may be an object or id. */
