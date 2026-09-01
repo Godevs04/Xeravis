@@ -1,13 +1,8 @@
 import { SiteHeaderClient } from '@/components/layout/SiteHeaderClient'
 import type { MegaMenuItem } from '@/components/layout/MegaMenu'
 import { getGlobal, listPublished } from '@/lib/cms'
-import {
-  BRAND,
-  DEFAULT_NAV,
-  FALLBACK_INDUSTRIES,
-  FALLBACK_SERVICES,
-  FALLBACK_SOLUTIONS,
-} from '@/lib/fallback-data'
+import { BRAND, DEFAULT_NAV, FALLBACK_INDUSTRIES, FALLBACK_SERVICES } from '@/lib/fallback-data'
+import { mergePublishedSolutions } from '@/lib/solutions-catalog'
 import { ABOUT_MEGA, INSIGHTS_MEGA, RESEARCH_MEGA } from '@/lib/site-ia'
 
 type NavigationGlobal = {
@@ -95,11 +90,24 @@ export async function SiteHeader() {
     about: ABOUT_MENU,
     company: ABOUT_MENU,
     research: RESEARCH_MEGA,
-    solutions: toMegaItems(solutions.length ? solutions : FALLBACK_SOLUTIONS, '/solutions', {
-      label: 'All solutions',
-      href: '/solutions',
-      description: 'Browse solution catalog.',
-    }),
+    solutions: toMegaItems(
+      mergePublishedSolutions(
+        solutions
+          .filter((s): s is CmsNavDoc & { slug: string } => Boolean(s.slug))
+          .map((s) => ({
+            id: s.slug,
+            slug: s.slug,
+            title: s.title || s.name || s.slug,
+            summary: s.summary || s.shortDescription || '',
+          })),
+      ),
+      '/solutions',
+      {
+        label: 'All solutions',
+        href: '/solutions',
+        description: 'Browse solution catalog.',
+      },
+    ),
     services: toMegaItems(services.length ? services : FALLBACK_SERVICES, '/services', {
       label: 'All services',
       href: '/services',

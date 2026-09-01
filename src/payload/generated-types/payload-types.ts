@@ -915,7 +915,7 @@ export interface Solution {
   relatedServices?: (string | Service)[] | null
   relatedIndustries?: (string | Industry)[] | null
   /**
-   * Technologies specific to this solution — do not inherit the full service stack.
+   * Technologies specific to this solution—use the canonical Solution → Technology matrix (not inherited from services).
    */
   technologies?: (string | Technology)[] | null
   relatedCaseStudies?: (string | CaseStudy)[] | null

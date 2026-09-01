@@ -111,7 +111,7 @@ export const Solutions: CollectionConfig = {
       label: 'Technology Stack',
       admin: {
         description:
-          'Technologies specific to this solution — do not inherit the full service stack.',
+          'Technologies specific to this solution—use the canonical Solution → Technology matrix (not inherited from services).',
       },
     },
     {
