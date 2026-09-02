@@ -7,7 +7,8 @@ import { Section } from '@/components/layout/Section'
 import { ServicesPageHero } from '@/components/marketing/PageHeroes'
 import { ServicesIndexSection } from '@/components/services/ServicesIndexSection'
 import { listPublished } from '@/lib/cms'
-import { FALLBACK_INDUSTRIES, FALLBACK_SERVICES } from '@/lib/fallback-data'
+import { FALLBACK_INDUSTRIES } from '@/lib/fallback-data'
+import { mergePublishedServices } from '@/lib/services-catalog'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -101,7 +102,7 @@ export default async function ServicesPage() {
     listPublished<BlogDoc>('blogs', { limit: 3 }),
   ])
 
-  const items = services.length ? services : FALLBACK_SERVICES
+  const items = mergePublishedServices(services)
   const industryItems = (industries.length ? industries : FALLBACK_INDUSTRIES)
     .filter((i) => {
       const tier = 'tier' in i && i.tier ? String(i.tier) : '3'

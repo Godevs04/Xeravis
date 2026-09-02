@@ -7,7 +7,7 @@ import { SectionHeader } from '@/components/layout/SectionHeader'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { Button } from '@/components/ui/button'
 import { listPublished } from '@/lib/cms'
-import { FALLBACK_SERVICES } from '@/lib/fallback-data'
+import { mergePublishedServices } from '@/lib/services-catalog'
 import { cn } from '@/lib/utils'
 
 type ServiceDoc = {
@@ -34,7 +34,7 @@ const CHIP_SETS = [
 
 export async function ServicesGrid({ heading, subheading }: ServicesGridProps) {
   const services = await listPublished<ServiceDoc>('services', { limit: 6 })
-  const items = services.length ? services : FALLBACK_SERVICES
+  const items = mergePublishedServices(services)
 
   return (
     <Section surface>

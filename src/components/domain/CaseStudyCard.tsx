@@ -18,8 +18,8 @@ export function CaseStudyCard({ title, client, outcome, href, className }: CaseS
       <SpotlightCard className="flex h-full min-h-[280px] flex-col p-8 lg:p-10">
         <div className="flex items-center justify-between gap-3">
           <p className="text-muted text-xs font-semibold tracking-[0.14em] uppercase">{client}</p>
-          <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-emerald-600 uppercase">
-            Outcome
+          <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-amber-700 uppercase dark:text-amber-300">
+            Representative
           </span>
         </div>
         <h3 className="font-display text-primary mt-5 text-2xl font-semibold tracking-tight lg:text-3xl">

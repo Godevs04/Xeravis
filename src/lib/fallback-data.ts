@@ -15,15 +15,14 @@ export const UNSPLASH = {
 export const DEFAULT_NAV = {
   primaryLinks: [
     { label: 'About', href: '/about', mega: 'about' },
-    { label: 'Services', href: '/services', mega: 'services' },
+    { label: 'Capabilities', href: '/services', mega: 'services' },
     { label: 'Solutions', href: '/solutions', mega: 'solutions' },
-    { label: 'Approach', href: '/about/our-approach', mega: 'none' },
     { label: 'Industries', href: '/industries', mega: 'industries' },
-    { label: 'Research & Innovation', href: '/ai-research-lab', mega: 'research' },
+    { label: 'Research', href: '/ai-research-lab', mega: 'research' },
     { label: 'Insights', href: '/insights', mega: 'insights' },
     { label: 'Careers', href: '/careers', mega: 'none' },
   ],
-  ctaLabel: 'Contact Us',
+  ctaLabel: 'Contact',
   ctaHref: '/contact',
 }
 
@@ -34,26 +33,26 @@ export const DEFAULT_FOOTER = {
       links: [
         { label: 'About', href: '/about' },
         { label: 'Our Approach', href: '/about/our-approach' },
-        { label: 'Research & Innovation', href: '/ai-research-lab' },
+        { label: 'Research', href: '/ai-research-lab' },
         { label: 'Collaborations', href: '/ai-research-lab/collaborations' },
         { label: 'Careers', href: '/careers' },
         { label: 'Contact', href: '/contact' },
       ],
     },
     {
-      title: 'Services',
+      title: 'Capabilities',
       links: [
-        { label: 'All services', href: '/services' },
-        { label: 'Industries', href: '/industries' },
+        { label: 'All capabilities', href: '/services' },
         { label: 'Solutions', href: '/solutions' },
+        { label: 'Industries', href: '/industries' },
         { label: 'Technologies', href: '/technologies' },
+        { label: 'Case studies', href: '/case-studies' },
       ],
     },
     {
       title: 'Insights',
       links: [
         { label: 'Insights Hub', href: '/insights' },
-        { label: 'Case studies', href: '/case-studies' },
         { label: 'Blogs', href: '/insights/blogs' },
         { label: 'Reports', href: '/insights/reports' },
       ],
@@ -76,7 +75,7 @@ export const FALLBACK_SERVICES = [
     title: 'Artificial Intelligence',
     slug: 'artificial-intelligence-ai-research',
     summary:
-      'Applied AI research and production systems—machine learning, generative AI, vision, NLP, and intelligent agents.',
+      'Strategy-led AI programs—machine learning, generative AI, agents, vision, and NLP—delivered as governed production systems.',
     icon: 'Sparkles',
   },
   {
@@ -84,7 +83,7 @@ export const FALLBACK_SERVICES = [
     title: 'Data Science & Advanced Analytics',
     slug: 'data-science-advanced-analytics',
     summary:
-      'Help organisations turn data into measurable business value through predictive analytics, BI, and decision intelligence.',
+      'Turn data into measurable business value through strategy, modeling, forecasting, BI, and decision intelligence.',
     icon: 'BarChart3',
   },
   {
@@ -92,7 +91,7 @@ export const FALLBACK_SERVICES = [
     title: 'IT Consulting & Digital Transformation',
     slug: 'it-consulting-digital-transformation',
     summary:
-      'Enterprise consulting for modernization—architecture, software engineering, cloud adoption, and automation.',
+      'Enterprise consulting for modernization—strategy, architecture, software engineering, cloud, and automation.',
     icon: 'Briefcase',
   },
   {
@@ -100,7 +99,7 @@ export const FALLBACK_SERVICES = [
     title: 'Data Engineering & Cloud',
     slug: 'data-engineering-cloud-solutions',
     summary:
-      'Scalable cloud platforms, data pipelines, AI infrastructure, and enterprise data architectures.',
+      'Design scalable data architectures, lakes, warehouses, pipelines, and MLOps infrastructure on the cloud.',
     icon: 'Cloud',
   },
   {
@@ -247,7 +246,7 @@ export const FALLBACK_CASE_STUDIES = [
     id: '1',
     title: 'Clinical reporting pipeline for a regional health system',
     slug: 'clinical-reporting-pipeline-regional-health',
-    client: 'Regional health system',
+    client: 'Representative · Healthcare',
     challenge:
       'Fragmented clinical and operational data made routine reporting slow and hard to trust.',
     outcome:
@@ -265,7 +264,7 @@ export const FALLBACK_CASE_STUDIES = [
     id: '2',
     title: 'Predictive maintenance analytics for a mid-market manufacturer',
     slug: 'predictive-maintenance-mid-market-manufacturer',
-    client: 'Mid-market manufacturer',
+    client: 'Representative · Manufacturing',
     challenge:
       'Equipment telemetry and maintenance logs sat in silos, limiting early fault detection.',
     outcome:
@@ -283,7 +282,7 @@ export const FALLBACK_CASE_STUDIES = [
     id: '3',
     title: 'Submission-ready trial analytics for a life sciences sponsor',
     slug: 'trial-analytics-life-sciences-sponsor',
-    client: 'Life sciences sponsor',
+    client: 'Representative · Life sciences',
     challenge:
       'Trial datasets and programming deliverables needed clearer standards alignment for analysis handoff.',
     outcome:

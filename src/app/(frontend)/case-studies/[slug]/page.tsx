@@ -86,6 +86,15 @@ export default async function CaseStudyDetailPage({ params }: Props) {
       <JsonLd id="case-study-jsonld" data={jsonLd} />
       <PageHero eyebrow={doc.client} title={doc.title} subtitle={doc.outcome} size="compact" />
       <Section>
+        <Container className="max-w-3xl">
+          <p className="rounded-2xl border border-amber-500/25 bg-amber-500/10 px-5 py-4 text-sm leading-relaxed text-amber-900 dark:text-amber-100">
+            <strong className="font-semibold">Representative engagement.</strong> This case study
+            illustrates a typical delivery pattern. Client details are anonymized and outcomes are
+            illustrative — not verified metrics or named customer claims.
+          </p>
+        </Container>
+      </Section>
+      <Section>
         <Container className="max-w-3xl space-y-10">
           <div>
             <h2 className="text-2xl font-bold">Challenge</h2>

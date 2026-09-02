@@ -17,6 +17,9 @@ type StoryCapabilitiesProps = {
   heading: string
   subheading?: string | null
   items: CapabilityItem[]
+  viewAllHref?: string
+  viewAllLabel?: string
+  exploreLabel?: string
 }
 
 export function StoryCapabilities({
@@ -24,6 +27,9 @@ export function StoryCapabilities({
   heading,
   subheading,
   items,
+  viewAllHref = '/services',
+  viewAllLabel = 'All capabilities →',
+  exploreLabel = 'Explore →',
 }: StoryCapabilitiesProps) {
   const reduce = useReducedMotion()
 
@@ -50,10 +56,10 @@ export function StoryCapabilities({
             ) : null}
           </div>
           <Link
-            href="/services"
+            href={viewAllHref}
             className="text-sm font-semibold text-[color:var(--color-accent)] underline-offset-4 hover:underline"
           >
-            All services →
+            {viewAllLabel}
           </Link>
         </div>
       </Container>
@@ -87,7 +93,7 @@ export function StoryCapabilities({
                     {item.summary}
                   </p>
                   <span className="mt-6 inline-block text-sm font-semibold text-[color:var(--color-accent)] sm:mt-8 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
-                    Explore →
+                    {exploreLabel}
                   </span>
                 </Link>
               </motion.li>

@@ -23,6 +23,7 @@ import {
   StoryProcess,
   StoryProof,
   StorySolution,
+  StorySolutionsBlock,
   StoryTechOrbitBlock,
 } from '@/blocks/story'
 import { TeamGrid } from '@/blocks/TeamGrid'
@@ -306,6 +307,15 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
           case 'storyCapabilities':
             return (
               <StoryCapabilitiesBlock
+                key={key}
+                eyebrow={block.eyebrow as string | undefined}
+                heading={block.heading as string}
+                subheading={block.subheading as string | undefined}
+              />
+            )
+          case 'storySolutions':
+            return (
+              <StorySolutionsBlock
                 key={key}
                 eyebrow={block.eyebrow as string | undefined}
                 heading={block.heading as string}
