@@ -1,6 +1,6 @@
 import { StoryCapabilities } from '@/blocks/story/StoryCapabilities'
 import { listPublished } from '@/lib/cms'
-import { FALLBACK_SERVICES } from '@/lib/fallback-data'
+import { mergePublishedServices } from '@/lib/services-catalog'
 
 type ServiceDoc = {
   id: string
@@ -21,8 +21,8 @@ export async function StoryCapabilitiesBlock({
   subheading,
 }: StoryCapabilitiesBlockProps) {
   const services = await listPublished<ServiceDoc>('services', { limit: 8, sort: 'order' })
-  const source = services.length ? services : FALLBACK_SERVICES
-  const items = source.map((s) => ({
+  const merged = mergePublishedServices(services)
+  const items = merged.map((s) => ({
     id: s.id,
     title: s.title,
     summary: s.summary,
@@ -30,6 +30,11 @@ export async function StoryCapabilitiesBlock({
   }))
 
   return (
-    <StoryCapabilities eyebrow={eyebrow} heading={heading} subheading={subheading} items={items} />
+    <StoryCapabilities
+      eyebrow={eyebrow ?? 'Capabilities'}
+      heading={heading}
+      subheading={subheading}
+      items={items}
+    />
   )
 }

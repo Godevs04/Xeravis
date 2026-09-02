@@ -11,7 +11,8 @@ import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
-import { FALLBACK_SERVICES, FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
+import { FALLBACK_SOLUTIONS } from '@/lib/fallback-data'
+import { mergePublishedServices } from '@/lib/services-catalog'
 import { buildRelatedGroups } from '@/lib/related-content'
 import { resolveLinkedServices } from '@/lib/solution-service-links'
 import {
@@ -96,7 +97,7 @@ export default async function SolutionDetailPage({ params }: Props) {
     },
   }
 
-  const serviceCatalog = services.length ? services : FALLBACK_SERVICES
+  const serviceCatalog = mergePublishedServices(services)
   const techCatalog: TechnologyLinkDoc[] = (
     technologies.length > 0
       ? technologies

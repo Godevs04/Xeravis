@@ -35,7 +35,13 @@ type StoryCasesProps = {
   items: CaseItem[]
 }
 
-const KPI_BADGES = ['ROI Increased', 'Cost Reduced', 'Faster Deployment', 'AI Accuracy', 'Uptime']
+const KPI_BADGES = [
+  'Representative',
+  'Anonymized',
+  'Delivery pattern',
+  'Governed AI',
+  'Enterprise scale',
+]
 
 const DEFAULT_TECH = ['Python', 'Azure', 'AI', 'Next.js', 'Cloud']
 
@@ -366,6 +372,9 @@ function ProjectPanel({ item, index }: { item: ReturnType<typeof enrichCase>; in
       />
 
       <div className="relative flex flex-wrap items-center gap-3">
+        <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[10px] font-bold tracking-[0.14em] text-amber-200 uppercase">
+          Representative
+        </span>
         <span className="rounded-full border border-[color:var(--color-accent)]/40 bg-[color:var(--color-accent-soft)] px-3 py-1 text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-accent)] uppercase">
           {item.industry}
         </span>
@@ -462,7 +471,11 @@ function ProjectPanel({ item, index }: { item: ReturnType<typeof enrichCase>; in
   )
 }
 
-export function StoryCases({ eyebrow = 'Success stories', heading, items }: StoryCasesProps) {
+export function StoryCases({
+  eyebrow = 'Representative engagements',
+  heading,
+  items,
+}: StoryCasesProps) {
   const reduce = useReducedMotion()
   const stories = items.map((item, i) => enrichCase(item, i))
 
@@ -508,8 +521,8 @@ export function StoryCases({ eyebrow = 'Success stories', heading, items }: Stor
               {heading || 'Engineering solutions that deliver measurable outcomes.'}
             </motion.h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-[color:var(--hero-muted)]">
-              Complex transformation programs across healthcare, AI, and enterprise platforms —
-              designed for regulated reality, not demos.
+              Anonymized delivery patterns across healthcare, AI, and enterprise platforms — clearly
+              labelled as representative examples, not verified client claims.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-2">

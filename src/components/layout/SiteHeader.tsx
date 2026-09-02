@@ -1,7 +1,8 @@
 import { SiteHeaderClient } from '@/components/layout/SiteHeaderClient'
 import type { MegaMenuItem } from '@/components/layout/MegaMenu'
 import { getGlobal, listPublished } from '@/lib/cms'
-import { BRAND, DEFAULT_NAV, FALLBACK_INDUSTRIES, FALLBACK_SERVICES } from '@/lib/fallback-data'
+import { BRAND, DEFAULT_NAV, FALLBACK_INDUSTRIES } from '@/lib/fallback-data'
+import { mergePublishedServices } from '@/lib/services-catalog'
 import { mergePublishedSolutions } from '@/lib/solutions-catalog'
 import { ABOUT_MEGA, INSIGHTS_MEGA, RESEARCH_MEGA } from '@/lib/site-ia'
 
@@ -54,17 +55,20 @@ function isMainplanAlignedNav(
   const labels = links.map((l) => l.label.trim().toLowerCase())
   const hasResearch = megas.has('research')
   const hasAbout = megas.has('about') || labels.includes('about')
-  const hasServices = megas.has('services') || labels.includes('services')
+  const hasCapabilities =
+    megas.has('services') || labels.includes('services') || labels.includes('capabilities')
   const hasSolutions = megas.has('solutions') || labels.includes('solutions')
   const hasStaleCompany = labels.includes('company')
   const hasTechnologiesTop = labels.includes('technologies')
+  const hasApproachTop = labels.includes('approach')
   return (
     hasResearch &&
     hasAbout &&
-    hasServices &&
+    hasCapabilities &&
     hasSolutions &&
     !hasStaleCompany &&
-    !hasTechnologiesTop
+    !hasTechnologiesTop &&
+    !hasApproachTop
   )
 }
 
@@ -108,11 +112,25 @@ export async function SiteHeader() {
         description: 'Browse solution catalog.',
       },
     ),
-    services: toMegaItems(services.length ? services : FALLBACK_SERVICES, '/services', {
-      label: 'All services',
-      href: '/services',
-      description: 'Full capability catalog.',
-    }),
+    services: toMegaItems(
+      mergePublishedServices(
+        services
+          .filter((s): s is CmsNavDoc & { slug: string } => Boolean(s.slug))
+          .map((s) => ({
+            id: s.slug,
+            slug: s.slug,
+            title: s.title || s.name || s.slug,
+            summary: s.summary || s.shortDescription || '',
+          })),
+      ),
+      '/services',
+      {
+        label: 'All capabilities',
+        href: '/services',
+        description:
+          'Five practice areas — AI, Data Science, IT Consulting, Data Engineering, Healthcare.',
+      },
+    ),
     industries: toMegaItems(industryMegaSource, '/industries', {
       label: 'All industries',
       href: '/industries',

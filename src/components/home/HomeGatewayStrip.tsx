@@ -6,8 +6,9 @@ import { Section } from '@/components/layout/Section'
 const GATEWAYS = [
   {
     href: '/services',
-    label: 'Services',
-    description: 'How we work — AI, Data Science, IT Consulting, and specialty practices.',
+    label: 'Capabilities',
+    description:
+      'How we work — AI, Data Science, IT Consulting, Data Engineering, and Healthcare specialty.',
   },
   {
     href: '/solutions',
@@ -53,7 +54,8 @@ export function HomeGatewayStrip() {
           Pathways into XELARVIS
         </h2>
         <p className="mt-3 max-w-2xl text-sm text-[color:var(--color-secondary)] sm:text-base">
-          Services are how we work. Solutions are what we solve. Industries are where we apply them.
+          Capabilities are how we work. Solutions are what we solve. Industries are where we apply
+          them.
         </p>
         <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {GATEWAYS.map((item) => (

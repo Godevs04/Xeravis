@@ -335,6 +335,15 @@ export const pageBlocks: Block[] = [
     ],
   },
   {
+    slug: 'storySolutions',
+    labels: { singular: 'Story Solutions', plural: 'Story Solutions' },
+    fields: [
+      { name: 'eyebrow', type: 'text', maxLength: 60 },
+      { name: 'heading', type: 'text', required: true, maxLength: 120 },
+      { name: 'subheading', type: 'textarea', maxLength: 240 },
+    ],
+  },
+  {
     slug: 'storyTechOrbit',
     labels: { singular: 'Story Tech Orbit', plural: 'Story Tech Orbits' },
     fields: [

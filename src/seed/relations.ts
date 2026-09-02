@@ -141,6 +141,17 @@ export const SOLUTION_INDUSTRY_MAP: Record<string, string[]> = {
 }
 
 /**
+ * Canonical service slugs in display order (5 capabilities).
+ */
+export const CANONICAL_SERVICE_SLUGS = [
+  'artificial-intelligence-ai-research',
+  'data-science-advanced-analytics',
+  'it-consulting-digital-transformation',
+  'data-engineering-cloud-solutions',
+  'clinical-data-science-healthcare-ai',
+] as const
+
+/**
  * Canonical solution slugs in display order (9 programs).
  * Kept in sync with SEED_SOLUTIONS / FALLBACK_SOLUTIONS.
  */

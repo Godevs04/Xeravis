@@ -678,6 +678,14 @@ export interface Page {
         subheading?: string | null
         id?: string | null
         blockName?: string | null
+        blockType: 'storySolutions'
+      }
+    | {
+        eyebrow?: string | null
+        heading: string
+        subheading?: string | null
+        id?: string | null
+        blockName?: string | null
         blockType: 'storyTechOrbit'
       }
     | {
@@ -2346,6 +2354,15 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T
             }
         storyCapabilities?:
+          | T
+          | {
+              eyebrow?: T
+              heading?: T
+              subheading?: T
+              id?: T
+              blockName?: T
+            }
+        storySolutions?:
           | T
           | {
               eyebrow?: T

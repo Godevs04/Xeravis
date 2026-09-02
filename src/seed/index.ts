@@ -131,16 +131,15 @@ async function seed() {
     data: {
       primaryLinks: [
         { label: 'About', href: '/about', mega: 'about' },
-        { label: 'Services', href: '/services', mega: 'services' },
+        { label: 'Capabilities', href: '/services', mega: 'services' },
         { label: 'Solutions', href: '/solutions', mega: 'solutions' },
-        { label: 'Approach', href: '/about/our-approach', mega: 'none' },
         { label: 'Industries', href: '/industries', mega: 'industries' },
-        { label: 'Research & Innovation', href: '/ai-research-lab', mega: 'research' },
+        { label: 'Research', href: '/ai-research-lab', mega: 'research' },
         { label: 'Insights', href: '/insights', mega: 'insights' },
         { label: 'Careers', href: '/careers', mega: 'none' },
       ],
-      cta: { label: 'Contact Us', href: '/contact' },
-      ctaLabel: 'Contact Us',
+      cta: { label: 'Contact', href: '/contact' },
+      ctaLabel: 'Contact',
       ctaHref: '/contact',
     },
     overrideAccess: true,
@@ -155,7 +154,7 @@ async function seed() {
           links: [
             { label: 'About', href: '/about' },
             { label: 'Our Approach', href: '/about/our-approach' },
-            { label: 'Research & Innovation', href: '/ai-research-lab' },
+            { label: 'Research', href: '/ai-research-lab' },
             { label: 'Collaborations', href: '/ai-research-lab/collaborations' },
             { label: 'Careers', href: '/careers' },
             { label: 'Contact', href: '/contact' },
@@ -164,7 +163,7 @@ async function seed() {
         {
           title: 'Capabilities',
           links: [
-            { label: 'Services', href: '/services' },
+            { label: 'All capabilities', href: '/services' },
             { label: 'Solutions', href: '/solutions' },
             { label: 'Industries', href: '/industries' },
             { label: 'Technologies', href: '/technologies' },
@@ -555,17 +554,28 @@ async function seed() {
           body: 'Modernize technology ecosystems through architecture, cloud, software engineering, automation and digital transformation.',
         },
         {
-          title: 'Healthcare & Life Sciences',
-          body: 'Specialized expertise applying AI and data science to clinical research, healthcare analytics and life-sciences workflows.',
+          title: 'Data Engineering & Cloud',
+          body: 'Design scalable data architectures, lakes, warehouses, pipelines, and MLOps infrastructure on the cloud.',
+        },
+        {
+          title: 'Healthcare & Clinical Data Science',
+          body: 'Specialized clinical SAS, CDISC standards, and analytics for regulated life sciences and care delivery.',
         },
       ],
     },
     {
       blockType: 'storyCapabilities' as const,
       eyebrow: 'Capabilities',
-      heading: 'How we help — and what problems we solve.',
+      heading: 'How we help — five practice areas.',
       subheading:
-        'Services are how we work. Solutions are the business problems we solve across AI, data, consulting and healthcare specialty programs.',
+        'Capabilities are how we work. Solutions are the business problems we solve across AI, data, consulting, and healthcare specialty programs.',
+    },
+    {
+      blockType: 'storySolutions' as const,
+      eyebrow: 'Solutions',
+      heading: 'What we solve — outcome themes for enterprise programs.',
+      subheading:
+        'Nine solution areas package our capabilities into business-ready programs — from enterprise AI and automation to data platforms and clinical intelligence.',
     },
     {
       blockType: 'storyTechOrbit' as const,

@@ -2,7 +2,7 @@ import { SolutionsPageHero } from '@/components/marketing/PageHeroes'
 import { HubLinkStrip } from '@/components/content/HubLinkStrip'
 import { SolutionsChallengeSelector } from '@/components/solutions/SolutionsChallengeSelector'
 import { listPublished } from '@/lib/cms'
-import { FALLBACK_SERVICES } from '@/lib/fallback-data'
+import { mergePublishedServices } from '@/lib/services-catalog'
 import { resolveLinkedServices } from '@/lib/solution-service-links'
 import { mergePublishedSolutions } from '@/lib/solutions-catalog'
 import { buildMetadata } from '@/lib/seo'
@@ -46,7 +46,7 @@ export default async function SolutionsPage() {
     listPublished<SolutionDoc>('solutions', { sort: 'order' }),
     listPublished<ServiceDoc>('services', { sort: 'order' }),
   ])
-  const serviceCatalog = services.length ? services : FALLBACK_SERVICES
+  const serviceCatalog = mergePublishedServices(services)
   const merged = mergePublishedSolutions(solutions)
   const items = merged.map((s) => {
     const challenges =
