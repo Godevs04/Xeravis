@@ -14,6 +14,8 @@ type TeamMemberDoc = {
   bio?: string | null
   photo?: unknown
   linkedIn?: string | null
+  expertise?: string | null
+  researchInterests?: string | null
 }
 
 type TeamGridProps = {
@@ -39,7 +41,9 @@ export async function TeamGrid({ heading }: TeamGridProps) {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h2>
         </AnimateIn>
         {members.length === 0 ? (
-          <p className="mt-8 text-secondary">Leadership profiles will appear here once published.</p>
+          <p className="text-secondary mt-8">
+            Leadership profiles will appear here once published.
+          </p>
         ) : (
           <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {members.map((member, index) => {
@@ -48,23 +52,43 @@ export async function TeamGrid({ heading }: TeamGridProps) {
                 <AnimateIn key={member.id} delay={index * 0.05}>
                   <article>
                     {photoUrl ? (
-                      <div className="relative mb-5 aspect-[4/5] overflow-hidden bg-surface">
+                      <div className="bg-surface relative mb-5 aspect-[4/5] overflow-hidden">
                         <Image
                           src={photoUrl}
-                          alt={getMediaAlt(member.photo as Parameters<typeof getMediaAlt>[0], member.name)}
+                          alt={getMediaAlt(
+                            member.photo as Parameters<typeof getMediaAlt>[0],
+                            member.name,
+                          )}
                           fill
                           className="object-cover"
                           sizes="(max-width: 768px) 50vw, 25vw"
                         />
                       </div>
                     ) : (
-                      <div className="mb-5 aspect-[4/5] bg-surface" />
+                      <div className="bg-surface mb-5 aspect-[4/5]" />
                     )}
-                    <h3 className="text-lg font-semibold text-primary">{member.name}</h3>
-                    <p className="text-sm text-muted">{member.role}</p>
-                    {member.bio && <p className="mt-3 text-sm leading-relaxed text-secondary">{member.bio}</p>}
+                    <h3 className="text-primary text-lg font-semibold">{member.name}</h3>
+                    <p className="text-muted text-sm">{member.role}</p>
+                    {member.bio && (
+                      <p className="text-secondary mt-3 text-sm leading-relaxed">{member.bio}</p>
+                    )}
+                    {member.expertise && (
+                      <p className="text-secondary mt-3 text-sm">
+                        <span className="text-primary font-semibold">Expertise: </span>
+                        {member.expertise}
+                      </p>
+                    )}
+                    {member.researchInterests && (
+                      <p className="text-secondary mt-2 text-sm">
+                        <span className="text-primary font-semibold">Research: </span>
+                        {member.researchInterests}
+                      </p>
+                    )}
                     {member.linkedIn && (
-                      <Link href={member.linkedIn} className="mt-3 inline-block text-sm font-medium text-accent hover:underline">
+                      <Link
+                        href={member.linkedIn}
+                        className="text-accent mt-3 inline-block text-sm font-medium hover:underline"
+                      >
                         LinkedIn
                       </Link>
                     )}

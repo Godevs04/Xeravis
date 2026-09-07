@@ -15,6 +15,10 @@ const EASE = [0.22, 1, 0.36, 1] as const
 type BaseHero = {
   title: string
   subtitle?: string
+  primaryCtaLabel?: string
+  primaryCtaHref?: string
+  secondaryCtaLabel?: string
+  secondaryCtaHref?: string
 }
 
 /** Services — capability masthead + glass ribbon */
@@ -235,108 +239,79 @@ export function CareersPageHero({ title, subtitle }: BaseHero) {
   )
 }
 
-/** About — brand masthead with mesh atmosphere */
-export function AboutPageHero({ title, subtitle }: BaseHero) {
+/** About — headline, supporting copy, and primary CTAs (no service repeat). */
+export function AboutPageHero({
+  title,
+  subtitle,
+  primaryCtaLabel = 'Explore Our Capabilities',
+  primaryCtaHref = '/services',
+  secondaryCtaLabel = 'Work With Us',
+  secondaryCtaHref = '/contact?intent=business',
+}: BaseHero) {
   const reduce = useReducedMotion()
-  const domains = [
-    'Artificial Intelligence',
-    'Data Science',
-    'IT Consulting',
-    'Healthcare Specialty',
-  ]
 
   return (
     <MeshBackdrop className="pt-28 pb-20 lg:pt-36 lg:pb-28" interactive={false}>
       <Container>
-        <div className="grid items-end gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
-          <div>
-            <motion.p
-              className="font-display text-2xl font-bold tracking-[-0.03em] text-[color:var(--color-accent)] sm:text-3xl"
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE }}
-            >
-              Xelarvis
-            </motion.p>
-            <motion.p
-              className="mt-3 text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)]/80 uppercase"
-              initial={reduce ? false : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.04, ease: EASE }}
-            >
-              About
-            </motion.p>
-            <motion.h1
-              className="font-display mt-5 max-w-3xl text-[clamp(2.2rem,5vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.08, ease: EASE }}
-            >
-              {title}
-            </motion.h1>
-            {subtitle ? (
-              <motion.p
-                className="mt-6 max-w-xl border-l-2 border-teal-400/60 pl-5 text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg"
-                initial={reduce ? false : { opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.14, ease: EASE }}
-              >
-                {subtitle}
-              </motion.p>
-            ) : null}
-            <motion.div
-              className="mt-8 flex flex-wrap gap-3"
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
-            >
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-7 font-semibold text-white shadow-[0_0_32px_rgba(13,148,136,0.4)] hover:from-teal-400 hover:to-cyan-400"
-              >
-                <Link href="/contact">
-                  Talk to us
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-7 font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/40 hover:bg-[color:var(--color-hover)]"
-              >
-                <Link href="/about/our-approach">Our Approach</Link>
-              </Button>
-            </motion.div>
-          </div>
-
-          <motion.div
-            className="relative overflow-hidden rounded-[28px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] p-6 backdrop-blur-xl sm:p-7"
-            initial={reduce ? false : { opacity: 0, y: 20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.65, delay: 0.18, ease: EASE }}
+        <div className="max-w-3xl">
+          <motion.p
+            className="font-display text-2xl font-bold tracking-[-0.03em] text-[color:var(--color-accent)] sm:text-3xl"
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
           >
-            <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-accent)] uppercase">
-              What we do
-            </p>
-            <ul className="mt-5 space-y-3">
-              {domains.map((d, i) => (
-                <motion.li
-                  key={d}
-                  className="flex items-center gap-3 rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--color-hover)] px-4 py-3 text-sm font-medium text-[color:var(--hero-text)]"
-                  initial={reduce ? false : { opacity: 0, x: 12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.28 + i * 0.06, duration: 0.4, ease: EASE }}
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.8)]" />
-                  {d}
-                </motion.li>
-              ))}
-            </ul>
-            <p className="mt-6 border-t border-[color:var(--hero-panel-border)] pt-5 text-xs leading-relaxed text-[color:var(--hero-muted)]">
-              Discover → Strategize → Design → Build → Deploy → Optimize
-            </p>
+            Xelarvis
+          </motion.p>
+          <motion.p
+            className="mt-3 text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)]/80 uppercase"
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.04, ease: EASE }}
+          >
+            About
+          </motion.p>
+          <motion.h1
+            className="font-display mt-5 text-[clamp(2.2rem,5vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.08, ease: EASE }}
+          >
+            {title}
+          </motion.h1>
+          {subtitle ? (
+            <motion.p
+              className="mt-6 max-w-2xl border-l-2 border-teal-400/60 pl-5 text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg"
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.14, ease: EASE }}
+            >
+              {subtitle}
+            </motion.p>
+          ) : null}
+          <motion.div
+            className="mt-8 flex flex-wrap gap-3"
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
+          >
+            <Button
+              asChild
+              size="lg"
+              className="rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-7 font-semibold text-white shadow-[0_0_32px_rgba(13,148,136,0.4)] hover:from-teal-400 hover:to-cyan-400"
+            >
+              <Link href={primaryCtaHref}>
+                {primaryCtaLabel}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-7 font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/40 hover:bg-[color:var(--color-hover)]"
+            >
+              <Link href={secondaryCtaHref}>{secondaryCtaLabel}</Link>
+            </Button>
           </motion.div>
         </div>
       </Container>

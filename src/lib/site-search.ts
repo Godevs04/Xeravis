@@ -41,7 +41,7 @@ const STATIC_PAGES: SiteSearchResult[] = [
     title: 'About XELARVIS',
     href: '/about',
     kind: 'pages',
-    excerpt: 'Company overview, mission, and leadership.',
+    excerpt: 'Who we are, how we think, and how XELARVIS connects research to production delivery.',
   },
   {
     id: 'page-services',
