@@ -49,7 +49,7 @@ export function StoryHeroMotion() {
         <div className="mx-auto flex h-full w-full max-w-[1400px] items-center px-4 sm:px-6 lg:px-8">
           <div className="grid w-full items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 xl:gap-10">
             <div className="hidden lg:block" />
-            <div className="relative mx-auto aspect-[5/4] w-full max-w-2xl overflow-visible lg:max-w-none">
+            <div className="relative mx-auto aspect-[5/4] w-full max-w-2xl overflow-visible p-3 sm:p-4 lg:max-w-none">
               <div className="pointer-events-auto h-full w-full">
                 <HeroProductVisual scrollProgress={scrollYProgress} />
               </div>

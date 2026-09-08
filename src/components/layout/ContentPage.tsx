@@ -10,12 +10,14 @@ type ContentPageProps = {
   page: ContentPageDef
   related?: { label: string; href: string }[]
   cta?: { label: string; href: string }
+  secondaryCta?: { label: string; href: string }
 }
 
 export function ContentPage({
   page,
   related,
-  cta = { label: 'Talk to us', href: '/contact' },
+  cta = { label: 'Work With Us', href: '/contact?intent=business' },
+  secondaryCta = { label: 'Explore capabilities', href: '/services' },
 }: ContentPageProps) {
   return (
     <>
@@ -28,7 +30,7 @@ export function ContentPage({
         variant="default"
         ctas={[
           { label: cta.label, href: cta.href, variant: 'accent' },
-          { label: 'Explore services', href: '/services', variant: 'outline' },
+          { label: secondaryCta.label, href: secondaryCta.href, variant: 'outline' },
         ]}
       />
       {page.sections.map((section) => (
@@ -61,6 +63,9 @@ export function ContentPage({
           <Container>
             <h2 className="font-display text-primary text-xl font-semibold">Explore more</h2>
             <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild variant="outline" className="rounded-full">
+                <Link href="/about">About XELARVIS</Link>
+              </Button>
               {related.map((item) => (
                 <Button key={item.href} asChild variant="outline" className="rounded-full">
                   <Link href={item.href}>{item.label}</Link>

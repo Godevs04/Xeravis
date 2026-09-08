@@ -153,7 +153,7 @@ async function seed() {
           title: 'About',
           links: [
             { label: 'About', href: '/about' },
-            { label: 'Our Approach', href: '/about/our-approach' },
+            { label: 'How We Think', href: '/about/our-approach' },
             { label: 'Research', href: '/ai-research-lab' },
             { label: 'Collaborations', href: '/ai-research-lab/collaborations' },
             { label: 'Careers', href: '/careers' },

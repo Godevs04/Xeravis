@@ -1,13 +1,13 @@
 import { AboutPageContent } from '@/components/about/AboutPageContent'
 import { AboutPageHero } from '@/components/marketing/PageHeroes'
+import { ABOUT_HERO } from '@/lib/about-content'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
 export const metadata = buildMetadata({
   title: 'About XELARVIS',
-  description:
-    'XELARVIS is an AI, data and technology company helping organizations transform complex data and technology challenges into scalable, measurable solutions.',
+  description: ABOUT_HERO.subtitle,
   path: '/about',
 })
 
@@ -15,8 +15,12 @@ export default function AboutPage() {
   return (
     <>
       <AboutPageHero
-        title="Engineering Intelligence for a Data-Driven World"
-        subtitle="XELARVIS is an AI, data and technology company focused on helping organizations transform complex data and technology challenges into scalable, measurable solutions."
+        title={ABOUT_HERO.title}
+        subtitle={ABOUT_HERO.subtitle}
+        primaryCtaLabel={ABOUT_HERO.primaryCta.label}
+        primaryCtaHref={ABOUT_HERO.primaryCta.href}
+        secondaryCtaLabel={ABOUT_HERO.secondaryCta.label}
+        secondaryCtaHref={ABOUT_HERO.secondaryCta.href}
       />
       <AboutPageContent />
     </>

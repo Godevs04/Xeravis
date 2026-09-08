@@ -1,45 +1,57 @@
 import type { MegaMenuItem } from '@/components/layout/MegaMenu'
+import {
+  DIFFERENTIATORS,
+  HEALTHCARE_SPECIALTY,
+  HOW_WE_THINK,
+  LEADERSHIP,
+  MISSION,
+  RESEARCH,
+  TECHNOLOGY_BRIDGE,
+  VISION,
+  WHO_WE_ARE,
+  toBulletSections,
+} from '@/lib/about-content'
 
 export const ABOUT_MEGA: MegaMenuItem[] = [
   {
-    label: 'Company Overview',
+    label: 'Who We Are',
     href: '/about/company-overview',
-    description: 'Who we are and what we deliver.',
+    description: 'Philosophy behind our capabilities — not a services catalog.',
   },
   {
     label: 'Vision & Mission',
     href: '/about/vision-mission',
-    description: 'Our purpose and long-term direction.',
+    description: 'Why we exist and where we are headed.',
+  },
+  {
+    label: 'What Makes Us Different',
+    href: '/about/why-xelarvis',
+    description: 'Business-model differentiators that matter in delivery.',
+  },
+  {
+    label: 'How We Think',
+    href: '/about/our-approach',
+    description: 'Principles that guide every engagement.',
+  },
+  {
+    label: 'Research Meets Engineering',
+    href: '/about/research-philosophy',
+    description: 'Research with a path to production.',
+  },
+  {
+    label: 'Domain Expertise',
+    href: '/about/domain-expertise',
+    description: 'Healthcare & clinical data as a specialty practice.',
+  },
+  {
+    label: 'Company Facts',
+    href: '/about/global-presence',
+    description: 'Verified company information only.',
   },
   {
     label: 'Leadership',
     href: '/about/leadership',
-    description: 'The people guiding XELARVIS.',
-  },
-  {
-    label: 'Technology & Innovation',
-    href: '/about/technology-innovation',
-    description: 'How we build and advance technology.',
-  },
-  {
-    label: 'Our Approach',
-    href: '/about/our-approach',
-    description: 'Delivery principles from discovery to production.',
-  },
-  {
-    label: 'Research Philosophy',
-    href: '/about/research-philosophy',
-    description: 'Research that ships with rigor and responsibility.',
-  },
-  {
-    label: 'Why XELARVIS',
-    href: '/about/why-xelarvis',
-    description: 'What makes our partnership different.',
-  },
-  {
-    label: 'Global Presence',
-    href: '/about/global-presence',
-    description: 'Where we work and collaborate.',
+    description: 'Published leadership profiles from the CMS.',
   },
 ]
 
@@ -132,199 +144,133 @@ export const ABOUT_PAGES: ContentPageDef[] = [
   {
     slug: 'company-overview',
     path: '/about/company-overview',
-    eyebrow: 'About Us',
-    title: 'About XELARVIS',
-    subtitle:
-      'XELARVIS is an AI, Data Science and IT Consulting company focused on helping organizations turn data and technology into measurable business value—with specialized expertise in Healthcare & Life Sciences.',
+    eyebrow: 'About',
+    title: WHO_WE_ARE.title,
+    subtitle: WHO_WE_ARE.intro,
     sections: [
       {
-        heading: 'What we do',
-        body: 'We help organizations solve complex data and technology challenges through three primary pillars: Artificial Intelligence, Data Science & Analytics, and IT Consulting & Digital Transformation. Healthcare & Life Sciences is a specialized practice—not our lead brand identity.',
-        bullets: [
-          'Artificial Intelligence — machine learning, generative AI, agents, NLP, and computer vision',
-          'Data Science & Analytics — modeling, forecasting, BI, and decision intelligence',
-          'IT Consulting & Digital Transformation — architecture, modernization, cloud, and engineering',
-          'Specialty: Healthcare & Clinical Data Science — clinical programming, analytics, and regulated AI',
-        ],
+        heading: 'What we stand for',
+        body: WHO_WE_ARE.span,
       },
+      ...WHO_WE_ARE.pillars.map((pillar) => ({
+        heading: pillar.title,
+        body: pillar.description,
+      })),
       {
-        heading: 'How we work',
-        body: 'Engagements follow a clear path from problem to production: research and discovery, strategy, design, build, deploy, and continuous optimization. Senior practitioners stay accountable across the lifecycle so solutions are accurate, secure, and operable.',
-      },
-      {
-        heading: 'What makes us different',
-        body: 'We combine research rigor with consulting-led delivery—closer in craft to enterprise AI and technology consulting organizations than to a typical software agency.',
-        bullets: [
-          'Research-driven — methods grounded in evaluation and continuous learning',
-          'Engineering-led — architecture and delivery that survive production',
-          'Outcome-focused — a credible path from problem to measurable business value',
-          'Industry-aware — enterprise delivery across sectors, with depth in Healthcare & Life Sciences',
-        ],
+        heading: 'Explore further',
+        body: 'The Services page explains our five capabilities in depth. About introduces the philosophy — then links you there.',
       },
     ],
   },
   {
     slug: 'vision-mission',
     path: '/about/vision-mission',
-    eyebrow: 'About Us',
+    eyebrow: 'About',
     title: 'Vision & Mission',
-    subtitle: 'Guiding how XELARVIS builds intelligent, scalable, and trustworthy technology.',
+    subtitle: 'Why XELARVIS exists and how we measure progress.',
     sections: [
       {
-        heading: 'Vision',
-        body: 'Be a trusted partner for AI, data and technology transformation across industries—with depth where regulated and research-intensive work demands it.',
+        heading: MISSION.title,
+        body: `${MISSION.statement} ${MISSION.detail}`,
       },
       {
-        heading: 'Mission',
-        body: 'Help organisations turn complex data and technology challenges into measurable outcomes through Artificial Intelligence, Data Science and IT Consulting.',
-      },
-    ],
-  },
-  {
-    slug: 'leadership',
-    path: '/about/leadership',
-    eyebrow: 'About Us',
-    title: 'Leadership',
-    subtitle: 'Senior practitioners who combine research depth with delivery discipline.',
-    sections: [
-      {
-        heading: 'How we lead',
-        body: 'XELARVIS leadership emphasizes clarity, accountable ownership, and research-informed engineering. Our leaders stay close to client outcomes — from discovery through production.',
-        bullets: [
-          'Hands-on architecture and delivery oversight',
-          'Ethics, quality, and governance in AI and data work',
-          'Mentorship and continuous learning culture',
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'technology-innovation',
-    path: '/about/technology-innovation',
-    eyebrow: 'About Us',
-    title: 'Technology & Innovation',
-    subtitle:
-      'We invest in modern stacks, applied research, and engineering practices that turn ideas into production systems.',
-    sections: [
-      {
-        heading: 'How we innovate',
-        body: 'XELARVIS advances technology through a dual track: applied AI research and enterprise-grade engineering. We evaluate emerging methods, validate them with clear metrics, and productize what proves reliable in real workflows.',
-        bullets: [
-          'AI, ML, generative AI, agents, and intelligent automation',
-          'Data science, analytics platforms, and decision intelligence',
-          'Cloud-native data engineering, platforms, and MLOps',
-          'IT consulting, application modernization, and secure enterprise software',
-          'Specialty depth in clinical data science and healthcare analytics where required',
-        ],
+        heading: 'Positioning',
+        body: MISSION.positioning,
       },
       {
-        heading: 'From lab to production',
-        body: 'Innovation is measured by outcomes — accuracy, governance readiness, operability, and business value — not demos. Successful prototypes move into governed delivery with monitoring and continuous improvement.',
-      },
-    ],
-  },
-  {
-    slug: 'our-approach',
-    path: '/about/our-approach',
-    eyebrow: 'XELARVIS Delivery Framework',
-    title: 'Our Approach',
-    subtitle: 'A consulting + engineering methodology from business problem to measurable results.',
-    sections: [
-      {
-        heading: '01 — Discover',
-        body: 'Understand the business problem, stakeholders, constraints, and success criteria.',
-      },
-      {
-        heading: '02 — Strategize',
-        body: 'Define the AI, data and technology roadmap aligned to outcomes and readiness.',
-      },
-      {
-        heading: '03 — Design',
-        body: 'Architect scalable solutions, data flows, governance, and delivery plans.',
-      },
-      {
-        heading: '04 — Build',
-        body: 'Develop models, platforms, and applications with quality and security built in.',
-      },
-      {
-        heading: '05 — Deploy',
-        body: 'Ship to production with monitoring, documentation, and operational readiness.',
-      },
-      {
-        heading: '06 — Optimize',
-        body: 'Measure outcomes, refine performance, and expand what works across the organization.',
-      },
-    ],
-  },
-  {
-    slug: 'research-philosophy',
-    path: '/about/research-philosophy',
-    eyebrow: 'About Us',
-    title: 'Research Philosophy',
-    subtitle: 'Research with rigor, ethics, and a path to real-world impact.',
-    sections: [
-      {
-        heading: 'What guides our research',
-        body: 'XELARVIS treats research as a disciplined practice: define the question, evaluate methods honestly, document assumptions, and ship only what meets quality and safety bars.',
-        bullets: [
-          'Evidence over hype — evaluate models with clear metrics',
-          'Responsible AI — bias, privacy, safety, and human oversight',
-          'Production path — methods that transfer into governed delivery',
-          'Domain depth where it matters — including healthcare as a specialty',
-          'Open collaboration — academia, industry, and open source where appropriate',
-        ],
-      },
-      {
-        heading: 'Impact orientation',
-        body: 'We publish and share methods that help teams adopt AI safely in enterprise and regulated environments, while keeping a direct line from research insights to client delivery.',
+        heading: VISION.title,
+        body: VISION.statement,
       },
     ],
   },
   {
     slug: 'why-xelarvis',
     path: '/about/why-xelarvis',
-    eyebrow: 'About Us',
-    title: 'Why XELARVIS',
+    eyebrow: 'About',
+    title: 'What makes XELARVIS different',
     subtitle:
-      'Enterprise buyers look for clarity, evidence, expertise, governance, and a credible path from problem to measurable outcome.',
+      'Differentiators tied to our business model — not generic innovation or excellence claims.',
+    sections: toBulletSections(DIFFERENTIATORS),
+  },
+  {
+    slug: 'our-approach',
+    path: '/about/our-approach',
+    eyebrow: 'About',
+    title: 'How we think',
+    subtitle: 'Principles that guide how XELARVIS approaches complex technology challenges.',
+    sections: toBulletSections(HOW_WE_THINK),
+  },
+  {
+    slug: 'research-philosophy',
+    path: '/about/research-philosophy',
+    eyebrow: 'About',
+    title: RESEARCH.title,
+    subtitle: RESEARCH.body,
     sections: [
       {
-        heading: 'What sets us apart',
-        body: 'We combine research-driven methods with practical engineering so solutions are accurate, governed, and ready for production—without overstating scale or inventing credentials.',
-        bullets: [
-          'Clarity — honest positioning across AI, data science, and IT consulting',
-          'Evidence — rigorous evaluation and delivery you can inspect',
-          'Expertise — practitioners who stay accountable from strategy to optimize',
-          'Governance — responsible AI, security, and quality built into delivery',
-          'Specialty depth — Healthcare & Clinical Data Science when regulated work demands it',
-          'End-to-end path — Discover → Strategize → Design → Build → Deploy → Optimize',
-        ],
+        heading: 'About → Research → Capabilities → Solutions',
+        body: 'Research informs how we evaluate, govern and deploy AI — without turning About into a research catalog. Explore the research lab for methods, publications and collaborations.',
+      },
+    ],
+  },
+  {
+    slug: 'domain-expertise',
+    path: '/about/domain-expertise',
+    eyebrow: 'About',
+    title: HEALTHCARE_SPECIALTY.title,
+    subtitle: HEALTHCARE_SPECIALTY.body,
+    sections: [
+      {
+        heading: 'Specialty, not the whole brand',
+        body: HEALTHCARE_SPECIALTY.note,
+      },
+    ],
+  },
+  {
+    slug: 'technology-innovation',
+    path: '/about/technology-innovation',
+    eyebrow: 'About',
+    title: TECHNOLOGY_BRIDGE.title,
+    subtitle: TECHNOLOGY_BRIDGE.body,
+    sections: [
+      {
+        heading: 'Where technology belongs',
+        body: 'Technology stacks are contextual — surfaced on Services and Solutions pages from the master catalog, not as a logo wall on About.',
       },
     ],
   },
   {
     slug: 'global-presence',
     path: '/about/global-presence',
-    eyebrow: 'About Us',
-    title: 'Global Presence',
-    subtitle:
-      'Collaborating with teams and clients across regions while staying rooted in delivery excellence.',
+    eyebrow: 'About',
+    title: 'Verified company facts',
+    subtitle: 'Only substantiated information — no placeholder counters or inflated claims.',
     sections: [
       {
-        heading: 'Where we work',
-        body: 'XELARVIS supports organizations across industries—without positioning healthcare as the only market we serve. Delivery hubs and remote collaboration models connect client teams with our practitioners.',
-        bullets: [
-          'Banks and financial services',
-          'Manufacturers and industrial operators',
-          'Retail and e-commerce organizations',
-          'Technology companies',
-          'Healthcare organizations',
-          'Pharmaceutical companies',
-          'Universities and research institutions',
-          'Government and public-sector programs',
-        ],
+        heading: 'Company',
+        body: 'XELARVIS Private Limited',
+      },
+      {
+        heading: 'Headquarters',
+        body: 'Hyderabad, India',
+      },
+      {
+        heading: 'Focus',
+        body: 'AI • Data • Technology • Healthcare',
+      },
+      {
+        heading: 'Practice scope',
+        body: 'Five core capabilities, nine solution areas, and industry programs across sectors including healthcare, financial services, manufacturing, and technology — linked from Capabilities, Solutions, and Industries hubs.',
       },
     ],
+  },
+  {
+    slug: 'leadership',
+    path: '/about/leadership',
+    eyebrow: 'About',
+    title: LEADERSHIP.title,
+    subtitle: LEADERSHIP.intro,
+    sections: [],
   },
 ]
 

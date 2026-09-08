@@ -1492,6 +1492,14 @@ export interface TeamMember {
    */
   order?: number | null
   linkedIn?: string | null
+  /**
+   * Short expertise areas (e.g. AI strategy, clinical data).
+   */
+  expertise?: string | null
+  /**
+   * Optional — relevant for research-facing leadership profiles.
+   */
+  researchInterests?: string | null
   updatedAt: string
   createdAt: string
 }
@@ -2875,6 +2883,8 @@ export interface TeamMembersSelect<T extends boolean = true> {
   photo?: T
   order?: T
   linkedIn?: T
+  expertise?: T
+  researchInterests?: T
   updatedAt?: T
   createdAt?: T
 }
