@@ -1,82 +1,24 @@
-import { RenderBlocks, type PageBlock } from '@/blocks/RenderBlocks'
-import { AboutExploreStrip } from '@/components/about/AboutExploreStrip'
+import { AboutPageContent } from '@/components/about/AboutPageContent'
 import { AboutPageHero } from '@/components/marketing/PageHeroes'
-import { safePayload } from '@/lib/cms'
-import { FALLBACK_ABOUT_BLOCKS } from '@/lib/fallback-data'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
-type AboutPageDoc = {
-  title?: string
-  layout?: PageBlock[]
-  meta?: { title?: string; description?: string; image?: unknown }
-  _status?: string | null
-}
+export const metadata = buildMetadata({
+  title: 'About XELARVIS',
+  description:
+    'XELARVIS is an AI, data and technology company helping organizations transform complex data and technology challenges into scalable, measurable solutions.',
+  path: '/about',
+})
 
-async function loadAboutPage() {
-  return safePayload(async (payload) => {
-    const result = await payload.find({
-      collection: 'pages',
-      where: {
-        slug: { equals: 'about' },
-      },
-      limit: 1,
-      depth: 2,
-      draft: false,
-      overrideAccess: true,
-    })
-
-    let doc = result.docs[0] as AboutPageDoc | undefined
-
-    if (!doc?.layout?.length) {
-      const draftResult = await payload.find({
-        collection: 'pages',
-        where: { slug: { equals: 'about' } },
-        limit: 1,
-        depth: 2,
-        draft: true,
-        overrideAccess: true,
-      })
-      doc = draftResult.docs[0] as AboutPageDoc | undefined
-    }
-
-    if (!doc?.layout?.length) return null
-    if (doc._status && doc._status !== 'published' && process.env.NODE_ENV === 'production') {
-      return null
-    }
-    return doc
-  })
-}
-
-function withoutHeroBlocks(blocks: PageBlock[]) {
-  return blocks.filter((b) => b.blockType !== 'hero' && b.blockType !== 'storyHero')
-}
-
-export async function generateMetadata() {
-  const page = await loadAboutPage()
-  return buildMetadata({
-    title: page?.meta?.title || page?.title || 'About',
-    description:
-      page?.meta?.description ||
-      'Learn about XELARVIS—an AI, Data Science and IT Consulting company with specialized Healthcare & Life Sciences expertise.',
-    image: page?.meta?.image,
-    path: '/about',
-  })
-}
-
-export default async function AboutPage() {
-  const page = await loadAboutPage()
-  const raw = page?.layout?.length ? page.layout : (FALLBACK_ABOUT_BLOCKS as unknown as PageBlock[])
-
+export default function AboutPage() {
   return (
     <>
       <AboutPageHero
-        title="AI, Data Science and IT Consulting"
-        subtitle="XELARVIS helps organizations turn data and technology into measurable business value—with specialized expertise in Healthcare & Life Sciences."
+        title="Engineering Intelligence for a Data-Driven World"
+        subtitle="XELARVIS is an AI, data and technology company focused on helping organizations transform complex data and technology challenges into scalable, measurable solutions."
       />
-      <AboutExploreStrip />
-      <RenderBlocks blocks={withoutHeroBlocks(raw)} />
+      <AboutPageContent />
     </>
   )
 }

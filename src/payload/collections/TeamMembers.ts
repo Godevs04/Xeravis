@@ -52,5 +52,17 @@ export const TeamMembers: CollectionConfig = {
       type: 'text',
       label: 'LinkedIn URL',
     },
+    {
+      name: 'expertise',
+      type: 'text',
+      label: 'Expertise',
+      admin: { description: 'Short expertise areas (e.g. AI strategy, clinical data).' },
+    },
+    {
+      name: 'researchInterests',
+      type: 'textarea',
+      label: 'Research interests',
+      admin: { description: 'Optional — relevant for research-facing leadership profiles.' },
+    },
   ],
 }

@@ -309,54 +309,7 @@ export const FALLBACK_BLOG_POSTS = [
   },
 ]
 
-export const FALLBACK_ABOUT_BLOCKS = [
-  {
-    blockType: 'aboutPreview',
-    heading: 'About XELARVIS',
-    body: 'XELARVIS is an AI, Data Science and IT Consulting company focused on helping organizations turn data and technology into measurable business value—with specialized expertise in Healthcare & Life Sciences.',
-    cta: { label: 'Our Approach', href: '/about/our-approach', style: 'secondary' },
-  },
-  {
-    blockType: 'missionVision',
-    heading: 'Vision & Mission',
-    missionTitle: 'Mission',
-    missionBody:
-      'Help organisations turn complex data and technology challenges into measurable outcomes through Artificial Intelligence, Data Science and IT Consulting.',
-    visionTitle: 'Vision',
-    visionBody:
-      'Be a trusted partner for AI, data and technology transformation across industries.',
-  },
-  {
-    blockType: 'valuesGrid',
-    heading: 'What makes us different',
-    subheading: 'Research-driven. Engineering-led. Outcome-focused. Industry-aware.',
-    values: [
-      {
-        title: 'Research-driven',
-        description: 'Methods grounded in evaluation, responsible AI and continuous learning.',
-      },
-      {
-        title: 'Engineering-led',
-        description: 'Architecture, build and operate disciplines that survive production.',
-      },
-      {
-        title: 'Outcome-focused',
-        description: 'Clear path from problem to solution to measurable business value.',
-      },
-    ],
-  },
-  {
-    blockType: 'teamGrid',
-    heading: 'Leadership',
-  },
-  {
-    blockType: 'ctaBand',
-    heading: 'Work with us',
-    subheading: 'Explore open roles or start a project conversation.',
-    ctaLabel: 'Contact',
-    ctaHref: '/contact',
-  },
-] as const
+export const FALLBACK_ABOUT_BLOCKS = [] as const
 
 export const FALLBACK_JOBS = [
   {
