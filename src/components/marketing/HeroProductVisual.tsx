@@ -25,7 +25,7 @@ const WIDGETS = [
     value: '94.2%',
     sub: 'Precision',
     icon: Stethoscope,
-    className: 'top-[4%] left-0 sm:-left-1',
+    position: 'top-left',
     delay: 0.85,
     float: 7,
   },
@@ -35,7 +35,7 @@ const WIDGETS = [
     value: 'Healthy',
     sub: '12 regions',
     icon: Radio,
-    className: 'top-0 right-0 sm:-right-1',
+    position: 'top-right',
     delay: 1,
     float: 8.5,
   },
@@ -45,21 +45,30 @@ const WIDGETS = [
     value: 'SOC 2',
     sub: 'Zero critical',
     icon: Lock,
-    className: 'bottom-[10%] left-0 sm:-left-1',
+    position: 'bottom-left',
     delay: 1.1,
     float: 9,
   },
   {
     id: 'gpu',
-    label: 'GPU / Inference',
+    label: 'Inference',
     value: '12ms',
     sub: 'p99 latency',
     icon: Cpu,
-    className: 'right-0 bottom-[6%] sm:-right-1',
+    position: 'bottom-right',
     delay: 1.2,
     float: 6.5,
   },
 ] as const
+
+const WIDGET_POSITION: Record<(typeof WIDGETS)[number]['position'], string> = {
+  'top-left': 'top-0 left-0 -translate-x-1 translate-y-1 sm:-translate-x-2 sm:translate-y-0',
+  'top-right': 'top-0 right-0 translate-x-1 translate-y-1 sm:translate-x-2 sm:translate-y-0',
+  'bottom-left':
+    'bottom-0 left-0 -translate-x-1 -translate-y-1 sm:-translate-x-2 sm:-translate-y-0',
+  'bottom-right':
+    'bottom-0 right-0 translate-x-1 -translate-y-1 sm:translate-x-2 sm:-translate-y-0',
+}
 
 function CountUp({
   value,
@@ -198,7 +207,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
       <motion.div
         initial={false}
         animate={{ opacity: 1 }}
-        className="relative h-full w-full overflow-visible"
+        className="relative h-full w-full overflow-visible p-4 sm:p-5 md:p-6"
       >
         <motion.div
           style={{
@@ -209,8 +218,8 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
           }}
           className="relative z-10 h-full w-full overflow-visible will-change-transform"
         >
-          {/* Main glass dashboard — theme-aware product chrome */}
-          <div className="absolute inset-y-3 right-6 left-6 overflow-hidden rounded-[28px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] shadow-[var(--shadow-floating)] backdrop-blur-xl sm:inset-y-4 sm:right-10 sm:left-10 lg:right-12 lg:left-12 dark:border-white/15 dark:bg-[#0B1224]/88 dark:shadow-[0_28px_90px_rgba(0,0,0,0.55)]">
+          {/* Main glass dashboard — inset leaves symmetric room for corner widgets */}
+          <div className="absolute inset-5 overflow-hidden rounded-[28px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] shadow-[var(--shadow-floating)] backdrop-blur-xl sm:inset-6 md:inset-7 dark:border-white/15 dark:bg-[#0B1224]/88 dark:shadow-[0_28px_90px_rgba(0,0,0,0.55)]">
             {/* Moving light sheen */}
             {!reduce ? (
               <motion.div
@@ -226,7 +235,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
               <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
               <span className="ml-3 text-[11px] font-semibold tracking-[0.12em] text-[color:var(--hero-muted)] uppercase">
-                Xelarvis Control
+                XELARVIS Control
               </span>
               <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-[color:var(--color-accent-soft)] px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[color:var(--color-accent)] dark:text-[#5EEAD4]">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500 dark:bg-emerald-400" />
@@ -235,14 +244,14 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
             </div>
 
             <div className="grid h-[calc(100%-50px)] grid-cols-[64px_1fr] sm:grid-cols-[78px_1fr]">
-              <aside className="space-y-1.5 border-r border-[color:var(--hero-panel-border)] bg-[color:var(--color-neutral)]/70 p-2.5 sm:p-3 dark:border-white/10 dark:bg-[#0F172A]/80">
+              <aside className="flex flex-col gap-1.5 border-r border-[color:var(--hero-panel-border)] bg-[color:var(--color-neutral)]/70 p-2.5 sm:p-3 dark:border-white/10 dark:bg-[#0F172A]/80">
                 {['Ops', 'AI', 'Cloud', 'Data', 'Sec'].map((item, i) => (
                   <motion.div
                     key={item}
                     initial={reduce ? false : { opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + i * 0.05, duration: 0.4, ease: EASE }}
-                    className={`rounded-xl px-1.5 py-2 text-center text-[9px] font-bold tracking-wide sm:text-[10px] ${
+                    className={`flex min-h-[2.25rem] items-center justify-center rounded-xl px-1.5 py-2 text-[9px] font-bold tracking-wide sm:min-h-[2.5rem] sm:text-[10px] ${
                       i === 1
                         ? 'bg-gradient-to-br from-[#0D9488] to-[#06B6D4] text-white shadow-[0_8px_20px_rgba(13,148,136,0.45)]'
                         : 'bg-[color:var(--color-hover)] text-[color:var(--hero-muted)] dark:bg-white/5 dark:text-slate-400'
@@ -381,57 +390,57 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
               </div>
             </div>
           </div>
-        </motion.div>
 
-        {/* Floating widgets sit above the 3D panel so they never tuck behind it */}
-        {WIDGETS.map((w) => {
-          const Icon = w.icon
-          return (
-            <motion.div
-              key={w.id}
-              className={`pointer-events-auto absolute z-30 hidden max-w-[148px] sm:block ${w.className}`}
-              style={{ x: widgetShiftX, y: widgetShiftY }}
-              initial={reduce ? false : { opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: w.delay, duration: 0.5, ease: EASE }}
-            >
+          {/* Floating widgets — symmetric corners, inside 3D panel for aligned parallax */}
+          {WIDGETS.map((w) => {
+            const Icon = w.icon
+            return (
               <motion.div
-                animate={reduce ? undefined : { y: [0, -w.float, 0] }}
-                transition={
-                  reduce
-                    ? undefined
-                    : {
-                        delay: w.delay + 0.4,
-                        duration: w.float + 1.5,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }
-                }
-                whileHover={reduce ? undefined : { scale: 1.04 }}
-                className="relative"
+                key={w.id}
+                className={`pointer-events-auto absolute z-30 hidden sm:block ${WIDGET_POSITION[w.position]}`}
+                style={{ x: widgetShiftX, y: widgetShiftY }}
+                initial={reduce ? false : { opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: w.delay, duration: 0.5, ease: EASE }}
               >
-                <div className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-2.5 shadow-[var(--shadow-medium)] ring-1 ring-[color:var(--color-accent-soft)] backdrop-blur-xl transition-shadow hover:shadow-[var(--shadow-hover)] hover:ring-[color:var(--color-accent-glow)] dark:border-white/25 dark:bg-[#0B1224] dark:shadow-[0_18px_44px_rgba(0,0,0,0.55)] dark:ring-cyan-400/15 dark:hover:shadow-[0_18px_48px_rgba(13,148,136,0.32)] dark:hover:ring-cyan-300/30">
-                  <div className="flex items-center gap-2">
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-teal-500/20 to-cyan-500/15 text-[color:var(--color-accent)] dark:from-teal-500/30 dark:to-cyan-500/25 dark:text-cyan-200">
-                      <Icon className="h-3.5 w-3.5" aria-hidden />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="truncate text-[9px] font-bold tracking-[0.12em] text-[color:var(--hero-muted)] uppercase">
-                        {w.label}
-                      </p>
-                      <p className="font-display text-sm font-bold text-[color:var(--hero-text)]">
-                        {w.value}
-                      </p>
+                <motion.div
+                  animate={reduce ? undefined : { y: [0, -w.float, 0] }}
+                  transition={
+                    reduce
+                      ? undefined
+                      : {
+                          delay: w.delay + 0.4,
+                          duration: w.float + 1.5,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                        }
+                  }
+                  whileHover={reduce ? undefined : { scale: 1.04 }}
+                  className="relative"
+                >
+                  <div className="w-[148px] rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-2.5 shadow-[var(--shadow-medium)] ring-1 ring-[color:var(--color-accent-soft)] backdrop-blur-xl transition-shadow hover:shadow-[var(--shadow-hover)] hover:ring-[color:var(--color-accent-glow)] dark:border-white/25 dark:bg-[#0B1224] dark:shadow-[0_18px_44px_rgba(0,0,0,0.55)] dark:ring-cyan-400/15 dark:hover:shadow-[0_18px_48px_rgba(13,148,136,0.32)] dark:hover:ring-cyan-300/30">
+                    <div className="flex items-start gap-2">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-teal-500/20 to-cyan-500/15 text-[color:var(--color-accent)] dark:from-teal-500/30 dark:to-cyan-500/25 dark:text-cyan-200">
+                        <Icon className="h-3.5 w-3.5" aria-hidden />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[9px] font-bold tracking-[0.1em] text-[color:var(--hero-muted)] uppercase">
+                          {w.label}
+                        </p>
+                        <p className="font-display text-sm leading-tight font-bold text-[color:var(--hero-text)]">
+                          {w.value}
+                        </p>
+                        <p className="mt-0.5 text-[10px] leading-snug text-[color:var(--hero-muted)]">
+                          {w.sub}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <p className="mt-1 truncate pl-9 text-[10px] text-[color:var(--hero-muted)]">
-                    {w.sub}
-                  </p>
-                </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          )
-        })}
+            )
+          })}
+        </motion.div>
 
         <motion.div
           className="pointer-events-none absolute top-[42%] right-[2%] z-30 sm:hidden"
