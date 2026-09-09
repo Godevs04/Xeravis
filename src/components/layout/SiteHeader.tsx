@@ -42,7 +42,7 @@ const ABOUT_MENU: MegaMenuItem[] = [
     label: 'About XELARVIS',
     href: '/about',
     description:
-      'Engineering intelligence for a data-driven world — who we are, how we think, and what we deliver.',
+      'Who we are, how we think, and how AI, data and technology create measurable value.',
   },
   ...ABOUT_MEGA,
 ]

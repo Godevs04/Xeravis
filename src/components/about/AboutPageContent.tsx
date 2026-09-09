@@ -14,7 +14,6 @@ import {
   ABOUT_CAPABILITY_ORDER,
   CAREERS_CTA,
   COMPANY_FACTS_STATIC,
-  CONNECTED_HUBS,
   DIFFERENTIATORS,
   FEATURED_SOLUTION_LABELS,
   FEATURED_SOLUTION_SLUGS,
@@ -62,6 +61,11 @@ function TextLink({ href, children }: { href: string; children: ReactNode }) {
   )
 }
 
+/**
+ * About page body — locked to docs/chnagesofSep07.md §17 structure:
+ * Who We Are → Mission → Vision → Different → How We Think → Research →
+ * Domain Expertise → Facts → Leadership → Capabilities → Solutions → Careers → CTA
+ */
 export async function AboutPageContent() {
   const [services, solutions, industries] = await Promise.all([
     listPublished<ServiceDoc>('services', { sort: 'order' }),
@@ -80,19 +84,20 @@ export async function AboutPageContent() {
     solutionItems.find((s) => s.slug === slug),
   ).filter((s): s is SolutionDoc => Boolean(s))
 
-  const industryCount = industries.length || 11
+  const industryCount = industries.length > 0 ? industries.length : null
 
   const companyFacts = [
     { label: 'Company', value: COMPANY_FACTS_STATIC.company },
     { label: 'Headquarters', value: COMPANY_FACTS_STATIC.headquarters },
     { label: 'Focus', value: COMPANY_FACTS_STATIC.focus },
-    { label: 'Core Services', value: String(capabilityItems.length) },
+    { label: 'Core Services', value: String(capabilityItems.length || 5) },
     { label: 'Solution Areas', value: String(CANONICAL_SOLUTION_SLUGS.length) },
-    { label: 'Industries', value: String(industryCount) },
+    ...(industryCount ? [{ label: 'Industries', value: String(industryCount) }] : []),
   ]
 
   return (
     <>
+      {/* 02 Who We Are */}
       <Section>
         <Container>
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
@@ -127,6 +132,7 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 03 Our Mission */}
       <Section surface>
         <Container className="max-w-3xl">
           <AnimateIn>
@@ -144,6 +150,7 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 04 Our Vision */}
       <Section>
         <Container className="max-w-3xl">
           <AnimateIn>
@@ -157,9 +164,10 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 05 What Makes XELARVIS Different */}
       <Section surface>
         <Container>
-          <SectionHeader eyebrow="Differentiators" title="What makes XELARVIS different" />
+          <SectionHeader eyebrow="Differentiators" title="What Makes XELARVIS Different" />
           <ul className="mt-10 grid gap-5 sm:grid-cols-2">
             {DIFFERENTIATORS.map((item, index) => (
               <li key={item.title} className="list-none">
@@ -179,9 +187,10 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 06 How We Think */}
       <Section>
         <Container>
-          <SectionHeader eyebrow="Philosophy" title="How we think" />
+          <SectionHeader eyebrow="Philosophy" title="How We Think" />
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {HOW_WE_THINK.map((item, index) => (
               <li key={item.title} className="list-none">
@@ -204,6 +213,7 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 07 Research Meets Engineering */}
       <Section surface>
         <Container className="max-w-3xl">
           <AnimateIn>
@@ -215,6 +225,7 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 08 Domain Expertise */}
       <Section>
         <Container className="max-w-3xl">
           <AnimateIn>
@@ -232,11 +243,12 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 09 Verified Company Facts — no fake counters */}
       <Section surface>
         <Container>
           <SectionHeader
             eyebrow="Company"
-            title="Verified company facts"
+            title="Verified Company Facts"
             description="Only substantiated information — no placeholder counters or inflated claims."
           />
           <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -253,14 +265,19 @@ export async function AboutPageContent() {
               </AnimateIn>
             ))}
           </dl>
+          <div className="mt-8">
+            <TextLink href="/industries">Explore Industries</TextLink>
+          </div>
         </Container>
       </Section>
 
+      {/* 10 Leadership — renders only when CMS has genuine profiles */}
       <TeamGrid heading="Leadership" />
 
+      {/* 12 Explore Our Capabilities — titles + Learn More only (no long service copy) */}
       <Section surface>
         <Container>
-          <SectionHeader eyebrow="Capabilities" title="Explore our capabilities" />
+          <SectionHeader eyebrow="Capabilities" title="Explore Our Capabilities" />
           <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {capabilityItems.map((service, index) => (
               <li key={service.slug} className="list-none">
@@ -270,7 +287,7 @@ export async function AboutPageContent() {
                       <h3 className="font-display text-primary text-base font-semibold">
                         {service.title}
                       </h3>
-                      <span className="text-accent shrink-0 text-sm font-semibold">Learn more</span>
+                      <span className="text-accent shrink-0 text-sm font-semibold">Learn More</span>
                     </SpotlightCard>
                   </Link>
                 </AnimateIn>
@@ -280,9 +297,10 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 13 Solutions Built Around Business Challenges */}
       <Section>
         <Container>
-          <SectionHeader eyebrow="Solutions" title="Solutions built around business challenges" />
+          <SectionHeader eyebrow="Solutions" title="Solutions Built Around Business Challenges" />
           <ul className="mt-10 grid gap-3 sm:grid-cols-2">
             {featuredSolutions.map((solution, index) => (
               <li key={solution.slug} className="list-none">
@@ -292,7 +310,7 @@ export async function AboutPageContent() {
                       <h3 className="font-display text-primary text-lg font-semibold">
                         {FEATURED_SOLUTION_LABELS[solution.slug] ?? solution.title}
                       </h3>
-                      <span className="text-accent shrink-0 text-sm font-semibold">Learn more</span>
+                      <span className="text-accent shrink-0 text-sm font-semibold">Learn More</span>
                     </SpotlightCard>
                   </Link>
                 </AnimateIn>
@@ -305,29 +323,8 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 14 Careers */}
       <Section surface>
-        <Container>
-          <SectionHeader
-            eyebrow="Explore"
-            title="Connected pathways"
-            description="About connects to the hubs where XELARVIS capabilities, solutions and sector context come together."
-          />
-          <ul className="mt-8 flex flex-wrap gap-3">
-            {CONNECTED_HUBS.map((hub) => (
-              <li key={hub.href} className="list-none">
-                <Link
-                  href={hub.href}
-                  className="inline-flex rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-4 py-2 text-sm font-semibold text-[color:var(--color-primary)] transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
-                >
-                  {hub.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-
-      <Section>
         <Container>
           <AnimateIn>
             <div className="bg-dark rounded-[var(--radius-hero)] px-8 py-14 text-white md:px-14 md:py-16">
@@ -348,6 +345,7 @@ export async function AboutPageContent() {
         </Container>
       </Section>
 
+      {/* 15 Final CTA */}
       <CTABand
         heading={FINAL_CTA.title}
         subheading={FINAL_CTA.body}

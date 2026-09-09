@@ -9,7 +9,7 @@ export const ABOUT_HERO = {
 } as const
 
 export const WHO_WE_ARE = {
-  title: 'Who we are',
+  title: 'Who We Are',
   intro:
     'XELARVIS brings together artificial intelligence, data science, data engineering and technology consulting to help organizations build smarter, more scalable and data-driven operations.',
   span: 'Our work spans AI solutions, advanced analytics, modern data platforms, digital transformation and healthcare & clinical data science.',
@@ -93,13 +93,13 @@ export const HOW_WE_THINK = [
 ] as const
 
 export const RESEARCH = {
-  title: 'Research meets engineering',
+  title: 'Research Meets Engineering',
   body: 'XELARVIS explores emerging technologies in artificial intelligence, machine learning, healthcare AI and data science while focusing on their practical application.',
   cta: { label: 'Explore Research & Innovation', href: '/ai-research-lab' },
 } as const
 
 export const HEALTHCARE_SPECIALTY = {
-  title: 'Domain expertise where it matters',
+  title: 'Domain Expertise Where It Matters',
   body: 'Our healthcare and clinical data capabilities combine data science, statistical programming and clinical data standards to support data-driven healthcare and life-sciences workflows.',
   note: 'Healthcare is a specialized practice within XELARVIS — not the lead identity of the brand. We apply depth where regulated, clinical and life-sciences contexts demand it.',
   cta: {

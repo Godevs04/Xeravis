@@ -187,7 +187,7 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     slug: 'why-xelarvis',
     path: '/about/why-xelarvis',
     eyebrow: 'About',
-    title: 'What makes XELARVIS different',
+    title: 'What Makes XELARVIS Different',
     subtitle:
       'Differentiators tied to our business model — not generic innovation or excellence claims.',
     sections: toBulletSections(DIFFERENTIATORS),
@@ -196,7 +196,7 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     slug: 'our-approach',
     path: '/about/our-approach',
     eyebrow: 'About',
-    title: 'How we think',
+    title: 'How We Think',
     subtitle: 'Principles that guide how XELARVIS approaches complex technology challenges.',
     sections: toBulletSections(HOW_WE_THINK),
   },
@@ -243,7 +243,7 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     slug: 'global-presence',
     path: '/about/global-presence',
     eyebrow: 'About',
-    title: 'Verified company facts',
+    title: 'Verified Company Facts',
     subtitle: 'Only substantiated information — no placeholder counters or inflated claims.',
     sections: [
       {
