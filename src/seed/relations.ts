@@ -3,77 +3,77 @@
  * from plans/23-08-26_Planchnages.md — used by seed.
  */
 
-/** Service slug → related solution slugs */
+/** Service slug → related solution slugs (docs/chnageson09sep2026.md §15) */
 export const SERVICE_SOLUTION_MAP: Record<string, string[]> = {
   'artificial-intelligence-ai-research': [
     'enterprise-ai-solutions',
-    'custom-ai-products',
     'ai-agents',
+    'custom-ai-products',
     'intelligent-automation',
     'predictive-analytics-solutions',
-    'healthcare-clinical-intelligence',
   ],
   'data-science-advanced-analytics': [
     'predictive-analytics-solutions',
     'business-intelligence-solutions',
     'enterprise-ai-solutions',
-    'data-platforms',
     'intelligent-automation',
+    'data-platforms',
   ],
   'it-consulting-digital-transformation': [
     'application-modernization',
-    'data-platforms',
     'intelligent-automation',
+    'custom-ai-products',
+    'data-platforms',
     'enterprise-ai-solutions',
   ],
   'data-engineering-cloud-solutions': [
     'data-platforms',
-    'enterprise-ai-solutions',
     'business-intelligence-solutions',
     'predictive-analytics-solutions',
+    'enterprise-ai-solutions',
     'intelligent-automation',
   ],
   'clinical-data-science-healthcare-ai': [
     'healthcare-clinical-intelligence',
-    'enterprise-ai-solutions',
     'predictive-analytics-solutions',
+    'business-intelligence-solutions',
+    'enterprise-ai-solutions',
     'data-platforms',
-    'intelligent-automation',
   ],
 }
 
-/** Service slug → related industry slugs */
+/** Service slug → related industry slugs (docs/chnageson09sep2026.md §14) */
 export const SERVICE_INDUSTRY_MAP: Record<string, string[]> = {
   'artificial-intelligence-ai-research': [
-    'healthcare-life-sciences',
+    'enterprise-technology',
     'banking-finance',
     'manufacturing',
     'retail',
-    'enterprise-technology',
-    'education',
+    'logistics',
+    'healthcare-life-sciences',
   ],
   'data-science-advanced-analytics': [
     'banking-finance',
     'manufacturing',
     'retail',
     'logistics',
-    'healthcare-life-sciences',
     'enterprise-technology',
+    'healthcare-life-sciences',
   ],
   'it-consulting-digital-transformation': [
     'enterprise-technology',
-    'banking-finance',
     'manufacturing',
     'retail',
-    'healthcare-life-sciences',
+    'logistics',
+    'banking-finance',
   ],
   'data-engineering-cloud-solutions': [
-    'healthcare-life-sciences',
+    'enterprise-technology',
     'banking-finance',
     'manufacturing',
     'retail',
-    'enterprise-technology',
     'logistics',
+    'healthcare-life-sciences',
   ],
   'clinical-data-science-healthcare-ai': [
     'healthcare-life-sciences',
@@ -97,16 +97,23 @@ export const INDUSTRY_TIER_MAP: Record<string, '1' | '2' | '3'> = {
   biotechnology: '3',
 }
 
-/** Solution slug → related industry slugs (primary) */
+/** Solution slug → related industry slugs (docs/chnageson09sep2026.md §14) */
 export const SOLUTION_INDUSTRY_MAP: Record<string, string[]> = {
   'enterprise-ai-solutions': [
-    'healthcare-life-sciences',
+    'enterprise-technology',
     'banking-finance',
     'manufacturing',
+    'retail',
+    'healthcare-life-sciences',
+  ],
+  'intelligent-automation': [
+    'banking-finance',
+    'manufacturing',
+    'retail',
+    'logistics',
     'enterprise-technology',
   ],
   'ai-agents': ['enterprise-technology', 'banking-finance', 'retail', 'manufacturing'],
-  'custom-ai-products': ['enterprise-technology', 'healthcare-life-sciences', 'retail'],
   'predictive-analytics-solutions': [
     'manufacturing',
     'banking-finance',
@@ -119,24 +126,81 @@ export const SOLUTION_INDUSTRY_MAP: Record<string, string[]> = {
     'retail',
     'manufacturing',
     'enterprise-technology',
-  ],
-  'intelligent-automation': ['banking-finance', 'manufacturing', 'retail', 'enterprise-technology'],
-  'data-platforms': [
     'healthcare-life-sciences',
+  ],
+  'data-platforms': [
+    'enterprise-technology',
     'banking-finance',
     'manufacturing',
-    'enterprise-technology',
+    'healthcare-life-sciences',
+    'retail',
+  ],
+  'custom-ai-products': ['enterprise-technology', 'healthcare-life-sciences', 'retail'],
+  'healthcare-clinical-intelligence': [
+    'healthcare-life-sciences',
+    'pharmaceutical',
+    'biotechnology',
   ],
   'application-modernization': [
     'enterprise-technology',
     'banking-finance',
     'manufacturing',
     'retail',
+    'logistics',
+  ],
+}
+
+/**
+ * Solution slug → services that deliver it (docs/chnageson09sep2026.md §15).
+ * Prefer this over inverting SERVICE_SOLUTION_MAP so Healthcare is not
+ * auto-attached to every AI solution that Healthcare also links to.
+ */
+export const SOLUTION_SERVICE_MAP: Record<string, string[]> = {
+  'enterprise-ai-solutions': [
+    'artificial-intelligence-ai-research',
+    'data-science-advanced-analytics',
+    'data-engineering-cloud-solutions',
+    'it-consulting-digital-transformation',
+  ],
+  'intelligent-automation': [
+    'artificial-intelligence-ai-research',
+    'it-consulting-digital-transformation',
+    'data-engineering-cloud-solutions',
+  ],
+  'ai-agents': [
+    'artificial-intelligence-ai-research',
+    'it-consulting-digital-transformation',
+    'data-engineering-cloud-solutions',
+  ],
+  'predictive-analytics-solutions': [
+    'data-science-advanced-analytics',
+    'artificial-intelligence-ai-research',
+    'data-engineering-cloud-solutions',
+  ],
+  'business-intelligence-solutions': [
+    'data-science-advanced-analytics',
+    'data-engineering-cloud-solutions',
+  ],
+  'data-platforms': [
+    'data-engineering-cloud-solutions',
+    'it-consulting-digital-transformation',
+    'data-science-advanced-analytics',
+  ],
+  'custom-ai-products': [
+    'artificial-intelligence-ai-research',
+    'it-consulting-digital-transformation',
+    'data-engineering-cloud-solutions',
   ],
   'healthcare-clinical-intelligence': [
-    'healthcare-life-sciences',
-    'pharmaceutical',
-    'biotechnology',
+    'clinical-data-science-healthcare-ai',
+    'artificial-intelligence-ai-research',
+    'data-science-advanced-analytics',
+    'data-engineering-cloud-solutions',
+  ],
+  'application-modernization': [
+    'it-consulting-digital-transformation',
+    'data-engineering-cloud-solutions',
+    'artificial-intelligence-ai-research',
   ],
 }
 
@@ -254,15 +318,5 @@ export const SOLUTION_TECHNOLOGY_MAP: Record<string, readonly string[]> = {
     'Microsoft Azure',
     'Google Cloud Platform',
   ],
-  'healthcare-clinical-intelligence': [
-    'SAS',
-    'Python',
-    'SQL',
-    'Power BI',
-    'Tableau',
-    'CDISC',
-    'SDTM',
-    'ADaM',
-    'TLF',
-  ],
+  'healthcare-clinical-intelligence': ['SAS', 'Python', 'SQL', 'Power BI', 'Tableau'],
 }

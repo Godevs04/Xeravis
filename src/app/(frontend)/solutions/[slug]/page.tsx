@@ -19,6 +19,7 @@ import {
   resolveSolutionTechnologies,
   type TechnologyLinkDoc,
 } from '@/lib/solution-technology-links'
+import { SOLUTION_EXTRAS, SOLUTION_HOW_WE_DELIVER } from '@/lib/solution-page-content'
 import { mergePublishedSolutions } from '@/lib/solutions-catalog'
 import { buildMetadata, breadcrumbJsonLd, graphJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -66,10 +67,12 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const solution = await getPublishedBySlug<SolutionDoc>('solutions', slug)
   const fallback = FALLBACK_SOLUTIONS.find((s) => s.slug === slug)
+  const extras = SOLUTION_EXTRAS[slug]
 
   return buildMetadata({
     title: solution?.meta?.title || solution?.title || fallback?.title,
-    description: solution?.meta?.description || solution?.summary || fallback?.summary,
+    description:
+      solution?.meta?.description || extras?.heroHeadline || solution?.summary || fallback?.summary,
     image: solution?.meta?.image,
     path: `/solutions/${slug}`,
   })
@@ -85,6 +88,7 @@ export default async function SolutionDetailPage({ params }: Props) {
     listPublished<RelatedTech>('technologies', { sort: 'order', limit: 64 }),
   ])
   const fallback = FALLBACK_SOLUTIONS.find((s) => s.slug === slug)
+  const extras = SOLUTION_EXTRAS[slug]
 
   if (!solution && !fallback) notFound()
 
@@ -129,26 +133,27 @@ export default async function SolutionDetailPage({ params }: Props) {
     { services: 6 },
     { omitTitles: ['Services', 'Technologies'] },
   )
-  const serviceNames = linkedServices.map((s) => s.title).join(', ')
-  const seedFaqs = [
-    {
-      question: `Who is ${doc.title} for?`,
-      answer:
-        doc.whoIsThisFor ||
-        'Organizations that need a governed path from business problem to production outcomes across AI, data, and IT consulting.',
-    },
-    {
-      question: 'Which XELARVIS services deliver this solution?',
-      answer: serviceNames
-        ? `${doc.title} is delivered through our ${serviceNames} practice areas—combining the capabilities needed for discovery, build, and production operations.`
-        : 'This solution combines AI, Data Science, IT Consulting, and engineering services from the XELARVIS catalog.',
-    },
-    {
-      question: 'What is the typical starting point?',
-      answer:
-        'We begin with Discover in the XELARVIS Delivery Framework—aligning problem, data readiness, and success criteria before architecture and build.',
-    },
-  ]
+  const seedFaqs = extras?.faqs?.length
+    ? extras.faqs
+    : [
+        {
+          question: `Who is ${doc.title} for?`,
+          answer:
+            doc.whoIsThisFor ||
+            'Organizations that need a governed path from business problem to production outcomes across AI, data, and IT consulting.',
+        },
+        {
+          question: 'Which XELARVIS services deliver this solution?',
+          answer: linkedServices.length
+            ? `${doc.title} is delivered through our ${linkedServices.map((s) => s.title).join(', ')} practice areas—combining the capabilities needed for discovery, build, and production operations.`
+            : 'This solution combines AI, Data Science, IT Consulting, and engineering services from the XELARVIS catalog.',
+        },
+        {
+          question: 'What is the typical starting point?',
+          answer:
+            'We begin by assessing the business problem, data, systems, and desired outcome before architecture and build.',
+        },
+      ]
 
   const jsonLd = graphJsonLd(
     breadcrumbJsonLd([
@@ -161,7 +166,17 @@ export default async function SolutionDetailPage({ params }: Props) {
   return (
     <>
       <JsonLd id="solution-jsonld" data={jsonLd} />
-      <PageHero eyebrow="Solution" title={doc.title} subtitle={doc.summary} size="compact" />
+      <PageHero
+        eyebrow="Solution"
+        title={doc.title}
+        subtitle={extras?.heroHeadline || doc.summary}
+        size="compact"
+        variant="default"
+        ctas={[
+          { label: 'Discuss your challenge', href: '/contact?intent=business', variant: 'accent' },
+          { label: 'All solutions', href: '/solutions', variant: 'outline' },
+        ]}
+      />
 
       {doc.businessChallenges && doc.businessChallenges.length > 0 ? (
         <Section>
@@ -205,6 +220,45 @@ export default async function SolutionDetailPage({ params }: Props) {
         />
       ) : null}
 
+      <Section>
+        <Container>
+          <h2 className="text-2xl font-bold">How we deliver</h2>
+          <p className="text-secondary mt-3 max-w-2xl text-sm sm:text-base">
+            A consistent path from business problem to production outcomes.
+          </p>
+          <ol className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {SOLUTION_HOW_WE_DELIVER.map((step, index) => (
+              <li key={step.title} className="border-border border-l pl-5">
+                <p className="text-muted text-xs font-semibold tracking-[0.12em] uppercase">
+                  {String(index + 1).padStart(2, '0')}
+                </p>
+                <h3 className="text-primary mt-2 font-semibold">{step.title}</h3>
+                <p className="text-secondary mt-2 text-sm">{step.description}</p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </Section>
+
+      {extras?.deliverables?.length ? (
+        <Section surface>
+          <Container>
+            <h2 className="text-2xl font-bold">Deliverables</h2>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+              {extras.deliverables.map((item) => (
+                <li
+                  key={item}
+                  className="text-primary flex gap-3 rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--card-bg)] px-4 py-3 text-sm shadow-[var(--shadow-light)]"
+                >
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      ) : null}
+
       {doc.useCases && doc.useCases.length > 0 ? (
         <Section>
           <Container>
@@ -241,8 +295,29 @@ export default async function SolutionDetailPage({ params }: Props) {
         </Section>
       ) : null}
 
-      {solutionTechnologies.length > 0 ? (
+      {extras?.successMeasures?.length ? (
         <Section>
+          <Container>
+            <h2 className="text-2xl font-bold">Success measures</h2>
+            <p className="text-secondary mt-3 max-w-2xl text-sm sm:text-base">
+              How we evaluate progress—without inventing vanity metrics.
+            </p>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {extras.successMeasures.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-3.5 py-1.5 text-sm text-[color:var(--color-primary)]"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      ) : null}
+
+      {solutionTechnologies.length > 0 ? (
+        <Section surface>
           <Container>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
@@ -277,6 +352,53 @@ export default async function SolutionDetailPage({ params }: Props) {
         </Section>
       ) : null}
 
+      {extras?.clinicalStandards?.length || extras?.clinicalTooling?.length ? (
+        <Section>
+          <Container>
+            <h2 className="text-2xl font-bold">Clinical standards & tooling</h2>
+            <p className="text-secondary mt-3 max-w-2xl text-sm sm:text-base">
+              Clinical standards sit outside the technology stack—shown here as domain expertise.
+            </p>
+            <div className="mt-8 grid gap-8 md:grid-cols-2">
+              {extras.clinicalStandards?.length ? (
+                <div>
+                  <h3 className="text-primary text-sm font-semibold tracking-[0.08em] uppercase">
+                    Clinical standards
+                  </h3>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {extras.clinicalStandards.map((item) => (
+                      <li
+                        key={item}
+                        className="rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-3.5 py-1.5 text-sm text-[color:var(--color-primary)]"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {extras.clinicalTooling?.length ? (
+                <div>
+                  <h3 className="text-primary text-sm font-semibold tracking-[0.08em] uppercase">
+                    Clinical tooling
+                  </h3>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {extras.clinicalTooling.map((item) => (
+                      <li
+                        key={item}
+                        className="rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-3.5 py-1.5 text-sm text-[color:var(--color-primary)]"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
       {doc.whoIsThisFor ? (
         <Section surface>
           <Container className="max-w-3xl">
@@ -293,9 +415,9 @@ export default async function SolutionDetailPage({ params }: Props) {
       <FAQAccordion heading="Frequently asked questions" seedFaqs={seedFaqs} />
 
       <CTABand
-        heading="Start a solution assessment"
-        subheading="We will map capabilities, timeline, and team structure for your context."
-        ctaLabel="Contact us"
+        heading="Have a business or technology challenge?"
+        subheading="Tell us what you are trying to solve. We can help identify the right capabilities, solution approach, technology foundation, and delivery path."
+        ctaLabel="Discuss your challenge"
         ctaHref="/contact?intent=business"
       />
       <div className="container-x pb-12">

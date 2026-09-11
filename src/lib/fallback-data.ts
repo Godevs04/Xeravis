@@ -186,58 +186,55 @@ export const FALLBACK_SOLUTIONS = [
     id: '1',
     title: 'Enterprise AI',
     slug: 'enterprise-ai-solutions',
-    summary: 'Production AI systems aligned to business workflows and governance.',
+    summary: 'Move AI from experimentation to measurable business value',
   },
   {
     id: '2',
     title: 'Intelligent Automation',
     slug: 'intelligent-automation',
-    summary: 'Assisted agents and AI-powered process automation for repeatable operations.',
+    summary: 'Automate repetitive work while keeping people in control',
   },
   {
     id: '3',
     title: 'AI Agents',
     slug: 'ai-agents',
-    summary:
-      'Governed agentic workflows that assist teams across research, ops, and customer journeys.',
+    summary: 'Build intelligent systems that can reason, act, and escalate',
   },
   {
     id: '4',
     title: 'Predictive Analytics',
     slug: 'predictive-analytics-solutions',
-    summary: 'Forecasting and risk models that help teams anticipate outcomes.',
+    summary: 'Turn historical data into forward-looking decisions',
   },
   {
     id: '5',
     title: 'Business Intelligence',
     slug: 'business-intelligence-solutions',
-    summary: 'Executive dashboards and reporting that turn data into decisions.',
+    summary: 'Create one trusted view of business performance',
   },
   {
     id: '6',
     title: 'Data Platforms',
     slug: 'data-platforms',
-    summary:
-      'Modern data foundations—pipelines, warehouses, and governed access for analytics and AI.',
+    summary: 'Build the data foundation for analytics and AI',
   },
   {
     id: '7',
     title: 'Custom AI Products',
     slug: 'custom-ai-products',
-    summary: 'Productized AI experiences for customer, research, and operations workflows.',
+    summary: 'Build AI products around the way your organization works',
   },
   {
     id: '8',
     title: 'Healthcare & Clinical Intelligence',
     slug: 'healthcare-clinical-intelligence',
-    summary: 'Specialized analytics and intelligence for clinical research and care delivery.',
+    summary: 'Turn complex clinical and healthcare data into reliable intelligence',
   },
   {
     id: '9',
     title: 'Application Modernization',
     slug: 'application-modernization',
-    summary:
-      'Legacy-to-modern application paths—architecture, cloud adoption, and delivery hardening.',
+    summary: 'Modernize legacy applications without losing business continuity',
   },
 ]
 

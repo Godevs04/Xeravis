@@ -4,12 +4,11 @@ export const SEED_SERVICES = [
   {
     title: 'Artificial Intelligence',
     slug: 'artificial-intelligence-ai-research',
-    summary:
-      'Strategy-led AI programs—machine learning, generative AI, agents, vision, and NLP—delivered as governed production systems.',
+    summary: 'From AI strategy to production-ready intelligence',
     icon: 'Sparkles',
     challenges:
       'Organizations need AI that improves efficiency and creates measurable value without compromising reliability, security, or governance.',
-    body: 'Artificial Intelligence is transforming how organizations operate, make decisions, and deliver services. At XELARVIS, we combine AI strategy with applied research and engineering so teams can turn models into governed, production systems that create measurable business value.',
+    body: 'XELARVIS helps organizations identify, design, build, and deploy AI solutions that solve meaningful business problems and create measurable value. We combine AI research, machine learning, generative AI, data science, and engineering to move AI initiatives from experimentation to reliable production systems.',
     process: [
       {
         title: 'Business Discovery & AI Strategy',
@@ -72,7 +71,7 @@ export const SEED_SERVICES = [
         description: 'Autonomous and assisted agents for multi-step business workflows.',
       },
       {
-        title: 'NLP',
+        title: 'Natural Language Processing',
         description: 'Language understanding for documents, search, chat, and classification.',
       },
       {
@@ -92,21 +91,29 @@ export const SEED_SERVICES = [
         description: 'Model evaluation, risk controls, and production governance.',
       },
       {
-        title: 'MLOps',
+        title: 'MLOps & AI Engineering',
         description: 'CI/CD, monitoring, and lifecycle management for production models.',
       },
     ],
-    techLabels: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'Hugging Face', 'LangChain'],
+    techLabels: [
+      'Python',
+      'TensorFlow',
+      'PyTorch',
+      'OpenAI',
+      'Hugging Face',
+      'LangChain',
+      'Docker',
+      'Kubernetes',
+    ],
   },
   {
     title: 'Data Science & Advanced Analytics',
     slug: 'data-science-advanced-analytics',
-    summary:
-      'Turn data into measurable business value through strategy, modeling, forecasting, BI, and decision intelligence.',
+    summary: 'Turn data into insight, prediction, and better decisions',
     icon: 'BarChart3',
     challenges:
       'Raw data rarely drives decisions without quality assessment, rigorous modeling, and clear executive storytelling.',
-    body: 'Data is one of the most valuable assets for any organization. XELARVIS helps businesses convert raw data into meaningful insights that improve decision-making, optimize operations, and uncover growth opportunities—so leaders act on intelligence, not intuition alone.',
+    body: 'XELARVIS combines statistical analysis, machine learning, forecasting, and business intelligence to help organizations understand performance, predict outcomes, and make better decisions—so leaders act on intelligence, not intuition alone.',
     process: [
       {
         title: 'Business Understanding',
@@ -196,12 +203,11 @@ export const SEED_SERVICES = [
   {
     title: 'IT Consulting & Digital Transformation',
     slug: 'it-consulting-digital-transformation',
-    summary:
-      'Enterprise consulting for modernization—strategy, architecture, software engineering, cloud, and automation.',
+    summary: 'Modernize technology with a clear path from strategy to execution',
     icon: 'Briefcase',
     challenges:
       'Legacy systems, unclear roadmaps, and fragmented delivery slow modernization and increase operational risk.',
-    body: 'XELARVIS provides IT consulting and digital transformation that helps organizations modernize infrastructure, improve operational efficiency, and implement technology programs tied to business outcomes—consulting-led delivery for production systems, not agency-style demos.',
+    body: 'XELARVIS provides IT consulting and digital transformation that helps organizations modernize infrastructure, improve operational efficiency, and implement technology programs tied to business outcomes—consulting-led delivery for production systems.',
     process: [
       {
         title: 'IT Strategy & Assessment',
@@ -296,12 +302,11 @@ export const SEED_SERVICES = [
   {
     title: 'Data Engineering & Cloud',
     slug: 'data-engineering-cloud-solutions',
-    summary:
-      'Design scalable data architectures, lakes, warehouses, pipelines, and MLOps infrastructure on the cloud.',
+    summary: 'Build the data foundation behind analytics and AI',
     icon: 'Cloud',
     challenges:
       'Enterprises need reliable data platforms, pipelines, and governance foundations to power analytics and AI at scale.',
-    body: 'Modern organizations require scalable and secure data platforms to support analytics, AI, and business operations. XELARVIS designs and implements cloud-native data architectures that enable organizations to collect, process, store, and analyze data efficiently—with governance and quality built in.',
+    body: 'XELARVIS designs and implements scalable data platforms that make information reliable, accessible, secure, and ready for analytics and AI—with governance and quality built in.',
     process: [
       {
         title: 'Data Architecture Assessment',
@@ -393,12 +398,11 @@ export const SEED_SERVICES = [
   {
     title: 'Healthcare & Clinical Data Science',
     slug: 'clinical-data-science-healthcare-ai',
-    summary:
-      'Specialized clinical programming, CDISC standards, healthcare analytics, and regulated AI for life sciences.',
+    summary: 'Clinical data, analytics, and technology for life sciences',
     icon: 'HeartPulse',
     challenges:
-      'Managing clinical trial data, meeting regulatory submissions, maintaining quality, and accelerating study timelines while adopting AI safely.',
-    body: 'Healthcare & Clinical Data Science is a specialty at XELARVIS—not our lead brand identity. We combine clinical research expertise, statistical programming, healthcare analytics, and responsible AI to support pharmaceutical companies, biotechnology organizations, CROs, hospitals, and healthcare innovators with secure, high-quality clinical data solutions.',
+      'Managing clinical trial data, meeting standards requirements, maintaining quality, and accelerating study timelines while adopting AI responsibly.',
+    body: 'XELARVIS provides specialized clinical data science and analytics capabilities for pharmaceutical, biotechnology, CRO, healthcare, and life sciences organizations. Our expertise spans clinical programming, CDISC-aligned data workflows, clinical analytics, healthcare data solutions, and responsible AI applications. Healthcare & Clinical Data Science is a specialty at XELARVIS—not our lead brand identity.',
     process: [
       {
         title: 'Clinical Study Assessment',
@@ -411,7 +415,7 @@ export const SEED_SERVICES = [
       },
       {
         title: 'Clinical Data Standardization',
-        description: 'SDTM and ADaM development with Define.xml and validation reports.',
+        description: 'SDTM and ADaM development with Define.xml and quality-control reports.',
       },
       {
         title: 'Statistical Programming & TLF Automation',
@@ -426,18 +430,18 @@ export const SEED_SERVICES = [
         description: 'Medical NLP, document intelligence, and predictive models under governance.',
       },
       {
-        title: 'Quality Assurance & Validation',
-        description: 'Independent QC, dataset validation, model evaluation, and security review.',
+        title: 'Quality Assurance & Controls',
+        description: 'Independent QC, dataset checks, model evaluation, and security review.',
       },
       {
-        title: 'Regulatory Delivery & Support',
-        description: 'Submission-ready outputs, training, maintenance, and monitoring.',
+        title: 'Delivery & Support',
+        description: 'Standards-aligned outputs, training, maintenance, and monitoring.',
       },
     ],
     benefits: [
       {
-        title: 'Clinical SAS',
-        description: 'Statistical programming for trials and submissions.',
+        title: 'Clinical SAS Programming',
+        description: 'Statistical programming for trials and clinical reporting.',
       },
       {
         title: 'SDTM',
@@ -448,23 +452,23 @@ export const SEED_SERVICES = [
         description: 'Analysis datasets for efficacy and safety outputs.',
       },
       {
-        title: 'TLF Automation',
+        title: 'Tables, Listings & Figures (TLF)',
         description: 'Tables, listings, and figures with QC and automation.',
       },
       {
-        title: 'Clinical Analytics',
+        title: 'Clinical Data Analytics',
         description: 'Operational and scientific insight across study data.',
       },
       {
-        title: 'CDM',
+        title: 'Clinical Data Management',
         description: 'Clinical data management, cleaning, and validation.',
       },
       {
         title: 'Healthcare AI',
-        description: 'Governed AI for clinical documents and decision support.',
+        description: 'Responsible AI for clinical documents and decision support.',
       },
       {
-        title: 'RWD',
+        title: 'Real-World Data Analytics',
         description: 'Real-world data analytics for research and evidence.',
       },
       {
@@ -472,19 +476,12 @@ export const SEED_SERVICES = [
         description: 'Dashboards and analyses that accelerate research decisions.',
       },
       {
-        title: 'Regulatory Standards',
-        description: 'CDISC-aligned, validated deliverables for submissions.',
+        title: 'CDISC-Aligned Data Standards',
+        description:
+          'CDISC-aligned clinical data workflows and deliverables, supported by defined quality-control processes.',
       },
     ],
-    techLabels: [
-      'Python',
-      'Power BI',
-      'Tableau',
-      'TensorFlow',
-      'PyTorch',
-      'AWS',
-      'Microsoft Azure',
-    ],
+    techLabels: ['SAS', 'Python', 'SQL', 'Power BI', 'Tableau'],
   },
 ] as const
 
@@ -492,33 +489,119 @@ export const SEED_SOLUTIONS = [
   {
     title: 'Enterprise AI',
     slug: 'enterprise-ai-solutions',
-    summary:
-      'When AI pilots stall in production—governed enterprise AI systems that move from use-case selection to measurable operational outcomes.',
-    techLabels: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'LangChain'],
+    summary: 'Move AI from experimentation to measurable business value',
+    body: 'Many organizations can demonstrate what AI can do. The greater challenge is integrating AI into real business processes with the right data, architecture, governance, security, and operating model. XELARVIS helps organizations identify high-value AI opportunities, design production-ready AI systems, integrate them into existing workflows, and establish the foundations required for responsible scaling.',
+    techLabels: [
+      'Python',
+      'PyTorch',
+      'TensorFlow',
+      'OpenAI',
+      'Hugging Face',
+      'LangChain',
+      'Docker',
+      'Kubernetes',
+      'AWS',
+      'Microsoft Azure',
+      'Google Cloud Platform',
+    ],
     businessChallenges: [
       {
-        title: 'AI pilots that never reach production',
-        description:
-          'Proof-of-concepts lack governance, ownership, and a path to operational systems.',
+        title: 'AI stuck in experimentation',
+        description: 'Initiatives remain in pilots without a path into production workflows.',
       },
       {
-        title: 'Unclear ROI and success criteria',
-        description: 'Teams struggle to define measurable outcomes before model work begins.',
+        title: 'Unclear use cases and priorities',
+        description: 'Teams struggle to prioritize opportunities against business outcomes.',
+      },
+      {
+        title: 'Integration and governance gaps',
+        description:
+          'Difficulty integrating AI with enterprise systems and measuring business value.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'AI opportunity assessment',
+        description: 'Identify and prioritize high-value AI use cases with clear success criteria.',
+      },
+      {
+        title: 'Enterprise AI strategy',
+        description: 'Define architecture, governance, and operating models for production AI.',
+      },
+      {
+        title: 'ML and generative applications',
+        description: 'Build machine learning and generative AI capabilities for real workflows.',
+      },
+      {
+        title: 'MLOps and monitoring',
+        description: 'Establish evaluation, deployment, monitoring, and continuous improvement.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'Faster path to production',
+        description: 'Move from AI pilots to systems teams can operate and improve.',
+      },
+      {
+        title: 'Aligned priorities',
+        description: 'Better alignment between AI initiatives and business outcomes.',
+      },
+      {
+        title: 'Governed scale',
+        description: 'Scalable architecture with improved operational control.',
       },
     ],
     whoIsThisFor:
-      'Technology and business leaders who need governed enterprise AI—not demos—across operations, customer, or decision workflows.',
+      'CTOs, CIOs, product leaders, data leaders, and business teams looking to move AI from experimentation into production.',
   },
   {
     title: 'Intelligent Automation',
     slug: 'intelligent-automation',
-    summary:
-      'When manual handoffs slow the business—AI agents and automation that reduce cycle time across knowledge and operational workflows.',
-    techLabels: ['LangChain', 'OpenAI', 'Python', 'Apache Kafka'],
+    summary: 'Automate repetitive work while keeping people in control',
+    body: 'XELARVIS designs intelligent automation that combines process automation, AI, integration, and human oversight—so teams reduce cycle time and inconsistency without losing accountability.',
+    techLabels: [
+      'Python',
+      'OpenAI',
+      'LangChain',
+      'REST APIs',
+      'Docker',
+      'Kubernetes',
+      'AWS',
+      'Microsoft Azure',
+      'Google Cloud Platform',
+    ],
     businessChallenges: [
       {
         title: 'Manual, error-prone handoffs',
         description: 'Repetitive knowledge work and process steps create delays and inconsistency.',
+      },
+      {
+        title: 'Disconnected systems',
+        description: 'Work stalls where applications, documents, and teams do not connect cleanly.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'Process discovery',
+        description: 'Assess automation opportunities and design human-in-the-loop workflows.',
+      },
+      {
+        title: 'Workflow automation',
+        description: 'Automate repetitive operations with AI-assisted decision support.',
+      },
+      {
+        title: 'Document and API integration',
+        description: 'Process documents and connect systems through reliable integrations.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'Lower manual effort',
+        description: 'Reduce repetitive work while preserving escalation and oversight.',
+      },
+      {
+        title: 'Faster cycle times',
+        description: 'Improve consistency and throughput across operational workflows.',
       },
     ],
     whoIsThisFor:
@@ -527,13 +610,41 @@ export const SEED_SOLUTIONS = [
   {
     title: 'AI Agents',
     slug: 'ai-agents',
-    summary:
-      'When workflows need autonomous or semi-autonomous execution—agent systems that plan, tool-use, and escalate with human oversight.',
-    techLabels: ['LangChain', 'OpenAI', 'Python', 'Hugging Face'],
+    summary: 'Build intelligent systems that can reason, act, and escalate',
+    body: 'XELARVIS builds AI agents that combine language models, tools, business rules, APIs, and human oversight to plan and execute multi-step work—with clear guardrails and escalation paths.',
+    techLabels: [
+      'Python',
+      'OpenAI',
+      'Hugging Face',
+      'LangChain',
+      'REST APIs',
+      'Docker',
+      'Kubernetes',
+    ],
     businessChallenges: [
       {
         title: 'Workflows too complex for simple scripts',
         description: 'Multi-step tasks need planning, tools, and escalation—not brittle RPA alone.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'Agent architecture',
+        description: 'Design agents with tools, retrieval, and multi-step orchestration.',
+      },
+      {
+        title: 'Human-in-the-loop controls',
+        description: 'Define escalation, evaluation, monitoring, and access controls.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'Assisted execution',
+        description: 'Higher task completion with controlled tool use and escalation quality.',
+      },
+      {
+        title: 'Productivity with oversight',
+        description: 'Reduce cycle time while keeping humans accountable for critical decisions.',
       },
     ],
     whoIsThisFor:
@@ -542,13 +653,42 @@ export const SEED_SOLUTIONS = [
   {
     title: 'Predictive Analytics',
     slug: 'predictive-analytics-solutions',
-    summary:
-      'When leaders need foresight—not lagging reports—forecasting and risk models that anticipate demand, churn, and operational outcomes.',
-    techLabels: ['Python', 'Apache Spark', 'Power BI', 'Databricks'],
+    summary: 'Turn historical data into forward-looking decisions',
+    body: 'XELARVIS builds forecasting, risk, and predictive models that help organizations anticipate demand, churn, and operational outcomes—moving beyond lagging reports to decision support.',
+    techLabels: [
+      'Python',
+      'R',
+      'SQL',
+      'Apache Spark',
+      'Databricks',
+      'Snowflake',
+      'Power BI',
+      'Tableau',
+    ],
     businessChallenges: [
       {
         title: 'Decisions based on lagging reports',
         description: 'Leaders need forecasts and risk signals before issues become costly.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'Forecasting and time-series',
+        description: 'Demand, planning, and operational forecasts tied to business KPIs.',
+      },
+      {
+        title: 'Risk and anomaly detection',
+        description: 'Early-warning models for risk, churn, and unusual operational patterns.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'Better foresight',
+        description: 'Improve forecast quality and lead time for planning decisions.',
+      },
+      {
+        title: 'Monitored models',
+        description: 'Keep predictive systems healthy with evaluation and monitoring.',
       },
     ],
     whoIsThisFor:
@@ -557,13 +697,33 @@ export const SEED_SOLUTIONS = [
   {
     title: 'Business Intelligence',
     slug: 'business-intelligence-solutions',
-    summary:
-      'When metrics conflict across teams—trusted BI layers and executive dashboards that turn fragmented data into shared decisions.',
-    techLabels: ['Power BI', 'Tableau', 'Python', 'Snowflake'],
+    summary: 'Create one trusted view of business performance',
+    body: 'XELARVIS builds trusted BI layers—KPI definitions, data models, dashboards, and governance—so teams share one view of performance instead of conflicting metrics.',
+    techLabels: ['SQL', 'Power BI', 'Tableau', 'Snowflake', 'Databricks'],
     businessChallenges: [
       {
         title: 'Conflicting metrics across teams',
         description: 'Fragmented sources produce inconsistent KPIs and slow executive decisions.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'KPI and metric definition',
+        description: 'Establish shared definitions and trusted reporting foundations.',
+      },
+      {
+        title: 'Executive and operational dashboards',
+        description: 'Deliver self-service analytics and reporting automation with governance.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'Trusted metrics',
+        description: 'Consistent KPIs and faster reporting cycles across teams.',
+      },
+      {
+        title: 'Faster decisions',
+        description: 'Improve dashboard adoption and decision turnaround time.',
       },
     ],
     whoIsThisFor:
@@ -572,13 +732,45 @@ export const SEED_SOLUTIONS = [
   {
     title: 'Data Platforms',
     slug: 'data-platforms',
-    summary:
-      'When analytics and AI outgrow spreadsheets—scalable lakes, warehouses, and pipelines that become the enterprise data foundation.',
-    techLabels: ['Apache Spark', 'Apache Kafka', 'Snowflake', 'Databricks', 'AWS'],
+    summary: 'Build the data foundation for analytics and AI',
+    body: 'XELARVIS designs lakes, lakehouses, warehouses, pipelines, and governance so analytics and AI programs run on reliable, scalable data foundations.',
+    techLabels: [
+      'Python',
+      'SQL',
+      'Apache Spark',
+      'Apache Kafka',
+      'Databricks',
+      'Snowflake',
+      'AWS',
+      'Microsoft Azure',
+      'Google Cloud Platform',
+      'Docker',
+      'Kubernetes',
+    ],
     businessChallenges: [
       {
         title: 'Analytics and AI outgrowing spreadsheets',
         description: 'Teams need governed pipelines, warehouses, and access patterns that scale.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'Architecture and platform design',
+        description: 'Design target architectures for analytics and AI workloads.',
+      },
+      {
+        title: 'Pipelines and cloud infrastructure',
+        description: 'Implement reliable batch and real-time data movement with governance.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'Reliable data access',
+        description: 'Improve availability, quality, and pipeline reliability.',
+      },
+      {
+        title: 'Scalable foundations',
+        description: 'Support analytics and AI with platforms built for growth.',
       },
     ],
     whoIsThisFor:
@@ -587,13 +779,46 @@ export const SEED_SOLUTIONS = [
   {
     title: 'Custom AI Products',
     slug: 'custom-ai-products',
-    summary:
-      'When off-the-shelf tools fall short—productized AI experiences engineered for your customer, research, or operations workflows.',
-    techLabels: ['Python', 'OpenAI', 'LangChain', 'Hugging Face', 'React'],
+    summary: 'Build AI products around the way your organization works',
+    body: 'XELARVIS engineers purpose-built AI products—models, applications, APIs, and infrastructure—when off-the-shelf tools cannot fit specialized workflows, proprietary data, or domain requirements.',
+    techLabels: [
+      'Python',
+      'PyTorch',
+      'TensorFlow',
+      'OpenAI',
+      'React',
+      'Node.js',
+      'REST APIs',
+      'Docker',
+      'Kubernetes',
+      'AWS',
+      'Microsoft Azure',
+      'Google Cloud Platform',
+    ],
     businessChallenges: [
       {
         title: 'Generic tools that miss the workflow',
         description: 'Off-the-shelf AI products do not fit domain process, data, or UX needs.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'AI product strategy and architecture',
+        description: 'Define the product path from capability to owned production experience.',
+      },
+      {
+        title: 'Applications and integrations',
+        description: 'Combine AI/ML with web applications, APIs, and enterprise systems.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'Fit-for-purpose products',
+        description: 'Ship AI experiences designed for real workflows and ownership.',
+      },
+      {
+        title: 'Reliable releases',
+        description: 'Deploy with monitoring and operational practices teams can sustain.',
       },
     ],
     whoIsThisFor:
@@ -602,30 +827,88 @@ export const SEED_SOLUTIONS = [
   {
     title: 'Healthcare & Clinical Intelligence',
     slug: 'healthcare-clinical-intelligence',
-    summary:
-      'When regulated research needs speed without risk—clinical programming, CDISC delivery, and healthcare analytics under governance.',
-    techLabels: ['Python', 'Power BI', 'AWS', 'Microsoft Azure'],
+    summary: 'Turn complex clinical and healthcare data into reliable intelligence',
+    body: 'Healthcare & Clinical Intelligence is a specialty solution—not the lead XELARVIS identity. We support clinical programming, CDISC-aligned data workflows, TLF automation, clinical analytics, and responsible healthcare AI where appropriate.',
+    techLabels: ['SAS', 'Python', 'SQL', 'Power BI', 'Tableau'],
     businessChallenges: [
       {
-        title: 'Regulated research under time pressure',
+        title: 'Complex clinical data under time pressure',
         description:
-          'Clinical and healthcare programs need speed without compromising quality or compliance.',
+          'Clinical and healthcare programs need efficient, high-quality data and analytics workflows.',
+      },
+      {
+        title: 'Standards and quality-control demands',
+        description: 'Teams need CDISC-aligned workflows and clear QC without overstated claims.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'Clinical SAS and CDISC workflows',
+        description: 'Support SDTM, ADaM, and TLF programming with defined quality controls.',
+      },
+      {
+        title: 'Clinical and healthcare analytics',
+        description: 'Dashboards, reporting automation, and analytics for research teams.',
+      },
+      {
+        title: 'Healthcare AI where appropriate',
+        description: 'Apply AI to healthcare and clinical workflows with clear governance.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'Traceable clinical workflows',
+        description: 'Improve consistency, QC coverage, and analytics turnaround.',
+      },
+      {
+        title: 'Scalable specialty delivery',
+        description: 'Extend clinical data and analytics capacity with clear ownership.',
       },
     ],
     whoIsThisFor:
-      'Life sciences and healthcare teams that need clinical intelligence and analytics under governance—a specialty practice, not the whole brand.',
+      'Life sciences and healthcare teams that need clinical intelligence and analytics—a specialty practice, not the whole brand.',
   },
   {
     title: 'Application Modernization',
     slug: 'application-modernization',
-    summary:
-      'When legacy systems constrain growth—modernize applications, APIs, and delivery practices for security, scale, and longevity.',
-    techLabels: ['Python', 'React', 'Node.js', 'Docker', 'Kubernetes', 'AWS'],
+    summary: 'Modernize legacy applications without losing business continuity',
+    body: 'XELARVIS modernizes aging applications through assessment, target architecture, incremental roadmaps, API layers, and cloud deployment—so critical systems keep running while platforms evolve.',
+    techLabels: [
+      'Python',
+      'React',
+      'Node.js',
+      'REST APIs',
+      'Docker',
+      'Kubernetes',
+      'AWS',
+      'Microsoft Azure',
+      'Google Cloud Platform',
+    ],
     businessChallenges: [
       {
         title: 'Legacy systems constraining change',
         description:
           'Monoliths and brittle integrations slow delivery, security hardening, and cloud adoption.',
+      },
+    ],
+    useCases: [
+      {
+        title: 'Assessment and roadmap',
+        description: 'Define current-state, target architecture, and incremental migration plans.',
+      },
+      {
+        title: 'Refactor and API modernization',
+        description: 'Evolve applications and integrations for maintainability and scale.',
+      },
+    ],
+    outcomes: [
+      {
+        title: 'More maintainable platforms',
+        description: 'Improve release frequency and reduce technical risk.',
+      },
+      {
+        title: 'Cloud-ready delivery',
+        description: 'Increase integration reliability and cloud readiness over time.',
       },
     ],
     whoIsThisFor:
@@ -712,13 +995,13 @@ export const SEED_TECHNOLOGIES = [
     title: 'PyTorch',
     slug: 'pytorch',
     category: 'ai',
-    description: 'Research-friendly neural network frameworks.',
+    description: 'Deep learning framework for research and production AI applications.',
   },
   {
     title: 'OpenAI',
     slug: 'openai',
     category: 'ai',
-    description: 'LLM APIs for generative applications.',
+    description: 'Foundation models and APIs for generative AI applications.',
   },
   {
     title: 'Hugging Face',
@@ -832,13 +1115,13 @@ export const SEED_TECHNOLOGIES = [
     title: 'SAS',
     slug: 'sas',
     category: 'other',
-    description: 'Clinical programming and regulated analytics delivery.',
+    description: 'Clinical programming and healthcare analytics delivery.',
   },
   {
     title: 'CDISC',
     slug: 'cdisc',
     category: 'other',
-    description: 'Clinical data standards for submission-ready programs.',
+    description: 'Clinical data standards for CDISC-aligned programs.',
   },
   {
     title: 'SDTM',
@@ -857,5 +1140,11 @@ export const SEED_TECHNOLOGIES = [
     slug: 'tlf',
     category: 'other',
     description: 'Tables, listings, and figures for clinical reporting.',
+  },
+  {
+    title: 'Pinnacle 21',
+    slug: 'pinnacle-21',
+    category: 'other',
+    description: 'Clinical data conformance and quality-control tooling.',
   },
 ] as const

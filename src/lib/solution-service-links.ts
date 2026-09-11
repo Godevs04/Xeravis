@@ -1,4 +1,4 @@
-import { SERVICE_SOLUTION_MAP } from '@/seed/relations'
+import { SOLUTION_SERVICE_MAP } from '@/seed/relations'
 
 export type ServiceLinkDoc = {
   id: string
@@ -22,13 +22,11 @@ function asServiceDocs(value: unknown): ServiceLinkDoc[] {
 
 /** Service slugs that deliver a given solution (canonical matrix from seed). */
 export function getServiceSlugsForSolution(solutionSlug: string): string[] {
-  return Object.entries(SERVICE_SOLUTION_MAP)
-    .filter(([, solutionSlugs]) => solutionSlugs.includes(solutionSlug))
-    .map(([serviceSlug]) => serviceSlug)
+  return SOLUTION_SERVICE_MAP[solutionSlug] ?? []
 }
 
 /**
- * Merge CMS `relatedServices` with the canonical service↔solution matrix
+ * Merge CMS `relatedServices` with the canonical solution↔service matrix
  * so pages always interlink even when CMS relations are empty.
  */
 export function resolveLinkedServices(
