@@ -77,13 +77,13 @@ export default async function SolutionsPage() {
   return (
     <>
       <SolutionsPageHero
-        title="Solutions for measurable business outcomes."
-        subtitle="Outcome-oriented programs built from our AI, Data Science, IT Consulting, and engineering services—each solution links to the practice areas that deliver it."
+        title="Technology solutions built around business outcomes"
+        subtitle="XELARVIS combines Artificial Intelligence, Data Science, Data Engineering, Cloud, and IT Consulting to help organizations solve complex business and technology challenges. Services are how we work. Solutions are what we solve."
       />
       <HubLinkStrip
         eyebrow="Practice areas"
-        heading="Every solution is delivered through our services"
-        subheading="Solutions describe the business outcome. Services are the capabilities, teams, and delivery methods we combine to get there."
+        heading="Services are how we work. Solutions are what we solve."
+        subheading="Our solutions are designed around the problem to be solved, the outcome to be achieved, and the capabilities required to deliver it."
         items={serviceCatalog.map((s) => ({
           href: `/services/${s.slug}`,
           label: s.title,

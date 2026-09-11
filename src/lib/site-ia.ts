@@ -332,13 +332,13 @@ export const SERVICE_CAPABILITIES: Record<string, string[]> = {
     'Clinical SAS Programming',
     'SDTM',
     'ADaM',
-    'TLF Automation',
-    'Clinical Analytics',
+    'Tables, Listings & Figures (TLF)',
+    'Clinical Data Analytics',
     'Clinical Data Management',
     'Healthcare AI',
     'Real-World Data Analytics',
     'Clinical Research Analytics',
-    'Regulatory Data Standards',
+    'CDISC-Aligned Data Standards',
   ],
 }
 
@@ -364,12 +364,12 @@ export const SERVICE_PAGE_EXTRAS: Record<
       'Integration into applications, APIs, and platforms',
     ],
     industries: [
+      'Technology',
       'Banking & Financial Services',
       'Manufacturing',
       'Retail & E-Commerce',
-      'Enterprise Technology',
+      'Logistics & Supply Chain',
       'Healthcare & Life Sciences',
-      'Education & Research',
     ],
     outcomes: [
       'Faster path from AI pilots to production systems',
@@ -379,8 +379,10 @@ export const SERVICE_PAGE_EXTRAS: Record<
     ],
     relatedSolutions: [
       { label: 'Enterprise AI', href: '/solutions/enterprise-ai-solutions' },
-      { label: 'Intelligent Automation', href: '/solutions/intelligent-automation' },
+      { label: 'AI Agents', href: '/solutions/ai-agents' },
       { label: 'Custom AI Products', href: '/solutions/custom-ai-products' },
+      { label: 'Intelligent Automation', href: '/solutions/intelligent-automation' },
+      { label: 'Predictive Analytics', href: '/solutions/predictive-analytics-solutions' },
     ],
   },
   'data-science-advanced-analytics': {
@@ -409,6 +411,8 @@ export const SERVICE_PAGE_EXTRAS: Record<
       { label: 'Predictive Analytics', href: '/solutions/predictive-analytics-solutions' },
       { label: 'Business Intelligence', href: '/solutions/business-intelligence-solutions' },
       { label: 'Enterprise AI', href: '/solutions/enterprise-ai-solutions' },
+      { label: 'Intelligent Automation', href: '/solutions/intelligent-automation' },
+      { label: 'Data Platforms', href: '/solutions/data-platforms' },
     ],
   },
   'it-consulting-digital-transformation': {
@@ -420,12 +424,11 @@ export const SERVICE_PAGE_EXTRAS: Record<
       'Automation and legacy coexistence plans',
     ],
     industries: [
-      'Enterprise Technology',
-      'Banking & Financial Services',
+      'Technology',
       'Manufacturing',
       'Retail & E-Commerce',
-      'Government & Public Sector',
-      'Healthcare & Life Sciences',
+      'Logistics & Supply Chain',
+      'Banking & Financial Services',
     ],
     outcomes: [
       'Clear modernization priorities tied to business outcomes',
@@ -435,8 +438,10 @@ export const SERVICE_PAGE_EXTRAS: Record<
     ],
     relatedSolutions: [
       { label: 'Application Modernization', href: '/solutions/application-modernization' },
-      { label: 'Data Platforms', href: '/solutions/data-platforms' },
       { label: 'Intelligent Automation', href: '/solutions/intelligent-automation' },
+      { label: 'Custom AI Products', href: '/solutions/custom-ai-products' },
+      { label: 'Data Platforms', href: '/solutions/data-platforms' },
+      { label: 'Enterprise AI', href: '/solutions/enterprise-ai-solutions' },
     ],
   },
   'data-engineering-cloud-solutions': {
@@ -448,12 +453,12 @@ export const SERVICE_PAGE_EXTRAS: Record<
       'MLOps infrastructure for analytics and AI',
     ],
     industries: [
+      'Technology',
       'Banking & Financial Services',
       'Manufacturing',
       'Retail & E-Commerce',
-      'Enterprise Technology',
-      'Pharmaceutical & Biotechnology',
-      'Education & Research',
+      'Logistics & Supply Chain',
+      'Healthcare & Life Sciences',
     ],
     outcomes: [
       'Reliable data foundations for analytics and AI',
@@ -464,30 +469,25 @@ export const SERVICE_PAGE_EXTRAS: Record<
     relatedSolutions: [
       { label: 'Data Platforms', href: '/solutions/data-platforms' },
       { label: 'Business Intelligence', href: '/solutions/business-intelligence-solutions' },
+      { label: 'Predictive Analytics', href: '/solutions/predictive-analytics-solutions' },
       { label: 'Enterprise AI', href: '/solutions/enterprise-ai-solutions' },
+      { label: 'Intelligent Automation', href: '/solutions/intelligent-automation' },
     ],
   },
   'clinical-data-science-healthcare-ai': {
     deliverables: [
       'Clinical study assessment and CDISC-aligned plans',
-      'SDTM and ADaM datasets with validation artifacts',
+      'SDTM and ADaM datasets with quality-control artifacts',
       'TLF programming and automation packages',
       'Clinical and real-world analytics dashboards',
-      'Governed healthcare AI prototypes where appropriate',
+      'Healthcare AI applications where appropriate',
     ],
-    industries: [
-      'Pharmaceutical',
-      'Biotechnology',
-      'CROs and clinical research',
-      'Hospitals and healthcare providers',
-      'Medical devices',
-      'Health technology',
-    ],
+    industries: ['Healthcare & Life Sciences', 'Pharmaceutical', 'Biotechnology'],
     outcomes: [
-      'Submission-ready clinical data packages',
+      'High-quality, traceable clinical data and analytics workflows',
       'Faster, more consistent TLF and analytics cycles',
-      'Stronger quality and standards alignment',
-      'Safe adoption of AI in regulated research workflows',
+      'Stronger CDISC alignment and quality-control coverage',
+      'Responsible adoption of AI in healthcare and clinical workflows',
     ],
     relatedSolutions: [
       {
@@ -495,6 +495,8 @@ export const SERVICE_PAGE_EXTRAS: Record<
         href: '/solutions/healthcare-clinical-intelligence',
       },
       { label: 'Predictive Analytics', href: '/solutions/predictive-analytics-solutions' },
+      { label: 'Business Intelligence', href: '/solutions/business-intelligence-solutions' },
+      { label: 'Enterprise AI', href: '/solutions/enterprise-ai-solutions' },
       { label: 'Data Platforms', href: '/solutions/data-platforms' },
     ],
   },

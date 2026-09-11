@@ -8,6 +8,7 @@ import {
   SERVICE_INDUSTRY_MAP,
   SERVICE_SOLUTION_MAP,
   SOLUTION_INDUSTRY_MAP,
+  SOLUTION_SERVICE_MAP,
   SOLUTION_TECHNOLOGY_MAP,
 } from './relations'
 
@@ -402,8 +403,10 @@ async function seed() {
     await upsertBySlug(payload, 'solutions', solution.slug, {
       title: solution.title,
       summary: solution.summary,
-      body: richParagraph(solution.summary),
+      body: richParagraph(solution.body),
       businessChallenges: solution.businessChallenges.map((c) => ({ ...c })),
+      useCases: solution.useCases.map((c) => ({ ...c })),
+      outcomes: solution.outcomes.map((c) => ({ ...c })),
       whoIsThisFor: solution.whoIsThisFor,
       technologies: relatedTech,
       featured: true,
@@ -443,9 +446,8 @@ async function seed() {
     const relatedIndustries = industrySlugs
       .map((s) => industryIds.get(s))
       .filter(Boolean) as string[]
-    const relatedServices = Object.entries(SERVICE_SOLUTION_MAP)
-      .filter(([, sols]) => sols.includes(solutionSlug))
-      .map(([svc]) => serviceIds.get(svc))
+    const relatedServices = (SOLUTION_SERVICE_MAP[solutionSlug] || [])
+      .map((svc) => serviceIds.get(svc))
       .filter(Boolean) as string[]
     await payload.update({
       collection: 'solutions',
@@ -747,6 +749,27 @@ async function seed() {
     clinicalDeptId = dept.id
   }
 
+  const itDeptFound = await payload.find({
+    collection: 'departments',
+    where: { slug: { equals: 'it-consulting' } },
+    limit: 1,
+    overrideAccess: true,
+  })
+  let itDeptId = itDeptFound.docs[0]?.id
+  if (!itDeptId) {
+    const dept = await payload.create({
+      collection: 'departments',
+      data: {
+        title: 'IT Consulting',
+        slug: 'it-consulting',
+        description: 'Software engineering and digital transformation roles.',
+        order: 3,
+      },
+      overrideAccess: true,
+    })
+    itDeptId = dept.id
+  }
+
   await upsertBySlug(payload, 'careers', 'data-scientist', {
     title: 'Data Scientist',
     department: 'Artificial Intelligence',
@@ -849,12 +872,65 @@ async function seed() {
     ],
     relatedServices: [
       serviceIds.get('artificial-intelligence-ai-research'),
-      serviceIds.get('data-engineering-cloud-solutions'),
+      serviceIds.get('data-science-advanced-analytics'),
     ].filter(Boolean),
     relatedSolutions: [
       solutionIds.get('enterprise-ai-solutions'),
       solutionIds.get('ai-agents'),
       solutionIds.get('custom-ai-products'),
+    ].filter(Boolean),
+    active: true,
+  })
+
+  await upsertBySlug(payload, 'careers', 'senior-software-engineer', {
+    title: 'Senior Software Engineer',
+    department: 'IT Consulting',
+    departmentRef: itDeptId,
+    office: 'Hyderabad / Remote',
+    location: 'Hyderabad / Remote',
+    type: 'full-time',
+    workMode: 'hybrid',
+    experienceRequired: '4–8 Years',
+    openings: 1,
+    postedAt: new Date().toISOString(),
+    aboutRole:
+      'Design and deliver enterprise software, APIs, and cloud-native applications for modernization and digital transformation programs.',
+    description: richParagraph(
+      'Join XELARVIS to engineer production systems across IT consulting, application modernization, and data platform delivery.',
+    ),
+    requirements: richParagraph(
+      'Strong experience with modern backend or full-stack engineering, APIs, cloud platforms, and delivery practices. Preferred: React, Node.js, Python, Docker, Kubernetes.',
+    ),
+    responsibilities: [
+      { item: 'Design scalable application architectures' },
+      { item: 'Build and integrate enterprise software' },
+      { item: 'Support cloud and DevOps delivery' },
+      { item: 'Collaborate with consulting and data teams' },
+    ],
+    requiredSkills: [
+      { item: 'Software Engineering' },
+      { item: 'APIs' },
+      { item: 'Cloud Platforms' },
+      { item: 'Git' },
+    ],
+    preferredSkills: [
+      { item: 'React' },
+      { item: 'Node.js' },
+      { item: 'Python' },
+      { item: 'Docker' },
+      { item: 'Kubernetes' },
+    ],
+    qualifications:
+      "Bachelor's or Master's degree in Computer Science, Software Engineering, or related field.",
+    benefits: [{ item: 'Flexible work' }, { item: 'Learning budget' }, { item: 'Mentorship' }],
+    relatedServices: [
+      serviceIds.get('it-consulting-digital-transformation'),
+      serviceIds.get('data-engineering-cloud-solutions'),
+    ].filter(Boolean),
+    relatedSolutions: [
+      solutionIds.get('application-modernization'),
+      solutionIds.get('custom-ai-products'),
+      solutionIds.get('data-platforms'),
     ].filter(Boolean),
     active: true,
   })
@@ -871,7 +947,7 @@ async function seed() {
     openings: 1,
     postedAt: new Date().toISOString(),
     aboutRole:
-      'Develop SDTM/ADaM datasets, TLFs, and validated clinical programming deliverables for regulatory submissions.',
+      'Develop SDTM/ADaM datasets, TLFs, and CDISC-aligned clinical programming deliverables with defined quality-control processes.',
     description: richParagraph(
       'Support pharmaceutical and biotechnology clients with CDISC-aligned statistical programming and quality control.',
     ),
