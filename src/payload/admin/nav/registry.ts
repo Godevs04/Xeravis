@@ -435,7 +435,32 @@ export function findActiveItem(pathname: string): { group: NavGroup; item: NavIt
     }
   }
 
-  return best ? { group: best.group, item: best.item } : null
+  if (best) return { group: best.group, item: best.item }
+
+  const hub = pathname.match(/^\/admin\/workspace\/([^/]+)/)?.[1]
+  const group = hub ? NAV_GROUPS.find((g) => g.id === workspaceIdFromPath(pathname)) : undefined
+  if (hub && group) {
+    return {
+      group,
+      item: {
+        id: `workspace-${hub}`,
+        label: WORKSPACE_LABELS[hub] ?? titleCase(hub),
+        href: `/admin/workspace/${hub}`,
+      },
+    }
+  }
+  return null
+}
+
+const WORKSPACE_LABELS: Record<string, string> = {
+  activity: 'Activity',
+  ai: 'AI Workspace',
+  analytics: 'Analytics',
+  crm: 'CRM Pipeline',
+  media: 'Media Studio',
+  newsletter: 'Newsletter',
+  recruitment: 'Recruitment',
+  seo: 'SEO',
 }
 
 export type NavigationResolution = {
@@ -568,7 +593,7 @@ export function getBreadcrumbTrail(
     })
   }
 
-  if (active.item.href !== '/admin') {
+  if (active.item.href !== '/admin' && active.item.label !== active.group.label) {
     crumbs.push({ label: active.item.label, href: active.item.href })
   }
 
@@ -587,10 +612,7 @@ export function getBreadcrumbTrail(
     crumbs.push({ label: docLabel })
 
     for (let i = 1; i < parts.length; i++) {
-      const part = parts[i]
-      if (part === 'api') crumbs.push({ label: 'API' })
-      else if (part === 'versions') crumbs.push({ label: 'Versions' })
-      else crumbs.push({ label: titleCase(part) })
+      crumbs.push({ label: segmentLabel(parts[i]) })
     }
     return crumbs
   }
@@ -601,10 +623,14 @@ export function getBreadcrumbTrail(
 
   const globalDeep = pathname.match(/^\/admin\/globals\/[^/]+\/([^/]+)$/)
   if (globalDeep?.[1]) {
-    crumbs.push({ label: titleCase(globalDeep[1]) })
+    crumbs.push({ label: segmentLabel(globalDeep[1]) })
   }
 
   return crumbs
+}
+
+function segmentLabel(segment: string) {
+  return segment === 'api' ? 'API' : titleCase(segment)
 }
 
 function titleCase(value: string) {

@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import type { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -32,7 +33,7 @@ export function NavItem({
     <Link
       href={href}
       scroll={false}
-      className={`xe-sb-item${active ? 'is-active' : ''}${collapsed ? 'is-rail' : ''}`}
+      className={clsx('xe-sb-item', active && 'is-active', collapsed && 'is-rail')}
       title={collapsed ? label : description || label}
       aria-current={active ? 'page' : undefined}
       aria-label={label}

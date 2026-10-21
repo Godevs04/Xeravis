@@ -1,5 +1,3 @@
-import React from 'react'
-
 /**
  * Profile dock lives in EnterpriseNav.
  * Slot kept for Payload config compatibility.

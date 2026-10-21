@@ -1,4 +1,6 @@
+import { DefaultTemplate } from '@payloadcms/next/templates'
 import Link from 'next/link'
+import type { AdminViewServerProps } from 'payload'
 import React from 'react'
 
 import { ContentShell } from '@/payload/admin/components/layout/ContentShell'
@@ -10,6 +12,8 @@ import { StatusBadge } from '@/payload/admin/components/ui/StatusBadge'
 import type { WorkspaceRow, WorkspaceStat } from './lib'
 
 type WorkspaceShellProps = {
+  /** Custom root views render outside the admin chrome unless wrapped in DefaultTemplate */
+  viewProps: AdminViewServerProps
   title: string
   subtitle: string
   /** Kept for call-site compatibility — horizontal tab strip removed (sidebar is source of truth) */
@@ -27,54 +31,75 @@ function badgeTone(tone?: WorkspaceStat['tone'] | WorkspaceRow['badgeTone']) {
 }
 
 export function WorkspaceShell({
+  viewProps,
   title,
   subtitle,
   stats = [],
   actions = [],
   children,
 }: WorkspaceShellProps) {
+  const { initPageResult, params, searchParams } = viewProps
+  const { req, visibleEntities } = initPageResult
+  // Same order as Payload's built-in views (getRouteData reverses config actions)
+  const viewActions = [...(req.payload.config.admin?.components?.actions ?? [])].reverse()
   return (
-    <ContentShell className="xe-ws">
-      <PageHeader
-        eyebrow="Xelarvis Admin"
-        title={title}
-        description={subtitle}
-        actions={
-          actions.length > 0 ? (
-            <>
-              {actions.map((action) => (
-                <Link
-                  key={action.href}
-                  href={action.href}
-                  className={action.primary ? 'xe-ws-btn xe-ws-btn--primary' : 'xe-ws-btn'}
-                >
-                  {action.label}
+    <DefaultTemplate
+      i18n={req.i18n}
+      locale={initPageResult.locale}
+      params={params}
+      payload={req.payload}
+      permissions={initPageResult.permissions}
+      req={req}
+      searchParams={searchParams}
+      user={req.user || undefined}
+      viewActions={viewActions}
+      visibleEntities={{
+        collections: visibleEntities?.collections,
+        globals: visibleEntities?.globals,
+      }}
+    >
+      <ContentShell className="xe-ws">
+        <PageHeader
+          eyebrow="Xelarvis Admin"
+          title={title}
+          description={subtitle}
+          actions={
+            actions.length > 0 ? (
+              <>
+                {actions.map((action) => (
+                  <Link
+                    key={action.href}
+                    href={action.href}
+                    className={action.primary ? 'xe-ws-btn xe-ws-btn--primary' : 'xe-ws-btn'}
+                  >
+                    {action.label}
+                  </Link>
+                ))}
+              </>
+            ) : undefined
+          }
+        />
+
+        {stats.length > 0 ? (
+          <section className="xe-ws__stats" aria-label="Workspace metrics">
+            {stats.map((stat) => {
+              const card = <StatCard label={stat.label} value={stat.value} hint={stat.meta} />
+              return stat.href ? (
+                <Link key={stat.label} href={stat.href} className="xe-ws-stat-link">
+                  {card}
                 </Link>
-              ))}
-            </>
-          ) : undefined
-        }
-      />
+              ) : (
+                <div key={stat.label} className="xe-ws-stat-link">
+                  {card}
+                </div>
+              )
+            })}
+          </section>
+        ) : null}
 
-      {stats.length > 0 ? (
-        <section className="xe-ws__stats" aria-label="Workspace metrics">
-          {stats.map((stat) => {
-            const card = <StatCard label={stat.label} value={stat.value} hint={stat.meta} />
-            return stat.href ? (
-              <Link key={stat.label} href={stat.href} className="xe-ws-stat-link">
-                {card}
-              </Link>
-            ) : (
-              <div key={stat.label} className="xe-ws-stat-link">
-                {card}
-              </div>
-            )
-          })}
-        </section>
-      ) : null}
-
-      <div className="xe-ws__body">{children}</div>
-    </ContentShell>
+        <div className="xe-ws__body">{children}</div>
+      </ContentShell>
+    </DefaultTemplate>
   )
 }
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Download, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -142,7 +143,7 @@ export function PwaInstallPrompt({
               <button
                 type="button"
                 onClick={dismiss}
-                className={`xe-pwa-btn xe-pwa-btn--ghost${iosHint ? 'xe-pwa-btn--full' : ''}`}
+                className={clsx('xe-pwa-btn xe-pwa-btn--ghost', iosHint && 'xe-pwa-btn--full')}
               >
                 {iosHint ? 'Got it' : 'Not now'}
               </button>

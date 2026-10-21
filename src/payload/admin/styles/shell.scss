@@ -135,6 +135,11 @@ html[data-xe-ui='v5'] .template-default__wrap {
   -webkit-overflow-scrolling: touch !important;
 }
 
+/* Rows of the scroll column keep their content height */
+html[data-xe-ui='v5'] .template-default__wrap > * {
+  flex-shrink: 0 !important;
+}
+
 /* Header sticky inside MainShell scrollport */
 html[data-xe-ui='v5'] .template-default__wrap > header,
 html[data-xe-ui='v5'] .app-header,
@@ -278,11 +283,11 @@ html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-na
   }
 
   /* Scrim when drawer open — clickable to dismiss */
-  html[data-xe-ui='v5'][data-xe-nav='open'] .template-default__wrap::before {
+  html[data-xe-ui='v5'][data-xe-nav='open'] .template-default::after {
     content: '';
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 55;
     background: rgba(15, 23, 42, 0.25);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -308,6 +313,13 @@ html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > [data-xe-os-na
   .xe-content-shell,
   .xe-page {
     padding: var(--xe-space-6) var(--xe-gutter) 48px !important;
+  }
+}
+
+/* Docked sidebar has its own collapse control — Payload's hamburger is mobile-only */
+@media (min-width: 769px) {
+  html[data-xe-ui='v5'] .template-default__nav-toggler-container {
+    display: none !important;
   }
 }
 

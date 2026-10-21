@@ -190,7 +190,7 @@ html[data-xe-ui='v5'] .nav .xe-sb a.xe-sb-sub__link.is-active {
 }
 
 .xe-sb__collapse:focus-visible {
-  box-shadow: 0 0 0 2px var(--xe-sidebar-active);
+  box-shadow: 0 0 0 2px var(--xe-sidebar-accent);
 }
 
 /* Workspace */
@@ -388,7 +388,21 @@ html[data-xe-ui='v5'] .nav .xe-sb a.xe-sb-sub__link.is-active {
   display: flex;
   flex-direction: column;
   gap: var(--xe-sidebar-section-gap);
-  padding: var(--xe-space-2) 0;
+  padding: var(--xe-space-3) 0;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 14px,
+    #000 calc(100% - 14px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 14px,
+    #000 calc(100% - 14px),
+    transparent 100%
+  );
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--xe-muted) 35%, transparent) transparent;
 }
@@ -542,16 +556,18 @@ html[data-xe-ui='v5'] .nav .xe-sb a.xe-sb-sub__link.is-active {
   background: var(--xe-sidebar-active);
 }
 
-.xe-sb-item.is-active .xe-sb-item__accent,
-.xe-sb-item.is-open .xe-sb-item__accent {
+.xe-sb-item.is-active .xe-sb-item__accent {
   opacity: 1;
   transform: scaleY(1);
 }
 
-.xe-sb-item.is-active .xe-sb-item__icon,
-.xe-sb-item.is-open .xe-sb-item__icon {
+.xe-sb-item.is-active .xe-sb-item__icon {
   background: color-mix(in srgb, var(--xe-sidebar-accent) 16%, transparent);
   color: var(--xe-sidebar-accent);
+}
+
+.xe-sb-item.is-open:not(.is-active) .xe-sb-item__icon {
+  color: var(--xe-text);
 }
 
 .xe-sb-item.is-active .xe-sb-item__label {
@@ -561,7 +577,7 @@ html[data-xe-ui='v5'] .nav .xe-sb a.xe-sb-sub__link.is-active {
 
 .xe-sb-item:focus-visible {
   background: var(--xe-sidebar-hover);
-  box-shadow: inset 0 0 0 2px var(--xe-sidebar-active) !important;
+  box-shadow: inset 0 0 0 2px var(--xe-sidebar-accent) !important;
 }
 
 /* Badge capsule */
@@ -736,7 +752,7 @@ html[data-xe-ui='v5'] .nav .xe-sb a.xe-sb-sub__link,
 
 .xe-sb-sub__link:focus-visible {
   background: var(--xe-sidebar-hover);
-  box-shadow: inset 0 0 0 2px var(--xe-sidebar-active) !important;
+  box-shadow: inset 0 0 0 2px var(--xe-sidebar-accent) !important;
 }
 
 /* Pins */
@@ -988,6 +1004,36 @@ html[data-xe-ui='v5'] .nav .xe-sb a.xe-sb-sub__link,
 
 .xe-sb.is-collapsed .xe-sb-section__body {
   align-items: center;
+}
+
+/* Mobile drawer is dismissed via the scrim — the rail toggle has no meaning there */
+@media (max-width: 768px) {
+  .xe-sb__collapse {
+    display: none;
+  }
+}
+
+/* Short viewports: top + footer would starve the module list — scroll the whole panel */
+@media (max-height: 820px) {
+  .xe-sb {
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .xe-sb::-webkit-scrollbar {
+    display: none;
+  }
+
+  .xe-sb__body {
+    flex: 0 0 auto;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  html[data-xe-ui='v5'] .nav > .nav__scroll:has([data-xe-os-nav]) > .xe-sb {
+    overflow-y: auto !important;
+  }
 }
 
 /* Dark theme tweaks */

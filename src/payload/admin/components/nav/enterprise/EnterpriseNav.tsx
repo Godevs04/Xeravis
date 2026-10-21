@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@payloadcms/ui'
@@ -17,6 +18,7 @@ import {
   saveSidebarScroll,
 } from '../sidebar/sidebarScroll'
 import { saveMainScroll } from '@/payload/admin/components/layout/mainScroll'
+import { persistTheme } from '@/payload/admin/components/theme'
 import {
   NAV_MODULES,
   QUICK_CREATES,
@@ -44,10 +46,7 @@ function toggleCollapse() {
 function toggleTheme() {
   const root = document.documentElement
   const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'
-  root.setAttribute('data-xe-ui', 'v5')
-  root.setAttribute('data-theme', next)
-  root.style.colorScheme = next
-  window.localStorage.setItem('payload-theme', next)
+  persistTheme(next)
   window.localStorage.setItem('xe-theme-preference', next)
 }
 
@@ -214,7 +213,7 @@ export function EnterpriseNav() {
                     key={p.href}
                     href={p.href}
                     scroll={false}
-                    className={`xe-sb-pin${isLinkActive(pathname, p.href) ? 'is-active' : ''}`}
+                    className={clsx('xe-sb-pin', isLinkActive(pathname, p.href) && 'is-active')}
                     title={p.label}
                     onClick={() => {
                       saveSidebarScroll(getSidebarBody())

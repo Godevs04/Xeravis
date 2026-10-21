@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import React from 'react'
 
 type CardProps = {
@@ -17,7 +18,7 @@ export function Card({
   as: Tag = 'div',
 }: CardProps) {
   return (
-    <Tag className={`xe-card${interactive ? '' : 'is-static'}${className ? ` ${className}` : ''}`}>
+    <Tag className={clsx('xe-card', !interactive && 'is-static', className)}>
       {title ? <h3 className="xe-card__title">{title}</h3> : null}
       {children}
     </Tag>

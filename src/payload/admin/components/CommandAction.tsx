@@ -1,5 +1,6 @@
 'use client'
 
+import { Search } from 'lucide-react'
 import React from 'react'
 
 export const CommandAction = () => {
@@ -10,7 +11,8 @@ export const CommandAction = () => {
       onClick={() => window.dispatchEvent(new CustomEvent('xe-open-command'))}
       aria-label="Open command palette"
     >
-      Search
+      <Search size={15} aria-hidden />
+      <span className="xe-action-btn__label">Search</span>
       <kbd>⌘K</kbd>
     </button>
   )

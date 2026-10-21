@@ -36,8 +36,7 @@ section.createFirstUser.template-minimal {
   justify-content: center !important;
   background:
     radial-gradient(ellipse 90% 55% at 50% -10%, var(--xe-mesh-1), transparent 58%),
-    radial-gradient(ellipse 45% 35% at 85% 95%, var(--xe-mesh-2), transparent 55%),
-    var(--xe-bg) !important;
+    radial-gradient(ellipse 45% 35% at 85% 95%, var(--xe-mesh-2), transparent 55%), var(--xe-bg) !important;
   font-family: var(--xe-font) !important;
   box-sizing: border-box !important;
 }
@@ -275,12 +274,12 @@ form.login__form,
 .login__form a[href*='forgot'] {
   display: inline-block !important;
   align-self: flex-start !important;
-  margin: 16px 0 20px !important;
+  margin: 4px 0 20px !important;
   font-size: 13px !important;
   font-weight: 500 !important;
-  color: var(--xe-primary) !important;
+  color: var(--xe-secondary) !important;
   text-decoration: none !important;
-  border-bottom: 1px solid color-mix(in srgb, var(--xe-primary) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--xe-secondary) 30%, transparent);
   transition:
     color 0.15s ease,
     border-color 0.15s ease;
@@ -288,8 +287,8 @@ form.login__form,
 
 .login__form > a:hover,
 .login__form a[href*='forgot']:hover {
-  color: var(--xe-primary-hover) !important;
-  border-bottom-color: color-mix(in srgb, var(--xe-primary) 55%, transparent);
+  color: var(--xe-text) !important;
+  border-bottom-color: color-mix(in srgb, var(--xe-secondary) 55%, transparent);
 }
 
 /* Submit — style the button, not the wrapper */

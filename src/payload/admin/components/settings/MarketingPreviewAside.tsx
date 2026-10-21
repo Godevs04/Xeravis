@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import { useField } from '@payloadcms/ui'
 import React from 'react'
 
@@ -32,14 +33,14 @@ export function MarketingPreviewAside({ kind }: { kind: PreviewKind }) {
         </header>
 
         {kind === 'announcement' ? (
-          <div className={`xe-preview-announce${enabled ? 'is-on' : ''}`}>
+          <div className={clsx('xe-preview-announce', enabled && 'is-on')}>
             <span className="xe-preview-announce__msg">
               {message || 'Your announcement message appears here'}
             </span>
             {ctaLabel ? <span className="xe-preview-announce__cta">{ctaLabel}</span> : null}
           </div>
         ) : (
-          <div className={`xe-preview-cookie${enabled ? 'is-on' : ''}`}>
+          <div className={clsx('xe-preview-cookie', enabled && 'is-on')}>
             <p>{message || 'Cookie message appears here'}</p>
             <div className="xe-preview-cookie__actions">
               <span className="xe-preview-cookie__accept">{ctaLabel || 'Accept'}</span>

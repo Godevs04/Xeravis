@@ -69,6 +69,7 @@ export async function RecruitmentView(props: AdminViewServerProps) {
 
   return (
     <WorkspaceShell
+      viewProps={props}
       active="recruitment"
       title="HR · Recruitment"
       subtitle="Candidates, jobs, interviews, and hiring funnel — managed in Payload collections."

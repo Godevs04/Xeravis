@@ -63,7 +63,7 @@ export function resolveModuleNavigation(pathname: string) {
 }
 
 export function moduleHasActiveLink(pathname: string, mod: NavModule) {
-  return groupHasActiveLink(pathname, {
+  const linked = groupHasActiveLink(pathname, {
     id: mod.id,
     label: mod.label,
     description: mod.description,
@@ -71,4 +71,5 @@ export function moduleHasActiveLink(pathname: string, mod: NavModule) {
     href: mod.href,
     items: mod.links.map((l) => ({ id: l.href, label: l.label, href: l.href })),
   })
+  return linked || resolveNavigation(pathname).section === mod.id
 }

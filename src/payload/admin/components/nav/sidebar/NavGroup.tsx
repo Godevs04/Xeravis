@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ChevronDown, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -55,12 +56,21 @@ export function NavGroup({
 
   return (
     <div
-      className={`xe-sb-group${expanded ? 'is-open' : ''}${active ? 'is-active' : ''}${collapsed ? 'is-rail' : ''}`}
+      className={clsx(
+        'xe-sb-group',
+        expanded && 'is-open',
+        active && 'is-active',
+        collapsed && 'is-rail',
+      )}
       data-nav-group={id}
     >
       <button
         type="button"
-        className={`xe-sb-item xe-sb-item--parent${active ? 'is-active' : ''}${expanded ? 'is-open' : ''}`}
+        className={clsx(
+          'xe-sb-item xe-sb-item--parent',
+          active && 'is-active',
+          expanded && 'is-open',
+        )}
         aria-expanded={expanded}
         aria-controls={panelId}
         title={collapsed ? label : description || label}
@@ -98,7 +108,7 @@ export function NavGroup({
                     <Link
                       href={child.href}
                       scroll={false}
-                      className={`xe-sb-sub__link${child.active ? 'is-active' : ''}`}
+                      className={clsx('xe-sb-sub__link', child.active && 'is-active')}
                       title={child.description || child.label}
                       aria-current={child.active ? 'page' : undefined}
                     >
@@ -125,7 +135,7 @@ export function NavGroup({
                     <Link
                       href={child.href}
                       scroll={false}
-                      className={`xe-sb-sub__link${child.active ? 'is-active' : ''}`}
+                      className={clsx('xe-sb-sub__link', child.active && 'is-active')}
                       title={child.description || child.label}
                       aria-current={child.active ? 'page' : undefined}
                     >

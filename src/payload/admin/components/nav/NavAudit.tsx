@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { NAV_GROUPS, isLinkActive, resolveNavigation } from '@/payload/admin/nav/registry'
 

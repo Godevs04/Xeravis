@@ -65,6 +65,7 @@ export async function MediaStudioView(props: AdminViewServerProps) {
 
   return (
     <WorkspaceShell
+      viewProps={props}
       active="media"
       title="Media Studio 2.0"
       subtitle="Folders, tags, and library health — still the same Payload media collection."

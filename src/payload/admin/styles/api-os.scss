@@ -12,11 +12,13 @@ html[data-xe-ui='v5'] .query-inspector {
   width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding: var(--xe-section-gap) var(--xe-gutter) 64px !important;
+  padding: 0 var(--xe-gutter) 64px !important;
   box-sizing: border-box !important;
 }
 
-html[data-xe-ui='v5'] .query-inspector > *:not(.query-inspector__configuration):not(.query-inspector__results-wrapper) {
+html[data-xe-ui='v5']
+  .query-inspector
+  > *:not(.query-inspector__configuration):not(.query-inspector__results-wrapper) {
   grid-column: 1 / -1;
 }
 
@@ -55,6 +57,7 @@ html[data-xe-ui='v5'] .query-inspector__api-url {
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
+  margin: 0 !important;
   padding: 14px !important;
   border-radius: 14px !important;
   border: 1px solid var(--xe-border) !important;
@@ -157,7 +160,9 @@ html[data-xe-ui='v5'] .query-inspector__toggle-fullscreen-button {
   background: rgba(255, 255, 255, 0.06) !important;
   color: #cbd5e1 !important;
   cursor: pointer !important;
-  transition: background 150ms ease, color 150ms ease !important;
+  transition:
+    background 150ms ease,
+    color 150ms ease !important;
 }
 
 html[data-xe-ui='v5'] .query-inspector__toggle-fullscreen-button:hover {
@@ -189,7 +194,10 @@ html[data-xe-ui='v5'] .xe-api-toolbar__btn {
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
 }
 
 html[data-xe-ui='v5'] .xe-api-toolbar__btn:hover {

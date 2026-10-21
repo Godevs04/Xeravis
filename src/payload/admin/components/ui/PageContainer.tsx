@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import React from 'react'
 
 type PageContainerProps = {
@@ -7,11 +8,7 @@ type PageContainerProps = {
 }
 
 export function PageContainer({ children, className = '', flush = false }: PageContainerProps) {
-  return (
-    <div className={`xe-page${flush ? 'is-flush' : ''}${className ? ` ${className}` : ''}`}>
-      {children}
-    </div>
-  )
+  return <div className={clsx('xe-page', flush && 'is-flush', className)}>{children}</div>
 }
 
 export default PageContainer

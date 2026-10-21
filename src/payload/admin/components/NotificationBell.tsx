@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import Link from 'next/link'
 import React, { useCallback, useEffect, useState } from 'react'
 
@@ -92,7 +93,7 @@ export function NotificationBell() {
                   key={item.id}
                   href={item.href}
                   scroll={false}
-                  className={`xe-bell__item${item.read ? '' : 'is-unread'}`}
+                  className={clsx('xe-bell__item', !item.read && 'is-unread')}
                   onClick={() => {
                     void markOne(item.id)
                     setOpen(false)

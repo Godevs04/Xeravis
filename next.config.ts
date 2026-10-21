@@ -109,7 +109,7 @@ const withPayloadConfig = withPayload(nextConfig, { devBundleServerPackages: fal
  * Chrome to re-request the document on first paint — a large LCP hit in Lighthouse.
  * Keep Accept-CH (optional later hints) but drop Critical-CH + its Vary-only entry.
  */
-export default {
+const config = {
   ...withPayloadConfig,
   async headers() {
     const entries =
@@ -132,3 +132,5 @@ export default {
       .filter((entry) => (entry.headers || []).length > 0)
   },
 }
+
+export default config

@@ -37,6 +37,7 @@ export async function CrmView(props: AdminViewServerProps) {
 
   return (
     <WorkspaceShell
+      viewProps={props}
       active="crm"
       title="Marketing · CRM"
       subtitle="Inquiry pipeline from Contact Us → assign → meeting → proposal → won/lost."

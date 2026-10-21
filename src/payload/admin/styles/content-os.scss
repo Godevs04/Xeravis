@@ -69,7 +69,6 @@ html[data-xe-ui='v5'] .global-edit .gutter,
 html[data-xe-ui='v5'] .collection-list .gutter,
 html[data-xe-ui='v5'] .account .gutter,
 html[data-xe-ui='v5'] .doc-header.gutter,
-html[data-xe-ui='v5'] .query-inspector.gutter,
 html[data-xe-ui='v5'] .gutter {
   max-width: none !important;
   width: 100% !important;
@@ -88,7 +87,9 @@ html[data-xe-ui='v5'] .template-default__wrap > .doc-header {
 }
 
 /* Hide redundant [Untitled] row when doc-controls already shows the create title */
-html[data-xe-ui='v5'] .collection-edit:has(.doc-controls) > .doc-header:not(:has(.doc-tabs, .document-tabs)) {
+html[data-xe-ui='v5']
+  .collection-edit:has(.doc-controls)
+  > .doc-header:not(:has(.doc-tabs, .document-tabs)) {
   display: none !important;
 }
 
@@ -184,13 +185,16 @@ html[data-xe-ui='v5'] .xe-header-chip--breadcrumb strong {
 
 html[data-xe-ui='v5'] .list-header,
 html[data-xe-ui='v5'] .collection-list__header,
-html[data-xe-ui='v5'] .doc-header__header,
 html[data-xe-ui='v5'] .doc-header,
 html[data-xe-ui='v5'] .collection-edit__header,
 html[data-xe-ui='v5'] .global-edit__header {
   display: flex !important;
   flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
   gap: 8px !important;
+  height: auto !important;
+  min-height: 0 !important;
   margin: 0 0 var(--xe-space-6) !important;
   padding: 0 !important;
   border: 0 !important;
@@ -209,6 +213,18 @@ html[data-xe-ui='v5'] .doc-header__header {
   justify-content: space-between !important;
   gap: var(--xe-btn-gap) !important;
   width: 100% !important;
+}
+
+html[data-xe-ui='v5'] .doc-header > * {
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+}
+
+html[data-xe-ui='v5'] .doc-header__header {
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  height: auto !important;
 }
 
 html[data-xe-ui='v5'] .list-header__title,
@@ -306,7 +322,10 @@ html[data-xe-ui='v5'] .doc-controls__wrapper {
   align-items: center !important;
   justify-content: space-between !important;
   gap: var(--xe-btn-gap) !important;
-  padding: 10px 14px !important;
+  width: 100% !important;
+  min-height: 60px !important;
+  box-sizing: border-box !important;
+  padding: 10px 12px 10px 16px !important;
   border-radius: var(--xe-radius-lg) !important;
   border: 1px solid var(--xe-border) !important;
   background: var(--xe-glass) !important;
@@ -327,6 +346,26 @@ html[data-xe-ui='v5'] .doc-controls__controls-wrapper {
   align-items: center !important;
   gap: 8px 12px !important;
   min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html[data-xe-ui='v5'] .doc-controls__content:not(:has(.doc-controls__meta > *)) {
+  display: none !important;
+}
+
+html[data-xe-ui='v5'] .doc-controls__controls-wrapper {
+  height: auto !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Payload's tablet scroll-fade overlays; the bar wraps instead of scrolling */
+html[data-xe-ui='v5'] .doc-controls__controls::after,
+html[data-xe-ui='v5'] .doc-controls__meta::after,
+html[data-xe-ui='v5'] .doc-tabs::after {
+  display: none !important;
 }
 
 html[data-xe-ui='v5'] .doc-controls__controls,
@@ -447,6 +486,18 @@ html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
   align-self: start !important;
 }
 
+@media (max-width: 1100px) {
+  html[data-xe-ui='v5'] .document-fields--has-sidebar {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
+    order: 2 !important;
+    position: static !important;
+    top: auto !important;
+  }
+}
+
 html[data-xe-ui='v5'] .document-fields__sidebar,
 html[data-xe-ui='v5'] .document-fields__sidebar-fields {
   display: flex !important;
@@ -465,6 +516,12 @@ html[data-xe-ui='v5'] .document-fields__edit {
 /* ────────────────────────────────────────────────────────────
    8. CARDS (form sections)
    ──────────────────────────────────────────────────────────── */
+
+/* Payload draws full-bleed dividers sized for its own gutters — the card border replaces them */
+html[data-xe-ui='v5'] .payload-settings::before,
+html[data-xe-ui='v5'] .payload-settings::after {
+  display: none !important;
+}
 
 html[data-xe-ui='v5'] .auth-fields,
 html[data-xe-ui='v5'] .collection-edit__auth,
@@ -551,7 +608,9 @@ html[data-xe-ui='v5'] .field-type > .field-label {
    9. INPUTS
    ──────────────────────────────────────────────────────────── */
 
-html[data-xe-ui='v5'] .field-type__wrap > input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
+html[data-xe-ui='v5']
+  .field-type__wrap
+  > input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
 html[data-xe-ui='v5'] .input > input:not([type='checkbox']):not([type='radio']),
 html[data-xe-ui='v5'] .textarea > textarea,
 html[data-xe-ui='v5'] .date-time-picker input,
@@ -838,18 +897,6 @@ html[data-xe-ui='v5'] .search-bar__actions .pill {
   box-shadow: none !important;
 }
 
-html[data-xe-ui='v5'] .collection-list__list-selection {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  gap: 12px !important;
-  margin: 0 0 14px !important;
-  padding: 10px 14px !important;
-  border-radius: 14px !important;
-  background: color-mix(in srgb, var(--xe-secondary) 8%, transparent) !important;
-  border: 1px solid color-mix(in srgb, var(--xe-secondary) 18%, transparent) !important;
-}
-
 /* ────────────────────────────────────────────────────────────
    12. TABLES
    ──────────────────────────────────────────────────────────── */
@@ -1091,22 +1138,6 @@ html[data-xe-ui='v5'] .xe-page__desc {
    16. RESPONSIVE
    ──────────────────────────────────────────────────────────── */
 
-@media (max-width: 1280px) {
-  html[data-xe-ui='v5'] .document-fields--has-sidebar {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 300px) !important;
-  }
-}
-
-@media (max-width: 1024px) {
-  html[data-xe-ui='v5'] .document-fields--has-sidebar {
-    grid-template-columns: 1fr !important;
-  }
-
-  html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
-    position: static !important;
-  }
-}
-
 @media (max-width: 768px) {
   html[data-xe-ui='v5'] .list-header h1,
   html[data-xe-ui='v5'] .doc-header h1,
@@ -1118,6 +1149,7 @@ html[data-xe-ui='v5'] .xe-page__desc {
   html[data-xe-ui='v5'] .doc-controls__controls-wrapper {
     width: 100% !important;
     margin-left: 0 !important;
+    justify-content: flex-end !important;
   }
 
   html[data-xe-ui='v5'] .table thead th,
@@ -1157,38 +1189,12 @@ html[data-xe-ui='v5'] .field-type__wrap {
    ARCHITECTURE PASS — document edit + forms (sole authority)
    ============================================================ */
 
-html[data-xe-ui='v5'] .document-fields--has-sidebar,
-html[data-xe-ui='v5'] .collection-edit .document-fields {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) var(--xe-doc-sidebar) !important;
-  gap: 24px !important;
-  align-items: start !important;
-}
-
-@media (max-width: 1100px) {
-  html[data-xe-ui='v5'] .document-fields--has-sidebar,
-  html[data-xe-ui='v5'] .collection-edit .document-fields {
-    grid-template-columns: minmax(0, 1fr) !important;
-  }
-
-  html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
-    order: 2 !important;
-    position: static !important;
-    top: auto !important;
-  }
-}
-
 html[data-xe-ui='v5'] .document-fields__main,
 html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
   width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
   float: none !important;
-}
-
-html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
-  position: sticky !important;
-  top: var(--xe-space-4) !important;
 }
 
 html[data-xe-ui='v5'] .field-type__wrap > input,
@@ -1235,17 +1241,6 @@ html[data-xe-ui='v5'] .field-type .field-description.error {
   border-radius: 0 !important;
 }
 
-@media (max-width: 1024px) {
-  html[data-xe-ui='v5'] .document-fields--has-sidebar,
-  html[data-xe-ui='v5'] .collection-edit .document-fields {
-    grid-template-columns: 1fr !important;
-  }
-
-  html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
-    position: static !important;
-  }
-}
-
 /* ============================================================
    DOCUMENT EDIT — alignment, uploads, stable layout
    ============================================================ */
@@ -1253,12 +1248,6 @@ html[data-xe-ui='v5'] .field-type .field-description.error {
 html[data-xe-ui='v5'] .collection-edit,
 html[data-xe-ui='v5'] .global-edit {
   animation: none !important;
-}
-
-html[data-xe-ui='v5'] .document-fields--has-sidebar {
-  grid-template-columns: minmax(0, 1fr) minmax(280px, var(--xe-doc-sidebar)) !important;
-  gap: var(--xe-card-gap) !important;
-  align-items: start !important;
 }
 
 html[data-xe-ui='v5'] .document-fields__main,
@@ -1274,7 +1263,7 @@ html[data-xe-ui='v5'] .document-fields__sidebar-fields > .render-fields {
 
 html[data-xe-ui='v5'] .document-fields__sidebar-fields > .render-fields > .field-type:first-child,
 html[data-xe-ui='v5'] .document-fields__edit > .render-fields > .field-type:first-child {
-  padding-top: var(--xe-field-gap) !important;
+  padding-top: 0 !important;
 }
 
 /* Upload / media field — clean action row */
@@ -1344,4 +1333,3 @@ html[data-xe-ui='v5'] .template-default__wrap > .global-edit {
   max-width: var(--xe-shell-max) !important;
   width: 100% !important;
 }
-

@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import React, { useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 
 import { restoreSidebarScroll } from '@/payload/admin/components/nav/sidebar/sidebarScroll'
 

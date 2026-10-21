@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import React from 'react'
 
 type NavBadgeProps = {
@@ -12,7 +13,7 @@ export function NavBadge({ count, active, className }: NavBadgeProps) {
   const label = count > 99 ? '99+' : String(count)
   return (
     <span
-      className={`xe-sb-badge${active ? 'is-active' : ''}${className ? ` ${className}` : ''}`}
+      className={clsx('xe-sb-badge', active && 'is-active', className)}
       aria-label={`${count} items`}
     >
       {label}

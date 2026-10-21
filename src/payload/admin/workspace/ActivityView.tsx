@@ -65,6 +65,7 @@ export async function ActivityView(props: AdminViewServerProps) {
 
   return (
     <WorkspaceShell
+      viewProps={props}
       active="activity"
       title="Activity Timeline"
       subtitle="Append-only enterprise feed: publishes, leads, jobs, media, and SEO edits."

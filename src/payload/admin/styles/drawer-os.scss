@@ -125,9 +125,15 @@ html[data-xe-ui='v5'] .drawer .field-type.text input,
 html[data-xe-ui='v5'] .drawer .field-type.textarea textarea,
 html[data-xe-ui='v5'] .drawer .field-type.number input,
 html[data-xe-ui='v5'] .drawer .field-type.email input,
-html[data-xe-ui='v5'] .payload__modal-item .field-type__wrap > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5']
+  .payload__modal-item
+  .field-type__wrap
+  > input:not([type='checkbox']):not([type='radio']),
 html[data-xe-ui='v5'] .payload__modal-item .field-type.text input,
-html[data-xe-ui='v5'] .doc-drawer .field-type__wrap > input:not([type='checkbox']):not([type='radio']),
+html[data-xe-ui='v5']
+  .doc-drawer
+  .field-type__wrap
+  > input:not([type='checkbox']):not([type='radio']),
 html[data-xe-ui='v5'] .doc-drawer .field-type.text input {
   width: 100% !important;
   max-width: 100% !important;
@@ -166,6 +172,45 @@ html[data-xe-ui='v5'] .drawer .document-fields__sidebar-fields > .render-fields 
 html[data-xe-ui='v5'] .drawer .document-fields__edit > .render-fields:hover,
 html[data-xe-ui='v5'] .drawer .document-fields__sidebar-fields > .render-fields:hover {
   transform: none !important;
+}
+
+/* List drawer header: title · Create New · close on one row */
+html[data-xe-ui='v5'] .list-drawer__header .list-header__content {
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: var(--xe-space-3) !important;
+}
+
+html[data-xe-ui='v5'] .list-drawer__header .list-header__title-and-actions {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  align-items: center !important;
+}
+
+html[data-xe-ui='v5'] .list-drawer__header .list-header__actions {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+
+html[data-xe-ui='v5'] .list-drawer__header-close {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: var(--xe-radius-sm) !important;
+  color: var(--xe-muted) !important;
+}
+
+html[data-xe-ui='v5'] .list-drawer__header-close:hover {
+  background: var(--xe-hover) !important;
+  color: var(--xe-text) !important;
+}
+
+html[data-xe-ui='v5'] .list-drawer__header-close .icon--x {
+  width: 28px !important;
+  height: 28px !important;
 }
 
 @media (max-width: 640px) {

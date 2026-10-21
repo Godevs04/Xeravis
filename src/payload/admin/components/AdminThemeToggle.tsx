@@ -2,14 +2,12 @@
 
 import React from 'react'
 
+import { persistTheme } from './theme'
+
 const STORAGE_KEY = 'payload-theme'
 
 function applyTheme(theme: 'light' | 'dark') {
-  const root = document.documentElement
-  root.setAttribute('data-xe-ui', 'v5')
-  root.setAttribute('data-theme', theme)
-  root.style.colorScheme = theme
-  window.localStorage.setItem(STORAGE_KEY, theme)
+  persistTheme(theme)
   window.localStorage.setItem('xe-theme-preference', theme)
 }
 

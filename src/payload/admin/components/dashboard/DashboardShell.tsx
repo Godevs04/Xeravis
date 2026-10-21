@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import { ContentShell } from '@/payload/admin/components/layout/ContentShell'
 import { motion, type Variants } from 'framer-motion'
 import Link from 'next/link'
@@ -285,7 +286,7 @@ export const DashboardShell = ({
                 <li key={row.id}>
                   <Link href={row.href} className="xe-os-timeline__item">
                     <span
-                      className={`xe-os-timeline__rail${i === 0 ? 'is-live' : ''}`}
+                      className={clsx('xe-os-timeline__rail', i === 0 && 'is-live')}
                       aria-hidden
                     />
                     <span className="xe-os-timeline__copy">

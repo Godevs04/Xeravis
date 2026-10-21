@@ -10,23 +10,19 @@ import { CommandPalette } from './CommandPalette'
 import { HeaderChip } from './HeaderChip'
 import { MainScrollController } from './layout/MainScrollController'
 import { SidebarScrollController } from './layout/SidebarScrollController'
+import { closeMobileDrawer } from './nav/mobileDrawer'
 import { NavAudit } from './nav/NavAudit'
+import { persistTheme, type ThemeMode } from './theme'
 
 const STORAGE_KEY = 'payload-theme'
 const NAV_KEY = 'xe-nav-collapsed'
-
-type ThemeMode = 'light' | 'dark'
 
 function resolveAutoTheme(): ThemeMode {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 function applyResolvedTheme(theme: ThemeMode) {
-  const root = document.documentElement
-  root.setAttribute('data-xe-ui', 'v5')
-  root.setAttribute('data-theme', theme)
-  root.style.colorScheme = theme
-  window.localStorage.setItem(STORAGE_KEY, theme)
+  persistTheme(theme)
 }
 
 function readStoredTheme(): ThemeMode | null {
@@ -85,7 +81,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Payload sets `inert` when navOpen is false (common below large breakpoint).
     // Docked desktop sidebar must stay interactive — strip inert so it can scroll.
-    const desktopMq = window.matchMedia('(min-width: 901px)')
+    const desktopMq = window.matchMedia('(min-width: 769px)')
     const syncNavInteractivity = () => {
       const aside = document.querySelector<HTMLElement>('aside.nav')
       if (!aside) return
@@ -98,6 +94,11 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
       if (aside.classList.contains('nav--nav-open')) {
         aside.removeAttribute('inert')
         root.setAttribute('data-xe-nav', 'open')
+      } else if (root.getAttribute('data-xe-nav') === 'open') {
+        root.setAttribute(
+          'data-xe-nav',
+          window.localStorage.getItem(NAV_KEY) === '1' ? 'collapsed' : 'expanded',
+        )
       }
     }
     syncNavInteractivity()
@@ -253,10 +254,9 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     /** Mobile scrim — close drawer when tapping the dimmed main area */
     const onScrimClick = (e: MouseEvent) => {
       if (root.getAttribute('data-xe-nav') !== 'open') return
-      const wrap = document.querySelector('.template-default__wrap')
-      if (!wrap || e.target !== wrap) return
-      root.setAttribute('data-xe-nav', 'expanded')
-      document.querySelector('aside.nav')?.classList.remove('nav--nav-open')
+      const target = e.target as Element | null
+      if (!target?.matches('.template-default, .template-default__wrap')) return
+      closeMobileDrawer()
     }
     document.addEventListener('click', onScrimClick, true)
 

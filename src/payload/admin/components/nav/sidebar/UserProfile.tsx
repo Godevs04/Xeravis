@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
@@ -47,7 +48,7 @@ export function UserProfile({
   }, [])
 
   return (
-    <div className={`xe-sb-profile${collapsed ? 'is-rail' : ''}${open ? 'is-open' : ''}`} ref={ref}>
+    <div className={clsx('xe-sb-profile', collapsed && 'is-rail', open && 'is-open')} ref={ref}>
       <button
         type="button"
         className="xe-sb-profile__card"

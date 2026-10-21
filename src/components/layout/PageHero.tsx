@@ -11,13 +11,7 @@ import {
   useTransform,
 } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
-import {
-  useEffect,
-  useRef,
-  useState,
-  type MouseEvent as ReactMouseEvent,
-  type ReactNode,
-} from 'react'
+import { useRef, useState, type MouseEvent as ReactMouseEvent, type ReactNode } from 'react'
 
 import { HeroCinematicBackground } from '@/components/marketing/HeroCinematicBackground'
 import { HeroProductVisual } from '@/components/marketing/HeroProductVisual'

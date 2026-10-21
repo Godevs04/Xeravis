@@ -1,5 +1,6 @@
 'use client'
 
+import { Plus } from 'lucide-react'
 import Link from 'next/link'
 import React, { useMemo, useState } from 'react'
 
@@ -27,7 +28,8 @@ export const QuickCreateAction = () => {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        + Create
+        <Plus size={15} aria-hidden />
+        <span className="xe-action-btn__label">Create</span>
       </button>
       {open ? (
         <div className="xe-header-create__menu xe-header-create__menu--grouped">

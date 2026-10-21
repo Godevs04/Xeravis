@@ -25,6 +25,7 @@ export async function NewsletterView(props: AdminViewServerProps) {
 
   return (
     <WorkspaceShell
+      viewProps={props}
       active="newsletter"
       title="Newsletter"
       subtitle="Subscribers, CSV export, and campaign history — managed inside Payload."

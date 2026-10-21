@@ -4,9 +4,10 @@ import React from 'react'
 import { AiAssistantForm } from './AiAssistantForm'
 import { WorkspacePanel, WorkspaceShell } from './WorkspaceShell'
 
-export async function AiAssistantView(_props: AdminViewServerProps) {
+export async function AiAssistantView(props: AdminViewServerProps) {
   return (
     <WorkspaceShell
+      viewProps={props}
       active="ai"
       title="AI Content Assistant"
       subtitle="Draft meta descriptions, service summaries, blog outlines, and job posts without leaving Payload."

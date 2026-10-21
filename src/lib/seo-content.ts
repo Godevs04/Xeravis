@@ -67,7 +67,7 @@ export function quickAnswerForService(title: string, summary: string) {
 }
 
 /** @deprecated Prefer CMS-driven RelatedContent via buildRelatedGroups. */
-export function relatedLinksForService(_slug: string): RelatedLink[] {
+export function relatedLinksForService(): RelatedLink[] {
   return [
     { label: 'Solutions', href: '/solutions', description: 'Outcome themes this practice unlocks' },
     {

@@ -49,6 +49,7 @@ export async function AnalyticsView(props: AdminViewServerProps) {
 
   return (
     <WorkspaceShell
+      viewProps={props}
       active="analytics"
       title="Analytics"
       subtitle="First-party traffic and conversion events stored in Payload — one database."

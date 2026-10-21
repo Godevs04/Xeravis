@@ -20,7 +20,6 @@ import {
   type TechnologyLinkDoc,
 } from '@/lib/solution-technology-links'
 import { SOLUTION_EXTRAS, SOLUTION_HOW_WE_DELIVER } from '@/lib/solution-page-content'
-import { mergePublishedSolutions } from '@/lib/solutions-catalog'
 import { buildMetadata, breadcrumbJsonLd, graphJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { CANONICAL_SOLUTION_SLUGS } from '@/seed/relations'

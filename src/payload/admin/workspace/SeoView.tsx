@@ -86,6 +86,7 @@ export async function SeoView(props: AdminViewServerProps) {
 
   return (
     <WorkspaceShell
+      viewProps={props}
       active="seo"
       title="SEO Center"
       subtitle="Coverage audits for meta, OG, and imagery — plus sitemap and robots shortcuts."

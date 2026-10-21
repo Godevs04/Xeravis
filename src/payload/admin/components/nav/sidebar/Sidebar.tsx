@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ChevronsLeft, ChevronsRight, Plus, Search } from 'lucide-react'
 import Link from 'next/link'
@@ -7,6 +8,7 @@ import React, { type ReactNode, useEffect, useRef, useState } from 'react'
 
 import { WorkspaceSwitcher } from './WorkspaceSwitcher'
 import { saveMainScroll } from '@/payload/admin/components/layout/mainScroll'
+import { closeMobileDrawer } from '@/payload/admin/components/nav/mobileDrawer'
 import {
   bindSidebarScrollPersistence,
   restoreSidebarScroll,
@@ -69,14 +71,6 @@ export function Sidebar({
     return bindSidebarScrollPersistence(el)
   }, [])
 
-  const closeMobileDrawer = () => {
-    const root = document.documentElement
-    if (root.getAttribute('data-xe-nav') === 'open') {
-      root.setAttribute('data-xe-nav', 'expanded')
-      document.querySelector('aside.nav')?.classList.remove('nav--nav-open')
-    }
-  }
-
   const createGroups = React.useMemo(() => {
     const order: string[] = []
     const map = new Map<string, QuickCreateOption[]>()
@@ -92,7 +86,7 @@ export function Sidebar({
   }, [quickCreates])
 
   return (
-    <div className={`xe-sb${collapsed ? 'is-collapsed' : ''}`} data-xe-os-nav data-xe-sidebar>
+    <div className={clsx('xe-sb', collapsed && 'is-collapsed')} data-xe-os-nav data-xe-sidebar>
       <div className="xe-sb__top">
         <div className="xe-sb__brand-row">
           <Link href="/admin" scroll={false} className="xe-sb__brand" title="Xelarvis Admin">
@@ -125,7 +119,7 @@ export function Sidebar({
         <div className="xe-sb__create" ref={createRef}>
           <button
             type="button"
-            className={`xe-sb__create-btn${createOpen ? 'is-open' : ''}`}
+            className={clsx('xe-sb__create-btn', createOpen && 'is-open')}
             aria-expanded={createOpen}
             aria-haspopup="menu"
             aria-label="Create"

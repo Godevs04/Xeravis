@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import React from 'react'
 
 type ContentShellProps = {
@@ -13,9 +14,7 @@ type ContentShellProps = {
  */
 export function ContentShell({ children, className = '', flush = false }: ContentShellProps) {
   return (
-    <div
-      className={`xe-content-shell xe-page${flush ? 'is-flush' : ''}${className ? ` ${className}` : ''}`}
-    >
+    <div className={clsx('xe-content-shell xe-page', flush && 'is-flush', className)}>
       {children}
     </div>
   )

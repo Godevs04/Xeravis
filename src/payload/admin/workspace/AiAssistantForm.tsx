@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from 'clsx'
 import Link from 'next/link'
 import React, { useActionState } from 'react'
 
@@ -39,7 +40,7 @@ export function AiAssistantForm() {
         {pending ? 'Generating…' : 'Generate draft'}
       </button>
       {state.message ? (
-        <p className={`xe-ai__status${state.ok ? 'is-ok' : 'is-err'}`}>{state.message}</p>
+        <p className={clsx('xe-ai__status', state.ok ? 'is-ok' : 'is-err')}>{state.message}</p>
       ) : null}
       {state.draftHref ? (
         <p className="xe-ai__status is-ok">
