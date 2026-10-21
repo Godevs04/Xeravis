@@ -1689,66 +1689,9 @@ html[data-xe-ui='v5'] .document-fields__edit {
   box-sizing: border-box !important;
 }
 
-/* Keep Payload sidebar rail when it has fields; never stretch an empty rail */
-html[data-xe-ui='v5'] .document-fields {
-  --main-width: 100% !important;
-  --doc-sidebar-width: 280px !important;
-}
-
-html[data-xe-ui='v5']
-  .document-fields--has-sidebar:has(
-    .document-fields__sidebar-fields > .render-fields > .field-type
-  ) {
-  --main-width: min(100%, calc(100% - var(--doc-sidebar-width))) !important;
-}
-
-html[data-xe-ui='v5'] .document-fields--has-sidebar .document-fields__main {
-  width: var(--main-width) !important;
-  max-width: 100% !important;
-  flex: 1 1 auto !important;
-}
-
-html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
-  width: var(--doc-sidebar-width) !important;
-  max-width: var(--doc-sidebar-width) !important;
-  flex: 0 0 var(--doc-sidebar-width) !important;
-  box-sizing: border-box !important;
-}
-
-html[data-xe-ui='v5']
-  .document-fields__sidebar-wrap:not(
-    :has(.document-fields__sidebar-fields > .render-fields > .field-type)
-  ),
-html[data-xe-ui='v5']
-  .document-fields:has(.document-fields__sidebar-fields > .render-fields:empty)
-  .document-fields__sidebar-wrap {
-  display: none !important;
-  width: 0 !important;
-  max-width: 0 !important;
-  flex: 0 0 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;
-}
-
-html[data-xe-ui='v5']
-  .document-fields:has(.document-fields__sidebar-fields > .render-fields:empty)
-  .document-fields__main,
-html[data-xe-ui='v5']
-  .document-fields:not(:has(.document-fields__sidebar-fields > .render-fields > .field-type))
-  .document-fields__main {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
 html[data-xe-ui='v5'] .document-fields__edit {
   padding-top: 0 !important;
   padding-bottom: 12px !important;
-}
-
-html[data-xe-ui='v5'] .doc-controls {
-  margin-bottom: 16px !important;
-  border-radius: 16px !important;
 }
 
 html[data-xe-ui='v5'] .document-fields__edit > .render-fields,
@@ -1951,10 +1894,6 @@ html[data-xe-ui='v5'] .multi-value {
 html[data-xe-ui='v5'] .collection-edit,
 html[data-xe-ui='v5'] .global-edit {
   padding-top: 8px !important;
-}
-
-html[data-xe-ui='v5'] .doc-controls {
-  margin-bottom: 12px !important;
 }
 
 html[data-xe-ui='v5'] .field-type {

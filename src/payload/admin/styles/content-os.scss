@@ -305,15 +305,37 @@ html[data-xe-ui='v5'] .document-tabs a[aria-current='page'] {
    5. ACTION BAR (doc-controls)
    ──────────────────────────────────────────────────────────── */
 
-html[data-xe-ui='v5'] .doc-controls {
+html[data-xe-ui='v5'] .doc-controls,
+html[data-xe-ui='v5'] .doc-controls.gutter {
   position: sticky !important;
-  top: calc(var(--xe-header-h) + 16px) !important;
+  top: var(--xe-header-h) !important;
   z-index: 30 !important;
-  margin: 0 0 var(--xe-space-6) !important;
-  padding: 0 !important;
+  margin: 0 0 var(--xe-space-4) !important;
+  padding: var(--xe-space-2) 0 0 !important;
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
+}
+
+/* Masks scrolled fields between the header and the bar, edge to edge across the gutters */
+html[data-xe-ui='v5'] .doc-controls::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 calc(-1 * var(--xe-gutter)) 50% !important;
+  width: auto !important;
+  height: auto !important;
+  background: var(--xe-bg) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+/* The frosted header would blur scrolled titles right above the stuck bar */
+html[data-xe-ui='v5'] .template-default__wrap:has(.doc-controls) .app-header {
+  background: var(--xe-bg) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 html[data-xe-ui='v5'] .doc-controls__wrapper {
@@ -328,8 +350,7 @@ html[data-xe-ui='v5'] .doc-controls__wrapper {
   padding: 10px 12px 10px 16px !important;
   border-radius: var(--xe-radius-lg) !important;
   border: 1px solid var(--xe-border) !important;
-  background: var(--xe-glass) !important;
-  backdrop-filter: blur(16px) saturate(160%) !important;
+  background: var(--xe-surface) !important;
   box-shadow: var(--xe-card-shadow) !important;
 }
 
@@ -478,9 +499,32 @@ html[data-xe-ui='v5'] .document-fields--no-sidebar {
   display: block !important;
 }
 
+/* Payload renders the sidebar wrapper even when no field targets it */
+html[data-xe-ui='v5']
+  .document-fields--has-sidebar:not(
+    :has(.document-fields__sidebar-fields > .render-fields > .field-type)
+  ) {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+html[data-xe-ui='v5']
+  .document-fields__sidebar-wrap:not(
+    :has(.document-fields__sidebar-fields > .render-fields > .field-type)
+  ) {
+  display: none !important;
+}
+
 html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
   position: sticky !important;
-  top: var(--xe-space-4) !important;
+  top: calc(var(--xe-header-h) + var(--xe-doc-controls-h) + var(--xe-space-4)) !important;
+  /* Shorter than the space above the page's 64px bottom padding, so the sticky rail never rides up under the save bar at the end of the page */
+  max-height: calc(
+    100dvh - var(--xe-header-h) - var(--xe-doc-controls-h) - var(--xe-space-4) *
+      2 - var(--xe-space-10)
+  ) !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
   max-width: none !important;
   width: 100% !important;
   align-self: start !important;
@@ -495,6 +539,8 @@ html[data-xe-ui='v5'] .document-fields__sidebar-wrap {
     order: 2 !important;
     position: static !important;
     top: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 }
 
@@ -1314,11 +1360,6 @@ html[data-xe-ui='v5'] .file-field__upload p {
   text-align: center !important;
   font-size: var(--xe-fs-secondary) !important;
   color: var(--xe-muted) !important;
-}
-
-/* Doc controls stick below header without pushing sidebar down */
-html[data-xe-ui='v5'] .doc-controls {
-  top: calc(var(--xe-header-h) + var(--xe-space-2)) !important;
 }
 
 html[data-xe-ui='v5'] .collection-edit__main,
