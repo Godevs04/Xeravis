@@ -117,7 +117,9 @@ html[data-xe-ui='v5'] .field-type .field-description {
 }
 
 /* Text/textarea inputs only — never style react-select's hidden input */
-html[data-xe-ui='v5'] .field-type__wrap > input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
+html[data-xe-ui='v5']
+  .field-type__wrap
+  > input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
 html[data-xe-ui='v5'] .input > input:not([type='checkbox']):not([type='radio']),
 html[data-xe-ui='v5'] .textarea > textarea,
 html[data-xe-ui='v5'] .date-time-picker input,
@@ -350,20 +352,11 @@ html[data-xe-ui='v5'] .rs__indicator {
   padding: 8px !important;
 }
 
-/* Select / relationship fields — readable width, not full bleed */
-html[data-xe-ui='v5'] .field-type.select .field-type__wrap,
-html[data-xe-ui='v5'] .field-type.select .react-select-container,
-html[data-xe-ui='v5'] .field-type.select .rs__container,
-html[data-xe-ui='v5'] .field-type.relationship:not(.relationship--has-many) .react-select-container {
-  max-width: min(100%, 560px) !important;
-}
-
 /* Relationship add (+) button — vertically centered with select */
 html[data-xe-ui='v5'] .relationship__wrap {
   display: flex !important;
   align-items: stretch !important;
   gap: 0 !important;
-  max-width: min(100%, 560px) !important;
 }
 
 html[data-xe-ui='v5'] .relationship--allow-create .relationship__wrap > .react-select-container,

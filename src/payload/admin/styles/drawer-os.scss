@@ -90,6 +90,8 @@ html[data-xe-ui='v5'] .doc-drawer .document-fields__sidebar-wrap {
   margin: 0 !important;
   padding: 0 !important;
   order: unset !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 html[data-xe-ui='v5'] .drawer .document-fields__sidebar-wrap {
@@ -152,10 +154,16 @@ html[data-xe-ui='v5'] .drawer .field-type.relationship .react-select-container {
   width: 100% !important;
 }
 
-html[data-xe-ui='v5'] .drawer .doc-controls {
+html[data-xe-ui='v5'] .drawer .doc-controls,
+html[data-xe-ui='v5'] .drawer .doc-controls.gutter {
   position: static !important;
   top: auto !important;
+  padding-top: 0 !important;
   margin-bottom: var(--xe-space-4) !important;
+}
+
+html[data-xe-ui='v5'] .drawer .doc-controls::before {
+  display: none !important;
 }
 
 html[data-xe-ui='v5'] .drawer .doc-drawer__header {
