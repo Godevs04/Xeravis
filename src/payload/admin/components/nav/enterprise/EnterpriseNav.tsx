@@ -20,6 +20,7 @@ import {
   QUICK_CREATES,
   isLinkActive,
   moduleHasActiveLink,
+  quickCreateAllowed,
   resolveModuleNavigation,
   type NavModuleId,
 } from './modules'
@@ -74,7 +75,14 @@ function writeRememberedOpen(ids: Set<string>) {
 export function EnterpriseNav() {
   const pathname = usePathname() || '/admin'
   const ctx = useWorkspaceOptional()
-  const { user } = useAuth()
+  const { user, permissions } = useAuth()
+  const quickCreates = useMemo(
+    () =>
+      QUICK_CREATES.filter((item) =>
+        quickCreateAllowed(item.href, (slug) => Boolean(permissions?.collections?.[slug]?.create)),
+      ),
+    [permissions],
+  )
   const routeNav = useMemo(() => resolveModuleNavigation(pathname), [pathname])
   const [manualOpen, setManualOpen] = useState<Set<string>>(() => new Set())
   const [collapsed, setCollapsed] = useState(false)
@@ -184,7 +192,7 @@ export function EnterpriseNav() {
       collapsed={collapsed}
       onToggleCollapse={toggleCollapse}
       onOpenCommand={openCommand}
-      quickCreates={QUICK_CREATES}
+      quickCreates={quickCreates}
       envLabel={envLabel}
       footer={
         <UserProfile

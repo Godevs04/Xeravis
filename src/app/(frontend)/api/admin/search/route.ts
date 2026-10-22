@@ -4,14 +4,14 @@ import { NextResponse } from 'next/server'
 import { getPayload } from '@/lib/payload'
 
 const SEARCH_TARGETS = [
-  { collection: 'blogs', titleField: 'title' },
-  { collection: 'pages', titleField: 'title' },
-  { collection: 'services', titleField: 'title' },
-  { collection: 'technologies', titleField: 'title' },
-  { collection: 'careers', titleField: 'title' },
-  { collection: 'media', titleField: 'filename' },
-  { collection: 'job-applications', titleField: 'name' },
-  { collection: 'contact-messages', titleField: 'name' },
+  { collection: 'blogs', titleField: 'title', group: 'Blogs' },
+  { collection: 'pages', titleField: 'title', group: 'Pages' },
+  { collection: 'services', titleField: 'title', group: 'Services' },
+  { collection: 'technologies', titleField: 'title', group: 'Technologies' },
+  { collection: 'careers', titleField: 'title', group: 'Jobs' },
+  { collection: 'media', titleField: 'filename', group: 'Media' },
+  { collection: 'job-applications', titleField: 'name', group: 'Candidates' },
+  { collection: 'contact-messages', titleField: 'name', group: 'Contact Messages' },
 ] as const
 
 export async function GET(request: Request) {
@@ -34,7 +34,9 @@ export async function GET(request: Request) {
             collection: target.collection as 'blogs',
             depth: 0,
             limit: 4,
-            overrideAccess: true,
+            draft: true,
+            overrideAccess: false,
+            user,
             where: {
               [target.titleField]: {
                 like: q,
@@ -51,7 +53,7 @@ export async function GET(request: Request) {
               id: `${target.collection}-${record.id}`,
               label: String(title),
               href: `/admin/collections/${target.collection}/${record.id}`,
-              group: target.collection,
+              group: target.group,
             }
           })
         } catch {

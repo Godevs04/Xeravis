@@ -5,6 +5,7 @@ import type { ReactNode } from 'react'
 import { PageviewBeacon } from '@/components/analytics/PageviewBeacon'
 import { TrackingScripts } from '@/components/analytics/TrackingScripts'
 import { AmbientBackground } from '@/components/layout/AmbientBackground'
+import { CookieBanner } from '@/components/layout/CookieBanner'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
 import { SkipLink } from '@/components/layout/SkipLink'
@@ -16,6 +17,11 @@ import {
   organizationJsonLd,
   websiteJsonLd,
 } from '@/lib/seo'
+import { getGlobal } from '@/lib/cms'
+import type {
+  CookieBanner as CookieBannerGlobal,
+  SeoDefault,
+} from '@/payload/generated-types/payload-types'
 import { AppProviders } from '@/providers'
 
 import './globals.css'
@@ -38,15 +44,21 @@ const body = Plus_Jakarta_Sans({
   preload: true,
 })
 
-export const metadata: Metadata = {
-  ...buildMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getGlobal<SeoDefault>('seo-defaults')
+  const base = buildMetadata({
     title: '',
-    description: DEFAULT_DESCRIPTION,
+    description: seo?.defaultDescription?.trim() || DEFAULT_DESCRIPTION,
     path: '/',
-  }),
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
-  },
+  })
+  const handle = seo?.twitterHandle?.trim()
+  return {
+    ...base,
+    twitter: handle ? { ...base.twitter, site: handle, creator: handle } : base.twitter,
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    },
+  }
 }
 
 export const viewport: Viewport = {
@@ -62,8 +74,10 @@ export const viewport: Viewport = {
   colorScheme: 'light',
 }
 
-export default function FrontendLayout({ children }: { children: ReactNode }) {
+export default async function FrontendLayout({ children }: { children: ReactNode }) {
   const jsonLd = graphJsonLd(organizationJsonLd(), websiteJsonLd())
+  const cookieBanner = await getGlobal<CookieBannerGlobal>('cookie-banner')
+  const cookieMessage = cookieBanner?.enabled ? cookieBanner.message?.trim() : undefined
 
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
@@ -83,6 +97,13 @@ export default function FrontendLayout({ children }: { children: ReactNode }) {
           <SiteFooter />
           <PageviewBeacon />
           <TrackingScripts />
+          {cookieMessage ? (
+            <CookieBanner
+              message={cookieMessage}
+              policyHref={cookieBanner?.policyHref}
+              acceptLabel={cookieBanner?.acceptLabel}
+            />
+          ) : null}
           <JsonLd id="site-graph-jsonld" data={jsonLd} />
         </AppProviders>
       </body>

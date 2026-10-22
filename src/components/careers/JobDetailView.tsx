@@ -33,6 +33,8 @@ type JobDetailViewProps = {
   requirementsSlot?: ReactNode
   /** When false, show email apply CTA instead of the online form (fallback/demo jobs). */
   applicationsOpen?: boolean
+  /** Replaces the fallback copy when a published role has stopped accepting applications. */
+  closedMessage?: string
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -152,6 +154,7 @@ export function JobDetailView({
   descriptionSlot,
   requirementsSlot,
   applicationsOpen = true,
+  closedMessage,
 }: JobDetailViewProps) {
   const reduce = useReducedMotion()
   const responsibilities = listItems(job.responsibilities)
@@ -400,8 +403,9 @@ export function JobDetailView({
                   ) : (
                     <div className="space-y-4 text-sm leading-relaxed text-[color:var(--color-secondary)]">
                       <p>
-                        Online applications for this listing will open once the role is published in
-                        our careers system. You can still reach recruiting directly:
+                        {closedMessage ||
+                          'Online applications for this listing will open once the role is published in our careers system.'}{' '}
+                        You can still reach recruiting directly:
                       </p>
                       <Button
                         asChild

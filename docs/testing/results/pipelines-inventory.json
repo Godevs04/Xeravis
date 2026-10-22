@@ -1,0 +1,37 @@
+[
+  {
+    "collection": "job-applications",
+    "id": "6ada5c8759652072ddf1590b",
+    "label": "[TEST] QA Applicant",
+    "slug": "XEL-2026-FB7CDA3A",
+    "state": "hired"
+  },
+  {
+    "collection": "interviews",
+    "id": "6ada68716c93653ab78fa52f",
+    "label": "[TEST] QA Technical interview",
+    "slug": "",
+    "state": "completed"
+  },
+  {
+    "collection": "contact-messages",
+    "id": "6ada5d5159652072ddf15b3a",
+    "label": "[TEST] QA Lead",
+    "slug": "",
+    "state": "won"
+  },
+  {
+    "collection": "form-submissions",
+    "id": "6ada68746c93653ab78fa5a0",
+    "label": "TEST-QA contact JSON",
+    "slug": "",
+    "state": "reviewed"
+  },
+  {
+    "collection": "newsletter-subscribers",
+    "id": "6ada5d7b59652072ddf15b5c",
+    "label": "qa.test+newsletter-1@xelarvis.test",
+    "slug": "",
+    "state": "active"
+  }
+]

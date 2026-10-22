@@ -4,7 +4,7 @@ import { authenticatedOrPublished, canManageCareers, isAdminOrEditor } from '@/p
 import { slugField } from '@/payload/fields/slug'
 import {
   autoSlugFromTitle,
-  enforcePublishRole,
+  enforcePublishRoleFor,
   revalidateOnDelete,
   revalidateSlugPath,
 } from '@/payload/hooks'
@@ -42,7 +42,7 @@ export const Careers: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [autoSlugFromTitle('title')],
-    beforeChange: [enforcePublishRole],
+    beforeChange: [enforcePublishRoleFor(['recruiter'])],
     afterChange: [revalidateSlugPath('/careers', 'careers'), trackActivity('careers')],
     afterDelete: [revalidateOnDelete(['/careers'], ['careers'])],
   },

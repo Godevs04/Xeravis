@@ -264,6 +264,7 @@ export interface Media {
         | 'documents'
         | 'videos'
         | 'og'
+        | 'resumes'
       )
     | null
   updatedAt: string

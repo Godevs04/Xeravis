@@ -1,0 +1,237 @@
+{
+  "site-settings": {
+    "createdAt": "2026-07-24T17:57:31.242Z",
+    "updatedAt": "2026-10-21T15:17:48.951Z",
+    "globalType": "site-settings",
+    "siteName": "Xelarvis Technologies",
+    "tagline": "Artificial Intelligence, Data Science & IT Consulting",
+    "theme": {},
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/xelarvis",
+      "twitter": "https://x.com/xelarvis_ai",
+      "github": "",
+      "youtube": ""
+    },
+    "id": "6a63a78b7e5a272d3888a8da"
+  },
+  "navigation": {
+    "createdAt": "2026-07-24T17:59:34.912Z",
+    "updatedAt": "2026-10-21T15:17:50.582Z",
+    "globalType": "navigation",
+    "primaryLinks": [
+      {
+        "label": "About",
+        "href": "/about",
+        "mega": "about",
+        "id": "6ad8d79efd0a754c36d6e09f"
+      },
+      {
+        "label": "Capabilities",
+        "href": "/services",
+        "mega": "services",
+        "id": "6ad8d79efd0a754c36d6e0a0"
+      },
+      {
+        "label": "Solutions",
+        "href": "/solutions",
+        "mega": "solutions",
+        "id": "6ad8d79efd0a754c36d6e0a1"
+      },
+      {
+        "label": "Industries",
+        "href": "/industries",
+        "mega": "industries",
+        "id": "6ad8d79efd0a754c36d6e0a2"
+      },
+      {
+        "label": "Research",
+        "href": "/ai-research-lab",
+        "mega": "research",
+        "id": "6ad8d79efd0a754c36d6e0a3"
+      },
+      {
+        "label": "Insights",
+        "href": "/insights",
+        "mega": "insights",
+        "id": "6ad8d79efd0a754c36d6e0a4"
+      },
+      {
+        "label": "Careers",
+        "href": "/careers",
+        "mega": "none",
+        "id": "6ad8d79efd0a754c36d6e0a5"
+      }
+    ],
+    "cta": {
+      "label": "Contact",
+      "href": "/contact",
+      "style": "primary",
+      "openInNewTab": false
+    },
+    "ctaLabel": "Contact",
+    "ctaHref": "/contact",
+    "stickyHeader": true,
+    "id": "6a63a806228d21c27b631794"
+  },
+  "footer": {
+    "createdAt": "2026-07-24T17:59:35.014Z",
+    "updatedAt": "2026-10-21T15:17:50.709Z",
+    "globalType": "footer",
+    "columns": [
+      {
+        "title": "About",
+        "links": [
+          {
+            "label": "About",
+            "href": "/about",
+            "id": "6ad8d79efd0a754c36d6e0a6"
+          },
+          {
+            "label": "How We Think",
+            "href": "/about/our-approach",
+            "id": "6ad8d79efd0a754c36d6e0a7"
+          },
+          {
+            "label": "Research",
+            "href": "/ai-research-lab",
+            "id": "6ad8d79efd0a754c36d6e0a8"
+          },
+          {
+            "label": "Collaborations",
+            "href": "/ai-research-lab/collaborations",
+            "id": "6ad8d79efd0a754c36d6e0a9"
+          },
+          {
+            "label": "Careers",
+            "href": "/careers",
+            "id": "6ad8d79efd0a754c36d6e0aa"
+          },
+          {
+            "label": "Contact",
+            "href": "/contact",
+            "id": "6ad8d79efd0a754c36d6e0ab"
+          }
+        ],
+        "id": "6ad8d79efd0a754c36d6e0ac"
+      },
+      {
+        "title": "Capabilities",
+        "links": [
+          {
+            "label": "All capabilities",
+            "href": "/services",
+            "id": "6ad8d79efd0a754c36d6e0ad"
+          },
+          {
+            "label": "Solutions",
+            "href": "/solutions",
+            "id": "6ad8d79efd0a754c36d6e0ae"
+          },
+          {
+            "label": "Industries",
+            "href": "/industries",
+            "id": "6ad8d79efd0a754c36d6e0af"
+          },
+          {
+            "label": "Technologies",
+            "href": "/technologies",
+            "id": "6ad8d79efd0a754c36d6e0b0"
+          },
+          {
+            "label": "Case Studies",
+            "href": "/case-studies",
+            "id": "6ad8d79efd0a754c36d6e0b1"
+          }
+        ],
+        "id": "6ad8d79efd0a754c36d6e0b2"
+      },
+      {
+        "title": "Insights",
+        "links": [
+          {
+            "label": "Insights Hub",
+            "href": "/insights",
+            "id": "6ad8d79efd0a754c36d6e0b3"
+          },
+          {
+            "label": "Blogs",
+            "href": "/insights/blogs",
+            "id": "6ad8d79efd0a754c36d6e0b4"
+          },
+          {
+            "label": "Reports",
+            "href": "/insights/reports",
+            "id": "6ad8d79efd0a754c36d6e0b5"
+          },
+          {
+            "label": "White Papers",
+            "href": "/insights/white-papers",
+            "id": "6ad8d79efd0a754c36d6e0b6"
+          }
+        ],
+        "id": "6ad8d79efd0a754c36d6e0b7"
+      }
+    ],
+    "showNewsletter": true,
+    "copyright": "XELARVIS PRIVATE LIMITED. All rights reserved.",
+    "id": "6a63a807228d21c27b6317a0"
+  },
+  "contact-details": {
+    "createdAt": "2026-07-24T17:59:35.104Z",
+    "updatedAt": "2026-10-21T15:17:50.826Z",
+    "globalType": "contact-details",
+    "email": "hello@xelarvis.in",
+    "phone": "+91 00000 00000",
+    "whatsapp": "",
+    "hours": "Mon–Fri, 9:30–18:30 IST",
+    "mapEmbedUrl": "",
+    "mapEmbed": "",
+    "id": "6a63a807228d21c27b6317a6"
+  },
+  "office-locations": {
+    "createdAt": "2026-07-24T17:59:35.284Z",
+    "updatedAt": "2026-10-21T15:17:51.061Z",
+    "globalType": "office-locations",
+    "locations": [
+      {
+        "name": "Headquarters",
+        "city": "Hyderabad",
+        "country": "India",
+        "address": "India",
+        "hours": "Mon–Fri, 9:30–18:30 IST",
+        "id": "6ad8d79ffd0a754c36d6e0b8"
+      }
+    ],
+    "id": "6a63a807228d21c27b6317bd"
+  },
+  "seo-defaults": {
+    "createdAt": "2026-07-24T17:59:35.372Z",
+    "updatedAt": "2026-10-21T15:17:51.175Z",
+    "globalType": "seo-defaults",
+    "titleTemplate": "%s · Xelarvis Technologies",
+    "defaultDescription": "XELARVIS combines Artificial Intelligence, Data Science and IT Consulting to help organisations turn complex data and technology challenges into measurable business outcomes—with specialized expertise in Healthcare & Life Sciences.",
+    "twitterHandle": "@xelarvis_ai",
+    "id": "6a63a807228d21c27b6317c8"
+  },
+  "social-media": {
+    "createdAt": "2026-07-24T17:59:35.195Z",
+    "updatedAt": "2026-10-21T15:17:50.946Z",
+    "globalType": "social-media",
+    "linkedin": "https://www.linkedin.com/company/xelarvis",
+    "instagram": "",
+    "facebook": "",
+    "youtube": "",
+    "twitter": "https://x.com/xelarvis_ai",
+    "github": "",
+    "id": "6a63a807228d21c27b6317b2"
+  },
+  "analytics": {},
+  "announcement-bar": {
+    "enabled": false
+  },
+  "cookie-banner": {
+    "enabled": false,
+    "policyHref": "/privacy-policy",
+    "acceptLabel": "Accept"
+  }
+}

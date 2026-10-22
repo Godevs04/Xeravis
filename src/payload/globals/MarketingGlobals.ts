@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { anyone, canManageMarketing, isAdmin } from '@/payload/access'
-import { revalidateGlobal } from '@/payload/hooks'
+import { revalidateGlobal, revalidateSiteWide } from '@/payload/hooks'
 
 export const SocialMedia: GlobalConfig = {
   slug: 'social-media',
@@ -36,6 +36,9 @@ export const Analytics: GlobalConfig = {
     read: anyone,
     update: isAdmin,
   },
+  hooks: {
+    afterChange: [revalidateSiteWide],
+  },
   fields: [
     { name: 'googleAnalyticsId', type: 'text', admin: { placeholder: 'G-XXXXXXXX' } },
     { name: 'googleTagManagerId', type: 'text', admin: { placeholder: 'GTM-XXXX' } },
@@ -57,7 +60,7 @@ export const AnnouncementBar: GlobalConfig = {
     update: canManageMarketing,
   },
   hooks: {
-    afterChange: [revalidateGlobal(['/'], ['announcement'])],
+    afterChange: [revalidateGlobal([], ['announcement']), revalidateSiteWide],
   },
   fields: [
     {
@@ -107,6 +110,9 @@ export const CookieBanner: GlobalConfig = {
   access: {
     read: anyone,
     update: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateSiteWide],
   },
   fields: [
     {

@@ -1,13 +1,23 @@
 import Script from 'next/script'
 
+import { getGlobal } from '@/lib/cms'
+import type { Analytics } from '@/payload/generated-types/payload-types'
+
+/** Tag IDs are interpolated into inline scripts, so only plain ID characters are accepted. */
+const safeId = (value?: string | null) => {
+  const id = value?.trim()
+  return id && /^[A-Za-z0-9_-]{2,40}$/.test(id) ? id : undefined
+}
+
 /**
- * Optional third-party tags from env.
- * CMS Analytics global remains the source of truth for ops; env enables SSR-safe injection.
+ * Third-party tags. Env vars win (per-deployment overrides); otherwise the CMS Analytics global
+ * (Settings → Analytics) supplies the IDs.
  */
-export function TrackingScripts() {
-  const ga = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
-  const gtm = process.env.NEXT_PUBLIC_GTM_ID?.trim()
-  const clarity = process.env.NEXT_PUBLIC_CLARITY_ID?.trim()
+export async function TrackingScripts() {
+  const cms = await getGlobal<Analytics>('analytics')
+  const ga = safeId(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) || safeId(cms?.googleAnalyticsId)
+  const gtm = safeId(process.env.NEXT_PUBLIC_GTM_ID) || safeId(cms?.googleTagManagerId)
+  const clarity = safeId(process.env.NEXT_PUBLIC_CLARITY_ID) || safeId(cms?.microsoftClarityId)
 
   return (
     <>

@@ -4,7 +4,7 @@ import { toSlug } from '@/payload/utilities'
 
 export const autoSlugFromTitle =
   (sourceField = 'title'): CollectionBeforeValidateHook =>
-  ({ data, operation }) => {
+  ({ data, operation, originalDoc }) => {
     if (!data) return data
     if (operation !== 'create' && operation !== 'update') return data
 
@@ -13,6 +13,9 @@ export const autoSlugFromTitle =
       data.slug = toSlug(existingSlug)
       return data
     }
+
+    // Partial updates that omit the slug must not re-derive it from a changed title (breaks URLs)
+    if (operation === 'update' && data.slug === undefined && originalDoc?.slug) return data
 
     const source = data[sourceField]
     if (typeof source === 'string' && source.trim()) {

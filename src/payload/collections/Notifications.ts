@@ -1,6 +1,17 @@
-import type { CollectionConfig } from 'payload'
+import type { Access, CollectionConfig } from 'payload'
 
-import { isAdmin, isLoggedIn } from '@/payload/access'
+import { isAdmin } from '@/payload/access'
+
+const ownNotifications: Access = ({ req: { user } }) => {
+  if (!user) return false
+  const roles = (user as { roles?: string[] }).roles || []
+  if (roles.includes('super-admin') || roles.includes('administrator')) return true
+  return {
+    user: {
+      equals: user.id,
+    },
+  }
+}
 
 export const Notifications: CollectionConfig = {
   slug: 'notifications',
@@ -14,18 +25,9 @@ export const Notifications: CollectionConfig = {
     group: 'System',
   },
   access: {
-    read: ({ req: { user } }) => {
-      if (!user) return false
-      const roles = (user as { roles?: string[] }).roles || []
-      if (roles.includes('super-admin') || roles.includes('administrator')) return true
-      return {
-        user: {
-          equals: user.id,
-        },
-      }
-    },
+    read: ownNotifications,
     create: () => false,
-    update: isLoggedIn,
+    update: ownNotifications,
     delete: isAdmin,
   },
   fields: [

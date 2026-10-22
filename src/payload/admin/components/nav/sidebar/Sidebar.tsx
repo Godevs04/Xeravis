@@ -116,7 +116,7 @@ export function Sidebar({
           <kbd className="xe-sb__kbd">⌘K</kbd>
         </button>
 
-        <div className="xe-sb__create" ref={createRef}>
+        <div className="xe-sb__create" ref={createRef} hidden={quickCreates.length === 0}>
           <button
             type="button"
             className={clsx('xe-sb__create-btn', createOpen && 'is-open')}

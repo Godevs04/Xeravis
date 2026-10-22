@@ -159,7 +159,8 @@ export async function runAiAssist(
     if (mode === 'job-post') {
       const created = await payload.create({
         collection: 'careers',
-        overrideAccess: true,
+        overrideAccess: false,
+        user,
         draft: true,
         data: {
           title: topic.slice(0, 140),
@@ -183,7 +184,8 @@ export async function runAiAssist(
 
     const created = await payload.create({
       collection: 'blogs',
-      overrideAccess: true,
+      overrideAccess: false,
+      user,
       draft: true,
       data: {
         title: topic.slice(0, 140),
@@ -222,10 +224,13 @@ export async function runAiAssist(
       output: generated.output,
       draftHref: `/admin/collections/blogs/${created.id}`,
     }
-  } catch {
+  } catch (error) {
+    const forbidden = error instanceof Error && error.name === 'Forbidden'
     return {
       ok: true,
-      message: `${generated.message} Write-back failed — copy the draft below and paste manually.`,
+      message: forbidden
+        ? `${generated.message} Your role cannot create ${mode === 'job-post' ? 'jobs' : 'insights'} — copy the draft below instead.`
+        : `${generated.message} Write-back failed — copy the draft below and paste manually.`,
       output: generated.output,
     }
   }

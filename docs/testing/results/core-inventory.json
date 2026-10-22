@@ -1,0 +1,149 @@
+[
+  {
+    "collection": "media",
+    "id": "6ada67096c93653ab78f823e",
+    "label": "[TEST] QA hero image",
+    "slug": "test-qa-hero.png",
+    "state": "saved"
+  },
+  {
+    "collection": "media",
+    "id": "6ada67096c93653ab78f825a",
+    "label": "[TEST] QA brochure PDF",
+    "slug": "test-qa-brochure.pdf",
+    "state": "saved"
+  },
+  {
+    "collection": "pages",
+    "id": "6ada670a6c93653ab78f828f",
+    "label": "[TEST] QA Page",
+    "slug": "test-qa-pages",
+    "state": "published"
+  },
+  {
+    "collection": "services",
+    "id": "6ada670e6c93653ab78f82f3",
+    "label": "[TEST] QA Service",
+    "slug": "test-qa-services",
+    "state": "published"
+  },
+  {
+    "collection": "solutions",
+    "id": "6ada67126c93653ab78f83d2",
+    "label": "[TEST] QA Solution",
+    "slug": "test-qa-solutions",
+    "state": "published"
+  },
+  {
+    "collection": "industries",
+    "id": "6ada67166c93653ab78f84a3",
+    "label": "[TEST] QA Industry",
+    "slug": "test-qa-industries",
+    "state": "published"
+  },
+  {
+    "collection": "case-studies",
+    "id": "6ada671a6c93653ab78f8553",
+    "label": "[TEST] QA Case Study",
+    "slug": "test-qa-case-studies",
+    "state": "published"
+  },
+  {
+    "collection": "blogs",
+    "id": "6ada671e6c93653ab78f860a",
+    "label": "[TEST] QA Blog",
+    "slug": "test-qa-blogs",
+    "state": "published"
+  },
+  {
+    "collection": "research",
+    "id": "6ada67236c93653ab78f86f8",
+    "label": "[TEST] QA Research",
+    "slug": "test-qa-research",
+    "state": "published"
+  },
+  {
+    "collection": "careers",
+    "id": "6ada67276c93653ab78f87bd",
+    "label": "[TEST] QA Job",
+    "slug": "test-qa-careers",
+    "state": "published"
+  },
+  {
+    "collection": "technologies",
+    "id": "6ada672b6c93653ab78f88a0",
+    "label": "[TEST] QA Technologies",
+    "slug": "test-qa-technologies",
+    "state": "saved"
+  },
+  {
+    "collection": "categories",
+    "id": "6ada672d6c93653ab78f88cf",
+    "label": "[TEST] QA Categories",
+    "slug": "test-qa-categories",
+    "state": "saved"
+  },
+  {
+    "collection": "tags",
+    "id": "6ada672e6c93653ab78f88f9",
+    "label": "[TEST] QA Tags",
+    "slug": "test-qa-tags",
+    "state": "saved"
+  },
+  {
+    "collection": "authors",
+    "id": "6ada67306c93653ab78f8921",
+    "label": "[TEST] QA Authors",
+    "slug": "",
+    "state": "saved"
+  },
+  {
+    "collection": "clients",
+    "id": "6ada67316c93653ab78f894b",
+    "label": "[TEST] QA Clients",
+    "slug": "",
+    "state": "saved"
+  },
+  {
+    "collection": "faqs",
+    "id": "6ada67326c93653ab78f8974",
+    "label": "[TEST] QA FAQs",
+    "slug": "",
+    "state": "saved"
+  },
+  {
+    "collection": "team-members",
+    "id": "6ada67346c93653ab78f8999",
+    "label": "[TEST] QA Team Members",
+    "slug": "",
+    "state": "saved"
+  },
+  {
+    "collection": "testimonials",
+    "id": "6ada67356c93653ab78f89c2",
+    "label": "[TEST] QA Testimonials",
+    "slug": "",
+    "state": "saved"
+  },
+  {
+    "collection": "departments",
+    "id": "6ada67366c93653ab78f89e9",
+    "label": "[TEST] QA Departments",
+    "slug": "test-qa-departments",
+    "state": "saved"
+  },
+  {
+    "collection": "newsletter-campaigns",
+    "id": "6ada67386c93653ab78f8a10",
+    "label": "[TEST] QA Newsletter Campaigns",
+    "slug": "",
+    "state": "saved"
+  },
+  {
+    "collection": "downloads",
+    "id": "6ada67396c93653ab78f8a38",
+    "label": "[TEST] QA Downloads",
+    "slug": "test-qa-downloads",
+    "state": "saved"
+  }
+]

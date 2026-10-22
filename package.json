@@ -15,6 +15,13 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/index.ts",
     "typecheck": "tsc --noEmit",
+    "backfill:resumes": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/backfill-resume-folder.ts",
+    "test:snapshot": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/testing/snapshot-globals.ts",
+    "test:restore": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/testing/restore-globals.ts",
+    "test:users": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/testing/seed-test-users.ts",
+    "test:cleanup": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/testing/cleanup-test-data.ts",
+    "test:e2e": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/testing/run-admin-e2e.ts",
+    "test:sheet": "tsx scripts/testing/build-sheet.ts",
     "lighthouse": "lighthouse http://localhost:3000 --view --only-categories=performance,accessibility,best-practices,seo --output=html --output=json --output-path=./lighthouse-report --chrome-flags=\"--headless\"",
     "lighthouse:ci": "lighthouse http://localhost:3000 --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=./lighthouse-report.json --chrome-flags=\"--headless --no-sandbox\" --quiet",
     "prepare": "husky"

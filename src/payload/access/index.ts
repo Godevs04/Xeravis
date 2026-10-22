@@ -50,6 +50,14 @@ export const canPublish: Access = ({ req: { user } }) =>
 export const canManageCareers: Access = ({ req: { user } }) =>
   hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'recruiter', 'editor'])
 
+export const RESUME_FOLDER = 'resumes'
+
+/** Candidate resumes are personal data: only people who can read applications may see them. */
+export const mediaRead: Access = ({ req: { user } }) =>
+  hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'recruiter', 'editor'])
+    ? true
+    : { folder: { not_equals: RESUME_FOLDER } }
+
 export const authenticatedOrPublished: Access = ({ req: { user } }) => {
   if (
     hasRole(user as UserWithRoles, [
@@ -102,5 +110,11 @@ export const isViewer: Access = ({ req: { user } }) =>
     'viewer',
   ])
 
+const MARKETING_ROLES: UserRole[] = ['super-admin', 'administrator', 'marketing', 'editor']
+
 export const canManageMarketing: Access = ({ req: { user } }) =>
-  hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'marketing', 'editor'])
+  hasRole(user as UserWithRoles, MARKETING_ROLES)
+
+/** Bulk subscriber export is a marketing task, stricter than row-level staff read access. */
+export const canExportSubscribers = (user: unknown) =>
+  hasRole(user as UserWithRoles, MARKETING_ROLES)

@@ -3,9 +3,11 @@
 import { headers } from 'next/headers'
 import { z } from 'zod'
 
+import { isPastDeadline } from '@/lib/date'
 import { sendEmail } from '@/lib/email'
 import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
 import { getPayload } from '@/lib/payload'
+import { RESUME_FOLDER } from '@/payload/access'
 
 const optionalUrl = z
   .string()
@@ -157,7 +159,12 @@ export async function submitCareerApplication(
       })
       .catch(() => null)
 
-    if (!career || career.active === false) {
+    if (
+      !career ||
+      career.active === false ||
+      career._status === 'draft' ||
+      isPastDeadline(career.applicationDeadline)
+    ) {
       return {
         ok: false,
         message:
@@ -172,7 +179,7 @@ export async function submitCareerApplication(
     const media = await payload.create({
       collection: 'media',
       overrideAccess: true,
-      data: { alt: `${fullName} resume` },
+      data: { alt: `${fullName} resume`, folder: RESUME_FOLDER },
       file: {
         data: buffer,
         mimetype: mime,

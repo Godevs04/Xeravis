@@ -7,6 +7,7 @@ import { AnimatePresence } from 'framer-motion'
 import { ChevronDown, Menu, Search } from 'lucide-react'
 
 import { BrandLogo } from '@/components/brand/BrandLogo'
+import { AnnouncementBar, type AnnouncementData } from '@/components/layout/AnnouncementBar'
 import { MegaMenu, type MegaMenuItem } from '@/components/layout/MegaMenu'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
@@ -26,6 +27,7 @@ type SiteHeaderClientProps = {
   ctaHref: string
   brandName: string
   megaMenus: Record<string, MegaMenuItem[]>
+  announcement?: AnnouncementData | null
 }
 
 const MEGA_CLOSE_DELAY_MS = 380
@@ -36,6 +38,7 @@ export function SiteHeaderClient({
   ctaHref,
   brandName,
   megaMenus,
+  announcement,
 }: SiteHeaderClientProps) {
   const { solid, hidden } = useScrollHeader(48)
   const pathname = usePathname()
@@ -280,6 +283,8 @@ export function SiteHeaderClient({
             </div>
           </div>
         </div>
+
+        {announcement && !openMega && !solid ? <AnnouncementBar {...announcement} /> : null}
 
         <AnimatePresence>
           {openItems?.length && openMega ? (

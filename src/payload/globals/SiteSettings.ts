@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { anyone, isAdmin } from '@/payload/access'
+import { revalidateSiteWide } from '@/payload/hooks'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -12,6 +13,9 @@ export const SiteSettings: GlobalConfig = {
   access: {
     read: anyone,
     update: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateSiteWide],
   },
   fields: [
     {

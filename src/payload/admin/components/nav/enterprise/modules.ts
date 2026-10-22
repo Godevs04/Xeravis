@@ -8,6 +8,7 @@ import {
   QUICK_CREATES as REGISTRY_QUICK_CREATES,
   groupHasActiveLink,
   isLinkActive,
+  quickCreateAllowed,
   resolveNavigation,
   type NavGroup,
   type NavItem,
@@ -56,7 +57,7 @@ export const QUICK_CREATES = REGISTRY_QUICK_CREATES.map((c) => ({
   section: c.section,
 }))
 
-export { isLinkActive, resolveNavigation }
+export { isLinkActive, quickCreateAllowed, resolveNavigation }
 
 export function resolveModuleNavigation(pathname: string) {
   return resolveNavigation(pathname)

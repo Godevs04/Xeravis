@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { anyone, canManageContent } from '@/payload/access'
+import { revalidateSiteWide } from '@/payload/hooks'
 
 export const SeoDefaults: GlobalConfig = {
   slug: 'seo-defaults',
@@ -12,6 +13,9 @@ export const SeoDefaults: GlobalConfig = {
   access: {
     read: anyone,
     update: canManageContent,
+  },
+  hooks: {
+    afterChange: [revalidateSiteWide],
   },
   fields: [
     {

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { submitKeepingValues } from '@/lib/form-submit'
 import { cn } from '@/lib/utils'
 
 const initialState: CareerFormState = { ok: false, message: '' }
@@ -80,7 +81,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
   }
 
   return (
-    <form action={action} className="space-y-8" noValidate>
+    <form action={action} onSubmit={submitKeepingValues(action)} className="space-y-8" noValidate>
       <input type="hidden" name="careerId" value={careerId} />
       <p className="text-sm text-[color:var(--color-secondary)]">
         Applying for{' '}

@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  if (pathname.startsWith('/api/downloads/') && request.method === 'GET') {
+  if (pathname.startsWith('/api/download/') && request.method === 'GET') {
     const key = clientKeyFromHeaders(request.headers, 'downloads')
     const result = rateLimit(key, { limit: 30, windowMs: 60_000 })
     if (!result.ok) {
@@ -42,5 +42,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/api/analytics/event', '/api/downloads/:path*'],
+  matcher: ['/api/analytics/event', '/api/download/:path*'],
 }

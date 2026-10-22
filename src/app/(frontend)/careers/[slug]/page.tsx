@@ -5,6 +5,7 @@ import { JobDetailView } from '@/components/careers/JobDetailView'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { RichText } from '@/components/RichText'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
+import { isPastDeadline } from '@/lib/date'
 import { FALLBACK_JOB_DETAILS, FALLBACK_JOBS } from '@/lib/fallback-data'
 import { buildRelatedGroups } from '@/lib/related-content'
 import { breadcrumbJsonLd, buildMetadata, graphJsonLd, jobPostingJsonLd } from '@/lib/seo'
@@ -73,7 +74,9 @@ export default async function CareerDetailPage({ params }: Props) {
 
   if (!job && !fallback) notFound()
 
-  const applicationsOpen = Boolean(job?.id && job.active !== false)
+  const applicationsOpen = Boolean(
+    job?.id && job.active !== false && !isPastDeadline(job.applicationDeadline),
+  )
 
   const doc = job || {
     ...fallback!,
@@ -117,6 +120,9 @@ export default async function CareerDetailPage({ params }: Props) {
       <JsonLd id="job-jsonld" data={jsonLd} />
       <JobDetailView
         applicationsOpen={applicationsOpen}
+        closedMessage={
+          job && !applicationsOpen ? 'This role is no longer accepting applications.' : undefined
+        }
         job={{
           id: String(doc.id),
           title: doc.title,

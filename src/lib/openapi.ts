@@ -100,7 +100,7 @@ export function buildOpenApiDocument(): OpenApiDocument {
           },
         },
       },
-      '/api/downloads/{slug}': {
+      '/api/download/{slug}': {
         get: {
           tags: ['Public'],
           summary: 'Download a file by slug',

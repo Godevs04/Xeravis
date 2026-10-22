@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import { Forbidden, type CollectionConfig } from 'payload'
 
 import { adminFieldAccess, isAdmin, isSuperAdmin } from '@/payload/access'
 import type { UserRole } from '@/payload/access'
@@ -56,6 +56,21 @@ export const Users: CollectionConfig = {
       access: {
         create: adminFieldAccess,
         update: adminFieldAccess,
+      },
+      hooks: {
+        beforeChange: [
+          ({ value, originalDoc, req }) => {
+            const actorRoles = (req.user as { roles?: UserRole[] } | null)?.roles
+            // First-user bootstrap and super-admins may grant or revoke super-admin; nobody else
+            if (!req.user || actorRoles?.includes('super-admin')) return value
+            const had = Boolean(
+              (originalDoc?.roles as UserRole[] | undefined)?.includes('super-admin'),
+            )
+            const has = Boolean((value as UserRole[] | undefined)?.includes('super-admin'))
+            if (had !== has) throw new Forbidden(req.t)
+            return value
+          },
+        ],
       },
     },
   ],
