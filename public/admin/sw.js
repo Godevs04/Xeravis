@@ -1,7 +1,8 @@
-/* Xelarvis CMS Service Worker — scope /admin/ */
-const CACHE = 'xelarvis-admin-v3'
+/* Xelarvis CMS Service Worker — scope /admin */
+const CACHE = 'xelarvis-admin-v4'
+const OFFLINE_URL = '/admin/offline.html'
 const PRECACHE = [
-  '/admin',
+  OFFLINE_URL,
   '/admin/manifest.webmanifest',
   '/icons/admin-192.png',
   '/icons/admin-512.png',
@@ -19,12 +20,18 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches
-      .keys()
-      .then((keys) =>
-        Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))),
-      )
-      .then(() => self.clients.claim()),
+    Promise.all([
+      caches
+        .keys()
+        .then((keys) =>
+          Promise.all(
+            keys
+              .filter((key) => key.startsWith('xelarvis-admin-') && key !== CACHE)
+              .map((key) => caches.delete(key)),
+          ),
+        ),
+      self.registration.navigationPreload?.enable(),
+    ]).then(() => self.clients.claim()),
   )
 })
 
@@ -34,24 +41,16 @@ self.addEventListener('message', (event) => {
   }
 })
 
-function networkFirst(request, fallbackUrls) {
-  return fetch(request)
-    .then((response) => {
-      if (response && response.status === 200) {
-        const copy = response.clone()
-        caches.open(CACHE).then((cache) => cache.put(request, copy))
-      }
-      return response
-    })
-    .catch(async () => {
-      const cached = await caches.match(request)
-      if (cached) return cached
-      for (const url of fallbackUrls || []) {
-        const fallback = await caches.match(url)
-        if (fallback) return fallback
-      }
-      return Response.error()
-    })
+// Admin pages are per-user and change constantly, so navigations are never cached: network only, offline page as the fallback.
+async function navigate(event) {
+  try {
+    const preloaded = await event.preloadResponse
+    if (preloaded) return preloaded
+    return await fetch(event.request)
+  } catch {
+    const offline = await caches.match(OFFLINE_URL)
+    return offline || Response.error()
+  }
 }
 
 self.addEventListener('fetch', (event) => {
@@ -60,19 +59,18 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url)
   if (url.origin !== self.location.origin) return
-  if (!url.pathname.startsWith('/admin')) return
-  if (url.pathname.startsWith('/api')) return
 
-  // Admin is API-heavy — only cache navigations lightly; never treat as full offline CMS.
   if (request.mode === 'navigate') {
-    event.respondWith(networkFirst(request, ['/admin']))
+    if (url.pathname === '/admin' || url.pathname.startsWith('/admin/')) {
+      event.respondWith(navigate(event))
+    }
     return
   }
 
   if (
     url.pathname.startsWith('/icons/') ||
-    url.pathname.endsWith('.webmanifest') ||
-    url.pathname.match(/\.(?:png|jpg|jpeg|svg|webp|ico)$/)
+    url.pathname === '/admin/manifest.webmanifest' ||
+    url.pathname === OFFLINE_URL
   ) {
     event.respondWith(
       caches.match(request).then(

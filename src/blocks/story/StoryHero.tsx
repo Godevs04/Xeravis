@@ -194,9 +194,13 @@ export function StoryHero({
             </div>
           </div>
 
-          <div className="relative mx-auto aspect-[5/4] w-full max-w-2xl overflow-visible lg:max-w-none">
+          <div
+            id="story-hero-visual"
+            className="group/visual relative mx-auto aspect-[4/5] w-full max-w-2xl overflow-visible sm:aspect-[5/4] lg:max-w-none"
+          >
+            {/* Static shell in the console's footprint until StoryHeroMotion portals the live console in */}
             <div
-              className="h-full w-full rounded-[28px] border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)]/50 shadow-[var(--shadow-light)]"
+              className="hero-console absolute inset-9 rounded-[28px] border border-[color:var(--hc-card-border)] [box-shadow:var(--hc-shadow)] transition-opacity duration-500 [background:var(--hc-panel)] group-has-[[data-hero-visual]]/visual:opacity-0 sm:inset-11 md:inset-[52px]"
               aria-hidden
             />
           </div>

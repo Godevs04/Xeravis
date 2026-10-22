@@ -1,7 +1,5 @@
 'use client'
 
-import { clsx } from 'clsx'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@payloadcms/ui'
 import posthog from 'posthog-js'
@@ -15,9 +13,7 @@ import {
   getSidebarBody,
   restoreSidebarScroll,
   revealActiveInSidebar,
-  saveSidebarScroll,
 } from '../sidebar/sidebarScroll'
-import { saveMainScroll } from '@/payload/admin/components/layout/mainScroll'
 import { persistTheme } from '@/payload/admin/components/theme'
 import {
   NAV_MODULES,
@@ -177,19 +173,6 @@ export function EnterpriseNav() {
     [ctx],
   )
 
-  const pinLabels = useMemo(() => {
-    const fromWs = ctx?.workspace.links?.slice(0, 4)
-    if (fromWs?.length) {
-      return fromWs.map((l) => ({ href: l.href, label: l.label }))
-    }
-    return [
-      { href: '/admin/globals/seo-defaults', label: 'SEO' },
-      { href: '/admin/collections/media', label: 'Media' },
-      { href: '/admin/collections/blogs', label: 'Blog' },
-      { href: '/admin/collections/contact-messages', label: 'CRM' },
-    ]
-  }, [ctx?.workspace.links])
-
   const envLabel =
     typeof process !== 'undefined' && process.env.NODE_ENV === 'production' ? 'PROD' : 'LOCAL'
 
@@ -204,40 +187,17 @@ export function EnterpriseNav() {
       quickCreates={QUICK_CREATES}
       envLabel={envLabel}
       footer={
-        <>
-          {pinLabels.length > 0 ? (
-            <SidebarSection label="Pinned" className="xe-sb-section--pins">
-              <div className="xe-sb-pins" aria-label="Pinned">
-                {pinLabels.map((p) => (
-                  <Link
-                    key={p.href}
-                    href={p.href}
-                    scroll={false}
-                    className={clsx('xe-sb-pin', isLinkActive(pathname, p.href) && 'is-active')}
-                    title={p.label}
-                    onClick={() => {
-                      saveSidebarScroll(getSidebarBody())
-                      saveMainScroll()
-                    }}
-                  >
-                    {p.label}
-                  </Link>
-                ))}
-              </div>
-            </SidebarSection>
-          ) : null}
-          <UserProfile
-            name={name}
-            email={email}
-            role={role}
-            initials={initials}
-            envLabel={envLabel}
-            collapsed={collapsed}
-            onOpenCommand={openCommand}
-            onToggleTheme={toggleTheme}
-            onLogout={() => posthog.reset()}
-          />
-        </>
+        <UserProfile
+          name={name}
+          email={email}
+          role={role}
+          initials={initials}
+          envLabel={envLabel}
+          collapsed={collapsed}
+          onOpenCommand={openCommand}
+          onToggleTheme={toggleTheme}
+          onLogout={() => posthog.reset()}
+        />
       }
     >
       <SidebarSection label="Command Center">

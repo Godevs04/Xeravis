@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F8FAFC" />
+    <meta name="robots" content="noindex" />
+    <title>Offline · Xelarvis CMS</title>
+    <link rel="manifest" href="/admin/manifest.webmanifest" />
+    <link rel="icon" type="image/png" href="/icons/admin-192.png" />
+    <script>
+      ;(function () {
+        var match = document.cookie.match(/(?:^|; )payload-theme=(light|dark)/)
+        var theme = match
+          ? match[1]
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light'
+        document.documentElement.setAttribute('data-theme', theme)
+        if (theme === 'dark') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0B1220')
+        }
+      })()
+    </script>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --border: #e2e8f0;
+        --text: #0f172a;
+        --muted: #64748b;
+        --accent: #0d9488;
+        --accent-2: #0ea5a4;
+        color-scheme: light;
+      }
+
+      [data-theme='dark'] {
+        --bg: #0b1220;
+        --surface: #111827;
+        --border: rgba(255, 255, 255, 0.08);
+        --text: #f1f5f9;
+        --muted: #94a3b8;
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right))
+          max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 420px;
+        padding: 40px 32px 32px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: var(--surface);
+        box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+        text-align: center;
+      }
+
+      .mark {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 20px;
+        border-radius: 16px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      p {
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 44px;
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #fff;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 650;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(14, 165, 164, 0.28);
+      }
+
+      button:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--accent) 40%, transparent);
+        outline-offset: 2px;
+      }
+
+      .status {
+        margin-top: 16px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card" role="main">
+      <img class="mark" src="/icons/admin-192.png" alt="" width="64" height="64" />
+      <h1>You're offline</h1>
+      <p>
+        Xelarvis CMS needs a connection to load and save content. This page reloads on its own once
+        you're back online.
+      </p>
+      <button type="button" id="retry">Retry</button>
+      <div class="status" id="status" aria-live="polite"></div>
+    </main>
+    <script>
+      ;(function () {
+        var status = document.getElementById('status')
+        document.getElementById('retry').addEventListener('click', function () {
+          status.textContent = navigator.onLine ? 'Reconnecting…' : 'Still offline'
+          if (navigator.onLine) window.location.reload()
+        })
+        window.addEventListener('online', function () {
+          window.location.reload()
+        })
+      })()
+    </script>
+  </body>
+</html>

@@ -3,7 +3,8 @@
 import { motion, useMotionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 import { HeroCinematicBackground } from '@/components/marketing/HeroCinematicBackground'
 
@@ -24,6 +25,12 @@ export function StoryHeroMotion() {
     offset: ['start start', 'end start'],
   })
   const bgMorph = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 1.06])
+  const [slot, setSlot] = useState<HTMLElement | null>(null)
+
+  // The console renders inside the hero's own grid slot so it stays in flow at every breakpoint
+  useEffect(() => {
+    setSlot(document.getElementById('story-hero-visual'))
+  }, [])
 
   useEffect(() => {
     if (reduce) return
@@ -45,18 +52,14 @@ export function StoryHeroMotion() {
         <HeroCinematicBackground cursorX={cursorX} cursorY={cursorY} />
       </motion.div>
 
-      <div className="absolute inset-0 z-10">
-        <div className="mx-auto flex h-full w-full max-w-[1400px] items-center px-4 sm:px-6 lg:px-8">
-          <div className="grid w-full items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 xl:gap-10">
-            <div className="hidden lg:block" />
-            <div className="relative mx-auto aspect-[5/4] w-full max-w-2xl overflow-visible p-3 sm:p-4 lg:max-w-none">
-              <div className="pointer-events-auto h-full w-full">
-                <HeroProductVisual scrollProgress={scrollYProgress} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {slot
+        ? createPortal(
+            <div data-hero-visual className="pointer-events-auto absolute inset-0">
+              <HeroProductVisual scrollProgress={scrollYProgress} />
+            </div>,
+            slot,
+          )
+        : null}
 
       {!reduce ? (
         <motion.div

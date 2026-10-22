@@ -5,6 +5,9 @@ import React from 'react'
 import { PwaInstallPrompt } from '@/components/pwa/PwaInstallPrompt'
 import { PwaRegister } from '@/components/pwa/PwaRegister'
 
+/** Matches `--xe-bg` so the browser and OS chrome blend into the admin background */
+const THEME_COLORS = { light: '#F8FAFC', dark: '#0B1220' } as const
+
 /** Mounts CMS PWA registration + elegant install prompt inside Payload admin */
 export function AdminPwa() {
   React.useEffect(() => {
@@ -33,16 +36,38 @@ export function AdminPwa() {
 
     ensure('manifest', { href: '/admin/manifest.webmanifest' })
     ensure('apple-touch-icon', { href: '/icons/admin-192.png' })
-    ensureMeta('theme-color', '#0D9488')
     ensureMeta('mobile-web-app-capable', 'yes')
     ensureMeta('apple-mobile-web-app-capable', 'yes')
-    ensureMeta('apple-mobile-web-app-status-bar-style', 'black-translucent')
+    // 'default' keeps iOS content below the status bar; 'black-translucent' would need safe-area padding everywhere
+    ensureMeta('apple-mobile-web-app-status-bar-style', 'default')
     ensureMeta('apple-mobile-web-app-title', 'XV CMS')
+
+    const root = document.documentElement
+    const syncThemeColor = () => {
+      ensureMeta(
+        'theme-color',
+        THEME_COLORS[root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'],
+      )
+    }
+    syncThemeColor()
+
+    // Earlier builds registered at '/admin/', which outranks '/admin' for every sub-page
+    if ('serviceWorker' in navigator) {
+      void navigator.serviceWorker.getRegistrations().then((registrations) => {
+        registrations
+          .filter((r) => new URL(r.scope).pathname === '/admin/')
+          .forEach((r) => void r.unregister())
+      })
+    }
+
+    const observer = new MutationObserver(syncThemeColor)
+    observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => observer.disconnect()
   }, [])
 
   return (
     <>
-      <PwaRegister scriptUrl="/admin/sw.js" scope="/admin/" />
+      <PwaRegister scriptUrl="/admin/sw.js" scope="/admin" />
       <PwaInstallPrompt
         appName="Xelarvis CMS"
         description="Install the CMS as a desktop/mobile app for quick content edits and a focused workspace."
