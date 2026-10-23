@@ -235,7 +235,7 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     sections: [
       {
         heading: 'Where technology belongs',
-        body: 'Technology stacks are contextual — surfaced on Services and Solutions pages from the master catalog, not as a logo wall on About.',
+        body: 'Each Services and Solutions page shows the technologies used to deliver it, so you can see how a stack fits the problem it solves.',
       },
     ],
   },
@@ -244,7 +244,7 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     path: '/about/global-presence',
     eyebrow: 'About',
     title: 'Verified Company Facts',
-    subtitle: 'Only substantiated information — no placeholder counters or inflated claims.',
+    subtitle: 'Key facts about XELARVIS: who we are, where we are based and what we focus on.',
     sections: [
       {
         heading: 'Company',

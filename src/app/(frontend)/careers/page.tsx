@@ -131,7 +131,7 @@ export default async function CareersPage() {
             <div className="flex flex-wrap gap-2">
               <Button
                 asChild
-                className="rounded-full bg-[color:var(--color-accent)] text-white hover:bg-[color:var(--color-accent-hover)]"
+                className="rounded-full bg-[color:var(--color-accent)] text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
               >
                 <Link href="#open-roles">Browse roles</Link>
               </Button>

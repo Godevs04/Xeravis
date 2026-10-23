@@ -18,7 +18,10 @@ export function Pagination({ page, totalPages, hrefForPage, className }: Paginat
   const next = page < totalPages ? page + 1 : null
 
   return (
-    <nav className={cn('flex items-center justify-between gap-4', className)} aria-label="Pagination">
+    <nav
+      className={cn('flex items-center justify-between gap-4', className)}
+      aria-label="Pagination"
+    >
       {prev ? (
         <Button asChild variant="outline" size="sm">
           <Link href={hrefForPage(prev)} rel="prev">
@@ -32,8 +35,8 @@ export function Pagination({ page, totalPages, hrefForPage, className }: Paginat
           Previous
         </Button>
       )}
-      <p className="text-sm text-secondary">
-        Page <span className="font-medium text-primary">{page}</span> of {totalPages}
+      <p className="text-secondary text-sm">
+        Page <span className="text-primary font-medium">{page}</span> of {totalPages}
       </p>
       {next ? (
         <Button asChild variant="outline" size="sm">

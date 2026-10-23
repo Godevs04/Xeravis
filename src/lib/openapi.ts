@@ -18,7 +18,7 @@ export function buildOpenApiDocument(): OpenApiDocument {
         '### Related Payload surfaces',
         `- REST: \`${siteUrl}/api/{collection}\` (Payload CMS)`,
         `- GraphQL: \`${siteUrl}/api/graphql\``,
-        `- GraphQL Playground: \`${siteUrl}/api/graphql-playground\``,
+        '- GraphQL Playground: `/api/graphql-playground` (development only)',
         `- Admin: \`${siteUrl}/admin\``,
         '',
         'Admin helper routes require an authenticated Payload session cookie.',
@@ -105,7 +105,7 @@ export function buildOpenApiDocument(): OpenApiDocument {
           tags: ['Public'],
           summary: 'Download a file by slug',
           description:
-            'Resolves a Downloads collection item and redirects to the file URL. Gated downloads require `email`. Rate-limited.',
+            'Resolves a Downloads collection item and streams the file. Gated downloads require `email`, which is stored as a Form Submission lead; their files are not publicly readable elsewhere. Rate-limited.',
           operationId: 'getDownloadBySlug',
           parameters: [
             {
@@ -124,7 +124,12 @@ export function buildOpenApiDocument(): OpenApiDocument {
             },
           ],
           responses: {
-            '302': { description: 'Redirect to file URL' },
+            '200': {
+              description: 'The file, served as an attachment',
+              content: {
+                'application/octet-stream': { schema: { type: 'string', format: 'binary' } },
+              },
+            },
             '401': {
               description: 'Gated download missing/invalid email',
               content: {

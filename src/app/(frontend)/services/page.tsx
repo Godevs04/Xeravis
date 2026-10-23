@@ -62,7 +62,7 @@ type BlogDoc = {
 }
 
 export const metadata = buildMetadata({
-  title: 'Artificial Intelligence, Data Science & IT Consulting Services',
+  title: 'AI, Data Science & IT Consulting Services',
   description:
     'Artificial Intelligence, Data Science & Analytics, IT Consulting & Digital Transformation, Data Engineering & Cloud, and Healthcare & Clinical Data Science—engineered for measurable business outcomes.',
   path: '/services',
@@ -170,7 +170,7 @@ export default async function ServicesPage() {
       <HubLinkStrip
         eyebrow="Technology ecosystem"
         heading="Engineering stack behind delivery"
-        subheading="Cloud, data, AI, and DevOps tools—shown in capability context, not as a vanity catalog."
+        subheading="The cloud, data, AI and DevOps tools we use to design, build and run production systems."
         surface
         items={technologies.slice(0, 6).map((t) => ({
           href: `/technologies#${t.slug}`,

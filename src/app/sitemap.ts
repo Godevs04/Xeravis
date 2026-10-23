@@ -1,16 +1,26 @@
 import type { MetadataRoute } from 'next'
 
 import { listPublished } from '@/lib/cms'
+import { isPastDeadline } from '@/lib/date'
 import { CANONICAL_SOLUTION_SLUGS } from '@/seed/relations'
 import { EXTRA_STATIC_ROUTES } from '@/lib/seo-content'
 import { absoluteUrl } from '@/lib/utils'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
+type SitemapDoc = { slug: string; updatedAt?: string }
 
+/** `noindex` pages stay out of the sitemap. */
+const EXCLUDED_ROUTES = new Set(['/docs/api', '/search'])
+
+const SITEMAP_LIMIT = 1000
+
+const modified = (item?: { updatedAt?: string }) =>
+  item?.updatedAt ? new Date(item.updatedAt) : undefined
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const coreStatic = [
     '',
     '/about',
+    '/about/domain-expertise',
     '/services',
     '/industries',
     '/solutions',
@@ -23,71 +33,85 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/terms',
   ]
 
+  // Static pages carry no lastModified: claiming "now" on every request misleads crawlers.
   const staticRoutes: MetadataRoute.Sitemap = [...coreStatic, ...EXTRA_STATIC_ROUTES]
-    .filter((path, index, arr) => arr.indexOf(path) === index)
+    .filter((path, index, arr) => arr.indexOf(path) === index && !EXCLUDED_ROUTES.has(path))
     .map((path) => ({
       url: absoluteUrl(path || '/'),
-      lastModified: now,
       changeFrequency: path === '' || path === '/' ? ('daily' as const) : ('weekly' as const),
       priority:
         path === '' || path === '/'
           ? 1
           : path.startsWith('/services') || path.startsWith('/solutions')
             ? 0.8
-            : path.includes('privacy') || path.includes('terms') || path === '/search'
+            : path.includes('privacy') || path.includes('terms')
               ? 0.3
               : 0.7,
     }))
 
-  const [services, industries, solutions, caseStudies, blogs, careers] = await Promise.all([
-    listPublished<{ slug: string; updatedAt?: string }>('services'),
-    listPublished<{ slug: string; updatedAt?: string }>('industries'),
-    listPublished<{ slug: string; updatedAt?: string }>('solutions'),
-    listPublished<{ slug: string; updatedAt?: string }>('case-studies'),
-    listPublished<{ slug: string; updatedAt?: string }>('blogs'),
-    listPublished<{ slug: string; updatedAt?: string }>('careers'),
-  ])
+  const list = (collection: string) =>
+    listPublished<SitemapDoc>(collection, { limit: SITEMAP_LIMIT, depth: 0 })
+
+  const [services, industries, solutions, caseStudies, blogs, research, careers] =
+    await Promise.all([
+      list('services'),
+      list('industries'),
+      list('solutions'),
+      list('case-studies'),
+      list('blogs'),
+      list('research'),
+      listPublished<SitemapDoc & { applicationDeadline?: string | null }>('careers', {
+        limit: SITEMAP_LIMIT,
+        depth: 0,
+        where: { active: { equals: true } },
+      }),
+    ])
 
   const dynamicRoutes: MetadataRoute.Sitemap = [
     ...services.map((item) => ({
       url: absoluteUrl(`/services/${item.slug}`),
-      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
+      lastModified: modified(item),
       changeFrequency: 'monthly' as const,
       priority: 0.75,
     })),
     ...industries.map((item) => ({
       url: absoluteUrl(`/industries/${item.slug}`),
-      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
+      lastModified: modified(item),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
-    ...CANONICAL_SOLUTION_SLUGS.map((slug) => {
-      const item = solutions.find((s) => s.slug === slug)
-      return {
-        url: absoluteUrl(`/solutions/${slug}`),
-        lastModified: item?.updatedAt ? new Date(item.updatedAt) : now,
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
-      }
-    }),
+    ...CANONICAL_SOLUTION_SLUGS.map((slug) => ({
+      url: absoluteUrl(`/solutions/${slug}`),
+      lastModified: modified(solutions.find((s) => s.slug === slug)),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
     ...caseStudies.map((item) => ({
       url: absoluteUrl(`/case-studies/${item.slug}`),
-      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
+      lastModified: modified(item),
       changeFrequency: 'monthly' as const,
       priority: 0.65,
     })),
     ...blogs.map((item) => ({
       url: absoluteUrl(`/blog/${item.slug}`),
-      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
+      lastModified: modified(item),
       changeFrequency: 'weekly' as const,
       priority: 0.55,
     })),
-    ...careers.map((item) => ({
-      url: absoluteUrl(`/careers/${item.slug}`),
-      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.5,
+    ...research.map((item) => ({
+      url: absoluteUrl(`/research/${item.slug}`),
+      lastModified: modified(item),
+      changeFrequency: 'monthly' as const,
+      priority: 0.55,
     })),
+    ...careers
+      .filter((item) => !isPastDeadline(item.applicationDeadline))
+      .map((item) => ({
+        url: absoluteUrl(`/careers/${item.slug}`),
+        lastModified: modified(item),
+        changeFrequency: 'weekly' as const,
+        priority: 0.5,
+      })),
   ]
 
   return [...staticRoutes, ...dynamicRoutes]

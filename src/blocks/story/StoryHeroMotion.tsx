@@ -1,6 +1,12 @@
 'use client'
 
-import { motion, useMotionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import {
+  m as motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'

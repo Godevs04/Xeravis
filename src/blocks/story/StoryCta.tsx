@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m as motion, useReducedMotion } from 'framer-motion'
 
 import { MeshBackdrop } from '@/components/marketing/MeshBackdrop'
 import { Container } from '@/components/layout/Container'
@@ -55,7 +55,7 @@ export function StoryCta({
           <Button
             asChild
             size="lg"
-            className="rounded-full bg-teal-500 px-10 py-6 text-base text-white shadow-[0_0_60px_rgba(13,148,136,0.55)] transition-[box-shadow,background] hover:bg-cyan-400 hover:shadow-[0_0_80px_rgba(6,182,212,0.55)]"
+            className="rounded-full bg-teal-700 px-10 py-6 text-base text-white shadow-[0_0_60px_rgba(13,148,136,0.55)] transition-[box-shadow,background] hover:bg-teal-800 hover:shadow-[0_0_80px_rgba(6,182,212,0.55)]"
           >
             <Link href={ctaHref || '/contact'}>{ctaLabel}</Link>
           </Button>

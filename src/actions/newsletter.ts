@@ -21,7 +21,7 @@ export async function submitNewsletter(
   formData: FormData,
 ): Promise<NewsletterFormState> {
   const headerList = await headers()
-  const limited = rateLimit(clientKeyFromHeaders(headerList, 'newsletter'), {
+  const limited = await rateLimit(clientKeyFromHeaders(headerList, 'newsletter'), {
     limit: 10,
     windowMs: 15 * 60_000,
   })

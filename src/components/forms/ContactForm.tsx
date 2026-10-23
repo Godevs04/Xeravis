@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import posthog from 'posthog-js'
+import { track } from '@/lib/analytics-client'
 
 import { submitContact, type ContactFormState } from '@/actions/contact'
 import { Button } from '@/components/ui/button'
@@ -28,7 +28,7 @@ export function ContactForm() {
 
       if (result.ok) {
         formRef.current?.reset()
-        posthog.capture('contact_form_submitted', {
+        track('contact_form_submitted', {
           enquiry_intent: String(formData.get('intent') || 'general'),
         })
       }

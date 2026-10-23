@@ -1,7 +1,7 @@
 'use client'
 
 import { useActionState, useRef } from 'react'
-import posthog from 'posthog-js'
+import { track } from '@/lib/analytics-client'
 
 import { submitNewsletter, type NewsletterFormState } from '@/actions/newsletter'
 import { Button } from '@/components/ui/button'
@@ -24,7 +24,7 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
 
       if (result.ok) {
         formRef.current?.reset()
-        posthog.capture('newsletter_subscribed')
+        track('newsletter_subscribed')
       }
 
       return result

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion, type Variants } from 'framer-motion'
+import { m as motion, useReducedMotion, type Variants } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Briefcase, Clock, MapPin, Sparkles, Users } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -409,7 +409,7 @@ export function JobDetailView({
                       </p>
                       <Button
                         asChild
-                        className="w-full rounded-full bg-[color:var(--color-accent)] font-semibold text-white hover:bg-[color:var(--color-accent-hover)]"
+                        className="w-full rounded-full bg-[color:var(--color-accent)] font-semibold text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
                       >
                         <a
                           href={`mailto:hr@xelarvis.in?subject=${encodeURIComponent(`Application: ${job.title}`)}`}

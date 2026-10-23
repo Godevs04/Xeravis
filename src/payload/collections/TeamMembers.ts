@@ -2,9 +2,16 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone, canManageContent, isAdminOrEditor } from '@/payload/access'
 import { orderField } from '@/payload/fields'
+import { revalidateOnDelete, revalidateSlugPath } from '@/payload/hooks/revalidate'
+
+const TEAM_PATHS = ['/', '/about', '/about/leadership']
 
 export const TeamMembers: CollectionConfig = {
   slug: 'team-members',
+  hooks: {
+    afterChange: [revalidateSlugPath('/about', undefined, TEAM_PATHS)],
+    afterDelete: [revalidateOnDelete(TEAM_PATHS)],
+  },
   admin: {
     group: 'Website',
     useAsTitle: 'name',

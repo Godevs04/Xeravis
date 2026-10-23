@@ -66,6 +66,7 @@ npm run generate:types
 | `npm run seed`               | Seed MongoDB via Payload Local API |
 | `npm run generate:types`     | Regenerate `payload-types.ts`      |
 | `npm run generate:importmap` | Regenerate admin import map        |
+| `npm run media:migrate`      | Copy local `media/` to Cloudinary  |
 
 ## Architecture
 
@@ -81,7 +82,7 @@ The frontend renders CMS content when MongoDB is available. Publish Pages (`home
 ## Deploy (Vercel)
 
 1. Push repo and import the project in Vercel.
-2. Set all production env vars from `.env.example` (`DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL=https://xelarvis.in`, optional Cloudinary/Resend/`SITE_NAME`).
+2. Set all production env vars from `.env.example` (`DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL=https://xelarvis.in`, the `CLOUDINARY_*` media storage vars, optional Resend/Upstash/`SITE_NAME`). Vercel's filesystem does not keep uploads, so Cloudinary is required in production; run `npm run media:migrate -- --apply` once to copy existing local uploads.
 3. Install command: `npm install --legacy-peer-deps` (already in `vercel.json`).
 4. Ensure MongoDB Atlas allows Vercel IPs (or `0.0.0.0/0` for serverless).
 5. Point `xelarvis.in` DNS to Vercel.

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import {
-  motion,
+  m as motion,
   useInView,
   useMotionValue,
   useReducedMotion,

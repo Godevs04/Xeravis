@@ -10,6 +10,8 @@ import { safePayload } from '@/lib/cms'
 import { ABOUT_MEGA, ABOUT_PAGES } from '@/lib/site-ia'
 import { buildMetadata } from '@/lib/seo'
 
+export const revalidate = 60
+
 const page = ABOUT_PAGES.find((p) => p.slug === 'leadership')!
 
 export const metadata = buildMetadata({

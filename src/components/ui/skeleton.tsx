@@ -7,7 +7,10 @@ type SkeletonProps = HTMLAttributes<HTMLDivElement>
 export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
-      className={cn('animate-pulse rounded-[var(--radius-button)] bg-surface ring-1 ring-border/60', className)}
+      className={cn(
+        'bg-surface ring-border/60 animate-pulse rounded-[var(--radius-button)] ring-1',
+        className,
+      )}
       aria-hidden
       {...props}
     />

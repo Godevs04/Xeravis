@@ -61,6 +61,9 @@ const ALLOWED_RESUME = new Set([
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ])
 
+const APPLICATION_RECEIVED =
+  'Thank you for applying to XELARVIS. Your application has been received. Our recruitment team will review your profile and contact you if there is a match.'
+
 function nextApplicationId() {
   const year = new Date().getFullYear()
   const rand = crypto.randomUUID().replace(/-/g, '').slice(0, 8).toUpperCase()
@@ -72,7 +75,7 @@ export async function submitCareerApplication(
   formData: FormData,
 ): Promise<CareerFormState> {
   const headerList = await headers()
-  const limited = rateLimit(clientKeyFromHeaders(headerList, 'career'), {
+  const limited = await rateLimit(clientKeyFromHeaders(headerList, 'career'), {
     limit: 5,
     windowMs: 30 * 60_000,
   })
@@ -81,6 +84,11 @@ export async function submitCareerApplication(
       ok: false,
       message: 'Too many applications from this network. Please try again later.',
     }
+  }
+
+  // Honeypot: bots fill the hidden `website` field; pretend success without storing anything.
+  if (String(formData.get('website') ?? '').trim()) {
+    return { ok: true, applicationId: nextApplicationId(), message: APPLICATION_RECEIVED }
   }
 
   const resume = formData.get('resume')
@@ -275,12 +283,7 @@ export async function submitCareerApplication(
         .join('\n'),
     })
 
-    return {
-      ok: true,
-      applicationId,
-      message:
-        'Thank you for applying to XELARVIS. Your application has been received. Our recruitment team will review your profile and contact you if there is a match.',
-    }
+    return { ok: true, applicationId, message: APPLICATION_RECEIVED }
   } catch {
     return {
       ok: false,

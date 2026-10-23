@@ -264,6 +264,7 @@ export interface Media {
         | 'documents'
         | 'videos'
         | 'og'
+        | 'gated-downloads'
         | 'resumes'
       )
     | null
@@ -1510,7 +1511,7 @@ export interface TeamMember {
  */
 export interface FormSubmission {
   id: string
-  type: 'contact' | 'newsletter'
+  type: 'contact' | 'newsletter' | 'download'
   data:
     | {
         [k: string]: unknown
@@ -1616,7 +1617,7 @@ export interface Download {
   relatedBlog?: (string | null) | Blog
   relatedResearch?: (string | null) | Research
   /**
-   * Require email capture before download (handled on the site).
+   * Require an email before download. The email is saved under Form Submissions and the file becomes private (only served via the download link).
    */
   gated?: boolean | null
   downloadCount?: number | null

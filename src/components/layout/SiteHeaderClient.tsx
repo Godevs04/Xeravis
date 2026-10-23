@@ -201,7 +201,7 @@ export function SiteHeaderClient({
               <Button
                 asChild
                 size="sm"
-                className="inline-flex h-9 shrink-0 rounded-full bg-[color:var(--color-accent)] px-3.5 font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:px-4"
+                className="inline-flex h-9 shrink-0 rounded-full bg-[color:var(--color-accent)] px-3.5 font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:px-4"
               >
                 <Link href={ctaHref}>
                   <span className="sm:hidden">Contact</span>
@@ -271,7 +271,7 @@ export function SiteHeaderClient({
                     </Link>
                     <Button
                       asChild
-                      className="mt-4 min-h-11 rounded-full bg-[color:var(--color-accent)] font-semibold text-white hover:bg-[color:var(--color-accent-hover)]"
+                      className="mt-4 min-h-11 rounded-full bg-[color:var(--color-accent)] font-semibold text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
                     >
                       <Link href={ctaHref} onClick={() => setDrawerOpen(false)}>
                         {ctaText}

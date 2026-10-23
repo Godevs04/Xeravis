@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import {
-  motion,
+  m as motion,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -418,7 +418,7 @@ export function PageHero({
                   className={
                     isOutline
                       ? 'rounded-full border-2 border-[color:var(--color-border)] bg-transparent font-semibold text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)]'
-                      : 'rounded-full bg-[color:var(--color-accent)] font-semibold text-white hover:bg-[color:var(--color-accent-hover)]'
+                      : 'rounded-full bg-[color:var(--color-accent)] font-semibold text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]'
                   }
                 >
                   <Link href={cta.href}>{cta.label}</Link>

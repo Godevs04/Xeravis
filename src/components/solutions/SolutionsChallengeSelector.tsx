@@ -73,7 +73,7 @@ export function SolutionsChallengeSelector({ solutions }: SolutionsChallengeSele
               className={cn(
                 'rounded-full border px-3.5 py-1.5 text-sm font-medium transition',
                 active === c.id
-                  ? 'border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-white'
+                  ? 'border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-[color:var(--color-on-accent)]'
                   : 'border-[color:var(--color-border)] text-[color:var(--color-secondary)] hover:border-[color:var(--color-accent)]',
               )}
             >

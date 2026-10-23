@@ -24,17 +24,21 @@ export function PageHeader({
   actions,
 }: PageHeaderProps) {
   return (
-    <header className={cn('border-b border-border bg-surface/60 pt-24 lg:pt-28', className)}>
-      <Container className="pb-12 pt-8 md:pb-16">
+    <header className={cn('border-border bg-surface/60 border-b pt-24 lg:pt-28', className)}>
+      <Container className="pt-8 pb-12 md:pb-16">
         {breadcrumbs?.length ? <Breadcrumb items={breadcrumbs} className="mb-6" /> : null}
         {eyebrow ? (
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted">{eyebrow}</p>
+          <p className="text-muted mb-3 text-xs font-semibold tracking-[0.14em] uppercase">
+            {eyebrow}
+          </p>
         ) : null}
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <Heading level="h1">{title}</Heading>
             {description ? (
-              <p className="mt-4 text-base leading-relaxed text-secondary md:text-lg">{description}</p>
+              <p className="text-secondary mt-4 text-base leading-relaxed md:text-lg">
+                {description}
+              </p>
             ) : null}
           </div>
           {actions ? <div className="shrink-0">{actions}</div> : null}

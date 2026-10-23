@@ -14,9 +14,16 @@ export function Newsletter({
   className,
 }: NewsletterProps) {
   return (
-    <div className={cn('rounded-[var(--radius-card)] border border-border bg-surface p-8 md:p-10', className)}>
+    <div
+      className={cn(
+        'border-border bg-surface rounded-[var(--radius-card)] border p-8 md:p-10',
+        className,
+      )}
+    >
       <Heading level="h3">{title}</Heading>
-      {description ? <p className="mt-3 max-w-xl text-sm leading-relaxed text-secondary">{description}</p> : null}
+      {description ? (
+        <p className="text-secondary mt-3 max-w-xl text-sm leading-relaxed">{description}</p>
+      ) : null}
       <div className="mt-6">
         <NewsletterForm />
       </div>

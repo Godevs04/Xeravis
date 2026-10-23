@@ -163,7 +163,7 @@ export default async function IndustryDetailPage({ params }: Props) {
 
       <CTABand
         heading="Discuss an initiative in this sector"
-        subheading="We will map services and solutions to your operating model—without invented proof claims."
+        subheading="We will map the right services and solutions to your operating model and priorities."
         ctaLabel="Talk to XELARVIS"
         ctaHref="/contact?intent=business"
       />

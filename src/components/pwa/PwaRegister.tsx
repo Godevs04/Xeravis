@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { RefreshCw } from 'lucide-react'
 
 import { logger } from '@/lib/logger'
@@ -15,6 +15,7 @@ const log = logger.child('pwa')
 export function PwaRegister({ scriptUrl, scope }: PwaRegisterProps) {
   const [updateReady, setUpdateReady] = useState(false)
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null)
+  const reloadOnControllerChange = useRef(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -40,7 +41,11 @@ export function PwaRegister({ scriptUrl, scope }: PwaRegisterProps) {
       })
     }
 
+    // The first worker also triggers `controllerchange` via clients.claim(); only an update the
+    // visitor accepted should reload the page.
     const onControllerChange = () => {
+      if (!reloadOnControllerChange.current) return
+      reloadOnControllerChange.current = false
       window.location.reload()
     }
 
@@ -67,10 +72,13 @@ export function PwaRegister({ scriptUrl, scope }: PwaRegisterProps) {
       }
     }
 
-    void register()
+    const onLoad = () => void register()
+    if (document.readyState === 'complete') onLoad()
+    else window.addEventListener('load', onLoad, { once: true })
 
     return () => {
       cancelled = true
+      window.removeEventListener('load', onLoad)
       registration?.removeEventListener('updatefound', onUpdateFound)
       navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange)
       if (intervalId) window.clearInterval(intervalId)
@@ -78,6 +86,7 @@ export function PwaRegister({ scriptUrl, scope }: PwaRegisterProps) {
   }, [scriptUrl, scope])
 
   const applyUpdate = () => {
+    reloadOnControllerChange.current = true
     waitingWorker?.postMessage({ type: 'SKIP_WAITING' })
     setUpdateReady(false)
   }
@@ -96,7 +105,7 @@ export function PwaRegister({ scriptUrl, scope }: PwaRegisterProps) {
         <button
           type="button"
           onClick={applyUpdate}
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[color:var(--color-accent)] px-3 py-1.5 text-xs font-semibold text-white"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[color:var(--color-accent)] px-3 py-1.5 text-xs font-semibold text-[color:var(--color-on-accent)]"
         >
           <RefreshCw className="h-3.5 w-3.5" />
           Update

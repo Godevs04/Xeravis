@@ -40,7 +40,7 @@ type SocialGlobal = {
 }
 
 export const metadata = buildMetadata({
-  title: 'Contact XELARVIS',
+  title: 'Contact Us',
   description:
     "Let's solve your next data, AI or technology challenge. Talk with XELARVIS about Artificial Intelligence, Data Science, IT Consulting, data platforms or Healthcare specialty programs.",
   path: '/contact',

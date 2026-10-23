@@ -5,7 +5,8 @@ export const revalidate = 60
 
 export const metadata = buildMetadata({
   title: 'Resources',
-  description: 'Guides and materials for teams adopting intelligent solutions.',
+  description:
+    'Practical guides, checklists and materials from Xelarvis for teams adopting AI, data platforms and intelligent automation in their organisations.',
   path: '/insights/resources',
 })
 

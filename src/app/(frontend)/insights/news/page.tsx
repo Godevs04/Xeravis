@@ -5,7 +5,8 @@ export const revalidate = 60
 
 export const metadata = buildMetadata({
   title: 'News',
-  description: 'Company announcements and industry updates.',
+  description:
+    'Company announcements, partnership news and industry updates from Xelarvis on artificial intelligence, data science, cloud engineering and healthcare data.',
   path: '/insights/news',
 })
 

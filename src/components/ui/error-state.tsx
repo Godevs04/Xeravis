@@ -27,8 +27,8 @@ export function ErrorState({
       role="alert"
     >
       <AlertTriangle className="mb-4 h-8 w-8 text-[var(--color-danger)]" strokeWidth={1.5} />
-      <h3 className="text-base font-semibold text-primary">{title}</h3>
-      <p className="mt-2 max-w-md text-sm text-secondary">{description}</p>
+      <h3 className="text-primary text-base font-semibold">{title}</h3>
+      <p className="text-secondary mt-2 max-w-md text-sm">{description}</p>
       {onRetry ? (
         <Button type="button" variant="outline" className="mt-6" onClick={onRetry}>
           {retryLabel}

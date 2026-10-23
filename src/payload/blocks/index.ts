@@ -91,6 +91,8 @@ export const pageBlocks: Block[] = [
   },
   {
     slug: 'testimonials',
+    // The Testimonials collection already owns the `Testimonials` GraphQL type name.
+    graphQL: { singularName: 'TestimonialsBlock' },
     labels: { singular: 'Testimonials', plural: 'Testimonials' },
     fields: [{ name: 'heading', type: 'text', required: true, maxLength: 120 }],
   },

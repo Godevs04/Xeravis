@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion'
+import { m as motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion'
 import {
   ArrowRight,
   Brain,
@@ -325,7 +325,7 @@ export function WhyJoinSection({ benefits }: WhyJoinSectionProps) {
               <Button
                 asChild
                 size="lg"
-                className="rounded-full bg-[color:var(--color-accent)] px-7 font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
+                className="rounded-full bg-[color:var(--color-accent)] px-7 font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
               >
                 <Link href="#open-roles">
                   View Open Positions

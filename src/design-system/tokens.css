@@ -11,8 +11,8 @@
   --ds-primary: #0f172a;
   --ds-secondary: #475569;
   --ds-muted: #475569;
-  --ds-accent: #0d9488;
-  --ds-accent-hover: #0f766e;
+  --ds-accent: #0f766e;
+  --ds-accent-hover: #115e59;
   --ds-background: #ffffff;
   --ds-surface: #ffffff;
   --ds-dark: #0f172a;
@@ -29,6 +29,8 @@
 
   --color-accent: var(--ds-accent);
   --color-accent-hover: var(--ds-accent-hover);
+  /* Text on filled accent surfaces (WCAG AA 4.5:1 in both themes) */
+  --color-on-accent: #ffffff;
   --color-accent-soft: rgba(13, 148, 136, 0.12);
   --color-accent-glow: rgba(6, 182, 212, 0.35);
   --color-secondary-accent: #06b6d4;
@@ -160,6 +162,7 @@
   --ds-danger: #ef4444;
 
   --color-accent-soft: rgba(20, 184, 166, 0.16);
+  --color-on-accent: #042f2e;
   --color-accent-glow: rgba(6, 182, 212, 0.4);
   --color-secondary-accent: #22d3ee;
   --color-accent-light: #67e8f9;

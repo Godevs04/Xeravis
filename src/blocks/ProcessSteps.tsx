@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { m as motion, useReducedMotion } from 'framer-motion'
 
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
@@ -51,7 +51,7 @@ export function ProcessSteps({ heading, steps }: ProcessStepsProps) {
                   }}
                   className="group relative overflow-hidden rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] p-6 shadow-[var(--shadow-medium)] backdrop-blur-2xl"
                 >
-                  <div className="bg-accent mb-5 grid h-10 w-10 place-items-center rounded-2xl text-sm font-bold text-white shadow-[0_10px_28px_rgba(13,148,136,0.4)]">
+                  <div className="bg-accent mb-5 grid h-10 w-10 place-items-center rounded-2xl text-sm font-bold text-[color:var(--color-on-accent)] shadow-[0_10px_28px_rgba(13,148,136,0.4)]">
                     {String(index + 1).padStart(2, '0')}
                   </div>
                   <h3 className="font-display text-primary text-lg font-semibold tracking-tight">

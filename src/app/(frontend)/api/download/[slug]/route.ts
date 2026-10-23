@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server'
+import { z } from 'zod'
 
+import { serveMediaFile } from '@/lib/media-file'
 import { getPayload } from '@/lib/payload'
 
 type Params = { params: Promise<{ slug: string }> }
+
+const emailSchema = z.string().trim().toLowerCase().email().max(200)
 
 export async function GET(request: Request, { params }: Params) {
   try {
@@ -16,22 +20,15 @@ export async function GET(request: Request, { params }: Params) {
       where: { slug: { equals: slug } },
     })
 
-    const doc = result.docs[0] as
-      | {
-          id: string | number
-          downloadCount?: number
-          gated?: boolean | null
-          file?: { url?: string } | string | number | null
-        }
-      | undefined
-
+    const doc = result.docs[0]
     if (!doc) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 })
     }
 
+    let leadEmail: string | null = null
     if (doc.gated) {
-      const email = new URL(request.url).searchParams.get('email')
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      const parsed = emailSchema.safeParse(new URL(request.url).searchParams.get('email') ?? '')
+      if (!parsed.success) {
         return NextResponse.json(
           {
             error: 'Email required',
@@ -40,14 +37,32 @@ export async function GET(request: Request, { params }: Params) {
           { status: 401 },
         )
       }
+      leadEmail = parsed.data
     }
 
-    const fileUrl =
-      doc.file && typeof doc.file === 'object' && typeof doc.file.url === 'string'
-        ? doc.file.url
-        : null
+    const file = doc.file && typeof doc.file === 'object' ? doc.file : null
+    if (!file?.filename) {
+      return NextResponse.json({ error: 'File missing' }, { status: 404 })
+    }
 
-    if (!fileUrl) {
+    if (leadEmail) {
+      // The lead is the point of a gated download, so it is stored before the file is served.
+      await payload.create({
+        collection: 'form-submissions',
+        overrideAccess: true,
+        data: {
+          type: 'download',
+          status: 'new',
+          data: { email: leadEmail, download: doc.title, downloadId: String(doc.id), slug },
+        },
+      })
+    }
+
+    const response = await serveMediaFile(file.filename, {
+      staticDir: payload.collections.media.config.upload.staticDir || 'media',
+      downloadName: file.filename,
+    })
+    if (!response.ok) {
       return NextResponse.json({ error: 'File missing' }, { status: 404 })
     }
 
@@ -75,9 +90,7 @@ export async function GET(request: Request, { params }: Params) {
       })
       .catch(() => undefined)
 
-    return NextResponse.redirect(
-      new URL(fileUrl, process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
-    )
+    return response
   } catch {
     return NextResponse.json({ error: 'Unable to download' }, { status: 500 })
   }

@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-
-const CONSENT_KEY = 'xe-cookie-consent'
+import { hasStoredConsent, storeConsent } from '@/lib/analytics-client'
 
 type CookieBannerProps = {
   message: string
@@ -17,11 +16,7 @@ export function CookieBanner({ message, policyHref, acceptLabel }: CookieBannerP
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    try {
-      setVisible(window.localStorage.getItem(CONSENT_KEY) !== 'accepted')
-    } catch {
-      setVisible(true)
-    }
+    setVisible(!hasStoredConsent())
   }, [])
 
   if (!visible) return null
@@ -48,11 +43,7 @@ export function CookieBanner({ message, policyHref, acceptLabel }: CookieBannerP
         <Button
           size="sm"
           onClick={() => {
-            try {
-              window.localStorage.setItem(CONSENT_KEY, 'accepted')
-            } catch {
-              // Ignore storage failures; hide for this session.
-            }
+            storeConsent()
             setVisible(false)
           }}
         >

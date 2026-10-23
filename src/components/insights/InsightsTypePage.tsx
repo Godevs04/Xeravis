@@ -71,7 +71,7 @@ export async function InsightsTypePage({ type, title, subtitle }: InsightsTypePa
                   className={cn(
                     'rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors',
                     active
-                      ? 'border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-white'
+                      ? 'border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-[color:var(--color-on-accent)]'
                       : 'border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] text-[color:var(--color-primary)] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]',
                   )}
                 >
@@ -81,6 +81,7 @@ export async function InsightsTypePage({ type, title, subtitle }: InsightsTypePa
             })}
           </nav>
 
+          <h2 className="sr-only">{title}</h2>
           {items.length === 0 ? (
             <div className="rounded-[24px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-6 py-12 text-center backdrop-blur-xl sm:px-10">
               <p className="font-display text-lg font-semibold text-[color:var(--color-primary)]">

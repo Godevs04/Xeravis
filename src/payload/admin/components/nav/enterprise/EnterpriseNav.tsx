@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@payloadcms/ui'
-import posthog from 'posthog-js'
+import { loadPosthog } from '@/lib/analytics-client'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useWorkspaceOptional } from '@/payload/admin/workspace/WorkspaceContext'
@@ -103,7 +103,7 @@ export function EnterpriseNav() {
 
   useEffect(() => {
     if (!userId) return
-    posthog.identify(userId, { email, role })
+    void loadPosthog().then((posthog) => posthog?.identify(userId, { email, role }))
   }, [email, role, userId])
 
   useEffect(() => {
@@ -204,7 +204,7 @@ export function EnterpriseNav() {
           collapsed={collapsed}
           onOpenCommand={openCommand}
           onToggleTheme={toggleTheme}
-          onLogout={() => posthog.reset()}
+          onLogout={() => void loadPosthog().then((posthog) => posthog?.reset())}
         />
       }
     >

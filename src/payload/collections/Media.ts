@@ -1,6 +1,12 @@
 import type { CollectionConfig } from 'payload'
 
-import { canManageContent, isAdminOrEditor, mediaRead, RESUME_FOLDER } from '@/payload/access'
+import {
+  canManageContent,
+  GATED_FOLDER,
+  isAdminOrEditor,
+  mediaRead,
+  RESUME_FOLDER,
+} from '@/payload/access'
 import { trackActivity } from '@/payload/hooks/activity'
 
 export const Media: CollectionConfig = {
@@ -116,6 +122,7 @@ export const Media: CollectionConfig = {
         { label: 'Documents', value: 'documents' },
         { label: 'Videos', value: 'videos' },
         { label: 'OG Images', value: 'og' },
+        { label: 'Gated downloads (private)', value: GATED_FOLDER },
         { label: 'Candidate resumes (private)', value: RESUME_FOLDER },
       ],
       admin: { position: 'sidebar' },

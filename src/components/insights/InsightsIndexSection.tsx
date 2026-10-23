@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m as motion, useReducedMotion } from 'framer-motion'
 import {
   ArrowUpRight,
   BookOpen,
@@ -101,7 +101,7 @@ export function InsightsIndexSection({ items }: InsightsIndexSectionProps) {
                         {item.description}
                       </p>
                     ) : null}
-                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--glass-border)] text-[color:var(--color-accent)] transition-all group-hover:border-[color:var(--color-accent)] group-hover:bg-[color:var(--color-accent)] group-hover:text-white">
+                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--glass-border)] text-[color:var(--color-accent)] transition-all group-hover:border-[color:var(--color-accent)] group-hover:bg-[color:var(--color-accent)] group-hover:text-[color:var(--color-on-accent)]">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </div>

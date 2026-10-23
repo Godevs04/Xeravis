@@ -15,6 +15,8 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/index.ts",
     "typecheck": "tsc --noEmit",
+    "audit:data-fixes": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/apply-audit-data-fixes.ts",
+    "media:migrate": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/migrate-media-to-cloudinary.ts",
     "backfill:resumes": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/backfill-resume-folder.ts",
     "test:snapshot": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/testing/snapshot-globals.ts",
     "test:restore": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/testing/restore-globals.ts",

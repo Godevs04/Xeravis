@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m as motion, useReducedMotion } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
@@ -125,7 +125,10 @@ export function BrandLogo({
 
   if (href === false) {
     return (
-      <span className="inline-flex items-center" aria-label={BRAND_MARK_ALT}>
+      <span
+        className="inline-flex items-center"
+        aria-label={showWordmark ? undefined : BRAND_MARK_ALT}
+      >
         {inner}
       </span>
     )
@@ -136,7 +139,7 @@ export function BrandLogo({
       href={href}
       onClick={onClick}
       className="group inline-flex max-w-full items-center rounded-md transition-opacity outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-      aria-label={BRAND_MARK_ALT}
+      aria-label={showWordmark ? undefined : BRAND_MARK_ALT}
     >
       {inner}
     </Link>

@@ -28,7 +28,7 @@ export async function CaseStudyFeature({ heading }: CaseStudyFeatureProps) {
       <Container>
         <AnimateIn className="max-w-2xl">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h2>
-          <p className="mt-4 text-lg text-secondary">
+          <p className="text-secondary mt-4 text-lg">
             Outcomes from programs where engineering discipline met business urgency.
           </p>
         </AnimateIn>
@@ -45,7 +45,7 @@ export async function CaseStudyFeature({ heading }: CaseStudyFeatureProps) {
           ))}
         </div>
         <p className="mt-10">
-          <Link href="/case-studies" className="text-sm font-semibold text-accent hover:underline">
+          <Link href="/case-studies" className="text-accent text-sm font-semibold hover:underline">
             View all case studies
           </Link>
         </p>

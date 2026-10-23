@@ -51,12 +51,20 @@ export const canManageCareers: Access = ({ req: { user } }) =>
   hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'recruiter', 'editor'])
 
 export const RESUME_FOLDER = 'resumes'
+/** Files behind gated downloads; visitors get them only via `/api/download/<slug>`. */
+export const GATED_FOLDER = 'gated-downloads'
 
-/** Candidate resumes are personal data: only people who can read applications may see them. */
-export const mediaRead: Access = ({ req: { user } }) =>
-  hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'recruiter', 'editor'])
-    ? true
-    : { folder: { not_equals: RESUME_FOLDER } }
+/**
+ * Candidate resumes are personal data: only people who can read applications may see them.
+ * Gated download files are hidden from anonymous visitors but visible to all staff.
+ */
+export const mediaRead: Access = ({ req: { user } }) => {
+  if (hasRole(user as UserWithRoles, ['super-admin', 'administrator', 'recruiter', 'editor'])) {
+    return true
+  }
+  if (user) return { folder: { not_equals: RESUME_FOLDER } }
+  return { folder: { not_in: [RESUME_FOLDER, GATED_FOLDER] } }
+}
 
 export const authenticatedOrPublished: Access = ({ req: { user } }) => {
   if (

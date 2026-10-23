@@ -85,11 +85,6 @@ export const plugins: Plugin[] = [
             media: {
               adapter: createCloudinaryAdapter(),
               disableLocalStorage: true,
-              generateFileURL: ({ filename }) => {
-                const cloud = process.env.CLOUDINARY_CLOUD_NAME
-                const folder = process.env.CLOUDINARY_FOLDER || 'xelarvis'
-                return `https://res.cloudinary.com/${cloud}/image/upload/${folder}/${filename}`
-              },
             },
           },
         }),

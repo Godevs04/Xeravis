@@ -1,5 +1,6 @@
 import Script from 'next/script'
 
+import { AnalyticsConsent } from '@/components/analytics/AnalyticsConsent'
 import { getGlobal } from '@/lib/cms'
 import type { Analytics } from '@/payload/generated-types/payload-types'
 
@@ -11,16 +12,17 @@ const safeId = (value?: string | null) => {
 
 /**
  * Third-party tags. Env vars win (per-deployment overrides); otherwise the CMS Analytics global
- * (Settings → Analytics) supplies the IDs.
+ * (Settings → Analytics) supplies the IDs. Nothing loads until the visitor accepts cookies when
+ * the cookie banner is enabled.
  */
-export async function TrackingScripts() {
+export async function TrackingScripts({ consentRequired }: { consentRequired: boolean }) {
   const cms = await getGlobal<Analytics>('analytics')
   const ga = safeId(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) || safeId(cms?.googleAnalyticsId)
   const gtm = safeId(process.env.NEXT_PUBLIC_GTM_ID) || safeId(cms?.googleTagManagerId)
   const clarity = safeId(process.env.NEXT_PUBLIC_CLARITY_ID) || safeId(cms?.microsoftClarityId)
 
   return (
-    <>
+    <AnalyticsConsent consentRequired={consentRequired}>
       {gtm ? (
         <Script id="gtm" strategy="afterInteractive">{`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -55,6 +57,6 @@ export async function TrackingScripts() {
           })(window, document, "clarity", "script", "${clarity}");
         `}</Script>
       ) : null}
-    </>
+    </AnalyticsConsent>
   )
 }

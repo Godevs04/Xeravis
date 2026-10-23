@@ -2,7 +2,7 @@
 
 import { ConstellationCanvas } from '@/components/marketing/ConstellationCanvas'
 import {
-  motion,
+  m as motion,
   useMotionTemplate,
   useMotionValue,
   useReducedMotion,

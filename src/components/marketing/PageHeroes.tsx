@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m as motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
 import { MeshBackdrop } from '@/components/marketing/MeshBackdrop'
@@ -218,7 +218,7 @@ export function CareersPageHero({ title, subtitle }: BaseHero) {
           <Button
             asChild
             size="lg"
-            className="rounded-full bg-teal-500 text-white shadow-[0_0_40px_rgba(13,148,136,0.4)] hover:bg-cyan-400"
+            className="rounded-full bg-teal-700 text-white shadow-[0_0_40px_rgba(13,148,136,0.4)] hover:bg-teal-800"
           >
             <Link href="#open-roles">
               View open roles

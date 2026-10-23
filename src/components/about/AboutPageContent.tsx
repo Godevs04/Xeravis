@@ -116,16 +116,18 @@ export async function AboutPageContent() {
             </AnimateIn>
             <ul className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
               {WHO_WE_ARE.pillars.map((pillar, index) => (
-                <AnimateIn key={pillar.title} delay={index * 0.05}>
-                  <SpotlightCard className="h-full p-5">
-                    <h3 className="font-display text-primary text-base font-semibold">
-                      {pillar.title}
-                    </h3>
-                    <p className="text-secondary mt-2 text-sm leading-relaxed">
-                      {pillar.description}
-                    </p>
-                  </SpotlightCard>
-                </AnimateIn>
+                <li key={pillar.title} className="list-none">
+                  <AnimateIn delay={index * 0.05} className="h-full">
+                    <SpotlightCard className="h-full p-5">
+                      <h3 className="font-display text-primary text-base font-semibold">
+                        {pillar.title}
+                      </h3>
+                      <p className="text-secondary mt-2 text-sm leading-relaxed">
+                        {pillar.description}
+                      </p>
+                    </SpotlightCard>
+                  </AnimateIn>
+                </li>
               ))}
             </ul>
           </div>
@@ -249,12 +251,15 @@ export async function AboutPageContent() {
           <SectionHeader
             eyebrow="Company"
             title="Verified Company Facts"
-            description="Only substantiated information — no placeholder counters or inflated claims."
+            description="Key facts about XELARVIS: who we are, where we are based and what we focus on."
           />
-          <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {companyFacts.map((fact, index) => (
-              <AnimateIn key={fact.label} delay={index * 0.03}>
-                <div className="rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-5 py-4">
+          <AnimateIn>
+            <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {companyFacts.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-5 py-4"
+                >
                   <dt className="text-muted text-[10px] font-bold tracking-[0.14em] uppercase">
                     {fact.label}
                   </dt>
@@ -262,9 +267,9 @@ export async function AboutPageContent() {
                     {fact.value}
                   </dd>
                 </div>
-              </AnimateIn>
-            ))}
-          </dl>
+              ))}
+            </dl>
+          </AnimateIn>
           <div className="mt-8">
             <TextLink href="/industries">Explore Industries</TextLink>
           </div>

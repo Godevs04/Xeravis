@@ -96,7 +96,7 @@ export default async function FrontendLayout({ children }: { children: ReactNode
           </main>
           <SiteFooter />
           <PageviewBeacon />
-          <TrackingScripts />
+          <TrackingScripts consentRequired={Boolean(cookieMessage)} />
           {cookieMessage ? (
             <CookieBanner
               message={cookieMessage}
