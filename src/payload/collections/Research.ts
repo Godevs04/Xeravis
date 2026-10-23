@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { previewAdmin } from '@/lib/preview'
 import { authenticatedOrPublished, canManageContent, isAdminOrEditor } from '@/payload/access'
 import { featuredField, publishedAtField, slugField } from '@/payload/fields'
 import {
@@ -17,6 +18,7 @@ export const Research: CollectionConfig = {
     plural: 'Research',
   },
   admin: {
+    ...previewAdmin('research'),
     useAsTitle: 'title',
     defaultColumns: ['title', 'publishedAt', '_status', 'updatedAt'],
     group: 'Website',
@@ -24,6 +26,7 @@ export const Research: CollectionConfig = {
   versions: {
     drafts: {
       autosave: { interval: 400 },
+      schedulePublish: true,
     },
   },
   access: {

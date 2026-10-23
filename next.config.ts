@@ -1,4 +1,5 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import { withSentryConfig } from '@sentry/nextjs/config'
 import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -15,6 +16,43 @@ const hsts =
     : []
 // React Refresh needs eval in development only.
 const devEval = isProd ? '' : " 'unsafe-eval'"
+
+const ANALYTICS = [
+  'https://*.posthog.com',
+  'https://www.googletagmanager.com',
+  'https://www.google-analytics.com',
+  'https://*.google-analytics.com',
+  'https://www.clarity.ms',
+  'https://*.clarity.ms',
+]
+const SENTRY = [
+  'https://*.ingest.sentry.io',
+  'https://*.ingest.us.sentry.io',
+  'https://*.ingest.de.sentry.io',
+]
+const CALCOM = ['https://app.cal.com', 'https://cal.com']
+const TURNSTILE = ['https://challenges.cloudflare.com']
+const MAPS = ['https://www.google.com', 'https://maps.google.com']
+
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${devEval} blob: https://cdn.jsdelivr.net ${[...ANALYTICS, ...CALCOM, ...TURNSTILE].join(' ')}`,
+  "script-src-attr 'none'",
+  "worker-src 'self' blob: https://*.posthog.com https://cdn.jsdelivr.net",
+  "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
+  "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://www.gravatar.com https://secure.gravatar.com https://www.googletagmanager.com https://*.google-analytics.com https://*.clarity.ms https://app.cal.com",
+  "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
+  `connect-src 'self' https://cdn.jsdelivr.net https://vitals.vercel-insights.com ${[...ANALYTICS, ...SENTRY, ...CALCOM, ...TURNSTILE].join(' ')}`,
+  `frame-src 'self' ${[...CALCOM, ...TURNSTILE, ...MAPS].join(' ')}`,
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "manifest-src 'self'",
+  "frame-ancestors 'self'",
+  ...(isProd && siteUrl.startsWith('https://') ? ['upgrade-insecure-requests'] : []),
+  // Sentry's security endpoint (Project settings > Security Headers) or any CSP report collector.
+  ...(process.env.CSP_REPORT_URI ? [`report-uri ${process.env.CSP_REPORT_URI}`] : []),
+].join('; ')
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -53,20 +91,7 @@ const nextConfig: NextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
           {
             key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              `script-src 'self' 'unsafe-inline'${devEval} blob: https://*.posthog.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://*.clarity.ms`,
-              "worker-src 'self' blob: https://*.posthog.com https://cdn.jsdelivr.net",
-              "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
-              "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://www.gravatar.com https://secure.gravatar.com https://www.googletagmanager.com https://*.google-analytics.com https://*.clarity.ms",
-              "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
-              "connect-src 'self' https://*.posthog.com https://cdn.jsdelivr.net https://www.google-analytics.com https://*.google-analytics.com https://*.clarity.ms https://vitals.vercel-insights.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "manifest-src 'self'",
-              "frame-ancestors 'self'",
-            ].join('; '),
+            value: contentSecurityPolicy,
           },
         ],
       },
@@ -147,4 +172,13 @@ const config = {
   },
 }
 
-export default config
+// Source maps are uploaded to Sentry only when an auth token is configured (CI / Vercel).
+export default process.env.SENTRY_AUTH_TOKEN
+  ? withSentryConfig(config, {
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      silent: true,
+      sourcemaps: { deleteSourcemapsAfterUpload: true },
+    })
+  : config

@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { AttributionFields } from '@/components/forms/AttributionFields'
+import { Turnstile } from '@/components/forms/Turnstile'
 import { submitKeepingValues } from '@/lib/form-submit'
 import { CONTACT_INTENTS } from '@/lib/site-ia'
 
@@ -63,6 +65,8 @@ export function ContactForm() {
         className="hidden"
         aria-hidden
       />
+      <AttributionFields />
+      <Turnstile resetKey={state} />
 
       <div className="space-y-2">
         <Label htmlFor="intent">What can we help with?</Label>

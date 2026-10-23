@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { isAdmin, isAdminOrEditor, staffRead } from '@/payload/access'
+import { attributionField } from '@/payload/fields'
 import { trackActivity } from '@/payload/hooks/activity'
 
 export const ContactMessages: CollectionConfig = {
@@ -111,5 +112,6 @@ export const ContactMessages: CollectionConfig = {
       ],
     },
     { name: 'notes', type: 'textarea', admin: { description: 'Internal summary notes' } },
+    attributionField(),
   ],
 }

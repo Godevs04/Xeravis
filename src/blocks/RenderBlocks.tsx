@@ -1,29 +1,52 @@
 import dynamic from 'next/dynamic'
 
-import { CareerBanner, NewsletterBlock } from '@/blocks/CareerBanner'
-import { CaseStudyFeature } from '@/blocks/CaseStudyFeature'
-import { ClientLogos } from '@/blocks/ClientLogos'
-import { FAQAccordion } from '@/blocks/FAQAccordion'
-import { FeatureSplit } from '@/blocks/FeatureSplit'
-import { HeroBanner } from '@/blocks/HeroBanner'
-import { IndustriesStrip } from '@/blocks/IndustriesStrip'
-import { LatestBlogs } from '@/blocks/LatestBlogs'
-import { MissionVision, ValuesGrid } from '@/blocks/MissionVision'
-import { RichTextBlock } from '@/blocks/RichTextBlock'
-import { ServicesGrid } from '@/blocks/ServicesGrid'
-import { StoryCapabilitiesBlock } from '@/blocks/story/StoryCapabilitiesBlock'
-import { StoryCasesBlock } from '@/blocks/story/StoryCasesBlock'
 import { StoryHero } from '@/blocks/story/StoryHero'
-import { StoryPresenceBlock } from '@/blocks/story/StoryPresenceBlock'
-import { StorySolutionsBlock } from '@/blocks/story/StorySolutionsBlock'
-import { StoryTechOrbitBlock } from '@/blocks/story/StoryTechOrbitBlock'
-import { TeamGrid } from '@/blocks/TeamGrid'
-import { TechnologyGrid } from '@/blocks/TechnologyGrid'
-import { TestimonialsBlock } from '@/blocks/TestimonialsBlock'
-import { TimelineBlock } from '@/blocks/TimelineBlock'
-import { WhyChooseUs } from '@/blocks/WhyChooseUs'
 
-// Client blocks are code-split so a page only downloads the blocks it renders (still SSR'd).
+// Blocks are code-split so a page only downloads the blocks it renders (still SSR'd). The story
+// hero stays static because it is the home page's LCP element.
+const CareerBanner = dynamic(() => import('@/blocks/CareerBanner').then((m) => m.CareerBanner))
+const NewsletterBlock = dynamic(() =>
+  import('@/blocks/CareerBanner').then((m) => m.NewsletterBlock),
+)
+const CaseStudyFeature = dynamic(() =>
+  import('@/blocks/CaseStudyFeature').then((m) => m.CaseStudyFeature),
+)
+const ClientLogos = dynamic(() => import('@/blocks/ClientLogos').then((m) => m.ClientLogos))
+const FAQAccordion = dynamic(() => import('@/blocks/FAQAccordion').then((m) => m.FAQAccordion))
+const FeatureSplit = dynamic(() => import('@/blocks/FeatureSplit').then((m) => m.FeatureSplit))
+const HeroBanner = dynamic(() => import('@/blocks/HeroBanner').then((m) => m.HeroBanner))
+const IndustriesStrip = dynamic(() =>
+  import('@/blocks/IndustriesStrip').then((m) => m.IndustriesStrip),
+)
+const LatestBlogs = dynamic(() => import('@/blocks/LatestBlogs').then((m) => m.LatestBlogs))
+const MissionVision = dynamic(() => import('@/blocks/MissionVision').then((m) => m.MissionVision))
+const ValuesGrid = dynamic(() => import('@/blocks/MissionVision').then((m) => m.ValuesGrid))
+const RichTextBlock = dynamic(() => import('@/blocks/RichTextBlock').then((m) => m.RichTextBlock))
+const ServicesGrid = dynamic(() => import('@/blocks/ServicesGrid').then((m) => m.ServicesGrid))
+const StoryCapabilitiesBlock = dynamic(() =>
+  import('@/blocks/story/StoryCapabilitiesBlock').then((m) => m.StoryCapabilitiesBlock),
+)
+const StoryCasesBlock = dynamic(() =>
+  import('@/blocks/story/StoryCasesBlock').then((m) => m.StoryCasesBlock),
+)
+const StoryPresenceBlock = dynamic(() =>
+  import('@/blocks/story/StoryPresenceBlock').then((m) => m.StoryPresenceBlock),
+)
+const StorySolutionsBlock = dynamic(() =>
+  import('@/blocks/story/StorySolutionsBlock').then((m) => m.StorySolutionsBlock),
+)
+const StoryTechOrbitBlock = dynamic(() =>
+  import('@/blocks/story/StoryTechOrbitBlock').then((m) => m.StoryTechOrbitBlock),
+)
+const TeamGrid = dynamic(() => import('@/blocks/TeamGrid').then((m) => m.TeamGrid))
+const TechnologyGrid = dynamic(() =>
+  import('@/blocks/TechnologyGrid').then((m) => m.TechnologyGrid),
+)
+const TestimonialsBlock = dynamic(() =>
+  import('@/blocks/TestimonialsBlock').then((m) => m.TestimonialsBlock),
+)
+const TimelineBlock = dynamic(() => import('@/blocks/TimelineBlock').then((m) => m.TimelineBlock))
+const WhyChooseUs = dynamic(() => import('@/blocks/WhyChooseUs').then((m) => m.WhyChooseUs))
 const AboutPreview = dynamic(() => import('@/blocks/AboutPreview').then((m) => m.AboutPreview))
 const CTABand = dynamic(() => import('@/blocks/CTABand').then((m) => m.CTABand))
 const ProcessSteps = dynamic(() => import('@/blocks/ProcessSteps').then((m) => m.ProcessSteps))

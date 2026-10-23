@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { previewAdmin } from '@/lib/preview'
 import { authenticatedOrPublished, canManageContent, isAdminOrEditor } from '@/payload/access'
 import { featuredField, publishedAtField, slugField } from '@/payload/fields'
 import {
@@ -13,6 +14,7 @@ import { trackActivity } from '@/payload/hooks/activity'
 export const Blogs: CollectionConfig = {
   slug: 'blogs',
   admin: {
+    ...previewAdmin('blogs'),
     useAsTitle: 'title',
     defaultColumns: ['title', 'author', 'publishedAt', '_status', 'updatedAt'],
     group: 'Website',
@@ -27,6 +29,7 @@ export const Blogs: CollectionConfig = {
   versions: {
     drafts: {
       autosave: { interval: 400 },
+      schedulePublish: true,
     },
   },
   access: {

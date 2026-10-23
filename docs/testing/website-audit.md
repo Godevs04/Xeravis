@@ -26,6 +26,25 @@ answers queries, and Lighthouse re-run on the same 10 pages.
 Home page first-load JavaScript went from 410 kB to 315 kB, other pages from about 250 kB to
 140–170 kB. Best practices and SEO are unchanged (100; `/search` stays `noindex`).
 
+A second mobile pass (single Lighthouse run per page, production build, simulated mobile):
+
+| Page                             | Mobile perf | LCP           | Change                                                    |
+| -------------------------------- | ----------- | ------------- | --------------------------------------------------------- |
+| `/`                              | 89 (76)     | 3.8 s (6.8 s) | Lucide icon set no longer shipped; 326 kB to 211 kB JS    |
+| `/services`                      | 81 (75)     | 5.2 s (9.2 s) | Hero entrance in CSS instead of Framer Motion             |
+| `/careers/sr-developer-engineer` | 82 (76)     | 4.9 s (7.4 s) | Hero entrance in CSS; install prompt waits for engagement |
+| `/solutions`                     | 89          | 3.8 s         | Hero entrance in CSS; label contrast fixed                |
+
+- `ServiceCard` is a server component, so the name-based Lucide lookup in `src/lib/icons.ts`
+  (which pulls in all ~1,500 icons) no longer reaches the browser.
+- Above-the-fold hero text (`PageHero`, `PageHeroes`, `JobDetailView`) animates with the
+  `hero-rise` / `hero-fade-up` CSS classes, so it paints before hydration instead of waiting
+  for Framer Motion.
+- The PWA install prompt opens only after the first scroll, tap or key press; it was becoming
+  the LCP element on job pages.
+- Lenis is loaded on demand, only on desktop pointers; every block in `RenderBlocks` except the
+  home hero is code-split.
+
 | Issue   | Fix                                                                                                                                                                                                                                                                                                        |
 | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | WEB-001 | Cloudinary storage adapter rewritten: files stored as private assets and streamed through `/api/media/file/*`, so Media access rules (private resumes) still apply. Enabled by the `CLOUDINARY_*` env vars (documented in `.env.example`); `npm run media:migrate -- --apply` copies existing local files. |
@@ -304,6 +323,22 @@ Each issue lists where it is, the evidence, why it matters and a suggested fix.
 - **Fix:** add HSTS (`max-age=63072000; includeSubDomains; preload`) for production, drop
   `'unsafe-eval'` (verify the admin still works) and move to nonce-based scripts when feasible,
   and set `poweredByHeader: false`.
+- **Decision on nonces (kept `'unsafe-inline'`):** a nonce must be unique per response, so it
+  has to be generated in middleware and read by every page. That opts all pages into dynamic
+  rendering and disables ISR (`revalidate = 60`) and the CDN cache, which would undo the
+  performance work in WEB-006. Next.js, Payload's admin, the JSON-LD blocks and the analytics
+  loaders also inject inline scripts. Hashes are not practical either, because the inline
+  bootstrap scripts change per build and per page. The current policy limits the damage of
+  `'unsafe-inline'` instead:
+  - `'unsafe-eval'` only in development; `script-src-attr 'none'` blocks inline event
+    handler attributes (`onclick=` and similar), the most common injection sink.
+  - Script, connect and frame sources are explicit allow-lists, built in `next.config.ts` from
+    named groups (analytics, Sentry, Cal.com, Turnstile, Maps).
+  - `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`, `frame-ancestors 'self'`,
+    and `upgrade-insecure-requests` plus HSTS on https production.
+  - Optional `CSP_REPORT_URI` (for example Sentry's security endpoint) to collect violations.
+  - Revisit nonces if the site moves to Partial Prerendering, where a dynamic shell can carry
+    a nonce while the content stays cached.
 
 #### WEB-016 Layout shift from the footer on desktop
 
@@ -431,7 +466,8 @@ Each issue lists where it is, the evidence, why it matters and a suggested fix.
 
 1. Decide on one analytics stack (PostHog with consent, or GA via the existing Analytics
    global) and add client error monitoring (Sentry or PostHog) (WEB-011, WEB-021).
-2. Nonce-based CSP without `'unsafe-inline'` / `'unsafe-eval'` (WEB-015).
+2. Nonce-based CSP without `'unsafe-inline'` (WEB-015). Deferred: nonces force dynamic
+   rendering and would disable ISR; see the decision note under WEB-015.
 3. Follow the system colour-scheme preference (WEB-024).
 4. Add automated checks in CI: Lighthouse CI budgets (the `lighthouse:ci` script already
    exists), a link checker on the sitemap, `prettier --check`, and an axe accessibility run.

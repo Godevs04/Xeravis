@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
@@ -11,6 +12,8 @@ type ContentPageProps = {
   related?: { label: string; href: string }[]
   cta?: { label: string; href: string }
   secondaryCta?: { label: string; href: string }
+  /** Rendered between the hero and the text sections. */
+  children?: ReactNode
 }
 
 export function ContentPage({
@@ -18,6 +21,7 @@ export function ContentPage({
   related,
   cta = { label: 'Work With Us', href: '/contact?intent=business' },
   secondaryCta = { label: 'Explore capabilities', href: '/services' },
+  children,
 }: ContentPageProps) {
   return (
     <>
@@ -33,6 +37,7 @@ export function ContentPage({
           { label: secondaryCta.label, href: secondaryCta.href, variant: 'outline' },
         ]}
       />
+      {children}
       {page.sections.map((section) => (
         <Section key={section.heading}>
           <Container className="max-w-3xl">

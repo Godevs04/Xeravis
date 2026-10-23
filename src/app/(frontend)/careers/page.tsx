@@ -1,12 +1,13 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 import { WhyJoinSection } from '@/components/careers/WhyJoinSection'
 import { HiringProcessSection } from '@/components/careers/HiringProcessSection'
-import { JobCard } from '@/components/domain/JobCard'
+import { CareersBoard, JobList, type BoardJob } from '@/components/careers/CareersBoard'
+import { NewsletterForm } from '@/components/forms/NewsletterForm'
 import { CareersPageHero } from '@/components/marketing/PageHeroes'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
-import { AnimateIn } from '@/components/motion/AnimateIn'
 import { Button } from '@/components/ui/button'
 import { listPublished } from '@/lib/cms'
 import { isPastDeadline } from '@/lib/date'
@@ -82,6 +83,19 @@ export default async function CareersPage() {
   ).filter((job) => !isPastDeadline(job.applicationDeadline))
   const fromCms = careers.length > 0
   const items = fromCms ? careers : FALLBACK_JOBS
+  const boardJobs: BoardJob[] = items.map((job) => ({
+    id: job.id,
+    title: job.title,
+    slug: job.slug,
+    department: departmentLabel(job),
+    location: job.location,
+    type: job.type,
+    workMode: job.workMode,
+    experienceRequired: job.experienceRequired,
+    openings: job.openings,
+    postedAt: 'postedAt' in job ? job.postedAt : null,
+    applicationDeadline: 'applicationDeadline' in job ? job.applicationDeadline : null,
+  }))
 
   return (
     <>
@@ -154,31 +168,27 @@ export default async function CareersPage() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-3">
-              {items.map((job, index) => (
-                <AnimateIn key={job.id} delay={index * 0.04}>
-                  <JobCard
-                    title={job.title}
-                    department={departmentLabel(job)}
-                    location={job.location}
-                    type={job.type}
-                    workMode={job.workMode}
-                    experienceRequired={job.experienceRequired}
-                    openings={job.openings}
-                    postedAt={'postedAt' in job ? job.postedAt : null}
-                    applicationDeadline={
-                      'applicationDeadline' in job ? job.applicationDeadline : null
-                    }
-                    href={`/careers/${job.slug}`}
-                  />
-                </AnimateIn>
-              ))}
-            </div>
+            <Suspense fallback={<JobList jobs={boardJobs} />}>
+              <CareersBoard jobs={boardJobs} />
+            </Suspense>
           )}
         </Container>
       </Section>
 
-      <Section surface>
+      <Section id="job-alerts" surface>
+        <Container className="max-w-2xl">
+          <h2 className="font-display text-2xl font-bold tracking-tight text-[color:var(--color-primary)]">
+            Get job alerts
+          </h2>
+          <p className="mt-2 mb-6 text-sm text-[color:var(--color-secondary)]">
+            Be the first to hear about new roles. We email only when positions open, and you can
+            unsubscribe at any time.
+          </p>
+          <NewsletterForm topic="careers" submitLabel="Notify me" />
+        </Container>
+      </Section>
+
+      <Section>
         <Container className="space-y-10">
           {PROGRAMS.map((card) => (
             <div

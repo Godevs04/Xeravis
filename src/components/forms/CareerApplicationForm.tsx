@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { AttributionFields } from '@/components/forms/AttributionFields'
+import { Turnstile } from '@/components/forms/Turnstile'
 import { submitKeepingValues } from '@/lib/form-submit'
 import { cn } from '@/lib/utils'
 
@@ -91,6 +93,8 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
         className="hidden"
         aria-hidden
       />
+      <AttributionFields />
+      <Turnstile resetKey={state} />
       <p className="text-sm text-[color:var(--color-secondary)]">
         Applying for{' '}
         <span className="font-semibold text-[color:var(--color-primary)]">{jobTitle}</span>

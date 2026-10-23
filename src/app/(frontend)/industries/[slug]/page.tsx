@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { CTABand } from '@/blocks/CTABand'
 import { FAQAccordion } from '@/blocks/FAQAccordion'
 import { RelatedContent } from '@/components/content/RelatedContent'
+import { CaseStudyCard } from '@/components/domain/CaseStudyCard'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
@@ -36,6 +37,8 @@ type IndustryDoc = {
   meta?: { title?: string; description?: string; image?: unknown }
 }
 
+type CaseStudyDoc = { id: string; title: string; slug: string; client: string; outcome: string }
+
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
@@ -61,6 +64,12 @@ export default async function IndustryDetailPage({ params }: Props) {
 
   if (!industry) notFound()
 
+  const caseStudies = await listPublished<CaseStudyDoc>('case-studies', {
+    where: { industry: { equals: industry.id } },
+    sort: '-updatedAt',
+    limit: 6,
+    depth: 0,
+  })
   const heroUrl = getMediaUrl(industry.heroImage as Parameters<typeof getMediaUrl>[0])
   const relatedGroups = buildRelatedGroups(industry as unknown as Record<string, unknown>)
   const isTier3 = industry.tier === '3'
@@ -129,6 +138,25 @@ export default async function IndustryDetailPage({ params }: Props) {
             <h2 className="text-2xl font-bold">Our approach</h2>
             <div className="mt-6">
               <RichText content={industry.approach as Parameters<typeof RichText>[0]['content']} />
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
+      {caseStudies.length > 0 ? (
+        <Section>
+          <Container>
+            <h2 className="text-2xl font-bold">Case studies in {industry.title}</h2>
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
+              {caseStudies.map((study) => (
+                <CaseStudyCard
+                  key={study.id}
+                  title={study.title}
+                  client={study.client}
+                  outcome={study.outcome}
+                  href={`/case-studies/${study.slug}`}
+                />
+              ))}
             </div>
           </Container>
         </Section>

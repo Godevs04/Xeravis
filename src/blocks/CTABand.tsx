@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { m as motion, useReducedMotion } from 'framer-motion'
 
+import { BookCallButton } from '@/components/booking/BookCallButton'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { Button } from '@/components/ui/button'
@@ -63,6 +64,11 @@ export function CTABand({ heading, subheading, ctaLabel, ctaHref }: CTABandProps
               >
                 <Link href={ctaHref}>{ctaLabel}</Link>
               </Button>
+              <BookCallButton
+                fallback="none"
+                size="lg"
+                className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] text-[color:var(--hero-text)] backdrop-blur-md hover:bg-[color:var(--color-hover)]"
+              />
               <Button
                 asChild
                 variant="outline"

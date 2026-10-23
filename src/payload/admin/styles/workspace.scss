@@ -70,7 +70,10 @@
   font-size: var(--xe-fs-secondary);
   font-weight: 600;
   text-decoration: none;
-  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
 .xe-ws-btn:hover {

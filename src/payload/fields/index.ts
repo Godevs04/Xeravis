@@ -174,4 +174,24 @@ export const richContentField = (name = 'content'): Field => ({
   label: 'Rich content',
 })
 
+/** First-touch lead attribution captured by public forms (read-only for staff). */
+export const attributionField = (): Field => ({
+  name: 'attribution',
+  type: 'group',
+  label: 'Attribution',
+  admin: {
+    readOnly: true,
+    description: 'Where this lead came from (first page of the visit and campaign tags).',
+  },
+  fields: [
+    { name: 'utmSource', type: 'text', label: 'Source' },
+    { name: 'utmMedium', type: 'text', label: 'Medium' },
+    { name: 'utmCampaign', type: 'text', label: 'Campaign' },
+    { name: 'utmTerm', type: 'text', label: 'Term' },
+    { name: 'utmContent', type: 'text', label: 'Content' },
+    { name: 'referrer', type: 'text' },
+    { name: 'landingPage', type: 'text', label: 'Landing page' },
+  ],
+})
+
 export const createSlugField = baseSlugField

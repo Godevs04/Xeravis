@@ -665,7 +665,7 @@ export function MegaMenu({ items, category, className, id }: MegaMenuProps) {
               <div className="mt-4 grid grid-cols-3 gap-2">
                 {featuredMetrics.map((m) => (
                   <div
-                    key={m.l}
+                    key={`${m.v}-${m.l}`}
                     className="rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-2 py-2 text-center backdrop-blur-sm dark:border-white/10 dark:bg-white/5"
                   >
                     <p className="font-display text-sm font-bold text-[color:var(--color-primary)] dark:text-white">

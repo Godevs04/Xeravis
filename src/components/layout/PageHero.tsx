@@ -249,15 +249,13 @@ export function PageHero({
             <h1 className="font-display max-w-[22ch] text-[clamp(2.4rem,5.2vw,4.5rem)] leading-[0.98] font-bold tracking-[-0.05em] text-balance text-[color:var(--hero-text)]">
               {titleLines.map((line, lineIndex) => (
                 <span key={line} className="block overflow-hidden pb-1">
-                  <motion.span
-                    className="block"
-                    initial={reduce ? false : { y: '110%', opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 + lineIndex * 0.12, duration: 0.7, ease: EASE }}
+                  <span
+                    className="hero-rise block"
+                    style={{ animationDelay: `${0.1 + lineIndex * 0.12}s` }}
                   >
                     {renderEmphasizedTitle(line)}
                     {lineIndex < titleLines.length - 1 ? ' ' : null}
-                  </motion.span>
+                  </span>
                 </span>
               ))}
             </h1>
@@ -265,15 +263,13 @@ export function PageHero({
             {subtitle ? (
               <p className="mt-5 max-w-[42ch] text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg">
                 {subtitleWords.map((word, i) => (
-                  <motion.span
+                  <span
                     key={`${word}-${i}`}
-                    className="inline-block pr-[0.3em]"
-                    initial={reduce ? false : { opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.32 + i * 0.018, duration: 0.35, ease: EASE }}
+                    className="hero-fade-up inline-block pr-[0.3em]"
+                    style={{ animationDelay: `${0.32 + i * 0.018}s` }}
                   >
                     {word}
-                  </motion.span>
+                  </span>
                 ))}
               </p>
             ) : null}
@@ -376,35 +372,33 @@ export function PageHero({
         )}
       >
         {eyebrow ? (
-          <motion.p
-            {...fade(0.02)}
+          <p
             className={cn(
-              'mb-4 text-[11px] font-bold tracking-[0.16em] uppercase',
+              'hero-fade-up mb-4 text-[11px] font-bold tracking-[0.16em] uppercase',
               image ? 'text-cyan-200' : 'text-[color:var(--color-accent)]',
             )}
           >
             {eyebrow}
-          </motion.p>
+          </p>
         ) : null}
-        <motion.h1
-          {...fade(0.08)}
+        <h1
           className={cn(
-            'font-display max-w-[18ch] text-[clamp(2.25rem,4.5vw,3.75rem)] font-bold tracking-[-0.045em] text-balance',
+            'hero-fade-up font-display max-w-[18ch] text-[clamp(2.25rem,4.5vw,3.75rem)] font-bold tracking-[-0.045em] text-balance',
             image ? 'text-white' : 'text-[color:var(--color-primary)]',
           )}
         >
           {title}
-        </motion.h1>
+        </h1>
         {subtitle ? (
-          <motion.p
-            {...fade(0.16)}
+          <p
+            style={{ animationDelay: '0.08s' }}
             className={cn(
-              'mt-5 max-w-[48ch] text-base leading-relaxed sm:text-lg',
+              'hero-fade-up mt-5 max-w-[48ch] text-base leading-relaxed sm:text-lg',
               image ? 'text-slate-200' : 'text-[color:var(--color-secondary)]',
             )}
           >
             {subtitle}
-          </motion.p>
+          </p>
         ) : null}
         {ctas.length > 0 ? (
           <motion.div {...fade(0.24)} className="mt-8 flex flex-wrap gap-3">

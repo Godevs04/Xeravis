@@ -1,4 +1,7 @@
+import { DownloadsSection, listDownloads } from '@/components/downloads/DownloadsSection'
+import { Container } from '@/components/layout/Container'
 import { ContentPage } from '@/components/layout/ContentPage'
+import { Section } from '@/components/layout/Section'
 import { INSIGHTS_MEGA } from '@/lib/site-ia'
 import { buildMetadata } from '@/lib/seo'
 
@@ -28,7 +31,10 @@ export const metadata = buildMetadata({
   path: page.path,
 })
 
-export default function ReportsPage() {
+export const revalidate = 60
+
+export default async function ReportsPage() {
+  const downloads = await listDownloads('report')
   return (
     <ContentPage
       page={page}
@@ -37,6 +43,14 @@ export default function ReportsPage() {
         href: item.href,
       }))}
       cta={{ label: 'Contact research', href: '/contact?intent=research' }}
-    />
+    >
+      {downloads.length > 0 ? (
+        <Section>
+          <Container>
+            <DownloadsSection id="downloads-report" heading="Download reports" items={downloads} />
+          </Container>
+        </Section>
+      ) : null}
+    </ContentPage>
   )
 }

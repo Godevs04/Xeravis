@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url'
 
 import { collections } from './payload/collections'
 import { globals } from './payload/globals'
+import { jobs } from './payload/jobs'
 import { plugins } from './payload/plugins'
 import { Users } from './payload/collections/Users'
 
@@ -121,5 +122,6 @@ export default buildConfig({
   cors: [process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'].filter(Boolean),
   csrf: [process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'].filter(Boolean),
   plugins,
+  jobs,
   sharp,
 })
