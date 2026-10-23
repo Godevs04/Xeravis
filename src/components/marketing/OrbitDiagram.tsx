@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { m as motion, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -77,7 +77,7 @@ export function OrbitDiagram({ nodes, className, centerLabel = 'XELARVIS' }: Orb
             className={cn(
               'absolute z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border px-3 py-1.5 text-left backdrop-blur-md transition-colors',
               isActive
-                ? 'border-[color:var(--color-accent)]/70 bg-[color:var(--color-accent)] text-white shadow-[var(--shadow-hover)]'
+                ? 'border-[color:var(--color-accent)]/70 bg-[color:var(--color-accent)] text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)]'
                 : 'border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] text-[color:var(--hero-text)] shadow-[var(--shadow-light)] hover:border-[color:var(--color-accent)]/50 hover:bg-[color:var(--color-hover)] dark:border-white/15 dark:bg-white/5 dark:text-slate-200 dark:shadow-none dark:hover:border-teal-400/50 dark:hover:bg-teal-500/20',
             )}
             style={{ left: `${x}%`, top: `${y}%` }}

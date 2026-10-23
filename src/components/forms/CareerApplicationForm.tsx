@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { useActionState } from 'react'
-import posthog from 'posthog-js'
+import { track } from '@/lib/analytics-client'
 
 import { submitCareerApplication, type CareerFormState } from '@/actions/career'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { submitKeepingValues } from '@/lib/form-submit'
 import { cn } from '@/lib/utils'
 
 const initialState: CareerFormState = { ok: false, message: '' }
@@ -38,7 +39,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
       const result = await submitCareerApplication(previousState, formData)
 
       if (result.ok) {
-        posthog.capture('career_application_submitted', {
+        track('career_application_submitted', {
           career_id: careerId,
         })
       }
@@ -80,8 +81,16 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
   }
 
   return (
-    <form action={action} className="space-y-8" noValidate>
+    <form action={action} onSubmit={submitKeepingValues(action)} className="space-y-8" noValidate>
       <input type="hidden" name="careerId" value={careerId} />
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden
+      />
       <p className="text-sm text-[color:var(--color-secondary)]">
         Applying for{' '}
         <span className="font-semibold text-[color:var(--color-primary)]">{jobTitle}</span>
@@ -299,7 +308,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
       <Button
         type="submit"
         disabled={pending}
-        className="w-full rounded-full bg-[color:var(--color-accent)] px-6 font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:w-auto"
+        className="w-full rounded-full bg-[color:var(--color-accent)] px-6 font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:w-auto"
       >
         {pending ? 'Submitting…' : 'Submit Application'}
       </Button>

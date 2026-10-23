@@ -4,6 +4,7 @@ export {
   revalidateGlobal,
   revalidateSlugPath,
   revalidateOnDelete,
+  revalidateSiteWide,
 } from './revalidate'
-export { enforcePublishRole } from './enforcePublishRole'
+export { enforcePublishRole, enforcePublishRoleFor } from './enforcePublishRole'
 export { autoSlugFromTitle } from './autoSlug'

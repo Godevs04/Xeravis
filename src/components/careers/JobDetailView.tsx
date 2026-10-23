@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion, type Variants } from 'framer-motion'
+import { m as motion, useReducedMotion, type Variants } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Briefcase, Clock, MapPin, Sparkles, Users } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -33,6 +33,8 @@ type JobDetailViewProps = {
   requirementsSlot?: ReactNode
   /** When false, show email apply CTA instead of the online form (fallback/demo jobs). */
   applicationsOpen?: boolean
+  /** Replaces the fallback copy when a published role has stopped accepting applications. */
+  closedMessage?: string
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -152,6 +154,7 @@ export function JobDetailView({
   descriptionSlot,
   requirementsSlot,
   applicationsOpen = true,
+  closedMessage,
 }: JobDetailViewProps) {
   const reduce = useReducedMotion()
   const responsibilities = listItems(job.responsibilities)
@@ -400,12 +403,13 @@ export function JobDetailView({
                   ) : (
                     <div className="space-y-4 text-sm leading-relaxed text-[color:var(--color-secondary)]">
                       <p>
-                        Online applications for this listing will open once the role is published in
-                        our careers system. You can still reach recruiting directly:
+                        {closedMessage ||
+                          'Online applications for this listing will open once the role is published in our careers system.'}{' '}
+                        You can still reach recruiting directly:
                       </p>
                       <Button
                         asChild
-                        className="w-full rounded-full bg-[color:var(--color-accent)] font-semibold text-white hover:bg-[color:var(--color-accent-hover)]"
+                        className="w-full rounded-full bg-[color:var(--color-accent)] font-semibold text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
                       >
                         <a
                           href={`mailto:hr@xelarvis.in?subject=${encodeURIComponent(`Application: ${job.title}`)}`}

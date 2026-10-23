@@ -67,7 +67,7 @@ export async function SiteFooter() {
             <p className="text-secondary mt-6 max-w-md text-base">{tagline}</p>
             <Link
               href="/contact"
-              className="bg-accent mt-8 inline-flex h-12 items-center rounded-full px-7 text-sm font-semibold text-white shadow-[0_12px_32px_var(--color-accent-glow)] transition-transform hover:-translate-y-0.5"
+              className="bg-accent mt-8 inline-flex h-12 items-center rounded-full px-7 text-sm font-semibold text-[color:var(--color-on-accent)] shadow-[0_12px_32px_var(--color-accent-glow)] transition-transform hover:-translate-y-0.5"
             >
               Start a project
             </Link>
@@ -137,9 +137,9 @@ export async function SiteFooter() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {columns.map((column) => (
               <div key={column.title}>
-                <h3 className="text-muted mb-4 text-xs font-semibold tracking-[0.14em] uppercase">
+                <h2 className="text-muted mb-4 text-xs font-semibold tracking-[0.14em] uppercase">
                   {column.title}
-                </h3>
+                </h2>
                 <ul className="space-y-3">
                   {column.links.map((link) => (
                     <li key={link.href}>

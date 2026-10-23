@@ -88,12 +88,14 @@ export function SwaggerDocs() {
             </p>
           </div>
           <div className="flex flex-wrap gap-2 text-sm">
-            <Link
-              href="/api/graphql-playground"
-              className="rounded-full border border-black/10 bg-white px-3 py-1.5 font-medium hover:border-teal-600"
-            >
-              GraphQL Playground
-            </Link>
+            {process.env.NODE_ENV === 'development' ? (
+              <Link
+                href="/api/graphql-playground"
+                className="rounded-full border border-black/10 bg-white px-3 py-1.5 font-medium hover:border-teal-600"
+              >
+                GraphQL Playground
+              </Link>
+            ) : null}
             <Link
               href="/admin"
               className="rounded-full border border-black/10 bg-white px-3 py-1.5 font-medium hover:border-teal-600"

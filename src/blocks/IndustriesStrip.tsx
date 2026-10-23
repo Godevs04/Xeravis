@@ -30,7 +30,7 @@ export async function IndustriesStrip({ heading, subheading }: IndustriesStripPr
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <AnimateIn className="max-w-2xl">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h2>
-            {subheading && <p className="mt-4 text-lg text-secondary">{subheading}</p>}
+            {subheading && <p className="text-secondary mt-4 text-lg">{subheading}</p>}
           </AnimateIn>
           <Button asChild variant="ghost" className="self-start lg:self-auto">
             <Link href="/industries">All industries</Link>

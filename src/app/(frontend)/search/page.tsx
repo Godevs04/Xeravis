@@ -40,7 +40,7 @@ export default async function SearchPage({ searchParams }: Props) {
             />
             <button
               type="submit"
-              className="h-11 rounded-full bg-[color:var(--color-accent)] px-6 text-sm font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
+              className="h-11 rounded-full bg-[color:var(--color-accent)] px-6 text-sm font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
             >
               Search
             </button>

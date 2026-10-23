@@ -34,11 +34,12 @@ export default async function CaseStudiesPage() {
         brand="Xelarvis"
         eyebrow="Evidence"
         title="Representative engagements."
-        subtitle="Anonymized delivery patterns that show how XELARVIS moves from business problem to governed outcomes—without inflated claims."
+        subtitle="Anonymized delivery patterns that show how XELARVIS moves from business problem to governed outcomes, with the results each engagement delivered."
         size="compact"
       />
       <Section>
         <Container>
+          <h2 className="sr-only">All case studies</h2>
           <div className="grid gap-6 lg:grid-cols-2">
             {items.map((study, index) => (
               <AnimateIn key={study.id} delay={index * 0.03}>

@@ -1,7 +1,7 @@
 'use client'
 
 import { clsx } from 'clsx'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m as motion, useReducedMotion } from 'framer-motion'
 import { Download, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 

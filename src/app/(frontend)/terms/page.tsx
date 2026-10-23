@@ -5,7 +5,8 @@ import { buildMetadata } from '@/lib/seo'
 
 export const metadata = buildMetadata({
   title: 'Terms of Use',
-  description: 'Terms of use for the Xelarvis Technologies website.',
+  description:
+    'Terms of use for the Xelarvis Technologies website, covering acceptable use, intellectual property, third-party links, disclaimers and the limits of our liability.',
   path: '/terms',
 })
 
@@ -14,28 +15,33 @@ export default function TermsPage() {
     <>
       <PageHero eyebrow="Legal" title="Terms of Use" size="compact" />
       <Section>
-        <Container className="max-w-3xl space-y-6 text-secondary leading-relaxed">
+        <Container className="text-secondary max-w-3xl space-y-6 leading-relaxed">
           <p>
-            By accessing xelarvis.in, you agree to these Terms of Use. If you do not agree, please do not use this website.
+            By accessing xelarvis.in, you agree to these Terms of Use. If you do not agree, please
+            do not use this website.
           </p>
-          <h2 className="text-xl font-semibold text-primary">Use of content</h2>
+          <h2 className="text-primary text-xl font-semibold">Use of content</h2>
           <p>
-            Content on this site is provided for general information about Xelarvis Technologies and our services. You may
-            not reproduce, distribute, or create derivative works without prior written consent.
+            Content on this site is provided for general information about Xelarvis Technologies and
+            our services. You may not reproduce, distribute, or create derivative works without
+            prior written consent.
           </p>
-          <h2 className="text-xl font-semibold text-primary">No professional advice</h2>
+          <h2 className="text-primary text-xl font-semibold">No professional advice</h2>
           <p>
-            Materials on this website do not constitute legal, financial, or professional advice. Engagements are governed by
-            separate agreements between Xelarvis and clients.
+            Materials on this website do not constitute legal, financial, or professional advice.
+            Engagements are governed by separate agreements between Xelarvis and clients.
           </p>
-          <h2 className="text-xl font-semibold text-primary">Limitation of liability</h2>
+          <h2 className="text-primary text-xl font-semibold">Limitation of liability</h2>
           <p>
-            To the fullest extent permitted by law, Xelarvis Technologies is not liable for damages arising from use of this
-            website or reliance on its content.
+            To the fullest extent permitted by law, Xelarvis Technologies is not liable for damages
+            arising from use of this website or reliance on its content.
           </p>
-          <h2 className="text-xl font-semibold text-primary">Governing law</h2>
-          <p>These terms are governed by the laws of India, without regard to conflict of law principles.</p>
-          <p className="text-sm text-muted">Last updated: July 2026</p>
+          <h2 className="text-primary text-xl font-semibold">Governing law</h2>
+          <p>
+            These terms are governed by the laws of India, without regard to conflict of law
+            principles.
+          </p>
+          <p className="text-muted text-sm">Last updated: July 2026</p>
         </Container>
       </Section>
     </>

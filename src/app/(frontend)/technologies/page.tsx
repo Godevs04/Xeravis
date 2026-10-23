@@ -95,10 +95,11 @@ export default async function TechnologiesPage() {
     <>
       <TechnologiesPageHero
         title="Engineering stack for intelligent delivery."
-        subtitle="AI, data, cloud, and DevOps tools used in service and solution programs. Clinical standards remain capability content—not vanity technology entries."
+        subtitle="The AI, data, cloud and DevOps tools we use across our services and solutions."
       />
       <Section>
         <Container>
+          <h2 className="sr-only">Technology catalog</h2>
           <div className="flex flex-col gap-8">
             {items.map((item, index) => (
               <AnimateIn key={item.id} delay={index * 0.03}>

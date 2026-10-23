@@ -101,7 +101,7 @@ export const RESEARCH = {
 export const HEALTHCARE_SPECIALTY = {
   title: 'Domain Expertise Where It Matters',
   body: 'Our healthcare and clinical data capabilities combine data science, statistical programming and clinical data standards to support data-driven healthcare and life-sciences workflows.',
-  note: 'Healthcare is a specialized practice within XELARVIS — not the lead identity of the brand. We apply depth where regulated, clinical and life-sciences contexts demand it.',
+  note: 'Healthcare is one of our specialized practices. We bring this depth wherever regulated, clinical and life-sciences work demands it, alongside our broader AI, data and engineering services.',
   cta: {
     label: 'Explore Healthcare & Clinical Data Science',
     href: '/services/clinical-data-science-healthcare-ai',
@@ -117,12 +117,12 @@ export const COMPANY_FACTS_STATIC = {
 export const LEADERSHIP = {
   title: 'Leadership',
   intro:
-    'Genuine leadership profiles only — name, title, biography, LinkedIn, expertise and research interests where relevant. A small, credible team is better than a decorative executive roster.',
+    'Meet the people who lead XELARVIS: their roles, backgrounds, areas of expertise and research interests, and how they guide every engagement from strategy to delivery.',
 } as const
 
 export const TECHNOLOGY_BRIDGE = {
   title: 'Technology in context',
-  body: 'The master technology catalog lives with Services and Solutions — not as a logo wall on About. XELARVIS selects and engineers technologies based on production requirements, governance and measurable outcomes.',
+  body: 'XELARVIS selects and engineers technologies based on production requirements, governance and measurable outcomes. Explore the full catalog to see the cloud, data and AI tools behind each service and solution.',
   cta: { label: 'Browse the technology catalog', href: '/technologies' },
 } as const
 

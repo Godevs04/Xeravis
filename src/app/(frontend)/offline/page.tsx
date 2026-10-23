@@ -23,7 +23,7 @@ export default function OfflinePage() {
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         <Link
           href="/"
-          className="inline-flex h-11 items-center justify-center rounded-full bg-[color:var(--color-accent)] px-6 text-sm font-semibold text-white shadow-[var(--shadow-hover)]"
+          className="inline-flex h-11 items-center justify-center rounded-full bg-[color:var(--color-accent)] px-6 text-sm font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)]"
         >
           Try homepage
         </Link>

@@ -15,6 +15,17 @@ function safeRevalidatePath(path: string) {
   }
 }
 
+/** For globals rendered by the root layout (header, banners, tags, default metadata) */
+export const revalidateSiteWide: GlobalAfterChangeHook = ({ doc, req: { context } }) => {
+  if (context?.disableRevalidate) return doc
+  try {
+    revalidatePath('/', 'layout')
+  } catch {
+    // Outside Next.js request context (e.g. seed scripts)
+  }
+  return doc
+}
+
 function safeRevalidateTag(tag: string) {
   try {
     revalidateTag(tag)

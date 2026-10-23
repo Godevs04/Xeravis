@@ -49,7 +49,7 @@ function renderNodes(nodes: LexicalNode[] | undefined, keyPrefix = 'node'): Reac
 
     if (node.type === 'paragraph') {
       return (
-        <p key={key} className="mb-4 leading-relaxed text-secondary last:mb-0">
+        <p key={key} className="text-secondary mb-4 leading-relaxed last:mb-0">
           {renderNodes(node.children, key)}
         </p>
       )
@@ -58,7 +58,7 @@ function renderNodes(nodes: LexicalNode[] | undefined, keyPrefix = 'node'): Reac
     if (node.type === 'heading') {
       const Tag = (node.tag || 'h3') as keyof React.JSX.IntrinsicElements
       return (
-        <Tag key={key} className="mb-4 mt-8 text-primary first:mt-0">
+        <Tag key={key} className="text-primary mt-8 mb-4 first:mt-0">
           {renderNodes(node.children, key)}
         </Tag>
       )
@@ -67,7 +67,7 @@ function renderNodes(nodes: LexicalNode[] | undefined, keyPrefix = 'node'): Reac
     if (node.type === 'list') {
       const ListTag = node.tag === 'ol' ? 'ol' : 'ul'
       return (
-        <ListTag key={key} className="mb-4 ml-6 list-disc space-y-2 text-secondary">
+        <ListTag key={key} className="text-secondary mb-4 ml-6 list-disc space-y-2">
           {renderNodes(node.children, key)}
         </ListTag>
       )

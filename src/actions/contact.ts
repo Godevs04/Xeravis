@@ -56,7 +56,7 @@ export async function submitContact(
   formData: FormData,
 ): Promise<ContactFormState> {
   const headerList = await headers()
-  const limited = rateLimit(clientKeyFromHeaders(headerList, 'contact'), {
+  const limited = await rateLimit(clientKeyFromHeaders(headerList, 'contact'), {
     limit: 8,
     windowMs: 15 * 60_000,
   })

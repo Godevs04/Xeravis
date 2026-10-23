@@ -9,6 +9,8 @@ export const SITE_NAME_SHORT = 'Xelarvis'
 export const SITE_NAME = BRAND.name
 export const SITE_DOMAIN = BRAND.domain
 export const TWITTER_HANDLE = '@xelarvis_ai'
+/** 1200x630, served by `src/app/(frontend)/og-image.png/route.ts`. */
+export const DEFAULT_OG_IMAGE_PATH = '/og-image.png'
 
 /** Primary brand positioning — AI, Data Science, IT Consulting (Healthcare as specialty). */
 export const BRAND_POSITIONING = 'Artificial Intelligence, Data Science & IT Consulting'
@@ -64,8 +66,14 @@ type MetaInput = {
   keywords?: string[]
 }
 
+/** Search engines show ~120–160 characters; very short (often CMS-entered) text gets context. */
+const MIN_DESCRIPTION = 70
+
 function clampDescription(text: string, max = 158) {
-  const clean = text.replace(/\s+/g, ' ').trim()
+  let clean = text.replace(/\s+/g, ' ').trim()
+  if (clean.length < MIN_DESCRIPTION) {
+    clean = `${clean.replace(/[.!?]?$/, '.')} ${SITE_NAME_SHORT}: ${BRAND_POSITIONING}.`
+  }
   if (clean.length <= max) return clean
   const cut = clean.slice(0, max - 1)
   const lastSpace = cut.lastIndexOf(' ')
@@ -100,7 +108,8 @@ export function buildMetadata({
 }: MetaInput): Metadata {
   const pageTitle = formatPageTitle(title)
   const pageDescription = clampDescription(description || DEFAULT_DESCRIPTION)
-  const imageUrl = getMediaUrl(image as Parameters<typeof getMediaUrl>[0])
+  const imageUrl =
+    getMediaUrl(image as Parameters<typeof getMediaUrl>[0]) || absoluteUrl(DEFAULT_OG_IMAGE_PATH)
   const url = absoluteUrl(path)
   const defaultKeywords = [
     'Artificial Intelligence',

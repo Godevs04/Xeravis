@@ -1,12 +1,13 @@
 'use client'
 
-import { useActionState } from 'react'
-import posthog from 'posthog-js'
+import { useActionState, useRef } from 'react'
+import { track } from '@/lib/analytics-client'
 
 import { submitNewsletter, type NewsletterFormState } from '@/actions/newsletter'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { submitKeepingValues } from '@/lib/form-submit'
 import { cn } from '@/lib/utils'
 
 const initialState: NewsletterFormState = { ok: false, message: '' }
@@ -16,12 +17,14 @@ type NewsletterFormProps = {
 }
 
 export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
+  const formRef = useRef<HTMLFormElement>(null)
   const [state, action, pending] = useActionState(
     async (previousState: NewsletterFormState, formData: FormData) => {
       const result = await submitNewsletter(previousState, formData)
 
       if (result.ok) {
-        posthog.capture('newsletter_subscribed')
+        formRef.current?.reset()
+        track('newsletter_subscribed')
       }
 
       return result
@@ -31,7 +34,13 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
   const dark = variant === 'dark'
 
   return (
-    <form action={action} className="space-y-3" noValidate>
+    <form
+      ref={formRef}
+      action={action}
+      onSubmit={submitKeepingValues(action)}
+      className="space-y-3"
+      noValidate
+    >
       <Label htmlFor="newsletter-email" className={cn(dark && 'text-white/80')}>
         Email address
       </Label>

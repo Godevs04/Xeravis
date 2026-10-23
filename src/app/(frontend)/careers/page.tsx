@@ -9,6 +9,7 @@ import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { Button } from '@/components/ui/button'
 import { listPublished } from '@/lib/cms'
+import { isPastDeadline } from '@/lib/date'
 import { FALLBACK_JOBS } from '@/lib/fallback-data'
 import { GRADUATE_PROGRAMS, HIRING_STEPS, LIFE_AT_XELARVIS, WHY_JOIN } from '@/lib/site-ia'
 import { buildMetadata } from '@/lib/seo'
@@ -74,9 +75,11 @@ const PROGRAMS = [
 ] as const
 
 export default async function CareersPage() {
-  const careers = await listPublished<CareerDoc>('careers', {
-    where: { active: { equals: true } },
-  })
+  const careers = (
+    await listPublished<CareerDoc>('careers', {
+      where: { active: { equals: true } },
+    })
+  ).filter((job) => !isPastDeadline(job.applicationDeadline))
   const fromCms = careers.length > 0
   const items = fromCms ? careers : FALLBACK_JOBS
 
@@ -128,7 +131,7 @@ export default async function CareersPage() {
             <div className="flex flex-wrap gap-2">
               <Button
                 asChild
-                className="rounded-full bg-[color:var(--color-accent)] text-white hover:bg-[color:var(--color-accent-hover)]"
+                className="rounded-full bg-[color:var(--color-accent)] text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
               >
                 <Link href="#open-roles">Browse roles</Link>
               </Button>

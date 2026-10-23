@@ -6,7 +6,7 @@ import { buildMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata = buildMetadata({
-  title: 'About XELARVIS',
+  title: 'About Us',
   description: ABOUT_HERO.subtitle,
   path: '/about',
 })

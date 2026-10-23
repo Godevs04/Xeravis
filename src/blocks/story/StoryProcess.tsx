@@ -2,7 +2,7 @@
 
 import {
   AnimatePresence,
-  motion,
+  m as motion,
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
@@ -751,7 +751,7 @@ export function StoryProcess({
                             className={cn(
                               'font-display grid h-8 w-8 place-items-center rounded-full border text-[10px] font-bold',
                               currentStep
-                                ? 'border-cyan-400 bg-teal-500 text-white shadow-[0_0_22px_var(--color-accent-glow)]'
+                                ? 'border-cyan-400 bg-teal-700 text-white shadow-[0_0_22px_var(--color-accent-glow)]'
                                 : done
                                   ? 'border-teal-500/50 bg-teal-500/15 text-[color:var(--color-accent)]'
                                   : 'border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] text-[color:var(--color-muted)]',

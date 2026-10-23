@@ -23,6 +23,7 @@ export const FormSubmissions: CollectionConfig = {
       options: [
         { label: 'Contact', value: 'contact' },
         { label: 'Newsletter', value: 'newsletter' },
+        { label: 'Gated download', value: 'download' },
       ],
     },
     {

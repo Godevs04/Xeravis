@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import {
-  motion,
+  m as motion,
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
@@ -131,7 +131,7 @@ export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
               <Button
                 asChild
                 size="lg"
-                className="rounded-full bg-[color:var(--color-accent)] px-7 font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
+                className="rounded-full bg-[color:var(--color-accent)] px-7 font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
               >
                 <Link href="#open-roles">
                   Browse open roles

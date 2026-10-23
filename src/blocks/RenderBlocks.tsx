@@ -1,36 +1,44 @@
-import { AboutPreview } from '@/blocks/AboutPreview'
+import dynamic from 'next/dynamic'
+
 import { CareerBanner, NewsletterBlock } from '@/blocks/CareerBanner'
 import { CaseStudyFeature } from '@/blocks/CaseStudyFeature'
 import { ClientLogos } from '@/blocks/ClientLogos'
-import { CTABand } from '@/blocks/CTABand'
 import { FAQAccordion } from '@/blocks/FAQAccordion'
 import { FeatureSplit } from '@/blocks/FeatureSplit'
 import { HeroBanner } from '@/blocks/HeroBanner'
 import { IndustriesStrip } from '@/blocks/IndustriesStrip'
 import { LatestBlogs } from '@/blocks/LatestBlogs'
 import { MissionVision, ValuesGrid } from '@/blocks/MissionVision'
-import { ProcessSteps } from '@/blocks/ProcessSteps'
 import { RichTextBlock } from '@/blocks/RichTextBlock'
 import { ServicesGrid } from '@/blocks/ServicesGrid'
-import { StatsRow } from '@/blocks/StatsRow'
-import {
-  StoryCapabilitiesBlock,
-  StoryCasesBlock,
-  StoryChallenge,
-  StoryCta,
-  StoryHero,
-  StoryPresenceBlock,
-  StoryProcess,
-  StoryProof,
-  StorySolution,
-  StorySolutionsBlock,
-  StoryTechOrbitBlock,
-} from '@/blocks/story'
+import { StoryCapabilitiesBlock } from '@/blocks/story/StoryCapabilitiesBlock'
+import { StoryCasesBlock } from '@/blocks/story/StoryCasesBlock'
+import { StoryHero } from '@/blocks/story/StoryHero'
+import { StoryPresenceBlock } from '@/blocks/story/StoryPresenceBlock'
+import { StorySolutionsBlock } from '@/blocks/story/StorySolutionsBlock'
+import { StoryTechOrbitBlock } from '@/blocks/story/StoryTechOrbitBlock'
 import { TeamGrid } from '@/blocks/TeamGrid'
 import { TechnologyGrid } from '@/blocks/TechnologyGrid'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock'
 import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { WhyChooseUs } from '@/blocks/WhyChooseUs'
+
+// Client blocks are code-split so a page only downloads the blocks it renders (still SSR'd).
+const AboutPreview = dynamic(() => import('@/blocks/AboutPreview').then((m) => m.AboutPreview))
+const CTABand = dynamic(() => import('@/blocks/CTABand').then((m) => m.CTABand))
+const ProcessSteps = dynamic(() => import('@/blocks/ProcessSteps').then((m) => m.ProcessSteps))
+const StatsRow = dynamic(() => import('@/blocks/StatsRow').then((m) => m.StatsRow))
+const StoryChallenge = dynamic(() =>
+  import('@/blocks/story/StoryChallenge').then((m) => m.StoryChallenge),
+)
+const StoryCta = dynamic(() => import('@/blocks/story/StoryCta').then((m) => m.StoryCta))
+const StoryProcess = dynamic(() =>
+  import('@/blocks/story/StoryProcess').then((m) => m.StoryProcess),
+)
+const StoryProof = dynamic(() => import('@/blocks/story/StoryProof').then((m) => m.StoryProof))
+const StorySolution = dynamic(() =>
+  import('@/blocks/story/StorySolution').then((m) => m.StorySolution),
+)
 
 export type PageBlock = {
   blockType: string

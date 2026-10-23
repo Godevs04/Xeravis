@@ -26,14 +26,16 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center rounded-[var(--radius-card)] border border-dashed border-border bg-surface/50 px-6 py-16 text-center',
+        'border-border bg-surface/50 flex flex-col items-center justify-center rounded-[var(--radius-card)] border border-dashed px-6 py-16 text-center',
         className,
       )}
       role="status"
     >
-      <div className="mb-4 text-muted">{icon ?? <Inbox className="h-8 w-8" strokeWidth={1.5} />}</div>
-      <h3 className="text-base font-semibold text-primary">{title}</h3>
-      {description ? <p className="mt-2 max-w-md text-sm text-secondary">{description}</p> : null}
+      <div className="text-muted mb-4">
+        {icon ?? <Inbox className="h-8 w-8" strokeWidth={1.5} />}
+      </div>
+      <h3 className="text-primary text-base font-semibold">{title}</h3>
+      {description ? <p className="text-secondary mt-2 max-w-md text-sm">{description}</p> : null}
       {actionLabel && (onAction || href) ? (
         <div className="mt-6">
           {href ? (

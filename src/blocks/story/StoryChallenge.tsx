@@ -2,7 +2,7 @@
 
 import {
   AnimatePresence,
-  motion,
+  m as motion,
   useMotionTemplate,
   useMotionValue,
   useMotionValueEvent,
@@ -721,7 +721,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                           className={cn(
                             'font-display grid h-9 w-9 place-items-center rounded-full border text-xs font-bold transition-colors duration-500',
                             currentStep
-                              ? 'border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-white shadow-[0_0_28px_var(--color-accent-glow)]'
+                              ? 'border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-[color:var(--color-on-accent)] shadow-[0_0_28px_var(--color-accent-glow)]'
                               : done
                                 ? 'border-[color:var(--color-accent)]/60 bg-[color:var(--color-accent-soft)] text-[color:var(--color-accent)]'
                                 : 'border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] text-[color:var(--hero-muted)]',

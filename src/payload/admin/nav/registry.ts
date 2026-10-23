@@ -99,6 +99,12 @@ export const NAV_GROUPS: NavGroup[] = [
       { id: 'cookie-banner', label: 'Cookie Banner', href: glob('cookie-banner') },
       { id: 'contact-details', label: 'Contact Details', href: glob('contact-details') },
       { id: 'office-locations', label: 'Office Locations', href: glob('office-locations') },
+      {
+        id: 'seo-center',
+        label: 'SEO Center',
+        href: '/admin/workspace/seo',
+        description: 'Coverage and audits',
+      },
     ],
   },
   {
@@ -155,6 +161,12 @@ export const NAV_GROUPS: NavGroup[] = [
       },
       /** social-media is a GLOBAL — never a collection */
       { id: 'social-media', label: 'Social', href: glob('social-media') },
+      {
+        id: 'newsletter-workspace',
+        label: 'Newsletter Hub',
+        href: '/admin/workspace/newsletter',
+        description: 'Audience health',
+      },
     ],
   },
   {
@@ -175,6 +187,12 @@ export const NAV_GROUPS: NavGroup[] = [
         href: col('form-submissions'),
         description: 'Forms',
       },
+      {
+        id: 'crm-workspace',
+        label: 'CRM Pipeline',
+        href: '/admin/workspace/crm',
+        description: 'Lead follow-ups',
+      },
     ],
   },
   {
@@ -192,6 +210,12 @@ export const NAV_GROUPS: NavGroup[] = [
       },
       { id: 'interviews', label: 'Interviews', href: col('interviews'), description: 'Schedule' },
       { id: 'departments', label: 'Departments', href: col('departments') },
+      {
+        id: 'recruitment-workspace',
+        label: 'Hiring Pipeline',
+        href: '/admin/workspace/recruitment',
+        description: 'Applicant stages',
+      },
     ],
   },
   {
@@ -199,7 +223,15 @@ export const NAV_GROUPS: NavGroup[] = [
     label: 'Media',
     description: 'Assets and library',
     icon: Image,
-    items: [{ id: 'media-lib', label: 'Library', href: col('media'), description: 'All assets' }],
+    items: [
+      { id: 'media-lib', label: 'Library', href: col('media'), description: 'All assets' },
+      {
+        id: 'media-studio',
+        label: 'Media Studio',
+        href: '/admin/workspace/media',
+        description: 'Folders and library health',
+      },
+    ],
   },
   {
     id: 'analytics',
@@ -220,6 +252,18 @@ export const NAV_GROUPS: NavGroup[] = [
         description: 'Audit trail',
       },
       { id: 'analytics-settings', label: 'Analytics Settings', href: glob('analytics') },
+      {
+        id: 'analytics-workspace',
+        label: 'Insights Dashboard',
+        href: '/admin/workspace/analytics',
+        description: 'Traffic and conversions',
+      },
+      {
+        id: 'activity-workspace',
+        label: 'Activity Timeline',
+        href: '/admin/workspace/activity',
+        description: 'Recent changes',
+      },
     ],
   },
   {
@@ -363,13 +407,6 @@ export const QUICK_CREATES: QuickCreate[] = [
     icon: Users,
     section: 'Recruitment',
   },
-  {
-    id: 'notification',
-    label: 'Notification',
-    href: `${col('notifications')}/create`,
-    icon: Settings2,
-    section: 'Administration',
-  },
 ]
 
 export type QuickCreateGroup = {
@@ -377,11 +414,20 @@ export type QuickCreateGroup = {
   items: QuickCreate[]
 }
 
-export function getGroupedQuickCreates(): QuickCreateGroup[] {
+/** Slugs the current user may create, from Payload's sanitized `useAuth().permissions`. */
+export type CanCreate = (collectionSlug: string) => boolean
+
+export function quickCreateAllowed(href: string, canCreate?: CanCreate): boolean {
+  const slug = href.match(/^\/admin\/collections\/([^/]+)\/create$/)?.[1]
+  return !canCreate || !slug || canCreate(slug)
+}
+
+export function getGroupedQuickCreates(canCreate?: CanCreate): QuickCreateGroup[] {
   const order: string[] = []
   const map = new Map<string, QuickCreate[]>()
 
   for (const item of QUICK_CREATES) {
+    if (!quickCreateAllowed(item.href, canCreate)) continue
     if (!map.has(item.section)) {
       map.set(item.section, [])
       order.push(item.section)
@@ -508,7 +554,7 @@ export function resolveNavigation(
 }
 
 /** Flat list for command palette */
-export function getCommandItems(): Array<{
+export function getCommandItems(canCreate?: CanCreate): Array<{
   id: string
   label: string
   href: string
@@ -549,6 +595,7 @@ export function getCommandItems(): Array<{
   }
 
   for (const create of QUICK_CREATES) {
+    if (!quickCreateAllowed(create.href, canCreate)) continue
     items.push({
       id: `create:${create.id}`,
       label: `Create ${create.label}`,

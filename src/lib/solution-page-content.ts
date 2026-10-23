@@ -323,9 +323,9 @@ export const SOLUTION_EXTRAS: Record<string, SolutionExtras> = {
     clinicalTooling: ['Pinnacle 21'],
     faqs: [
       {
-        question: 'Is Healthcare the lead identity of XELARVIS?',
+        question: 'Does XELARVIS work only in healthcare?',
         answer:
-          'No. Healthcare & Clinical Intelligence is a specialty solution. The primary brand remains AI, Data Science and IT Consulting.',
+          'No. Healthcare & Clinical Intelligence is one of our specialty solutions. We also deliver AI, data science and IT consulting across many other industries.',
       },
       {
         question: 'How do you describe clinical standards work?',

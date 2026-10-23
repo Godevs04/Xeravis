@@ -7,6 +7,7 @@ import { AnimatePresence } from 'framer-motion'
 import { ChevronDown, Menu, Search } from 'lucide-react'
 
 import { BrandLogo } from '@/components/brand/BrandLogo'
+import { AnnouncementBar, type AnnouncementData } from '@/components/layout/AnnouncementBar'
 import { MegaMenu, type MegaMenuItem } from '@/components/layout/MegaMenu'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
@@ -26,6 +27,7 @@ type SiteHeaderClientProps = {
   ctaHref: string
   brandName: string
   megaMenus: Record<string, MegaMenuItem[]>
+  announcement?: AnnouncementData | null
 }
 
 const MEGA_CLOSE_DELAY_MS = 380
@@ -36,6 +38,7 @@ export function SiteHeaderClient({
   ctaHref,
   brandName,
   megaMenus,
+  announcement,
 }: SiteHeaderClientProps) {
   const { solid, hidden } = useScrollHeader(48)
   const pathname = usePathname()
@@ -198,7 +201,7 @@ export function SiteHeaderClient({
               <Button
                 asChild
                 size="sm"
-                className="inline-flex h-9 shrink-0 rounded-full bg-[color:var(--color-accent)] px-3.5 font-semibold text-white shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:px-4"
+                className="inline-flex h-9 shrink-0 rounded-full bg-[color:var(--color-accent)] px-3.5 font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)] sm:px-4"
               >
                 <Link href={ctaHref}>
                   <span className="sm:hidden">Contact</span>
@@ -268,7 +271,7 @@ export function SiteHeaderClient({
                     </Link>
                     <Button
                       asChild
-                      className="mt-4 min-h-11 rounded-full bg-[color:var(--color-accent)] font-semibold text-white hover:bg-[color:var(--color-accent-hover)]"
+                      className="mt-4 min-h-11 rounded-full bg-[color:var(--color-accent)] font-semibold text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
                     >
                       <Link href={ctaHref} onClick={() => setDrawerOpen(false)}>
                         {ctaText}
@@ -280,6 +283,8 @@ export function SiteHeaderClient({
             </div>
           </div>
         </div>
+
+        {announcement && !openMega && !solid ? <AnnouncementBar {...announcement} /> : null}
 
         <AnimatePresence>
           {openItems?.length && openMega ? (

@@ -299,7 +299,7 @@ export default async function SolutionDetailPage({ params }: Props) {
           <Container>
             <h2 className="text-2xl font-bold">Success measures</h2>
             <p className="text-secondary mt-3 max-w-2xl text-sm sm:text-base">
-              How we evaluate progress—without inventing vanity metrics.
+              How we measure progress against the outcomes that matter to your team.
             </p>
             <ul className="mt-6 flex flex-wrap gap-2">
               {extras.successMeasures.map((item) => (

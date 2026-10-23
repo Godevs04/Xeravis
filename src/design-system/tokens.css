@@ -11,8 +11,8 @@
   --ds-primary: #0f172a;
   --ds-secondary: #475569;
   --ds-muted: #475569;
-  --ds-accent: #0d9488;
-  --ds-accent-hover: #0f766e;
+  --ds-accent: #0f766e;
+  --ds-accent-hover: #115e59;
   --ds-background: #ffffff;
   --ds-surface: #ffffff;
   --ds-dark: #0f172a;
@@ -29,6 +29,8 @@
 
   --color-accent: var(--ds-accent);
   --color-accent-hover: var(--ds-accent-hover);
+  /* Text on filled accent surfaces (WCAG AA 4.5:1 in both themes) */
+  --color-on-accent: #ffffff;
   --color-accent-soft: rgba(13, 148, 136, 0.12);
   --color-accent-glow: rgba(6, 182, 212, 0.35);
   --color-secondary-accent: #06b6d4;
@@ -160,6 +162,7 @@
   --ds-danger: #ef4444;
 
   --color-accent-soft: rgba(20, 184, 166, 0.16);
+  --color-on-accent: #042f2e;
   --color-accent-glow: rgba(6, 182, 212, 0.4);
   --color-secondary-accent: #22d3ee;
   --color-accent-light: #67e8f9;
@@ -257,6 +260,69 @@ html:not(.dark) .surface-navy [class*='border-white'] {
 
 html:not(.dark) .surface-navy [class*='bg-white/'] {
   background-color: var(--hero-panel) !important;
+}
+
+/* Hero product console (HeroProductVisual): light glass in light theme, deep navy in dark */
+.hero-console {
+  --hc-panel: linear-gradient(160deg, #ffffff 0%, #f8fafc 50%, #eef3f8 100%);
+  --hc-chrome: rgba(248, 250, 252, 0.85);
+  --hc-rail: rgba(241, 245, 249, 0.7);
+  --hc-line: rgba(15, 23, 42, 0.08);
+  --hc-grid: rgba(15, 23, 42, 0.05);
+  --hc-card: rgba(255, 255, 255, 0.75);
+  --hc-card-border: rgba(15, 23, 42, 0.08);
+  --hc-card-inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --hc-nav-idle: rgba(15, 23, 42, 0.035);
+  --hc-track: rgba(15, 23, 42, 0.08);
+  --hc-text: #0f172a;
+  --hc-text-soft: #334155;
+  --hc-muted: #64748b;
+  --hc-title: linear-gradient(90deg, #0f172a, #0d9488);
+  --hc-live: #047857;
+  --hc-sheen: rgba(255, 255, 255, 0.55);
+  --hc-spot: rgba(13, 148, 136, 0.08);
+  --hc-glow: rgba(13, 148, 136, 0.28);
+  --hc-shadow:
+    0 40px 90px -24px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(15, 23, 42, 0.04),
+    0 0 50px -12px rgba(13, 148, 136, 0.25);
+  --hc-widget: rgba(255, 255, 255, 0.92);
+  --hc-widget-border: rgba(15, 23, 42, 0.08);
+  --hc-widget-shadow: 0 20px 44px -14px rgba(15, 23, 42, 0.25);
+  --hc-icon: #0f766e;
+  --hc-icon-bg: linear-gradient(135deg, rgba(20, 184, 166, 0.16), rgba(8, 145, 178, 0.1));
+  --hc-ring: rgba(45, 212, 191, 0.3);
+  --hc-spark-dot: #0891b2;
+}
+
+.dark .hero-console {
+  --hc-panel: linear-gradient(160deg, #0b1628 0%, #070f1f 45%, #030712 100%);
+  --hc-chrome: rgba(2, 6, 23, 0.45);
+  --hc-rail: rgba(2, 6, 23, 0.35);
+  --hc-line: rgba(148, 163, 184, 0.1);
+  --hc-grid: rgba(148, 163, 184, 0.07);
+  --hc-card: rgba(255, 255, 255, 0.035);
+  --hc-card-border: rgba(148, 163, 184, 0.12);
+  --hc-card-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --hc-nav-idle: rgba(255, 255, 255, 0.03);
+  --hc-track: rgba(148, 163, 184, 0.14);
+  --hc-text: #f1f5f9;
+  --hc-text-soft: #e2e8f0;
+  --hc-muted: #7c8da6;
+  --hc-title: linear-gradient(90deg, #e2e8f0, #5eead4);
+  --hc-live: #6ee7b7;
+  --hc-sheen: rgba(255, 255, 255, 0.07);
+  --hc-spot: rgba(45, 212, 191, 0.1);
+  --hc-glow: rgba(13, 148, 136, 0.6);
+  --hc-shadow:
+    0 40px 100px -20px rgba(2, 6, 23, 0.75), 0 0 0 1px rgba(148, 163, 184, 0.08),
+    0 0 60px -10px rgba(13, 148, 136, 0.45);
+  --hc-widget: rgba(8, 14, 28, 0.92);
+  --hc-widget-border: rgba(148, 163, 184, 0.18);
+  --hc-widget-shadow: 0 20px 50px -12px rgba(2, 6, 23, 0.8);
+  --hc-icon: #99f6e4;
+  --hc-icon-bg: linear-gradient(135deg, rgba(20, 184, 166, 0.3), rgba(8, 145, 178, 0.22));
+  --hc-ring: rgba(45, 212, 191, 0.25);
+  --hc-spark-dot: #a5f3fc;
 }
 
 @media (max-width: 1023px) {

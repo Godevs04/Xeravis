@@ -5,7 +5,8 @@ export const revalidate = 60
 
 export const metadata = buildMetadata({
   title: 'Blogs',
-  description: 'Articles from our engineering and delivery practice.',
+  description:
+    'Articles from the Xelarvis engineering and delivery practice on AI, machine learning, data engineering, cloud platforms and clinical data science.',
   path: '/insights/blogs',
 })
 

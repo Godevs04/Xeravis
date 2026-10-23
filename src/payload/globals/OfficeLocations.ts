@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { anyone, canManageContent } from '@/payload/access'
+import { revalidateGlobal } from '@/payload/hooks'
 
 export const OfficeLocations: GlobalConfig = {
   slug: 'office-locations',
@@ -12,6 +13,9 @@ export const OfficeLocations: GlobalConfig = {
   access: {
     read: anyone,
     update: canManageContent,
+  },
+  hooks: {
+    afterChange: [revalidateGlobal(['/contact'])],
   },
   fields: [
     {

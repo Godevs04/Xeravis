@@ -5,7 +5,8 @@ export const revalidate = 60
 
 export const metadata = buildMetadata({
   title: 'White Papers',
-  description: 'In-depth briefs on AI, healthcare, and digital transformation.',
+  description:
+    'In-depth white papers from Xelarvis on artificial intelligence, data science, healthcare data standards and enterprise digital transformation.',
   path: '/insights/white-papers',
 })
 

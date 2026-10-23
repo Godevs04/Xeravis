@@ -1,5 +1,6 @@
 'use client'
 
+import { useAuth } from '@payloadcms/ui'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -16,19 +17,23 @@ type CmdItem = {
   group: string
 }
 
-const STATIC_ITEMS: CmdItem[] = [
-  ...getCommandItems().map((item) => ({
-    id: item.id,
-    label: item.label,
-    href: item.href,
-    group: item.section,
-  })),
+const ACTION_ITEMS: CmdItem[] = [
   { id: 'account', label: 'Account', href: '/admin/account', group: 'Actions' },
   { id: 'website', label: 'View website', href: '/', group: 'Actions' },
 ]
 
 export const CommandPalette = () => {
   const router = useRouter()
+  const { permissions } = useAuth()
+  const staticItems = React.useMemo<CmdItem[]>(
+    () => [
+      ...getCommandItems((slug) => Boolean(permissions?.collections?.[slug]?.create)).map(
+        (item) => ({ id: item.id, label: item.label, href: item.href, group: item.section }),
+      ),
+      ...ACTION_ITEMS,
+    ],
+    [permissions],
+  )
   const [open, setOpen] = React.useState(false)
   const [query, setQuery] = React.useState('')
   const [active, setActive] = React.useState(0)
@@ -38,11 +43,11 @@ export const CommandPalette = () => {
 
   const staticFiltered = React.useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return STATIC_ITEMS
-    return STATIC_ITEMS.filter(
+    if (!q) return staticItems
+    return staticItems.filter(
       (item) => item.label.toLowerCase().includes(q) || item.group.toLowerCase().includes(q),
     )
-  }, [query])
+  }, [staticItems, query])
 
   const filtered = React.useMemo(() => {
     const map = new Map<string, CmdItem>()

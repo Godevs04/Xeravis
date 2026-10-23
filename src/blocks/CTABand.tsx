@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m as motion, useReducedMotion } from 'framer-motion'
 
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
@@ -59,7 +59,7 @@ export function CTABand({ heading, subheading, ctaLabel, ctaHref }: CTABandProps
                 asChild
                 variant="primary"
                 size="lg"
-                className="rounded-full bg-[color:var(--color-teal)] px-8 text-white shadow-[0_0_48px_rgba(13,148,136,0.35)] hover:bg-[color:var(--color-cyan)]"
+                className="rounded-full bg-[color:var(--color-accent)] px-8 text-[color:var(--color-on-accent)] shadow-[0_0_48px_rgba(13,148,136,0.35)] hover:bg-[color:var(--color-accent-hover)]"
               >
                 <Link href={ctaHref}>{ctaLabel}</Link>
               </Button>

@@ -5,6 +5,7 @@ import { BRAND, DEFAULT_NAV, FALLBACK_INDUSTRIES } from '@/lib/fallback-data'
 import { mergePublishedServices } from '@/lib/services-catalog'
 import { mergePublishedSolutions } from '@/lib/solutions-catalog'
 import { ABOUT_MEGA, INSIGHTS_MEGA, RESEARCH_MEGA } from '@/lib/site-ia'
+import type { AnnouncementBar as AnnouncementBarGlobal } from '@/payload/generated-types/payload-types'
 
 type NavigationGlobal = {
   primaryLinks?: { label: string; href: string; mega?: string | null }[]
@@ -74,12 +75,26 @@ function isMainplanAlignedNav(
 }
 
 export async function SiteHeader() {
-  const [navigation, solutions, services, industries] = await Promise.all([
+  const [navigation, solutions, services, industries, announcementGlobal] = await Promise.all([
     getGlobal<NavigationGlobal>('navigation'),
     listPublished<CmsNavDoc>('solutions', { limit: 9, sort: 'order' }),
     listPublished<CmsNavDoc>('services', { limit: 8, sort: 'order' }),
     listPublished<CmsNavDoc & { tier?: string | null }>('industries', { limit: 12, sort: 'order' }),
+    getGlobal<AnnouncementBarGlobal>('announcement-bar'),
   ])
+
+  const announcementMessage = announcementGlobal?.message?.trim()
+  const announcementLive =
+    announcementGlobal?.enabled &&
+    announcementMessage &&
+    (!announcementGlobal.expiresAt || new Date(announcementGlobal.expiresAt).getTime() > Date.now())
+  const announcement = announcementLive
+    ? {
+        message: announcementMessage,
+        ctaLabel: announcementGlobal.ctaLabel,
+        ctaLink: announcementGlobal.ctaLink,
+      }
+    : null
 
   const cmsLinks = navigation?.primaryLinks ?? []
   const links = isMainplanAlignedNav(cmsLinks) ? cmsLinks : DEFAULT_NAV.primaryLinks
@@ -147,6 +162,7 @@ export async function SiteHeader() {
       ctaHref={ctaHref}
       brandName={BRAND.name}
       megaMenus={megaMenus}
+      announcement={announcement}
     />
   )
 }

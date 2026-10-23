@@ -1,14 +1,15 @@
 'use client'
 
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import posthog from 'posthog-js'
+import { track } from '@/lib/analytics-client'
 
 import { submitContact, type ContactFormState } from '@/actions/contact'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { submitKeepingValues } from '@/lib/form-submit'
 import { CONTACT_INTENTS } from '@/lib/site-ia'
 
 const initialState: ContactFormState = { ok: false, message: '' }
@@ -20,12 +21,14 @@ const LEGACY_INTENT_MAP: Record<string, string> = {
 }
 
 export function ContactForm() {
+  const formRef = useRef<HTMLFormElement>(null)
   const [state, action, pending] = useActionState(
     async (previousState: ContactFormState, formData: FormData) => {
       const result = await submitContact(previousState, formData)
 
       if (result.ok) {
-        posthog.capture('contact_form_submitted', {
+        formRef.current?.reset()
+        track('contact_form_submitted', {
           enquiry_intent: String(formData.get('intent') || 'general'),
         })
       }
@@ -45,7 +48,13 @@ export function ContactForm() {
   }, [defaultIntent])
 
   return (
-    <form action={action} className="space-y-6" noValidate>
+    <form
+      ref={formRef}
+      action={action}
+      onSubmit={submitKeepingValues(action)}
+      className="space-y-6"
+      noValidate
+    >
       <input
         type="text"
         name="website"

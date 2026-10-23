@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m as motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 
 import { Container } from '@/components/layout/Container'
@@ -83,7 +83,7 @@ export function AboutExploreStrip() {
                       {item.description}
                     </p>
                   </div>
-                  <span className="mt-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--glass-border)] text-[color:var(--color-accent)] transition-all group-hover:border-[color:var(--color-accent)] group-hover:bg-[color:var(--color-accent)] group-hover:text-white">
+                  <span className="mt-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--glass-border)] text-[color:var(--color-accent)] transition-all group-hover:border-[color:var(--color-accent)] group-hover:bg-[color:var(--color-accent)] group-hover:text-[color:var(--color-on-accent)]">
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </span>
                 </Link>
