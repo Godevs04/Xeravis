@@ -9,6 +9,7 @@ import { CookieBanner } from '@/components/layout/CookieBanner'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
 import { SkipLink } from '@/components/layout/SkipLink'
+import { PreviewBanner } from '@/components/preview/PreviewBanner'
 import { JsonLd } from '@/components/seo/JsonLd'
 import {
   buildMetadata,
@@ -85,6 +86,12 @@ export default async function FrontendLayout({ children }: { children: ReactNode
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Xelarvis Insights"
+          href="/feed.xml"
+        />
       </head>
       <body className="text-primary relative min-h-screen bg-transparent font-sans antialiased">
         <AppProviders>
@@ -105,6 +112,7 @@ export default async function FrontendLayout({ children }: { children: ReactNode
             />
           ) : null}
           <JsonLd id="site-graph-jsonld" data={jsonLd} />
+          <PreviewBanner />
         </AppProviders>
       </body>
     </html>

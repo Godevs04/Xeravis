@@ -7,6 +7,7 @@ export type SendEmailInput = {
   text: string
   html?: string
   replyTo?: string
+  headers?: Record<string, string>
 }
 
 function smtpConfigured() {
@@ -55,6 +56,7 @@ async function sendViaSmtp(input: SendEmailInput & { to: string | string[]; from
     subject: input.subject,
     text: input.text,
     html: input.html,
+    headers: input.headers,
   })
 }
 
@@ -69,6 +71,7 @@ async function sendViaResend(input: SendEmailInput & { to: string | string[]; fr
     subject: input.subject,
     text: input.text,
     html: input.html,
+    headers: input.headers,
   })
 }
 

@@ -51,7 +51,7 @@ export const Downloads: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'gated', 'downloadCount', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'gated', 'downloadCount', 'updatedAt'],
     group: 'Website',
   },
   access: {
@@ -81,6 +81,20 @@ export const Downloads: CollectionConfig = {
       name: 'description',
       type: 'textarea',
       maxLength: 400,
+    },
+    {
+      name: 'category',
+      type: 'select',
+      defaultValue: 'resource',
+      admin: {
+        position: 'sidebar',
+        description: 'Which Insights page lists this download.',
+      },
+      options: [
+        { label: 'White paper', value: 'white-paper' },
+        { label: 'Report', value: 'report' },
+        { label: 'Resource / guide', value: 'resource' },
+      ],
     },
     {
       name: 'file',

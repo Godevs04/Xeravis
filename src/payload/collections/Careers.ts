@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { previewAdmin } from '@/lib/preview'
 import { authenticatedOrPublished, canManageCareers, isAdminOrEditor } from '@/payload/access'
 import { slugField } from '@/payload/fields/slug'
 import {
@@ -9,10 +10,12 @@ import {
   revalidateSlugPath,
 } from '@/payload/hooks'
 import { trackActivity } from '@/payload/hooks/activity'
+import { markJobAlert, sendJobAlerts } from '@/payload/hooks/jobAlerts'
 
 export const Careers: CollectionConfig = {
   slug: 'careers',
   admin: {
+    ...previewAdmin('careers'),
     group: 'Careers',
     useAsTitle: 'title',
     defaultColumns: [
@@ -42,8 +45,12 @@ export const Careers: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [autoSlugFromTitle('title')],
-    beforeChange: [enforcePublishRoleFor(['recruiter'])],
-    afterChange: [revalidateSlugPath('/careers', 'careers'), trackActivity('careers')],
+    beforeChange: [enforcePublishRoleFor(['recruiter']), markJobAlert],
+    afterChange: [
+      revalidateSlugPath('/careers', 'careers'),
+      trackActivity('careers'),
+      sendJobAlerts,
+    ],
     afterDelete: [revalidateOnDelete(['/careers'], ['careers'])],
   },
   fields: [
@@ -197,6 +204,15 @@ export const Careers: CollectionConfig = {
       defaultValue: true,
       admin: {
         position: 'sidebar',
+      },
+    },
+    {
+      name: 'jobAlertSentAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'When job-alert subscribers were emailed about this role.',
       },
     },
   ],

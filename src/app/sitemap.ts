@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 
+import { authorSlug, listAuthors } from '@/lib/authors'
 import { listPublished } from '@/lib/cms'
 import { isPastDeadline } from '@/lib/date'
 import { CANONICAL_SOLUTION_SLUGS } from '@/seed/relations'
@@ -24,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/services',
     '/industries',
     '/solutions',
+    '/ai-readiness',
     '/case-studies',
     '/insights',
     '/insights/blogs',
@@ -52,20 +54,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const list = (collection: string) =>
     listPublished<SitemapDoc>(collection, { limit: SITEMAP_LIMIT, depth: 0 })
 
-  const [services, industries, solutions, caseStudies, blogs, research, careers] =
+  const [services, industries, solutions, caseStudies, blogs, research, careers, authors] =
     await Promise.all([
       list('services'),
       list('industries'),
       list('solutions'),
       list('case-studies'),
-      list('blogs'),
+      listPublished<SitemapDoc & { author?: string | { id: string } | null }>('blogs', {
+        limit: SITEMAP_LIMIT,
+        depth: 0,
+      }),
       list('research'),
       listPublished<SitemapDoc & { applicationDeadline?: string | null }>('careers', {
         limit: SITEMAP_LIMIT,
         depth: 0,
         where: { active: { equals: true } },
       }),
+      listAuthors(),
     ])
+
+  const blogAuthorIds = new Set(
+    blogs
+      .map((b) => (typeof b.author === 'object' && b.author ? b.author.id : b.author))
+      .filter(Boolean)
+      .map(String),
+  )
 
   const dynamicRoutes: MetadataRoute.Sitemap = [
     ...services.map((item) => ({
@@ -104,6 +117,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.55,
     })),
+    ...authors
+      .filter((author) => blogAuthorIds.has(String(author.id)))
+      .map((author) => ({
+        url: absoluteUrl(`/authors/${authorSlug(author)}`),
+        changeFrequency: 'monthly' as const,
+        priority: 0.4,
+      })),
     ...careers
       .filter((item) => !isPastDeadline(item.applicationDeadline))
       .map((item) => ({

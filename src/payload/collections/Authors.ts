@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { anyone, canManageContent, isAdminOrEditor } from '@/payload/access'
+import { toSlug } from '@/payload/utilities'
 
 export const Authors: CollectionConfig = {
   slug: 'authors',
@@ -24,6 +25,24 @@ export const Authors: CollectionConfig = {
         components: {
           Cell: './payload/admin/components/cells/CatalogTitleCell#CatalogTitleCell',
         },
+      },
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      index: true,
+      maxLength: 120,
+      admin: {
+        position: 'sidebar',
+        description: 'Author page URL (/authors/<slug>). Auto-generated from the name when empty.',
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value, data }) => {
+            if (typeof value === 'string' && value.trim()) return toSlug(value)
+            return typeof data?.name === 'string' ? toSlug(data.name) : value
+          },
+        ],
       },
     },
     {

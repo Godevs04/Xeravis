@@ -1,12 +1,14 @@
 'use client'
 
-import { useActionState, useRef } from 'react'
+import { useActionState, useId, useRef } from 'react'
 import { track } from '@/lib/analytics-client'
 
 import { submitNewsletter, type NewsletterFormState } from '@/actions/newsletter'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { AttributionFields } from '@/components/forms/AttributionFields'
+import { Turnstile } from '@/components/forms/Turnstile'
 import { submitKeepingValues } from '@/lib/form-submit'
 import { cn } from '@/lib/utils'
 
@@ -14,9 +16,16 @@ const initialState: NewsletterFormState = { ok: false, message: '' }
 
 type NewsletterFormProps = {
   variant?: 'default' | 'dark'
+  topic?: 'insights' | 'careers'
+  submitLabel?: string
 }
 
-export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
+export function NewsletterForm({
+  variant = 'default',
+  topic = 'insights',
+  submitLabel = 'Subscribe',
+}: NewsletterFormProps) {
+  const inputId = useId()
   const formRef = useRef<HTMLFormElement>(null)
   const [state, action, pending] = useActionState(
     async (previousState: NewsletterFormState, formData: FormData) => {
@@ -24,7 +33,7 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
 
       if (result.ok) {
         formRef.current?.reset()
-        track('newsletter_subscribed')
+        track(topic === 'careers' ? 'job_alerts_subscribed' : 'newsletter_subscribed')
       }
 
       return result
@@ -41,12 +50,12 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
       className="space-y-3"
       noValidate
     >
-      <Label htmlFor="newsletter-email" className={cn(dark && 'text-white/80')}>
+      <Label htmlFor={inputId} className={cn(dark && 'text-white/80')}>
         Email address
       </Label>
       <div className="flex flex-col gap-3 sm:flex-row">
         <Input
-          id="newsletter-email"
+          id={inputId}
           name="email"
           type="email"
           placeholder="you@company.com"
@@ -54,6 +63,7 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
           required
           className={cn(dark && 'border-white/20 bg-white/5 text-white placeholder:text-white/40')}
         />
+        <input type="hidden" name="topic" value={topic} />
         {/* Honeypot */}
         <input
           type="text"
@@ -63,6 +73,8 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
           className="hidden"
           aria-hidden
         />
+        <AttributionFields />
+        <Turnstile resetKey={state} />
         <Button
           type="submit"
           variant={dark ? 'outline' : 'primary'}
@@ -70,7 +82,7 @@ export function NewsletterForm({ variant = 'default' }: NewsletterFormProps) {
           loading={pending}
           className={cn(dark && 'border-white/30 text-white hover:bg-white/10')}
         >
-          Subscribe
+          {submitLabel}
         </Button>
       </div>
       {state.message && (

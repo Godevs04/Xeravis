@@ -69,7 +69,7 @@ type MetaInput = {
 /** Search engines show ~120–160 characters; very short (often CMS-entered) text gets context. */
 const MIN_DESCRIPTION = 70
 
-function clampDescription(text: string, max = 158) {
+export function clampDescription(text: string, max = 158) {
   let clean = text.replace(/\s+/g, ' ').trim()
   if (clean.length < MIN_DESCRIPTION) {
     clean = `${clean.replace(/[.!?]?$/, '.')} ${SITE_NAME_SHORT}: ${BRAND_POSITIONING}.`
@@ -339,6 +339,8 @@ export function articleJsonLd(input: {
   dateModified?: string
   image?: unknown
   authorName?: string
+  /** Author page path; when set the author is a Person rather than the organisation. */
+  authorPath?: string
   speakable?: boolean
 }): JsonLd {
   const imageUrl = getMediaUrl(input.image as Parameters<typeof getMediaUrl>[0])
@@ -351,11 +353,14 @@ export function articleJsonLd(input: {
     mainEntityOfPage: absoluteUrl(input.path),
     datePublished: input.datePublished,
     dateModified: input.dateModified || input.datePublished,
-    author: {
-      '@type': 'Organization',
-      name: input.authorName || SITE_NAME,
-      url: absoluteUrl('/'),
-    },
+    author:
+      input.authorPath && input.authorName
+        ? { '@type': 'Person', name: input.authorName, url: absoluteUrl(input.authorPath) }
+        : {
+            '@type': 'Organization',
+            name: input.authorName || SITE_NAME,
+            url: absoluteUrl('/'),
+          },
     publisher: { '@id': absoluteUrl('/#organization') },
     ...(imageUrl
       ? {

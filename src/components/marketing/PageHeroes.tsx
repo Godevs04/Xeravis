@@ -10,8 +10,6 @@ import { OrbitDiagram } from '@/components/marketing/OrbitDiagram'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
 
-const EASE = [0.22, 1, 0.36, 1] as const
-
 type BaseHero = {
   title: string
   subtitle?: string
@@ -31,37 +29,26 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
       <Container>
         <div className="grid items-end gap-10 pb-16 lg:grid-cols-[1.2fr_0.8fr] lg:pb-20">
           <div>
-            <motion.p
-              className="font-display text-2xl font-bold tracking-[-0.03em] text-[color:var(--color-accent)] sm:text-3xl"
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE }}
-            >
+            <p className="hero-fade-up font-display text-2xl font-bold tracking-[-0.03em] text-[color:var(--color-accent)] sm:text-3xl">
               Xelarvis
-            </motion.p>
-            <motion.h1
-              className="font-display mt-4 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.06, ease: EASE }}
+            </p>
+            <h1
+              className="hero-fade-up font-display mt-4 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
+              style={{ animationDelay: '0.06s' }}
             >
               {title}
-            </motion.h1>
+            </h1>
             {subtitle ? (
-              <motion.p
-                className="mt-5 max-w-xl text-base leading-relaxed text-[color:var(--hero-muted)]"
-                initial={reduce ? false : { opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.12, ease: EASE }}
+              <p
+                className="hero-fade-up mt-5 max-w-xl text-base leading-relaxed text-[color:var(--hero-muted)]"
+                style={{ animationDelay: '0.12s' }}
               >
                 {subtitle}
-              </motion.p>
+              </p>
             ) : null}
-            <motion.div
-              className="mt-8 flex flex-wrap gap-3"
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.18, ease: EASE }}
+            <div
+              className="hero-fade-up mt-8 flex flex-wrap gap-3"
+              style={{ animationDelay: '0.18s' }}
             >
               <Button
                 asChild
@@ -78,7 +65,7 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
               >
                 <Link href="/contact?intent=services">Talk to an expert</Link>
               </Button>
-            </motion.div>
+            </div>
           </div>
           <p className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)]/80 uppercase lg:text-right">
             Services
@@ -109,21 +96,15 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
 
 /** Solutions — oversized editorial masthead */
 export function SolutionsPageHero({ title, subtitle }: BaseHero) {
-  const reduce = useReducedMotion()
   return (
     <section className="surface-navy bg-[color:var(--hero-bg)] pt-28 pb-20 text-[color:var(--hero-text)] lg:pt-36 lg:pb-28">
       <Container>
         <p className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase">
           Solutions
         </p>
-        <motion.h1
-          className="font-display mt-6 max-w-5xl text-[clamp(2.6rem,7vw,5.5rem)] leading-[0.95] font-bold tracking-[-0.05em]"
-          initial={reduce ? false : { opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease: EASE }}
-        >
+        <h1 className="hero-fade-up font-display mt-6 max-w-5xl text-[clamp(2.6rem,7vw,5.5rem)] leading-[0.95] font-bold tracking-[-0.05em]">
           {title}
-        </motion.h1>
+        </h1>
         {subtitle ? (
           <p className="mt-8 max-w-2xl text-lg text-[color:var(--hero-muted)]">{subtitle}</p>
         ) : null}
@@ -192,7 +173,6 @@ export function TechnologiesPageHero({ title, subtitle }: BaseHero) {
 
 /** Careers — atmosphere + type */
 export function CareersPageHero({ title, subtitle }: BaseHero) {
-  const reduce = useReducedMotion()
   return (
     <section className="surface-navy relative min-h-[70svh] overflow-hidden bg-[color:var(--hero-bg)] text-[color:var(--hero-text)]">
       <div
@@ -203,14 +183,9 @@ export function CareersPageHero({ title, subtitle }: BaseHero) {
         <p className="text-[11px] font-bold tracking-[0.2em] text-[color:var(--color-accent)] uppercase">
           Careers
         </p>
-        <motion.h1
-          className="font-display mt-4 max-w-3xl text-[clamp(2.6rem,6vw,5rem)] leading-[0.98] font-bold tracking-[-0.05em]"
-          initial={reduce ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE }}
-        >
+        <h1 className="hero-fade-up font-display mt-4 max-w-3xl text-[clamp(2.6rem,6vw,5rem)] leading-[0.98] font-bold tracking-[-0.05em]">
           {title}
-        </motion.h1>
+        </h1>
         {subtitle ? (
           <p className="mt-6 max-w-xl text-lg text-[color:var(--hero-muted)]">{subtitle}</p>
         ) : null}
@@ -248,51 +223,36 @@ export function AboutPageHero({
   secondaryCtaLabel = 'Work With Us',
   secondaryCtaHref = '/contact?intent=business',
 }: BaseHero) {
-  const reduce = useReducedMotion()
-
   return (
     <MeshBackdrop className="pt-28 pb-20 lg:pt-36 lg:pb-28" interactive={false}>
       <Container>
         <div className="max-w-3xl">
-          <motion.p
-            className="font-display text-2xl font-bold tracking-[-0.03em] text-[color:var(--color-accent)] sm:text-3xl"
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE }}
-          >
+          <p className="hero-fade-up font-display text-2xl font-bold tracking-[-0.03em] text-[color:var(--color-accent)] sm:text-3xl">
             Xelarvis
-          </motion.p>
-          <motion.p
-            className="mt-3 text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)]/80 uppercase"
-            initial={reduce ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.04, ease: EASE }}
+          </p>
+          <p
+            className="hero-fade-up mt-3 text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)]/80 uppercase"
+            style={{ animationDelay: '0.04s' }}
           >
             About
-          </motion.p>
-          <motion.h1
-            className="font-display mt-5 text-[clamp(2.2rem,5vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
-            initial={reduce ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.08, ease: EASE }}
+          </p>
+          <h1
+            className="hero-fade-up font-display mt-5 text-[clamp(2.2rem,5vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
+            style={{ animationDelay: '0.08s' }}
           >
             {title}
-          </motion.h1>
+          </h1>
           {subtitle ? (
-            <motion.p
-              className="mt-6 max-w-2xl border-l-2 border-teal-400/60 pl-5 text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg"
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.14, ease: EASE }}
+            <p
+              className="hero-fade-up mt-6 max-w-2xl border-l-2 border-teal-400/60 pl-5 text-base leading-relaxed text-[color:var(--hero-muted)] sm:text-lg"
+              style={{ animationDelay: '0.14s' }}
             >
               {subtitle}
-            </motion.p>
+            </p>
           ) : null}
-          <motion.div
-            className="mt-8 flex flex-wrap gap-3"
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
+          <div
+            className="hero-fade-up mt-8 flex flex-wrap gap-3"
+            style={{ animationDelay: '0.2s' }}
           >
             <Button
               asChild
@@ -312,7 +272,7 @@ export function AboutPageHero({
             >
               <Link href={secondaryCtaHref}>{secondaryCtaLabel}</Link>
             </Button>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </MeshBackdrop>
@@ -321,39 +281,28 @@ export function AboutPageHero({
 
 /** Insights — magazine masthead on navy mesh */
 export function InsightsPageHero({ title, subtitle }: BaseHero) {
-  const reduce = useReducedMotion()
-
   return (
     <MeshBackdrop className="pt-28 pb-16 lg:pt-36 lg:pb-20" interactive={false}>
       <Container>
         <div className="flex flex-wrap items-start justify-between gap-8">
           <div className="max-w-3xl">
-            <motion.p
-              className="font-display text-sm font-bold tracking-[0.08em] text-[color:var(--color-accent)]"
-              initial={reduce ? false : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: EASE }}
-            >
+            <p className="hero-fade-up font-display text-sm font-bold tracking-[0.08em] text-[color:var(--color-accent)]">
               INSIGHTS · XELARVIS
-            </motion.p>
-            <motion.h1
-              className="font-display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-[1] font-bold tracking-[-0.05em] text-balance text-[color:var(--hero-text)]"
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.06, ease: EASE }}
+            </p>
+            <h1
+              className="hero-fade-up font-display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-[1] font-bold tracking-[-0.05em] text-balance text-[color:var(--hero-text)]"
+              style={{ animationDelay: '0.06s' }}
             >
               {title}
-            </motion.h1>
+            </h1>
           </div>
           {subtitle ? (
-            <motion.p
-              className="mt-2 max-w-xs text-sm leading-relaxed text-[color:var(--hero-muted)] lg:mt-12"
-              initial={reduce ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.12, ease: EASE }}
+            <p
+              className="hero-fade-up mt-2 max-w-xs text-sm leading-relaxed text-[color:var(--hero-muted)] lg:mt-12"
+              style={{ animationDelay: '0.12s' }}
             >
               {subtitle}
-            </motion.p>
+            </p>
           ) : null}
         </div>
         <div className="mt-12 h-px w-full bg-[color:var(--hero-panel-border)]" />

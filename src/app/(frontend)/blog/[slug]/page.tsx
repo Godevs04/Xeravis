@@ -2,14 +2,17 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { RelatedContent } from '@/components/content/RelatedContent'
+import { BlogCard } from '@/components/domain/BlogCard'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { RichText } from '@/components/RichText'
+import { asAuthor, authorSlug } from '@/lib/authors'
 import { getPublishedBySlug, listPublished } from '@/lib/cms'
 import { FALLBACK_BLOG_POSTS } from '@/lib/fallback-data'
 import { buildRelatedGroups } from '@/lib/related-content'
+import { relatedPosts } from '@/lib/related-posts'
 import { articleJsonLd, breadcrumbJsonLd, buildMetadata, graphJsonLd } from '@/lib/seo'
 
 export const revalidate = 60
@@ -25,6 +28,9 @@ type BlogDoc = {
   relatedServices?: unknown
   relatedSolutions?: unknown
   relatedIndustries?: unknown
+  author?: unknown
+  tags?: unknown
+  categories?: unknown
   meta?: { title?: string; description?: string; image?: unknown }
 }
 
@@ -69,6 +75,12 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const relatedGroups = buildRelatedGroups(doc as unknown as Record<string, unknown>)
+  const author = asAuthor(post?.author)
+  const morePosts = await relatedPosts({
+    id: post?.id,
+    tags: post?.tags,
+    categories: post?.categories,
+  })
 
   const jsonLd = graphJsonLd(
     articleJsonLd({
@@ -78,6 +90,8 @@ export default async function BlogPostPage({ params }: Props) {
       datePublished: doc.publishedAt || undefined,
       dateModified: doc.updatedAt || doc.publishedAt || undefined,
       image: post?.meta?.image,
+      authorName: author?.name,
+      authorPath: author ? `/authors/${authorSlug(author)}` : undefined,
     }),
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
@@ -105,12 +119,44 @@ export default async function BlogPostPage({ params }: Props) {
               </time>
             )}
             <p className="text-muted mb-8 text-sm">
-              Written by Xelarvis Technologies · Reviewed for technical accuracy
+              Written by{' '}
+              {author ? (
+                <Link
+                  href={`/authors/${authorSlug(author)}`}
+                  className="text-accent font-medium hover:underline"
+                >
+                  {author.name}
+                </Link>
+              ) : (
+                'Xelarvis Technologies'
+              )}{' '}
+              · Reviewed for technical accuracy
             </p>
             <RichText content={doc.content as Parameters<typeof RichText>[0]['content']} />
           </article>
         </Container>
       </Section>
+
+      {morePosts.length > 0 ? (
+        <Section surface>
+          <Container>
+            <h2 className="font-display text-primary mb-6 text-2xl font-semibold tracking-tight">
+              Related articles
+            </h2>
+            <div className="grid gap-4 md:grid-cols-3">
+              {morePosts.map((item) => (
+                <BlogCard
+                  key={item.id}
+                  title={item.title}
+                  excerpt={item.excerpt}
+                  href={`/blog/${item.slug}`}
+                  publishedAt={item.publishedAt}
+                />
+              ))}
+            </div>
+          </Container>
+        </Section>
+      ) : null}
 
       <RelatedContent heading="Continue exploring" groups={relatedGroups} />
 

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import Lenis from 'lenis'
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -9,26 +8,34 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     const coarsePointer = window.matchMedia('(pointer: coarse)')
     const narrowViewport = window.matchMedia('(max-width: 1023px)')
 
-    // Skip Lenis on reduced-motion, touch-first, and tablet/phone viewports.
+    // Skip Lenis on reduced-motion, touch-first, and tablet/phone viewports. It is loaded on
+    // demand so phones never download it.
     if (reduceMotion.matches || coarsePointer.matches || narrowViewport.matches) return
 
-    const lenis = new Lenis({
-      duration: 1.15,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 1,
+    let cancelled = false
+    let frame = 0
+    let destroy: (() => void) | undefined
+
+    void import('lenis').then(({ default: Lenis }) => {
+      if (cancelled) return
+      const lenis = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        touchMultiplier: 1,
+      })
+      const raf = (time: number) => {
+        lenis.raf(time)
+        frame = requestAnimationFrame(raf)
+      }
+      frame = requestAnimationFrame(raf)
+      destroy = () => lenis.destroy()
     })
 
-    let frame = 0
-    const raf = (time: number) => {
-      lenis.raf(time)
-      frame = requestAnimationFrame(raf)
-    }
-    frame = requestAnimationFrame(raf)
-
     return () => {
+      cancelled = true
       cancelAnimationFrame(frame)
-      lenis.destroy()
+      destroy?.()
     }
   }, [])
 

@@ -1,6 +1,7 @@
 import { cache } from 'react'
 import type { Payload, Where } from 'payload'
 
+import { isDraftMode } from '@/lib/draft-mode'
 import { getPayload, resetPayloadCache } from '@/lib/payload'
 import { logger } from '@/lib/logger'
 
@@ -56,8 +57,10 @@ export async function getPublishedDoc<T>(collection: string, id: string): Promis
   })
 }
 
+/** Published doc by slug; in Next draft mode (admin preview) returns the latest draft instead. */
 export const getPublishedBySlug = cache(
   async <T>(collection: string, slug: string): Promise<T | null> => {
+    const draft = await isDraftMode()
     return safePayload(async (payload) => {
       const result = await payload.find({
         collection: collection as 'pages',
@@ -66,12 +69,12 @@ export const getPublishedBySlug = cache(
         },
         limit: 1,
         depth: 2,
-        draft: false,
+        draft,
         overrideAccess: true,
       })
       const doc = result.docs[0] as unknown as (T & { _status?: string }) | undefined
       if (!doc) return null
-      if (doc._status && doc._status !== 'published') return null
+      if (!draft && doc._status && doc._status !== 'published') return null
       return doc
     })
   },

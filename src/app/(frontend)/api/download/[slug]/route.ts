@@ -1,8 +1,12 @@
-import { NextResponse } from 'next/server'
+import { after, NextResponse } from 'next/server'
 import { z } from 'zod'
 
+import { verifyDownloadToken } from '@/lib/download-token'
+import { sendEmail } from '@/lib/email'
 import { serveMediaFile } from '@/lib/media-file'
+import { notifyLead } from '@/lib/notify'
 import { getPayload } from '@/lib/payload'
+import { turnstileEnabled } from '@/lib/turnstile'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -27,17 +31,22 @@ export async function GET(request: Request, { params }: Params) {
 
     let leadEmail: string | null = null
     if (doc.gated) {
-      const parsed = emailSchema.safeParse(new URL(request.url).searchParams.get('email') ?? '')
-      if (!parsed.success) {
-        return NextResponse.json(
-          {
-            error: 'Email required',
-            message: 'This download is gated. Provide ?email=you@company.com to continue.',
-          },
-          { status: 401 },
-        )
+      const searchParams = new URL(request.url).searchParams
+      // Signed links come from the download form, which already stored the lead.
+      if (!verifyDownloadToken(slug, searchParams.get('t'))) {
+        const parsed = emailSchema.safeParse(searchParams.get('email') ?? '')
+        // The bare ?email= form skips the bot check, so it is disabled once Turnstile is on.
+        if (!parsed.success || turnstileEnabled()) {
+          return NextResponse.json(
+            {
+              error: 'Email required',
+              message: 'This download is gated. Request it from the download form on the website.',
+            },
+            { status: 401 },
+          )
+        }
+        leadEmail = parsed.data
       }
-      leadEmail = parsed.data
     }
 
     const file = doc.file && typeof doc.file === 'object' ? doc.file : null
@@ -55,6 +64,23 @@ export async function GET(request: Request, { params }: Params) {
           status: 'new',
           data: { email: leadEmail, download: doc.title, downloadId: String(doc.id), slug },
         },
+      })
+      const email = leadEmail
+      after(async () => {
+        await Promise.allSettled([
+          sendEmail({
+            to: process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO,
+            replyTo: email,
+            subject: `New download lead: ${doc.title}`,
+            text: `Email: ${email}\nDownload: ${doc.title}\n\nReview in Payload Admin > Form Submissions.`,
+          }),
+          notifyLead({
+            type: 'download',
+            title: doc.title,
+            fields: [['Email', email]],
+            adminPath: '/admin/collections/form-submissions',
+          }),
+        ])
       })
     }
 

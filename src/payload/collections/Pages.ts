@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { previewAdmin } from '@/lib/preview'
 import { authenticatedOrPublished, canManageContent, isAdminOrEditor } from '@/payload/access'
 import { pageBlocks } from '@/payload/blocks'
 import { slugField } from '@/payload/fields'
@@ -16,13 +17,7 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
     group: 'Website',
-    livePreview: {
-      url: ({ data }) => {
-        const base = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-        if (data?.slug === 'home') return base
-        return `${base}/${data?.slug || ''}`
-      },
-    },
+    ...previewAdmin('pages'),
   },
   versions: {
     drafts: {

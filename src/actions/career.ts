@@ -1,11 +1,18 @@
 'use server'
 
 import { headers } from 'next/headers'
+import { after } from 'next/server'
 import { z } from 'zod'
 
 import { isPastDeadline } from '@/lib/date'
 import { sendEmail } from '@/lib/email'
-import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
+import { notifyLead } from '@/lib/notify'
+import { attributionFromFormData } from '@/lib/attribution'
+import { clientIpFromHeaders, clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
+import { applicationStatusUrl } from '@/lib/application-status'
+import { emailLayout, escapeHtml } from '@/lib/email-templates'
+import { createToken } from '@/lib/tokens'
+import { TURNSTILE_FIELD, verifyTurnstile } from '@/lib/turnstile'
 import { getPayload } from '@/lib/payload'
 import { RESUME_FOLDER } from '@/payload/access'
 
@@ -89,6 +96,10 @@ export async function submitCareerApplication(
   // Honeypot: bots fill the hidden `website` field; pretend success without storing anything.
   if (String(formData.get('website') ?? '').trim()) {
     return { ok: true, applicationId: nextApplicationId(), message: APPLICATION_RECEIVED }
+  }
+
+  if (!(await verifyTurnstile(formData.get(TURNSTILE_FIELD), clientIpFromHeaders(headerList)))) {
+    return { ok: false, message: 'Please complete the security check and try again.' }
   }
 
   const resume = formData.get('resume')
@@ -203,11 +214,13 @@ export async function submitCareerApplication(
       .slice(0, 40)
       .map((item) => ({ item }))
 
+    const statusToken = createToken()
     await payload.create({
       collection: 'job-applications',
       overrideAccess: true,
       data: {
         applicationId,
+        statusToken,
         career: parsed.data.careerId,
         name: fullName,
         firstName: parsed.data.firstName,
@@ -240,6 +253,7 @@ export async function submitCareerApplication(
         consent: true,
         resume: media.id,
         status: 'new',
+        attribution: attributionFromFormData(formData),
       },
     })
 
@@ -258,29 +272,54 @@ export async function submitCareerApplication(
       },
     })
 
-    await sendEmail({
-      to:
-        process.env.CAREERS_NOTIFY_EMAIL ||
-        process.env.CONTACT_NOTIFY_EMAIL ||
-        process.env.EMAIL_TO,
-      replyTo: parsed.data.email,
-      subject: `New application · ${career.title} · ${applicationId}`,
-      text: [
-        `Application ID: ${applicationId}`,
-        `Role: ${career.title}`,
-        `Name: ${fullName}`,
-        `Email: ${parsed.data.email}`,
-        `Phone: ${parsed.data.phone}`,
-        `Location: ${parsed.data.city}, ${parsed.data.country}`,
-        parsed.data.totalExperience ? `Experience: ${parsed.data.totalExperience}` : '',
-        parsed.data.linkedin ? `LinkedIn: ${parsed.data.linkedin}` : '',
-        parsed.data.portfolio ? `Portfolio: ${parsed.data.portfolio}` : '',
-        parsed.data.currentCompany ? `Current company: ${parsed.data.currentCompany}` : '',
-        '',
-        'Review in Payload Admin → Job Applications.',
-      ]
-        .filter(Boolean)
-        .join('\n'),
+    after(async () => {
+      await Promise.allSettled([
+        sendEmail({
+          to:
+            process.env.CAREERS_NOTIFY_EMAIL ||
+            process.env.CONTACT_NOTIFY_EMAIL ||
+            process.env.EMAIL_TO,
+          replyTo: parsed.data.email,
+          subject: `New application · ${career.title} · ${applicationId}`,
+          text: [
+            `Application ID: ${applicationId}`,
+            `Role: ${career.title}`,
+            `Name: ${fullName}`,
+            `Email: ${parsed.data.email}`,
+            `Phone: ${parsed.data.phone}`,
+            `Location: ${parsed.data.city}, ${parsed.data.country}`,
+            parsed.data.totalExperience ? `Experience: ${parsed.data.totalExperience}` : '',
+            parsed.data.linkedin ? `LinkedIn: ${parsed.data.linkedin}` : '',
+            parsed.data.portfolio ? `Portfolio: ${parsed.data.portfolio}` : '',
+            parsed.data.currentCompany ? `Current company: ${parsed.data.currentCompany}` : '',
+            '',
+            'Review in Payload Admin → Job Applications.',
+          ]
+            .filter(Boolean)
+            .join('\n'),
+        }),
+        sendEmail({
+          to: parsed.data.email,
+          subject: `We received your application: ${career.title}`,
+          text: `Hi ${parsed.data.firstName},\n\nThanks for applying for ${career.title} at Xelarvis. Your reference is ${applicationId}.\n\nTrack your application status: ${applicationStatusUrl(statusToken)}\n\nXelarvis Recruiting`,
+          html: emailLayout({
+            heading: 'Application received',
+            bodyHtml: `<p style="margin:0 0 14px">Hi ${escapeHtml(parsed.data.firstName)},</p><p style="margin:0 0 14px">Thanks for applying for <strong>${escapeHtml(career.title)}</strong> at Xelarvis. Your reference is <strong>${escapeHtml(applicationId)}</strong>.</p><p style="margin:0">You can check where your application is at any time.</p>`,
+            cta: { label: 'Track application status', href: applicationStatusUrl(statusToken) },
+          }),
+        }),
+        notifyLead({
+          type: 'application',
+          title: `${fullName} for ${career.title}`,
+          fields: [
+            ['Application ID', applicationId],
+            ['Email', parsed.data.email],
+            ['Location', `${parsed.data.city}, ${parsed.data.country}`],
+            ['Experience', parsed.data.totalExperience],
+          ],
+          adminPath: '/admin/collections/job-applications',
+        }),
+      ])
     })
 
     return { ok: true, applicationId, message: APPLICATION_RECEIVED }

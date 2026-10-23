@@ -26,7 +26,9 @@
     "test:sheet": "tsx scripts/testing/build-sheet.ts",
     "lighthouse": "lighthouse http://localhost:3000 --view --only-categories=performance,accessibility,best-practices,seo --output=html --output=json --output-path=./lighthouse-report --chrome-flags=\"--headless\"",
     "lighthouse:ci": "lighthouse http://localhost:3000 --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=./lighthouse-report.json --chrome-flags=\"--headless --no-sandbox\" --quiet",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -55,6 +57,7 @@
     "@radix-ui/react-separator": "^1.1.12",
     "@radix-ui/react-slot": "^1.3.0",
     "@radix-ui/react-tabs": "^1.1.20",
+    "@sentry/nextjs": "^11.9.0",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.6.1",
     "clsx": "^2.1.1",
@@ -95,6 +98,7 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4",
     "tsx": "^4.19.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   }
 }

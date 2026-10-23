@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Rss } from 'lucide-react'
 
 import { BrandLogo } from '@/components/brand/BrandLogo'
 import { Container } from '@/components/layout/Container'
@@ -79,6 +80,13 @@ export async function SiteFooter() {
                 Product notes, architecture essays, and shipping updates.
               </p>
               <NewsletterForm />
+              <a
+                href="/feed.xml"
+                className="text-muted hover:text-accent mt-4 inline-flex items-center gap-1.5 text-xs font-medium"
+              >
+                <Rss className="h-3.5 w-3.5" aria-hidden />
+                Subscribe via RSS
+              </a>
             </div>
           ) : null}
         </div>

@@ -86,7 +86,7 @@ export function SolutionsChallengeSelector({ solutions }: SolutionsChallengeSele
           {filtered.map((solution, index) => (
             <li key={solution.id} className="py-10">
               <Link href={`/solutions/${solution.slug}`} className="group block">
-                <p className="font-display text-xs tracking-[0.16em] text-teal-600">
+                <p className="font-display text-xs tracking-[0.16em] text-teal-700 dark:text-teal-400">
                   {String(index + 1).padStart(2, '0')}
                 </p>
                 <h3 className="font-display mt-3 text-[clamp(1.4rem,2.8vw,2.2rem)] font-semibold tracking-[-0.035em] text-[color:var(--color-navy)] transition-colors group-hover:text-teal-700">

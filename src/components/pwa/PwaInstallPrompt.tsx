@@ -36,6 +36,30 @@ function canShowPrompt(storageKey: string) {
   return true
 }
 
+const ENGAGEMENT_EVENTS = ['scroll', 'pointerdown', 'keydown'] as const
+
+/**
+ * Runs `callback` shortly after the visitor first scrolls, taps or types. Waiting for engagement
+ * keeps the prompt from interrupting first paint and from becoming the page's LCP element.
+ */
+function afterEngagement(callback: () => void, delayMs = 1500) {
+  let timer = 0
+  const onEngage = () => {
+    stop()
+    timer = window.setTimeout(callback, delayMs)
+  }
+  const stop = () => {
+    for (const type of ENGAGEMENT_EVENTS) window.removeEventListener(type, onEngage)
+  }
+  for (const type of ENGAGEMENT_EVENTS) {
+    window.addEventListener(type, onEngage, { once: true, passive: true })
+  }
+  return () => {
+    stop()
+    window.clearTimeout(timer)
+  }
+}
+
 function persist(storageKey: string, status: 'dismissed' | 'installed') {
   localStorage.setItem(storageKey, JSON.stringify({ status, at: Date.now() }))
 }
@@ -59,18 +83,22 @@ export function PwaInstallPrompt({
     const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent)
     const isSafari = Boolean(navigator.userAgent.match(/Version\/[\d.]+.*Safari/))
     if (isIos && isSafari) {
-      const timer = window.setTimeout(() => setIosHint(true), 1800)
-      return () => window.clearTimeout(timer)
+      return afterEngagement(() => setIosHint(true))
     }
 
+    let cancelEngagement: (() => void) | undefined
     const onBip = (e: Event) => {
       e.preventDefault()
       setDeferred(e as BeforeInstallPromptEvent)
-      setOpen(true)
+      cancelEngagement?.()
+      cancelEngagement = afterEngagement(() => setOpen(true))
     }
 
     window.addEventListener('beforeinstallprompt', onBip)
-    return () => window.removeEventListener('beforeinstallprompt', onBip)
+    return () => {
+      window.removeEventListener('beforeinstallprompt', onBip)
+      cancelEngagement?.()
+    }
   }, [storageKey])
 
   const dismiss = () => {
