@@ -53,6 +53,9 @@ export function Turnstile({ action, resetKey }: { action: TurnstileAction; reset
         action,
         appearance: 'interaction-only',
         theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+        // Without this Turnstile throws uncaught (e.g. 110200 on hostnames outside the widget's
+        // domain list). The form still submits; the server rejects the missing token.
+        'error-callback': () => true,
       })
     })
     return () => {
