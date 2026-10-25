@@ -49,7 +49,12 @@ export async function requestDownload(
   if (String(formData.get('website') ?? '').trim()) {
     return { ok: true, message: 'Your download is ready.' }
   }
-  if (!(await verifyTurnstile(formData.get(TURNSTILE_FIELD), clientIpFromHeaders(headerList)))) {
+  if (
+    !(await verifyTurnstile(formData.get(TURNSTILE_FIELD), {
+      action: 'download',
+      ip: clientIpFromHeaders(headerList),
+    }))
+  ) {
     return { ok: false, message: 'Please complete the security check and try again.' }
   }
 

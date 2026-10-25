@@ -94,7 +94,7 @@ export function CareerApplicationForm({ careerId, jobTitle }: CareerApplicationF
         aria-hidden
       />
       <AttributionFields />
-      <Turnstile resetKey={state} />
+      <Turnstile action="career" resetKey={state} />
       <p className="text-sm text-[color:var(--color-secondary)]">
         Applying for{' '}
         <span className="font-semibold text-[color:var(--color-primary)]">{jobTitle}</span>

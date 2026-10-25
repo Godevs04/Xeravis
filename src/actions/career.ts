@@ -98,7 +98,12 @@ export async function submitCareerApplication(
     return { ok: true, applicationId: nextApplicationId(), message: APPLICATION_RECEIVED }
   }
 
-  if (!(await verifyTurnstile(formData.get(TURNSTILE_FIELD), clientIpFromHeaders(headerList)))) {
+  if (
+    !(await verifyTurnstile(formData.get(TURNSTILE_FIELD), {
+      action: 'career',
+      ip: clientIpFromHeaders(headerList),
+    }))
+  ) {
     return { ok: false, message: 'Please complete the security check and try again.' }
   }
 
