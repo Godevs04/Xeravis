@@ -10,6 +10,7 @@ const iconMap: Record<string, LucideIcon> = {
   box: Box,
 }
 
+/** Server-only: the name lookup pulls in every Lucide icon, so never call it from a client component. */
 export function getLucideIcon(name?: string | null): LucideIcon {
   if (!name) return Box
   const normalized = name.trim().toLowerCase()

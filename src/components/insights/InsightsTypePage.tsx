@@ -1,6 +1,11 @@
 import Link from 'next/link'
 
 import { BlogCard } from '@/components/domain/BlogCard'
+import {
+  DownloadsSection,
+  listDownloads,
+  type DownloadCategory,
+} from '@/components/downloads/DownloadsSection'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
@@ -32,6 +37,11 @@ const TYPE_PATH: Record<InsightsTypePageProps['type'], string> = {
   resource: '/insights/resources',
 }
 
+const DOWNLOAD_CATEGORY: Partial<Record<InsightsTypePageProps['type'], DownloadCategory>> = {
+  'white-paper': 'white-paper',
+  resource: 'resource',
+}
+
 const CTA_LABEL: Record<InsightsTypePageProps['type'], string> = {
   blog: 'Read article',
   'white-paper': 'Read white paper',
@@ -40,11 +50,15 @@ const CTA_LABEL: Record<InsightsTypePageProps['type'], string> = {
 }
 
 export async function InsightsTypePage({ type, title, subtitle }: InsightsTypePageProps) {
-  const posts = await listPublished<BlogDoc>('blogs', {
-    sort: '-publishedAt',
-    limit: 24,
-    where: { insightType: { equals: type } },
-  })
+  const downloadCategory = DOWNLOAD_CATEGORY[type]
+  const [posts, downloads] = await Promise.all([
+    listPublished<BlogDoc>('blogs', {
+      sort: '-publishedAt',
+      limit: 24,
+      where: { insightType: { equals: type } },
+    }),
+    downloadCategory ? listDownloads(downloadCategory) : Promise.resolve([]),
+  ])
   const items = posts.length > 0 ? posts : type === 'blog' ? FALLBACK_BLOG_POSTS : []
   const activePath = TYPE_PATH[type]
 
@@ -81,8 +95,9 @@ export async function InsightsTypePage({ type, title, subtitle }: InsightsTypePa
             })}
           </nav>
 
+          <DownloadsSection id={`downloads-${type}`} items={downloads} />
           <h2 className="sr-only">{title}</h2>
-          {items.length === 0 ? (
+          {items.length === 0 && downloads.length > 0 ? null : items.length === 0 ? (
             <div className="rounded-[24px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-6 py-12 text-center backdrop-blur-xl sm:px-10">
               <p className="font-display text-lg font-semibold text-[color:var(--color-primary)]">
                 Nothing published here yet

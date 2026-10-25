@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { ExternalLink } from 'lucide-react'
 
+import { BookCallButton } from '@/components/booking/BookCallButton'
 import { ContactForm } from '@/components/forms/ContactForm'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
@@ -50,6 +51,19 @@ function extractIframeSrc(html: string | null | undefined): string | null {
   if (!html) return null
   const match = html.match(/src=["']([^"']+)["']/i)
   return match?.[1] ?? null
+}
+
+function BookingCard() {
+  if (!process.env.NEXT_PUBLIC_CALCOM_LINK) return null
+  return (
+    <div className="rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--card-bg)] p-6 shadow-[var(--shadow-medium)] backdrop-blur-xl">
+      <h2 className="text-lg font-semibold">Prefer to talk?</h2>
+      <p className="text-secondary mt-2 text-sm">
+        Book a 30-minute discovery call with our team at a time that suits you.
+      </p>
+      <BookCallButton variant="primary" className="mt-4 w-full rounded-full" />
+    </div>
+  )
 }
 
 export default async function ContactPage() {
@@ -105,6 +119,7 @@ export default async function ContactPage() {
             </div>
           </Suspense>
           <aside className="space-y-6">
+            <BookingCard />
             <div className="rounded-[28px] border border-[color:var(--glass-border-soft)] bg-[color:var(--card-bg)] p-6 shadow-[var(--shadow-medium)] backdrop-blur-xl">
               <h2 className="text-lg font-semibold">Enquiry types</h2>
               <ul className="mt-4 space-y-3">

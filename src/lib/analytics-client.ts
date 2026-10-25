@@ -5,8 +5,11 @@ import type { PostHog } from 'posthog-js'
 export const CONSENT_KEY = 'xe-cookie-consent'
 export const CONSENT_EVENT = 'xe-consent-change'
 
+type SentryClient = typeof import('@sentry/nextjs')
+
 let allowed = false
 let client: Promise<PostHog | null> | null = null
+let sentry: Promise<SentryClient | null> | null = null
 
 export function hasStoredConsent() {
   try {
@@ -28,6 +31,24 @@ export function storeConsent() {
 /** Marks analytics as allowed for this page view (consent given, or no banner configured). */
 export function allowAnalytics() {
   allowed = true
+  void loadSentry()
+}
+
+export function isAnalyticsAllowed() {
+  return allowed
+}
+
+/** Loads Sentry error monitoring after consent, only when `NEXT_PUBLIC_SENTRY_DSN` is set. */
+function loadSentry(): Promise<SentryClient | null> {
+  const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN
+  if (!dsn) return Promise.resolve(null)
+  sentry ??= Promise.all([import('@sentry/nextjs'), import('@/lib/sentry-options')])
+    .then(([Sentry, { sentryOptions }]) => {
+      Sentry.init(sentryOptions(dsn))
+      return Sentry
+    })
+    .catch(() => null)
+  return sentry
 }
 
 /** Loads and initialises PostHog on first use; `posthog-js` stays out of the initial bundle. */
@@ -57,5 +78,6 @@ export function track(event: string, properties?: Record<string, unknown>) {
 
 export function reportError(error: unknown) {
   if (!allowed) return
+  void loadSentry().then((Sentry) => Sentry?.captureException(error))
   void loadPosthog().then((posthog) => posthog?.captureException(error))
 }

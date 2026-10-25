@@ -127,7 +127,11 @@ export async function SiteHeader() {
         href: '/solutions',
         description: 'Browse solution catalog.',
       },
-    ),
+    ).concat({
+      label: 'AI readiness assessment',
+      href: '/ai-readiness',
+      description: 'Free 2-minute maturity score with next steps.',
+    }),
     services: toMegaItems(
       mergePublishedServices(
         services

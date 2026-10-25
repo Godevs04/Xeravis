@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { previewAdmin } from '@/lib/preview'
 import { authenticatedOrPublished, canManageContent, isAdminOrEditor } from '@/payload/access'
 import { featuredField, orderField } from '@/payload/fields'
 import { slugField } from '@/payload/fields/slug'
@@ -13,6 +14,7 @@ import {
 export const Solutions: CollectionConfig = {
   slug: 'solutions',
   admin: {
+    ...previewAdmin('solutions'),
     group: 'Website',
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'featured', '_status', 'updatedAt'],

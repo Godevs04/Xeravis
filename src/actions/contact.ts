@@ -1,10 +1,14 @@
 'use server'
 
 import { headers } from 'next/headers'
+import { after } from 'next/server'
 import { z } from 'zod'
 
 import { sendEmail } from '@/lib/email'
-import { clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
+import { notifyLead } from '@/lib/notify'
+import { attributionFromFormData } from '@/lib/attribution'
+import { clientIpFromHeaders, clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
+import { TURNSTILE_FIELD, verifyTurnstile } from '@/lib/turnstile'
 import { getPayload } from '@/lib/payload'
 
 const INTENT_VALUES = [
@@ -91,6 +95,10 @@ export async function submitContact(
     return { ok: true, message: 'Thank you. Our team will respond within one business day.' }
   }
 
+  if (!(await verifyTurnstile(formData.get(TURNSTILE_FIELD), clientIpFromHeaders(headerList)))) {
+    return { ok: false, message: 'Please complete the security check and try again.' }
+  }
+
   const intent = mapIntent(parsed.data.intent)
 
   try {
@@ -109,6 +117,7 @@ export async function submitContact(
         intent,
         subject: intent || 'Website enquiry',
         status: 'new',
+        attribution: attributionFromFormData(formData),
       },
     })
 
@@ -122,23 +131,40 @@ export async function submitContact(
       },
     })
 
-    await sendEmail({
-      to: process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO,
-      replyTo: parsed.data.email,
-      subject: `New contact enquiry from ${parsed.data.name}`,
-      text: [
-        `Name: ${parsed.data.name}`,
-        `Email: ${parsed.data.email}`,
-        parsed.data.company ? `Company: ${parsed.data.company}` : '',
-        parsed.data.jobTitle ? `Job title: ${parsed.data.jobTitle}` : '',
-        parsed.data.country ? `Country: ${parsed.data.country}` : '',
-        parsed.data.phone ? `Phone: ${parsed.data.phone}` : '',
-        `Area of interest: ${intent}`,
-        '',
-        parsed.data.message,
-      ]
-        .filter(Boolean)
-        .join('\n'),
+    const lead = parsed.data
+    after(async () => {
+      await Promise.allSettled([
+        sendEmail({
+          to: process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO,
+          replyTo: parsed.data.email,
+          subject: `New contact enquiry from ${parsed.data.name}`,
+          text: [
+            `Name: ${parsed.data.name}`,
+            `Email: ${parsed.data.email}`,
+            parsed.data.company ? `Company: ${parsed.data.company}` : '',
+            parsed.data.jobTitle ? `Job title: ${parsed.data.jobTitle}` : '',
+            parsed.data.country ? `Country: ${parsed.data.country}` : '',
+            parsed.data.phone ? `Phone: ${parsed.data.phone}` : '',
+            `Area of interest: ${intent}`,
+            '',
+            parsed.data.message,
+          ]
+            .filter(Boolean)
+            .join('\n'),
+        }),
+        notifyLead({
+          type: 'contact',
+          title: lead.name,
+          fields: [
+            ['Email', lead.email],
+            ['Company', lead.company],
+            ['Country', lead.country],
+            ['Interest', intent],
+            ['Message', lead.message],
+          ],
+          adminPath: '/admin/collections/contact-messages',
+        }),
+      ])
     })
 
     return { ok: true, message: 'Thank you. Our team will respond within one business day.' }

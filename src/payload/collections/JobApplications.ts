@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { canManageCareers, isAdmin } from '@/payload/access'
+import { attributionField } from '@/payload/fields'
 import { trackActivity } from '@/payload/hooks/activity'
 
 export const JobApplications: CollectionConfig = {
@@ -49,6 +50,13 @@ export const JobApplications: CollectionConfig = {
         readOnly: true,
         position: 'sidebar',
       },
+    },
+    {
+      name: 'statusToken',
+      type: 'text',
+      index: true,
+      access: { read: () => false },
+      admin: { hidden: true },
     },
     {
       name: 'career',
@@ -212,5 +220,6 @@ export const JobApplications: CollectionConfig = {
       type: 'textarea',
       admin: { position: 'sidebar' },
     },
+    attributionField(),
   ],
 }

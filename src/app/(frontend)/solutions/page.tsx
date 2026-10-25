@@ -1,3 +1,4 @@
+import { AssessmentPromo } from '@/components/assessment/AssessmentPromo'
 import { SolutionsPageHero } from '@/components/marketing/PageHeroes'
 import { HubLinkStrip } from '@/components/content/HubLinkStrip'
 import { SolutionsChallengeSelector } from '@/components/solutions/SolutionsChallengeSelector'
@@ -92,6 +93,7 @@ export default async function SolutionsPage() {
         viewAll={{ href: '/services', label: 'All services →' }}
       />
       <SolutionsChallengeSelector solutions={items} />
+      <AssessmentPromo />
     </>
   )
 }

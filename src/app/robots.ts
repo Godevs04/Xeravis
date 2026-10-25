@@ -13,7 +13,15 @@ const AI_CRAWLERS = [
 
 // CMS images are served from /api/media/file/, so that path stays crawlable for image search.
 const allow = ['/', '/api/media/file/']
-const disallow = ['/admin/', '/api/', '/offline', '/search', '/docs/']
+const disallow = [
+  '/admin/',
+  '/api/',
+  '/offline',
+  '/search',
+  '/docs/',
+  '/newsletter/',
+  '/careers/application/',
+]
 
 export default function robots(): MetadataRoute.Robots {
   return {

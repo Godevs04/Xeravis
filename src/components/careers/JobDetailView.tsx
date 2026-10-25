@@ -188,11 +188,7 @@ export function JobDetailView({
         ) : null}
 
         <Container className="relative z-10">
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: EASE }}
-          >
+          <div className="hero-fade-up">
             <Link
               href="/careers"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--hero-muted)] transition-colors hover:text-[color:var(--color-accent)]"
@@ -200,32 +196,23 @@ export function JobDetailView({
               <ArrowLeft className="h-4 w-4" />
               All openings
             </Link>
-          </motion.div>
+          </div>
 
           <div className="mt-8 grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <motion.p
-                className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase"
-                initial={reduce ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
-              >
+              <p className="hero-fade-up text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase">
                 {job.department || 'Careers'}
-              </motion.p>
-              <motion.h1
-                className="font-display mt-4 max-w-3xl text-[clamp(2.4rem,5.5vw,4.25rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
-                initial={reduce ? false : { opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
+              </p>
+              <h1
+                className="hero-fade-up font-display mt-4 max-w-3xl text-[clamp(2.4rem,5.5vw,4.25rem)] leading-[1.02] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
+                style={{ animationDelay: '0.06s' }}
               >
                 {job.title}
-              </motion.h1>
+              </h1>
 
-              <motion.div
-                className="mt-6 flex flex-wrap gap-2"
-                initial={reduce ? false : { opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.18, ease: EASE }}
+              <div
+                className="hero-fade-up mt-6 flex flex-wrap gap-2"
+                style={{ animationDelay: '0.12s' }}
               >
                 <MetaChip icon={MapPin} label={job.location} />
                 {typeLabel ? <MetaChip icon={Briefcase} label={typeLabel} /> : null}
@@ -239,13 +226,11 @@ export function JobDetailView({
                     label={`${job.openings} opening${job.openings > 1 ? 's' : ''}`}
                   />
                 ) : null}
-              </motion.div>
+              </div>
 
-              <motion.div
-                className="mt-8 flex flex-wrap gap-3"
-                initial={reduce ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.24, ease: EASE }}
+              <div
+                className="hero-fade-up mt-8 flex flex-wrap gap-3"
+                style={{ animationDelay: '0.18s' }}
               >
                 <Button
                   asChild
@@ -265,7 +250,7 @@ export function JobDetailView({
                 >
                   <Link href="/contact?intent=career">Talk to recruiting</Link>
                 </Button>
-              </motion.div>
+              </div>
             </div>
 
             <motion.aside

@@ -361,10 +361,35 @@
     }
   }
 
+  /* Hero entrance runs in CSS so the headline (the LCP element) paints before hydration. */
+  @keyframes hero-rise {
+    from {
+      transform: translateY(110%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes hero-fade-up {
+    from {
+      transform: translateY(8px);
+      opacity: 0;
+    }
+  }
+
+  .hero-rise {
+    animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .hero-fade-up {
+    animation: hero-fade-up 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .aurora-mesh,
     .animate-blob,
-    .animate-blob-slow {
+    .animate-blob-slow,
+    .hero-rise,
+    .hero-fade-up {
       animation: none !important;
     }
   }
