@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react'
 
+import type { TurnstileAction } from '@/lib/turnstile'
+
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 const SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
 
@@ -36,7 +38,7 @@ function loadScript(): Promise<TurnstileApi | null> {
  * The widget adds a hidden `cf-turnstile-response` input to the surrounding form. Change `resetKey`
  * after each submit to get a fresh token (tokens are single-use).
  */
-export function Turnstile({ resetKey }: { resetKey?: unknown }) {
+export function Turnstile({ action, resetKey }: { action: TurnstileAction; resetKey?: unknown }) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -48,15 +50,19 @@ export function Turnstile({ resetKey }: { resetKey?: unknown }) {
       if (!api || cancelled) return
       widgetId = api.render(el, {
         sitekey: SITE_KEY,
+        action,
         appearance: 'interaction-only',
         theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+        // Without this Turnstile throws uncaught (e.g. 110200 on hostnames outside the widget's
+        // domain list). The form still submits; the server rejects the missing token.
+        'error-callback': () => true,
       })
     })
     return () => {
       cancelled = true
       if (widgetId && window.turnstile) window.turnstile.remove(widgetId)
     }
-  }, [resetKey])
+  }, [action, resetKey])
 
   if (!SITE_KEY) return null
   return <div ref={ref} className="min-h-0" />

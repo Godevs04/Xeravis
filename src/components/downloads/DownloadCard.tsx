@@ -56,7 +56,7 @@ function GatedDownloadForm({ item }: { item: DownloadItem }) {
         aria-hidden
       />
       <AttributionFields />
-      <Turnstile resetKey={state} />
+      <Turnstile action="download" resetKey={state} />
       <div className="space-y-2">
         <Label htmlFor={emailId}>Work email</Label>
         <Input

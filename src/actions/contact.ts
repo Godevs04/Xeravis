@@ -95,7 +95,12 @@ export async function submitContact(
     return { ok: true, message: 'Thank you. Our team will respond within one business day.' }
   }
 
-  if (!(await verifyTurnstile(formData.get(TURNSTILE_FIELD), clientIpFromHeaders(headerList)))) {
+  if (
+    !(await verifyTurnstile(formData.get(TURNSTILE_FIELD), {
+      action: 'contact',
+      ip: clientIpFromHeaders(headerList),
+    }))
+  ) {
     return { ok: false, message: 'Please complete the security check and try again.' }
   }
 

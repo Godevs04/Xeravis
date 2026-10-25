@@ -52,7 +52,12 @@ export async function submitAssessment(
   if (String(formData.get('website') ?? '').trim()) {
     return { ok: true, message: 'Your report is on its way.' }
   }
-  if (!(await verifyTurnstile(formData.get(TURNSTILE_FIELD), clientIpFromHeaders(headerList)))) {
+  if (
+    !(await verifyTurnstile(formData.get(TURNSTILE_FIELD), {
+      action: 'assessment',
+      ip: clientIpFromHeaders(headerList),
+    }))
+  ) {
     return { ok: false, message: 'Please complete the security check and try again.' }
   }
 

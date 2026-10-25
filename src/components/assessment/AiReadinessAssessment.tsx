@@ -43,7 +43,7 @@ function ReportForm({ answers }: { answers: Answers }) {
         aria-hidden
       />
       <AttributionFields />
-      <Turnstile resetKey={state} />
+      <Turnstile action="assessment" resetKey={state} />
       <div className="space-y-2">
         <Label htmlFor={emailId}>Work email</Label>
         <Input id={emailId} name="email" type="email" autoComplete="email" required />

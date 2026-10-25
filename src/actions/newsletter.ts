@@ -50,7 +50,12 @@ export async function submitNewsletter(
     return { ok: true, message: pendingMessage }
   }
 
-  if (!(await verifyTurnstile(formData.get(TURNSTILE_FIELD), clientIpFromHeaders(headerList)))) {
+  if (
+    !(await verifyTurnstile(formData.get(TURNSTILE_FIELD), {
+      action: 'newsletter',
+      ip: clientIpFromHeaders(headerList),
+    }))
+  ) {
     return { ok: false, message: 'Please complete the security check and try again.' }
   }
 

@@ -118,6 +118,10 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
+    // Serverless cold starts would otherwise re-run createIndexes/create for every collection.
+    // Indexes are built by dev/seed runs; run one after adding an indexed or unique field.
+    connectOptions:
+      process.env.NODE_ENV === 'production' ? { autoIndex: false, autoCreate: false } : undefined,
   }),
   cors: [process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'].filter(Boolean),
   csrf: [process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'].filter(Boolean),

@@ -74,7 +74,7 @@ export function NewsletterForm({
           aria-hidden
         />
         <AttributionFields />
-        <Turnstile resetKey={state} />
+        <Turnstile action="newsletter" resetKey={state} />
         <Button
           type="submit"
           variant={dark ? 'outline' : 'primary'}
