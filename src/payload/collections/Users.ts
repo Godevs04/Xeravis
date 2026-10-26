@@ -38,6 +38,11 @@ export const Users: CollectionConfig = {
   },
   fields: [
     {
+      name: 'name',
+      type: 'text',
+      admin: { description: 'Shown in interview invitations and staff emails.' },
+    },
+    {
       name: 'roles',
       type: 'select',
       hasMany: true,

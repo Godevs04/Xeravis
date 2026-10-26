@@ -3,6 +3,11 @@ import type { CollectionConfig } from 'payload'
 import { canManageCareers, isAdmin } from '@/payload/access'
 import { attributionField } from '@/payload/fields'
 import { trackActivity } from '@/payload/hooks/activity'
+import {
+  notifyApplicationStatus,
+  preventApplicationDelete,
+  validateApplication,
+} from '@/payload/hooks/recruitment'
 
 export const JobApplications: CollectionConfig = {
   slug: 'job-applications',
@@ -38,7 +43,9 @@ export const JobApplications: CollectionConfig = {
         return data
       },
     ],
-    afterChange: [trackActivity('job-applications')],
+    beforeChange: [validateApplication],
+    beforeDelete: [preventApplicationDelete],
+    afterChange: [trackActivity('job-applications'), notifyApplicationStatus],
   },
   fields: [
     {
@@ -213,6 +220,18 @@ export const JobApplications: CollectionConfig = {
       ],
       admin: {
         position: 'sidebar',
+        description:
+          'Changing the stage emails the candidate (wording matches the stage), the recruiting inbox and assigned interviewers.',
+      },
+    },
+    {
+      name: 'sendStatusEmails',
+      label: 'Email candidate on stage change',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Turn off to move this candidate silently (the team is still notified).',
       },
     },
     {

@@ -384,12 +384,39 @@
     animation: hero-fade-up 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
+  /* Multi-step forms: steps stay mounted (so FormData keeps every field) and replay these on show. */
+  @keyframes step-in-next {
+    from {
+      transform: translateX(28px);
+      opacity: 0;
+      filter: blur(4px);
+    }
+  }
+
+  @keyframes step-in-prev {
+    from {
+      transform: translateX(-28px);
+      opacity: 0;
+      filter: blur(4px);
+    }
+  }
+
+  .step-in-next {
+    animation: step-in-next 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .step-in-prev {
+    animation: step-in-prev 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .aurora-mesh,
     .animate-blob,
     .animate-blob-slow,
     .hero-rise,
-    .hero-fade-up {
+    .hero-fade-up,
+    .step-in-next,
+    .step-in-prev {
       animation: none !important;
     }
   }

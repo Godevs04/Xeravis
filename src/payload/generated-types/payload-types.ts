@@ -214,6 +214,10 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  /**
+   * Shown in interview invitations and staff emails.
+   */
+  name?: string | null;
   roles: ('super-admin' | 'administrator' | 'editor' | 'content-manager' | 'marketing' | 'recruiter' | 'viewer')[];
   updatedAt: string;
   createdAt: string;
@@ -1390,16 +1394,47 @@ export interface Department {
 export interface Interview {
   id: string;
   /**
-   * e.g. Technical screen — Jane Doe
+   * Leave blank to generate it, e.g. "Technical interview · Jane Doe · AI Engineer".
    */
-  title: string;
+  title?: string | null;
+  /**
+   * Candidate being interviewed.
+   */
   application: string | JobApplication;
+  /**
+   * Filled from the application when left blank.
+   */
   job?: (string | null) | Career;
+  /**
+   * Sets the wording of the invitation and moves the candidate forward (screening/technical → Interview Scheduled, final/HR → Final Interview).
+   */
+  round: 'screening' | 'technical' | 'final' | 'hr';
+  /**
+   * Each interviewer receives the invitation with the meeting link.
+   */
   interviewers?: (string | User)[] | null;
   scheduledAt: string;
+  durationMinutes: number;
   mode: 'video' | 'onsite' | 'phone';
+  /**
+   * Paste a Google Meet, Teams or Zoom link. Leave blank to create a secure Jitsi meeting room automatically.
+   */
   meetingLink?: string | null;
+  /**
+   * Office address and any arrival instructions for the candidate.
+   */
+  location?: string | null;
+  /**
+   * Setting this to Cancelled emails the candidate and panel.
+   */
   outcome?: ('scheduled' | 'completed' | 'no-show' | 'cancelled' | 'advance' | 'reject') | null;
+  /**
+   * Sends the invitation on create, updates when time/link change, and a notice on cancellation.
+   */
+  sendInvites?: boolean | null;
+  /**
+   * Interview feedback (internal only).
+   */
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -1451,6 +1486,9 @@ export interface JobApplication {
   earliestJoinDate?: string | null;
   healthcareExperience?: ('yes' | 'no') | null;
   consent: boolean;
+  /**
+   * Changing the stage emails the candidate (wording matches the stage), the recruiting inbox and assigned interviewers.
+   */
   status:
     | 'new'
     | 'under-review'
@@ -1462,6 +1500,10 @@ export interface JobApplication {
     | 'hired'
     | 'rejected'
     | 'withdrawn';
+  /**
+   * Turn off to move this candidate silently (the team is still notified).
+   */
+  sendStatusEmails?: boolean | null;
   recruiterNotes?: string | null;
   /**
    * Where this lead came from (first page of the visit and campaign tags).
@@ -2094,6 +2136,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
   roles?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2978,11 +3021,15 @@ export interface InterviewsSelect<T extends boolean = true> {
   title?: T;
   application?: T;
   job?: T;
+  round?: T;
   interviewers?: T;
   scheduledAt?: T;
+  durationMinutes?: T;
   mode?: T;
   meetingLink?: T;
+  location?: T;
   outcome?: T;
+  sendInvites?: T;
   notes?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3033,6 +3080,7 @@ export interface JobApplicationsSelect<T extends boolean = true> {
   healthcareExperience?: T;
   consent?: T;
   status?: T;
+  sendStatusEmails?: T;
   recruiterNotes?: T;
   attribution?:
     | T
