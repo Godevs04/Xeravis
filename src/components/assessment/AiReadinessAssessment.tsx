@@ -73,6 +73,7 @@ function ReportForm({ answers }: { answers: Answers }) {
 export function AiReadinessAssessment() {
   const [answers, setAnswers] = useState<Answers>({})
   const [step, setStep] = useState(0)
+  const [direction, setDirection] = useState<1 | -1>(1)
   const done = step >= QUESTIONS.length
   const result = useMemo(() => (done ? scoreAssessment(answers) : null), [done, answers])
   const question = QUESTIONS[Math.min(step, QUESTIONS.length - 1)]
@@ -83,6 +84,7 @@ export function AiReadinessAssessment() {
 
   function next() {
     const nextStep = step + 1
+    setDirection(1)
     setStep(nextStep)
     if (nextStep === QUESTIONS.length) track('assessment_completed')
   }
@@ -181,11 +183,14 @@ export function AiReadinessAssessment() {
       </div>
       <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[color:var(--color-hover)]">
         <div
-          className="h-full rounded-full bg-[color:var(--color-accent)] transition-[width]"
+          className="h-full rounded-full bg-[color:var(--color-accent)] transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
           style={{ width: `${(step / QUESTIONS.length) * 100}%` }}
         />
       </div>
-      <fieldset className="mt-6">
+      <fieldset
+        key={question.id}
+        className={cn('mt-6', direction > 0 ? 'step-in-next' : 'step-in-prev')}
+      >
         <legend className="font-display text-primary text-xl font-semibold">
           {question.prompt}
         </legend>
@@ -217,7 +222,10 @@ export function AiReadinessAssessment() {
         <Button
           variant="ghost"
           disabled={step === 0}
-          onClick={() => setStep((s) => Math.max(0, s - 1))}
+          onClick={() => {
+            setDirection(-1)
+            setStep((s) => Math.max(0, s - 1))
+          }}
         >
           Back
         </Button>

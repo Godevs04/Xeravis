@@ -18,17 +18,35 @@ type StageKey = (typeof CANDIDATE_STAGES)[number]['key']
 
 const STATUS_TO_STAGE: Record<string, { stage: StageKey; message: string }> = {
   new: { stage: 'received', message: 'We have your application and will review it shortly.' },
-  'under-review': { stage: 'review', message: 'Our recruiting team is reviewing your profile.' },
-  shortlisted: { stage: 'review', message: 'Your profile has been shortlisted.' },
-  'interview-scheduled': { stage: 'interview', message: 'Interviews are being scheduled.' },
-  'technical-assessment': { stage: 'interview', message: 'You are in the assessment stage.' },
-  'final-interview': { stage: 'interview', message: 'You are in the final interview stage.' },
-  offered: { stage: 'decision', message: 'An offer has been made. Check your email for details.' },
-  hired: { stage: 'decision', message: 'Welcome aboard!' },
+  'under-review': {
+    stage: 'review',
+    message: 'Our recruiting team is reviewing your profile. We will email you with next steps.',
+  },
+  shortlisted: {
+    stage: 'review',
+    message: 'You have been shortlisted. We will be in touch to arrange the next conversation.',
+  },
+  'interview-scheduled': {
+    stage: 'interview',
+    message: 'You are in the interview stage. Your invitation email has the time and meeting link.',
+  },
+  'technical-assessment': {
+    stage: 'interview',
+    message: 'You are in the technical assessment stage. Details are sent by email.',
+  },
+  'final-interview': {
+    stage: 'interview',
+    message: 'You have reached the final interview round. Check your email for the invitation.',
+  },
+  offered: {
+    stage: 'decision',
+    message: 'Congratulations, we would like to make you an offer. Check your email for details.',
+  },
+  hired: { stage: 'decision', message: 'Welcome to XELARVIS! Onboarding details are on the way.' },
   rejected: {
     stage: 'decision',
     message:
-      'This application is closed. Thank you for your interest; we encourage you to apply for future roles.',
+      'This application is closed. Thank you for your time; we would be glad to see you apply for future roles.',
   },
   withdrawn: { stage: 'decision', message: 'This application was withdrawn.' },
 }
