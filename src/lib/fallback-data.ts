@@ -66,7 +66,7 @@ export const DEFAULT_FOOTER = {
     },
   ],
   showNewsletter: true,
-  copyright: `© ${new Date().getFullYear()} Xelarvis Technologies. All rights reserved.`,
+  copyright: `© ${new Date().getFullYear()} XELARVIS Private Limited. All rights reserved.`,
 }
 
 export const FALLBACK_SERVICES = [
@@ -455,22 +455,22 @@ export const FALLBACK_OFFICES = {
   locations: [
     {
       name: 'Headquarters',
-      address: 'Technology Park, Phase 2',
-      city: 'Bangalore',
+      address: 'Hyderabad, Telangana',
+      city: 'Hyderabad',
       country: 'India',
-      hours: 'Mon–Fri, 9:00–18:00 IST',
+      hours: 'Mon–Fri, 9:30–18:30 IST',
     },
   ],
 }
 
 export const FALLBACK_CONTACT = {
-  email: 'hello@xelarvis.in',
-  phone: '+91 00000 00000',
+  email: 'info@xelarvis.in',
+  phone: '+91 63051 06646',
 }
 
 export const FALLBACK_STATS = [
   { label: 'Core services', value: '5' },
-  { label: 'Solution areas', value: '8' },
+  { label: 'Solution areas', value: '9' },
   { label: 'Delivery focus', value: 'Multi-industry' },
   { label: 'Practice pillars', value: 'AI · Data · Technology' },
 ]

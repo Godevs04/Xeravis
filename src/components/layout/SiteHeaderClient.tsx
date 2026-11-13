@@ -4,11 +4,12 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { ChevronDown, Menu, Search } from 'lucide-react'
+import { ChevronDown, Menu } from 'lucide-react'
 
 import { BrandLogo } from '@/components/brand/BrandLogo'
 import { AnnouncementBar, type AnnouncementData } from '@/components/layout/AnnouncementBar'
 import { MegaMenu, type MegaMenuItem } from '@/components/layout/MegaMenu'
+import { SiteSearchDialog } from '@/components/layout/SiteSearchDialog'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
@@ -73,6 +74,17 @@ export function SiteHeaderClient({
     },
     [cancelMegaClose],
   )
+
+  const closeMegaMenu = useCallback(() => {
+    cancelMegaClose()
+    setOpenMega(null)
+  }, [cancelMegaClose])
+
+  const [menuPath, setMenuPath] = useState(pathname)
+  if (menuPath !== pathname) {
+    setMenuPath(pathname)
+    setOpenMega(null)
+  }
 
   useEffect(() => {
     return () => cancelMegaClose()
@@ -187,17 +199,7 @@ export function SiteHeaderClient({
 
             <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1 lg:ml-1">
               <ThemeToggle className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)]" />
-              <Button
-                asChild
-                variant="ghost"
-                size="icon"
-                className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)]"
-                aria-label="Search"
-              >
-                <Link href="/search">
-                  <Search className="h-4 w-4" />
-                </Link>
-              </Button>
+              <SiteSearchDialog triggerClassName="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)]" />
               <Button
                 asChild
                 size="sm"
@@ -288,7 +290,12 @@ export function SiteHeaderClient({
 
         <AnimatePresence>
           {openItems?.length && openMega ? (
-            <div className="pointer-events-auto absolute top-full right-0 left-0 z-50 hidden pt-3 lg:block">
+            <div
+              className="pointer-events-auto absolute top-full right-0 left-0 z-50 hidden pt-3 lg:block"
+              onClick={(event) => {
+                if ((event.target as HTMLElement).closest('a')) closeMegaMenu()
+              }}
+            >
               {/* Extends upward into the pill so the cursor never hits empty space */}
               <div aria-hidden className="absolute inset-x-0 -top-6 h-6" />
               <MegaMenu key={openMega} id="xe-mega-menu" items={openItems} category={openMega} />

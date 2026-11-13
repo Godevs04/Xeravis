@@ -5,7 +5,6 @@ import { m as motion, useReducedMotion, type Variants } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Briefcase, Clock, MapPin, Sparkles, Users } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-import { CareerApplicationForm } from '@/components/forms/CareerApplicationForm'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -29,6 +28,8 @@ export type JobDetailData = {
 
 type JobDetailViewProps = {
   job: JobDetailData
+  /** Dedicated application page for this role. */
+  applyHref: string
   descriptionSlot?: ReactNode
   requirementsSlot?: ReactNode
   /** When false, show email apply CTA instead of the online form (fallback/demo jobs). */
@@ -75,6 +76,7 @@ function ContentBlock({
     <motion.section
       className="relative overflow-hidden rounded-[24px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] p-6 shadow-[var(--shadow-light)] backdrop-blur-xl sm:p-8"
       initial={reduce ? false : 'hidden'}
+      data-reveal
       whileInView="show"
       viewport={{ once: true, margin: '-6% 0px' }}
       custom={index}
@@ -111,6 +113,7 @@ function BulletCards({ items }: { items: string[] }) {
           key={item}
           className="flex gap-3 rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--color-hover)] px-4 py-3 text-sm leading-relaxed text-[color:var(--color-secondary)]"
           initial={reduce ? false : { opacity: 0, x: 12 }}
+          data-reveal
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.04 * i, duration: 0.4, ease: EASE }}
@@ -137,6 +140,7 @@ function SkillCloud({ items, accent }: { items: string[]; accent?: boolean }) {
               : 'border-[color:var(--glass-border)] bg-[color:var(--color-hover)] text-[color:var(--color-secondary)]',
           )}
           initial={reduce ? false : { opacity: 0, scale: 0.9 }}
+          data-reveal
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.03 * i, duration: 0.35, ease: EASE }}
@@ -151,6 +155,7 @@ function SkillCloud({ items, accent }: { items: string[]; accent?: boolean }) {
 
 export function JobDetailView({
   job,
+  applyHref,
   descriptionSlot,
   requirementsSlot,
   applicationsOpen = true,
@@ -162,6 +167,18 @@ export function JobDetailView({
   const preferredSkills = listItems(job.preferredSkills)
   const benefits = listItems(job.benefits)
   const typeLabel = job.type?.replace('-', ' ')
+  const mailtoHref = `mailto:hr@xelarvis.in?subject=${encodeURIComponent(`Application: ${job.title}`)}`
+  const summary = [
+    { icon: MapPin, label: 'Location', value: job.location },
+    { icon: Briefcase, label: 'Employment', value: typeLabel },
+    { icon: Sparkles, label: 'Work mode', value: job.workMode },
+    { icon: Clock, label: 'Experience', value: job.experienceRequired },
+    {
+      icon: Users,
+      label: 'Openings',
+      value: job.openings ? String(job.openings) : null,
+    },
+  ].filter((row) => Boolean(row.value))
 
   return (
     <>
@@ -237,10 +254,17 @@ export function JobDetailView({
                   size="lg"
                   className="rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-7 font-semibold text-white shadow-[0_0_32px_rgba(13,148,136,0.45)] hover:from-teal-400 hover:to-cyan-400"
                 >
-                  <Link href="#apply">
-                    Apply for this Position
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  {applicationsOpen ? (
+                    <Link href={applyHref}>
+                      Apply for this Position
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  ) : (
+                    <a href={mailtoHref}>
+                      Email recruiting
+                      <ArrowRight className="h-4 w-4" />
+                    </a>
+                  )}
                 </Button>
                 <Button
                   asChild
@@ -360,10 +384,11 @@ export function JobDetailView({
             ) : null}
           </div>
 
-          <aside id="apply" className="lg:sticky lg:top-28 lg:self-start">
+          <aside className="lg:sticky lg:top-28 lg:self-start">
             <motion.div
               className="relative overflow-hidden rounded-[28px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] p-6 shadow-[var(--shadow-floating)] backdrop-blur-2xl sm:p-7"
               initial={reduce ? false : { opacity: 0, y: 28 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: EASE }}
@@ -377,14 +402,45 @@ export function JobDetailView({
               />
               <div className="relative">
                 <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-accent)] uppercase">
-                  Application
+                  Role summary
                 </p>
                 <h2 className="font-display mt-2 text-xl font-semibold text-[color:var(--color-primary)]">
-                  Apply for this Position
+                  {job.title}
                 </h2>
+                {summary.length > 0 ? (
+                  <dl className="mt-5 space-y-3 border-t border-[color:var(--glass-border)] pt-5">
+                    {summary.map(({ icon: Icon, label, value }) => (
+                      <div key={label} className="flex items-center gap-3 text-sm">
+                        <Icon
+                          className="h-4 w-4 shrink-0 text-[color:var(--color-accent)]"
+                          strokeWidth={1.75}
+                          aria-hidden
+                        />
+                        <dt className="text-[color:var(--color-muted)]">{label}</dt>
+                        <dd className="ml-auto text-right font-semibold text-[color:var(--color-primary)] capitalize">
+                          {value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
                 <div className="mt-6">
                   {applicationsOpen ? (
-                    <CareerApplicationForm careerId={String(job.id)} jobTitle={job.title} />
+                    <div className="space-y-3">
+                      <Button
+                        asChild
+                        size="lg"
+                        className="w-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 font-semibold text-white shadow-[0_0_28px_rgba(13,148,136,0.35)] hover:from-teal-400 hover:to-cyan-400"
+                      >
+                        <Link href={applyHref}>
+                          Apply for this Position
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                      <p className="text-center text-xs text-[color:var(--color-muted)]">
+                        Four short steps · Resume in PDF or Word
+                      </p>
+                    </div>
                   ) : (
                     <div className="space-y-4 text-sm leading-relaxed text-[color:var(--color-secondary)]">
                       <p>
@@ -396,11 +452,7 @@ export function JobDetailView({
                         asChild
                         className="w-full rounded-full bg-[color:var(--color-accent)] font-semibold text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
                       >
-                        <a
-                          href={`mailto:hr@xelarvis.in?subject=${encodeURIComponent(`Application: ${job.title}`)}`}
-                        >
-                          Email hr@xelarvis.in
-                        </a>
+                        <a href={mailtoHref}>Email hr@xelarvis.in</a>
                       </Button>
                       <Button asChild variant="outline" className="w-full rounded-full">
                         <Link href="/careers#open-roles">Browse open roles</Link>

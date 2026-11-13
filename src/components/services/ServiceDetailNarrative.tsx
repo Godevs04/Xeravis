@@ -96,6 +96,7 @@ export function ServiceDetailNarrative({
               {hasChallenges ? (
                 <motion.div
                   initial={reduce ? false : 'hidden'}
+                  data-reveal
                   whileInView="show"
                   viewport={{ once: true, margin: '-8% 0px' }}
                   custom={0}
@@ -120,6 +121,7 @@ export function ServiceDetailNarrative({
                     hasChallenges ? 'mt-8 border-t border-[color:var(--glass-border)] pt-8' : '',
                   )}
                   initial={reduce ? false : 'hidden'}
+                  data-reveal
                   whileInView="show"
                   viewport={{ once: true, margin: '-8% 0px' }}
                   custom={1}
@@ -139,6 +141,7 @@ export function ServiceDetailNarrative({
               <motion.div
                 className="mb-8"
                 initial={reduce ? false : 'hidden'}
+                data-reveal
                 whileInView="show"
                 viewport={{ once: true }}
                 custom={0}
@@ -160,6 +163,7 @@ export function ServiceDetailNarrative({
                     <motion.li
                       key={benefit.title}
                       initial={reduce ? false : 'hidden'}
+                      data-reveal
                       whileInView="show"
                       viewport={{ once: true, margin: '-4% 0px' }}
                       custom={index + 1}
@@ -209,6 +213,7 @@ export function ServiceDetailNarrative({
                           aria-hidden
                           className="absolute bottom-0 left-0 h-[2px] origin-left bg-gradient-to-r from-teal-500 to-cyan-400"
                           initial={{ scaleX: 0 }}
+                          data-reveal
                           whileInView={{ scaleX: 1 }}
                           viewport={{ once: true }}
                           transition={{

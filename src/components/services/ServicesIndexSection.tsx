@@ -83,6 +83,7 @@ export function ServicesIndexSection({ services }: ServicesIndexSectionProps) {
             <motion.p
               className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase"
               initial={reduce ? false : { opacity: 0, y: 10 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, ease: EASE }}
@@ -92,16 +93,18 @@ export function ServicesIndexSection({ services }: ServicesIndexSectionProps) {
             <motion.h2
               className="font-display mt-3 max-w-xl text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.08] font-bold tracking-[-0.04em] text-[color:var(--color-primary)]"
               initial={reduce ? false : { opacity: 0, y: 16 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
             >
-              Engineered for measurable outcomes
+              Built for production
             </motion.h2>
           </div>
           <motion.p
             className="max-w-sm text-sm leading-relaxed text-[color:var(--color-secondary)] sm:text-right"
             initial={reduce ? false : { opacity: 0, y: 12 }}
+            data-reveal
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: 0.1, ease: EASE }}
@@ -119,6 +122,7 @@ export function ServicesIndexSection({ services }: ServicesIndexSectionProps) {
               <motion.li
                 key={service.id}
                 initial={reduce ? false : { opacity: 0, y: 20 }}
+                data-reveal
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-4% 0px' }}
                 transition={{ duration: 0.45, delay: index * 0.04, ease: EASE }}

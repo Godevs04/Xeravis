@@ -45,8 +45,7 @@ type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
   const careers = await listPublished<CareerDoc>('careers')
-  const slugs = careers.length ? careers : FALLBACK_JOBS
-  return slugs.map((c) => ({ slug: c.slug }))
+  return careers.map((c) => ({ slug: c.slug }))
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -95,30 +94,36 @@ export default async function CareerDetailPage({ params }: Props) {
     ...(doc.preferredSkills?.map((s) => s.item).filter(Boolean) as string[]),
   ]
 
-  const jsonLd = graphJsonLd(
-    jobPostingJsonLd({
-      title: doc.title,
-      description: doc.aboutRole || `Open role: ${doc.title} at Xelarvis Technologies.`,
-      path: `/careers/${slug}`,
-      datePosted: doc.postedAt || doc.createdAt || doc.updatedAt || undefined,
-      validThrough: doc.applicationDeadline || undefined,
-      employmentType: doc.type,
-      workMode: doc.workMode,
-      location: doc.location,
-      experienceRequirements: doc.experienceRequired,
-      skills,
-    }),
-    breadcrumbJsonLd([
-      { name: 'Home', path: '/' },
-      { name: 'Careers', path: '/careers' },
-      { name: doc.title, path: `/careers/${slug}` },
-    ]),
-  )
+  const breadcrumbs = breadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: 'Careers', path: '/careers' },
+    { name: doc.title, path: `/careers/${slug}` },
+  ])
+
+  // Only live CMS postings that accept applications qualify as JobPosting structured data.
+  const jsonLd = applicationsOpen
+    ? graphJsonLd(
+        jobPostingJsonLd({
+          title: doc.title,
+          description: doc.aboutRole || `Open role: ${doc.title} at XELARVIS.`,
+          path: `/careers/${slug}`,
+          datePosted: doc.postedAt || doc.createdAt || doc.updatedAt || undefined,
+          validThrough: doc.applicationDeadline || undefined,
+          employmentType: doc.type,
+          workMode: doc.workMode,
+          location: doc.location,
+          experienceRequirements: doc.experienceRequired,
+          skills,
+        }),
+        breadcrumbs,
+      )
+    : graphJsonLd(breadcrumbs)
 
   return (
     <>
       <JsonLd id="job-jsonld" data={jsonLd} />
       <JobDetailView
+        applyHref={`/careers/${slug}/apply`}
         applicationsOpen={applicationsOpen}
         closedMessage={
           job && !applicationsOpen ? 'This role is no longer accepting applications.' : undefined

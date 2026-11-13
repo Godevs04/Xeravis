@@ -59,8 +59,8 @@ const StoryProcess = dynamic(() =>
   import('@/blocks/story/StoryProcess').then((m) => m.StoryProcess),
 )
 const StoryProof = dynamic(() => import('@/blocks/story/StoryProof').then((m) => m.StoryProof))
-const StorySolution = dynamic(() =>
-  import('@/blocks/story/StorySolution').then((m) => m.StorySolution),
+const StorySolutionBlock = dynamic(() =>
+  import('@/blocks/story/StorySolutionBlock').then((m) => m.StorySolutionBlock),
 )
 
 export type PageBlock = {
@@ -192,7 +192,7 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
                 heading={block.heading as string}
                 subheading={block.subheading as string | undefined}
                 ctaLabel={(block.ctaLabel as string) || 'Schedule a Consultation'}
-                ctaHref={(block.ctaHref as string) || '/contact?intent=project'}
+                ctaHref={(block.ctaHref as string) || '/contact?intent=business'}
               />
             )
           case 'contactCta': {
@@ -328,7 +328,7 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
             )
           case 'storySolution':
             return (
-              <StorySolution
+              <StorySolutionBlock
                 key={key}
                 eyebrow={block.eyebrow as string | undefined}
                 heading={block.heading as string}

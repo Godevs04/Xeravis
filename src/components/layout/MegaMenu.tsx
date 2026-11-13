@@ -17,7 +17,6 @@ import {
   Calendar,
   Cloud,
   Cpu,
-  Download,
   FileText,
   FlaskConical,
   HeartPulse,
@@ -91,13 +90,26 @@ const CATEGORY_META: Record<string, { title: string; blurb: string; featuredLabe
   },
 }
 
-const QUICK_ACTIONS = [
-  { label: 'Case studies', href: '/case-studies', icon: FileText },
-  { label: 'Talk to expert', href: '/contact?intent=business', icon: Sparkles },
-  { label: 'Schedule consult', href: '/contact?intent=business', icon: Calendar },
-  { label: 'Company profile', href: '/about', icon: Download },
-  { label: 'Success stories', href: '/case-studies', icon: Activity },
-]
+const CALCOM_LINK = process.env.NEXT_PUBLIC_CALCOM_LINK?.replace(
+  /^https?:\/\/(app\.)?cal\.com\//,
+  '',
+)
+
+const QUICK_ACTIONS: { label: string; href: string; icon: typeof FileText; external?: boolean }[] =
+  [
+    { label: 'Case studies', href: '/case-studies', icon: FileText },
+    { label: 'Talk to an expert', href: '/contact?intent=business', icon: Sparkles },
+    CALCOM_LINK
+      ? {
+          label: 'Book a call',
+          href: `https://cal.com/${CALCOM_LINK}`,
+          icon: Calendar,
+          external: true,
+        }
+      : { label: 'Book a call', href: '/contact?intent=business', icon: Calendar },
+    { label: 'AI readiness check', href: '/ai-readiness', icon: Activity },
+    { label: 'Company overview', href: '/about/company-overview', icon: Building2 },
+  ]
 
 function iconForItem(label: string, href: string): LucideIcon {
   const t = `${label} ${href}`.toLowerCase()
@@ -568,7 +580,7 @@ export function MegaMenu({ items, category, className, id }: MegaMenuProps) {
               </div>
 
               <div className="grid max-h-[min(52vh,22rem)] gap-3 overflow-y-auto pr-1 sm:grid-cols-2">
-                {cards.slice(0, 8).map((item, index) => {
+                {cards.map((item, index) => {
                   const Icon = iconForItem(item.label, item.href)
                   const selected = item.href === activeHref
                   const tags = tagsForItem(item.label, item.href)
@@ -708,6 +720,7 @@ export function MegaMenu({ items, category, className, id }: MegaMenuProps) {
                   <Link
                     href={action.href}
                     role="menuitem"
+                    {...(action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-3 py-1.5 text-xs font-semibold text-[color:var(--color-secondary)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] hover:shadow-[var(--shadow-hover)]"
                   >
                     <Icon className="h-3.5 w-3.5 text-[color:var(--color-accent)]" />

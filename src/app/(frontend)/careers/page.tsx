@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Suspense } from 'react'
 
 import { WhyJoinSection } from '@/components/careers/WhyJoinSection'
@@ -12,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import { listPublished } from '@/lib/cms'
 import { isPastDeadline } from '@/lib/date'
 import { FALLBACK_JOBS } from '@/lib/fallback-data'
-import { GRADUATE_PROGRAMS, HIRING_STEPS, LIFE_AT_XELARVIS, WHY_JOIN } from '@/lib/site-ia'
+import { GRADUATE_PROGRAMS, HIRING_STEPS, WHY_JOIN } from '@/lib/site-ia'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
@@ -50,8 +49,8 @@ export const metadata = buildMetadata({
 const PROGRAMS = [
   {
     id: 'internships',
-    title: 'Internship Program',
-    body: 'Hands-on experience across Artificial Intelligence, Data Science, and IT Consulting with structured mentorship and real delivery work.',
+    title: 'Internships',
+    body: 'Hands-on work across AI, data science and IT consulting projects, with a named mentor and real delivery tasks.',
   },
   {
     id: 'graduates',
@@ -59,19 +58,9 @@ const PROGRAMS = [
     body: GRADUATE_PROGRAMS.body,
   },
   {
-    id: 'learning',
-    title: 'Learning & Development',
-    body: 'Certification support, research exposure, and continuous learning budgets so talent grows with the practice.',
-  },
-  {
     id: 'research',
-    title: 'Research Opportunities',
-    body: 'Collaborate with the AI Research Lab on publications, benchmarks, open-source, and applied innovation projects.',
-  },
-  {
-    id: 'benefits',
-    title: 'Employee Benefits',
-    body: 'Flexible work, learning budget, paid leave, and growth-focused career paths.',
+    title: 'Research opportunities',
+    body: 'Join the AI Research Lab on benchmarks, publications, open-source and applied projects.',
   },
 ] as const
 
@@ -101,29 +90,10 @@ export default async function CareersPage() {
     <>
       <CareersPageHero
         title="Build careers in AI, Data Science, and IT Consulting"
-        subtitle="Join XELARVIS to turn data and technology into measurable business value—across Artificial Intelligence, Data Science, IT Consulting, and Healthcare as a specialty."
+        subtitle="Work with engineers, data scientists and consultants on client programs in AI, data science and IT consulting, with a healthcare specialty track."
       />
 
       <WhyJoinSection benefits={WHY_JOIN} />
-
-      <Section id="life-at-xelarvis" surface>
-        <Container className="max-w-3xl">
-          <h2 className="font-display text-3xl font-bold tracking-tight text-[color:var(--color-primary)]">
-            {LIFE_AT_XELARVIS.title}
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-[color:var(--color-secondary)]">
-            {LIFE_AT_XELARVIS.body}
-          </p>
-          <ul className="mt-6 space-y-2 text-sm text-[color:var(--color-secondary)]">
-            {LIFE_AT_XELARVIS.bullets.map((item) => (
-              <li key={item} className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--color-accent)]" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
 
       <div id="hiring-process">
         <HiringProcessSection steps={HIRING_STEPS} />
@@ -142,17 +112,9 @@ export default async function CareersPage() {
                   : 'Preview roles below. Online applications open when positions are published in careers admin—or email hr@xelarvis.in.'}
               </p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                asChild
-                className="rounded-full bg-[color:var(--color-accent)] text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
-              >
-                <Link href="#open-roles">Browse roles</Link>
-              </Button>
-              <Button asChild variant="outline" className="rounded-full">
-                <a href="mailto:hr@xelarvis.in">Email recruiting</a>
-              </Button>
-            </div>
+            <Button asChild variant="outline" className="rounded-full">
+              <a href="mailto:hr@xelarvis.in">Email recruiting</a>
+            </Button>
           </div>
           {items.length === 0 ? (
             <div className="rounded-[24px] border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] p-8 text-center">
@@ -188,22 +150,23 @@ export default async function CareersPage() {
         </Container>
       </Section>
 
-      <Section>
-        <Container className="space-y-10">
-          {PROGRAMS.map((card) => (
-            <div
-              key={card.id}
-              id={card.id}
-              className="border-t border-[color:var(--color-border)] pt-8 first:border-t-0 first:pt-0"
-            >
-              <h3 className="font-display text-xl font-semibold text-[color:var(--color-primary)]">
-                {card.title}
-              </h3>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color:var(--color-secondary)]">
-                {card.body}
-              </p>
-            </div>
-          ))}
+      <Section id="programs">
+        <Container>
+          <h2 className="font-display text-2xl font-bold tracking-tight text-[color:var(--color-primary)]">
+            Early-career and research programs
+          </h2>
+          <div className="mt-8 grid gap-8 md:grid-cols-3">
+            {PROGRAMS.map((card) => (
+              <div key={card.id} id={card.id}>
+                <h3 className="font-display text-lg font-semibold text-[color:var(--color-primary)]">
+                  {card.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-secondary)]">
+                  {card.body}
+                </p>
+              </div>
+            ))}
+          </div>
         </Container>
       </Section>
     </>

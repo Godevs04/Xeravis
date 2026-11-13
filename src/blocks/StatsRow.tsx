@@ -98,6 +98,7 @@ export function StatsRow({ heading, stats }: StatsRowProps) {
               key={`${stat.label}-${index}`}
               className="group relative isolate min-w-0 overflow-hidden rounded-[24px] border border-[color:var(--glass-border-soft)] bg-[color:var(--glass-bg)] p-5 shadow-[var(--shadow-medium)] backdrop-blur-2xl sm:p-6"
               initial={reduce ? false : { opacity: 0, y: 18 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8% 0px' }}
               transition={{

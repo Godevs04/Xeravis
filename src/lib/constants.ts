@@ -2,7 +2,7 @@ export const SITE = {
   defaultLocale: 'en',
   revalidateSeconds: 60,
   contactPath: '/contact',
-  projectIntentQuery: 'intent=project',
+  projectIntentQuery: 'intent=business',
 } as const
 
 export const ROUTES = {

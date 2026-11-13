@@ -68,6 +68,7 @@ export function TechnologyEcosystem({
               <motion.div
                 key={item.id}
                 initial={reduce ? false : { opacity: 0, scale: 0.94 }}
+                data-reveal
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{

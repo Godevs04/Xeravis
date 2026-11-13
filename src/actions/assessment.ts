@@ -95,42 +95,48 @@ export async function submitAssessment(
       )
       .join('')
 
-    after(async () => {
-      await Promise.allSettled([
-        sendEmail({
-          to: email,
-          subject: `Your AI readiness score: ${result.overall}% (${result.level.label})`,
-          text: [
-            `Overall: ${result.overall}% (${result.level.label})`,
-            result.level.summary,
-            '',
-            ...result.dimensions.map((d) => `${d.label}: ${d.score}%`),
-            '',
-            'Where to focus next:',
-            ...result.focus.map((key) => `- ${DIMENSIONS[key].label}: ${DIMENSIONS[key].advice}`),
-            '',
-            `Talk to us: ${absoluteUrl('/contact?intent=business')}`,
-          ].join('\n'),
-          html: emailLayout({
-            heading: `AI readiness: ${result.overall}% (${result.level.label})`,
-            bodyHtml: `<p style="margin:0 0 14px">${escapeHtml(result.level.summary)}</p><ul style="margin:0 0 14px;padding-left:18px">${rows}</ul><p style="margin:0 0 8px"><strong>Where to focus next</strong></p><ul style="margin:0;padding-left:18px">${focus}</ul>`,
-            cta: { label: 'Discuss your roadmap', href: absoluteUrl('/contact?intent=business') },
-          }),
-        }),
-        notifyLead({
-          type: 'assessment',
-          title: `${result.overall}% (${result.level.label})`,
-          fields: [
-            ['Email', email],
-            ['Name', name],
-            ['Company', company],
-          ],
-          adminPath: '/admin/collections/form-submissions',
-        }),
-      ])
+    const sent = await sendEmail({
+      to: email,
+      subject: `Your AI readiness score: ${result.overall}% (${result.level.label})`,
+      text: [
+        `Overall: ${result.overall}% (${result.level.label})`,
+        result.level.summary,
+        '',
+        ...result.dimensions.map((d) => `${d.label}: ${d.score}%`),
+        '',
+        'Where to focus next:',
+        ...result.focus.map((key) => `- ${DIMENSIONS[key].label}: ${DIMENSIONS[key].advice}`),
+        '',
+        `Talk to us: ${absoluteUrl('/contact?intent=business')}`,
+      ].join('\n'),
+      html: emailLayout({
+        heading: `AI readiness: ${result.overall}% (${result.level.label})`,
+        bodyHtml: `<p style="margin:0 0 14px">${escapeHtml(result.level.summary)}</p><ul style="margin:0 0 14px;padding-left:18px">${rows}</ul><p style="margin:0 0 8px"><strong>Where to focus next</strong></p><ul style="margin:0;padding-left:18px">${focus}</ul>`,
+        cta: { label: 'Discuss your roadmap', href: absoluteUrl('/contact?intent=business') },
+      }),
     })
 
-    return { ok: true, message: `Report sent to ${email}. Check your inbox in a minute.` }
+    after(() =>
+      notifyLead({
+        type: 'assessment',
+        title: `${result.overall}% (${result.level.label})`,
+        fields: [
+          ['Email', email],
+          ['Name', name],
+          ['Company', company],
+        ],
+        adminPath: '/admin/collections/form-submissions',
+      }),
+    )
+
+    if (!sent) {
+      return {
+        ok: true,
+        message:
+          'Your results are on this page. We could not email the report just now; email info@xelarvis.in if you would like a copy.',
+      }
+    }
+    return { ok: true, message: `Report sent to ${email}. Check your inbox (and spam folder).` }
   } catch {
     return { ok: false, message: 'Unable to send the report right now. Please try again.' }
   }

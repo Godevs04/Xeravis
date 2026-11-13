@@ -182,7 +182,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <PageHero
         eyebrow="Service"
         title={service.title}
-        subtitle={overview?.heroHeadline || service.summary}
+        subtitle={overview?.heroHeadline}
         image={heroUrl || undefined}
         size="compact"
         variant="default"
@@ -212,11 +212,13 @@ export default async function ServiceDetailPage({ params }: Props) {
           overview?.whyChoose ||
           'XELARVIS combines Artificial Intelligence, Data Science, and IT Consulting for production systems.'
         }
-        howDeliver={overview?.howDeliver || 'Discover → Design → Build → Deploy → Optimize'}
+        howDeliver={
+          overview?.howDeliver || 'Discover → Strategize → Design → Build → Deploy → Optimize'
+        }
         industries={extras?.industries?.join(', ') || industryLabelsFor(service.slug)}
         outcomes={
           overview?.outcomes ||
-          'Governed delivery, clearer decisions, scalable platforms, and measurable operational outcomes'
+          'Clearer decisions, scalable platforms and systems your teams can run'
         }
       />
 
@@ -235,12 +237,6 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </li>
               ))}
             </ul>
-            {overview.businessOutcome ? (
-              <p className="text-secondary mt-8 max-w-3xl text-sm leading-relaxed sm:text-base">
-                <span className="text-primary font-semibold">Business outcome. </span>
-                {overview.businessOutcome}
-              </p>
-            ) : null}
           </Container>
         </Section>
       ) : null}
@@ -274,7 +270,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           <Container>
             <h2 className="text-2xl font-bold">How we deliver</h2>
             <p className="text-secondary mt-3 max-w-2xl text-sm sm:text-base">
-              How we move from business problem to governed delivery for this service.
+              The steps we follow on this service, from first workshop to handover.
             </p>
             <ol className="mt-8 grid gap-6 md:grid-cols-2">
               {service.process.map((step, index) => (

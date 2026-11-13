@@ -147,7 +147,8 @@ export function DownloadCard({ item }: { item: DownloadItem }) {
         <ModalHeader>
           <ModalTitle>{item.title}</ModalTitle>
           <ModalDescription>
-            Tell us where to send updates and the download starts.
+            Enter your work email and the download starts. We send one confirmation email; no
+            mailing list unless you subscribe.
           </ModalDescription>
         </ModalHeader>
         <GatedDownloadForm item={item} />

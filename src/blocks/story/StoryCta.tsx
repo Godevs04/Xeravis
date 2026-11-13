@@ -28,6 +28,7 @@ export function StoryCta({
         <motion.p
           className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase"
           initial={reduce ? false : { opacity: 0 }}
+          data-reveal
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
@@ -36,6 +37,7 @@ export function StoryCta({
         <motion.h2
           className="font-display mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,7vw,5.5rem)] leading-[0.95] font-bold tracking-[-0.05em] text-balance text-[color:var(--hero-text)]"
           initial={reduce ? false : { opacity: 0, y: 28 }}
+          data-reveal
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}

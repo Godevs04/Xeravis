@@ -3,6 +3,8 @@ import { getPayload, type CollectionSlug, type GlobalSlug, type Payload, type Wh
 
 loadEnv({ path: '.env' })
 loadEnv({ path: '.env.local', override: true })
+// e.g. ENV_FILE=.env.prod to target the production database.
+if (process.env.ENV_FILE) loadEnv({ path: process.env.ENV_FILE, override: true })
 
 /** Every record created during QA carries at least one of these markers. */
 export const TEST_TITLE_PREFIX = '[TEST]'

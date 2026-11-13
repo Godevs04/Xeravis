@@ -3,6 +3,7 @@ import { getPayload, type Payload } from 'payload'
 
 import { logger } from '../lib/logger'
 import { SEED_INDUSTRIES, SEED_SERVICES, SEED_SOLUTIONS, SEED_TECHNOLOGIES } from './content'
+import { HOME_LAYOUT } from './home-layout'
 import {
   INDUSTRY_TIER_MAP,
   SERVICE_INDUSTRY_MAP,
@@ -182,7 +183,7 @@ async function seed() {
         },
       ],
       showNewsletter: true,
-      copyright: 'XELARVIS PRIVATE LIMITED. All rights reserved.',
+      copyright: '© XELARVIS Private Limited. All rights reserved.',
     },
     overrideAccess: true,
   })
@@ -190,8 +191,8 @@ async function seed() {
   await payload.updateGlobal({
     slug: 'contact-details',
     data: {
-      email: 'hello@xelarvis.in',
-      phone: '+91 00000 00000',
+      email: 'info@xelarvis.in',
+      phone: '+91 63051 06646',
       whatsapp: '',
       hours: 'Mon–Fri, 9:30–18:30 IST',
       mapEmbedUrl: '',
@@ -219,7 +220,7 @@ async function seed() {
       locations: [
         {
           name: 'Headquarters',
-          address: 'India',
+          address: 'Hyderabad, Telangana',
           city: 'Hyderabad',
           country: 'India',
           hours: 'Mon–Fri, 9:30–18:30 IST',
@@ -506,151 +507,9 @@ async function seed() {
     }
   }
 
-  const homeLayout = [
-    {
-      blockType: 'storyHero' as const,
-      brand: 'Xelarvis',
-      eyebrow: 'Artificial Intelligence · Data Science · IT Consulting',
-      heading: 'Engineering Intelligence. Transforming Business.',
-      subheading:
-        'XELARVIS combines Artificial Intelligence, Data Science and IT Consulting to help organizations turn complex data and technology challenges into measurable business outcomes.',
-      ctaLabel: 'Explore Our Capabilities',
-      ctaHref: '/services',
-      secondaryCtaLabel: 'Talk to XELARVIS',
-      secondaryCtaHref: '/contact?intent=business',
-    },
-    {
-      blockType: 'storyChallenge' as const,
-      eyebrow: 'Business problems',
-      heading: 'Organizations are facing three connected challenges.',
-      items: [
-        {
-          title: 'Data complexity',
-          body: 'Disconnected data makes decision-making slow.',
-        },
-        {
-          title: 'AI adoption',
-          body: 'Organizations struggle to move AI from experimentation into production.',
-        },
-        {
-          title: 'Technology modernization',
-          body: 'Legacy systems limit scalability, security and innovation.',
-        },
-      ],
-    },
-    {
-      blockType: 'storySolution' as const,
-      eyebrow: 'What XELARVIS does',
-      heading: 'XELARVIS connects strategy, data, AI and technology execution.',
-      chapters: [
-        {
-          title: 'Artificial Intelligence',
-          body: 'Build and deploy intelligent systems using machine learning, generative AI, computer vision, NLP and AI agents.',
-        },
-        {
-          title: 'Data Science & Analytics',
-          body: 'Turn complex data into predictions, insights and decisions through advanced analytics, machine learning and business intelligence.',
-        },
-        {
-          title: 'IT Consulting & Digital Transformation',
-          body: 'Modernize technology ecosystems through architecture, cloud, software engineering, automation and digital transformation.',
-        },
-        {
-          title: 'Data Engineering & Cloud',
-          body: 'Design scalable data architectures, lakes, warehouses, pipelines, and MLOps infrastructure on the cloud.',
-        },
-        {
-          title: 'Healthcare & Clinical Data Science',
-          body: 'Specialized clinical SAS, CDISC standards, and analytics for regulated life sciences and care delivery.',
-        },
-      ],
-    },
-    {
-      blockType: 'storyCapabilities' as const,
-      eyebrow: 'Capabilities',
-      heading: 'How we help — five practice areas.',
-      subheading:
-        'Capabilities are how we work. Solutions are the business problems we solve across AI, data, consulting, and healthcare specialty programs.',
-    },
-    {
-      blockType: 'storySolutions' as const,
-      eyebrow: 'Solutions',
-      heading: 'What we solve — outcome themes for enterprise programs.',
-      subheading:
-        'Nine solution areas package our capabilities into business-ready programs — from enterprise AI and automation to data platforms and clinical intelligence.',
-    },
-    {
-      blockType: 'storyTechOrbit' as const,
-      eyebrow: 'Technology',
-      heading: 'A constellation, not a checklist.',
-      subheading:
-        'Hover the orbit. Each node is a capability we put into production for enterprise and industry teams.',
-    },
-    {
-      blockType: 'storyProof' as const,
-      eyebrow: 'Credibility',
-      heading: 'Clarity, evidence and governed delivery.',
-      stats: [
-        { label: 'Core services', value: '5' },
-        { label: 'Solution areas', value: '9' },
-        { label: 'Delivery pillars', value: 'AI · Data · IT' },
-        { label: 'Specialty', value: 'Healthcare' },
-      ],
-    },
-    {
-      blockType: 'storyCases' as const,
-      eyebrow: 'Evidence',
-      heading: 'Representative engagements and delivery patterns.',
-    },
-    {
-      blockType: 'storyProcess' as const,
-      eyebrow: 'XELARVIS Delivery Framework',
-      heading: 'From business problem to measurable results.',
-      steps: [
-        {
-          title: 'Discover',
-          description: 'Understand the business problem, stakeholders, and success criteria.',
-        },
-        {
-          title: 'Strategize',
-          description: 'Define the AI, data and technology roadmap aligned to outcomes.',
-        },
-        {
-          title: 'Design',
-          description: 'Architect scalable solutions, data flows, and governance.',
-        },
-        {
-          title: 'Build',
-          description: 'Develop models, platforms, and applications with quality built in.',
-        },
-        {
-          title: 'Deploy',
-          description: 'Ship to production with monitoring and operational readiness.',
-        },
-        {
-          title: 'Optimize',
-          description: 'Measure outcomes, refine performance, and expand what works.',
-        },
-      ],
-    },
-    {
-      blockType: 'storyPresence' as const,
-      eyebrow: 'Trust',
-      heading: 'Consulting + engineering for enterprise buyers.',
-    },
-    {
-      blockType: 'storyCta' as const,
-      heading: "Let's solve your next data, AI or technology challenge.",
-      subheading:
-        'Talk with XELARVIS about AI, data science, IT consulting, data platforms or healthcare specialty programs.',
-      ctaLabel: 'Talk to XELARVIS',
-      ctaHref: '/contact?intent=business',
-    },
-  ]
-
   await upsertBySlug(payload, 'pages', 'home', {
     title: 'Home',
-    layout: homeLayout,
+    layout: HOME_LAYOUT,
   })
 
   const aboutLayout = [
@@ -689,7 +548,7 @@ async function seed() {
       slug: 'privacy-policy',
       title: 'Privacy Policy',
       heading: 'Privacy Policy',
-      body: 'This privacy policy describes how XELARVIS PRIVATE LIMITED collects and uses information. Update this page in the CMS with your final legal copy.',
+      body: 'This privacy policy describes how XELARVIS Private Limited collects and uses information. Update this page in the CMS with your final legal copy.',
     },
     {
       slug: 'terms',

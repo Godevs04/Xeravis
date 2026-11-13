@@ -57,7 +57,7 @@ export async function GET() {
     `# Xelarvis Technologies (${absoluteUrl('/')})`,
     '# Machine-readable summary for AI assistants and answer engines.',
     '',
-    '> Xelarvis (XELARVIS PRIVATE LIMITED) is a global AI research, IT consulting, data science, and healthcare AI company, positioned closer to enterprise consulting and applied research organisations than to a typical software agency.',
+    '> XELARVIS Private Limited is an AI, data science and IT consulting company, with healthcare and clinical data science as a specialty practice.',
     '',
     '## Who we serve',
     '- Hospitals and healthcare networks',

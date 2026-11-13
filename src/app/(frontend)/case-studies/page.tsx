@@ -34,7 +34,7 @@ export default async function CaseStudiesPage() {
         brand="Xelarvis"
         eyebrow="Evidence"
         title="Representative engagements."
-        subtitle="Anonymized delivery patterns that show how XELARVIS moves from business problem to governed outcomes, with the results each engagement delivered."
+        subtitle="Anonymized examples of our delivery work: the problem, the approach and what changed."
         size="compact"
       />
       <Section>

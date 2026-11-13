@@ -9,9 +9,12 @@ import {
 } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-/** Soft mesh + a few orbs — kept light for main-thread / LCP. */
+import { RICH_MOTION_QUERY, useMediaQuery } from '@/hooks/useMediaQuery'
+
+/** Soft mesh + a few orbs — kept light for main-thread / LCP. Static on touch and narrow screens. */
 export function AmbientBackground() {
   const reduce = useReducedMotion()
+  const richMotion = useMediaQuery(RICH_MOTION_QUERY)
   const [mounted, setMounted] = useState(false)
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
@@ -19,7 +22,7 @@ export function AmbientBackground() {
   const sy = useSpring(my, { stiffness: 40, damping: 22, mass: 0.6 })
   const layerA = useMotionTemplate`translate3d(${sx}px, ${sy}px, 0)`
   const layerB = useMotionTemplate`translate3d(calc(${sx}px * -0.55), calc(${sy}px * -0.4), 0)`
-  const live = mounted && !reduce
+  const live = mounted && !reduce && richMotion
 
   useEffect(() => {
     // Defer motion orbs until after first paint / interaction — cuts main-thread work for LCP.

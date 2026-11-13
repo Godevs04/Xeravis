@@ -7,6 +7,7 @@ import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { getGlobal } from '@/lib/cms'
+import { FALLBACK_CONTACT } from '@/lib/fallback-data'
 import { buildMetadata, SOCIAL_PROFILES } from '@/lib/seo'
 import { CONTACT_INTENTS } from '@/lib/site-ia'
 
@@ -74,7 +75,11 @@ export default async function ContactPage() {
   ])
 
   const locations = offices?.locations ?? []
-  const details = contact ?? {}
+  const details = {
+    ...contact,
+    email: contact?.email || FALLBACK_CONTACT.email,
+    phone: contact?.phone || FALLBACK_CONTACT.phone,
+  }
   const mapSrc = details.mapEmbedUrl || extractIframeSrc(details.mapEmbed)
 
   const socialLinks = [
@@ -146,7 +151,16 @@ export default async function ContactPage() {
                     </a>
                   </li>
                 ) : null}
-                {details.phone ? <li>{details.phone}</li> : null}
+                {details.phone ? (
+                  <li>
+                    <a
+                      href={`tel:${details.phone.replace(/[^\d+]/g, '')}`}
+                      className="hover:text-accent"
+                    >
+                      {details.phone}
+                    </a>
+                  </li>
+                ) : null}
                 {details.whatsapp ? (
                   <li>
                     <a
@@ -171,9 +185,15 @@ export default async function ContactPage() {
                   {locations.map((office) => (
                     <li key={office.name} className="text-secondary text-sm">
                       <p className="text-primary font-semibold">{office.name}</p>
-                      <p className="mt-1 whitespace-pre-line">{office.address}</p>
+                      {office.address &&
+                      office.address !== office.country &&
+                      office.address !== office.city ? (
+                        <p className="mt-1 whitespace-pre-line">{office.address}</p>
+                      ) : null}
                       <p>
-                        {office.city}, {office.country}
+                        {office.address?.includes(office.city)
+                          ? office.country
+                          : `${office.city}, ${office.country}`}
                       </p>
                       {office.hours ? <p className="text-muted mt-1">{office.hours}</p> : null}
                     </li>

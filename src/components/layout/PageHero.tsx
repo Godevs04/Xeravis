@@ -43,20 +43,6 @@ const EASE = [0.22, 1, 0.36, 1] as const
 
 const EMPHASIS = /\b(AI|Healthcare|Enterprise|Innovation|Cloud|Digital|Intelligent|Excellence)\b/gi
 
-const TRUST_LOGOS = [
-  { name: 'Banking & Finance', mark: 'BF' },
-  { name: 'Manufacturing', mark: 'MF' },
-  { name: 'Healthcare Specialty', mark: 'HS' },
-  { name: 'Technology', mark: 'TE' },
-]
-
-const LIVE_PILLARS = [
-  { label: 'Artificial Intelligence', short: 'AI' },
-  { label: 'Data Science', short: 'Data' },
-  { label: 'IT Consulting', short: 'IT' },
-  { label: 'Healthcare Specialty', short: 'Health' },
-]
-
 function renderEmphasizedTitle(title: string) {
   const parts: ReactNode[] = []
   let last = 0
@@ -187,7 +173,7 @@ export function PageHero({
   ctas = [],
   align = 'left',
   size = 'default',
-  variant = 'product',
+  variant = 'default',
   brand = 'Xelarvis',
 }: PageHeroProps) {
   const reduce = useReducedMotion()
@@ -201,8 +187,6 @@ export function PageHero({
     target: sectionRef,
     offset: ['start start', 'end start'],
   })
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, reduce ? 1 : 0.25])
-  const contentY = useTransform(scrollYProgress, [0, 0.55], [0, reduce ? 0 : -28])
   const bgMorph = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 1.08])
 
   const fade = (delay: number) =>
@@ -235,8 +219,9 @@ export function PageHero({
         </motion.div>
 
         <Container className="relative z-10 grid items-center gap-10 pt-28 pb-20 lg:grid-cols-[1.02fr_1.08fr] lg:gap-10 lg:pt-32 lg:pb-24 xl:gap-12">
-          <motion.div className="relative z-10" style={{ opacity: contentOpacity, y: contentY }}>
+          <div className="relative z-10">
             <motion.div
+              data-reveal
               {...fade(0.04)}
               className="mb-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-1.5 shadow-[var(--shadow-light)] backdrop-blur-md"
             >
@@ -275,7 +260,7 @@ export function PageHero({
             ) : null}
 
             {ctas.length > 0 ? (
-              <motion.div {...fade(0.42)} className="mt-8 flex flex-wrap gap-3">
+              <motion.div data-reveal {...fade(0.42)} className="mt-8 flex flex-wrap gap-3">
                 {ctas.map((cta) => {
                   const isOutline = cta.variant === 'outline' || cta.variant === 'secondary'
                   return (
@@ -289,45 +274,7 @@ export function PageHero({
                 })}
               </motion.div>
             ) : null}
-
-            <motion.div {...fade(0.5)} className="mt-10">
-              <p className="mb-3 text-[10px] font-bold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase">
-                Industries we serve
-              </p>
-              <div className="flex flex-wrap gap-2.5 sm:gap-3">
-                {TRUST_LOGOS.map((logo) => (
-                  <div
-                    key={logo.name}
-                    className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-1.5 text-[color:var(--hero-muted)] transition-[color,border-color,background] duration-300 hover:border-[color:var(--color-accent)]/40 hover:text-[color:var(--hero-text)]"
-                  >
-                    <span className="grid h-5 w-5 place-items-center rounded-md bg-[color:var(--color-hover)] text-[9px] font-bold tracking-wide text-[color:var(--hero-muted)] transition-colors group-hover:bg-teal-500/20 group-hover:text-[color:var(--color-accent)]">
-                      {logo.mark}
-                    </span>
-                    <span className="text-[11px] font-semibold tracking-wide">{logo.name}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              {...fade(0.58)}
-              className="mt-8 grid max-w-xl grid-cols-2 gap-3 border-t border-[color:var(--hero-panel-border)] pt-7 sm:grid-cols-4"
-            >
-              {LIVE_PILLARS.map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-3 shadow-[var(--shadow-light)] backdrop-blur-md"
-                >
-                  <p className="font-display text-sm font-bold tracking-tight text-[color:var(--hero-text)] sm:text-base">
-                    {item.short}
-                  </p>
-                  <p className="mt-1 text-[10px] leading-snug text-[color:var(--hero-muted)] sm:text-xs">
-                    {item.label}
-                  </p>
-                </div>
-              ))}
-            </motion.div>
-          </motion.div>
+          </div>
 
           <div className="relative z-10 min-h-[340px] overflow-visible sm:min-h-[440px] lg:min-h-[520px]">
             <HeroProductVisual scrollProgress={scrollYProgress} />
@@ -351,6 +298,7 @@ export function PageHero({
 
   return (
     <section
+      ref={sectionRef}
       className={cn(
         'relative overflow-hidden border-b border-[color:var(--color-border)] bg-[color:var(--color-background)]',
         image ? 'min-h-[min(100svh,720px)]' : 'pt-24 lg:pt-28',
@@ -401,7 +349,7 @@ export function PageHero({
           </p>
         ) : null}
         {ctas.length > 0 ? (
-          <motion.div {...fade(0.24)} className="mt-8 flex flex-wrap gap-3">
+          <motion.div data-reveal {...fade(0.24)} className="mt-8 flex flex-wrap gap-3">
             {ctas.map((cta) => {
               const isOutline = cta.variant === 'outline' || cta.variant === 'secondary'
               return (

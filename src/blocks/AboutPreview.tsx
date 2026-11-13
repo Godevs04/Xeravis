@@ -34,7 +34,10 @@ const HOW_WE_WORK = [
 const PRINCIPLES = [
   { title: 'Research-driven', detail: 'Evaluation, evidence and responsible AI over hype.' },
   { title: 'Engineering-led', detail: 'Architecture and delivery that survive production.' },
-  { title: 'Outcome-focused', detail: 'Problem → solution → measurable business value.' },
+  {
+    title: 'Outcome-focused',
+    detail: 'We start from the business problem and agree how success is measured.',
+  },
 ]
 
 export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
@@ -63,6 +66,7 @@ export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
             <motion.p
               className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase"
               initial={reduce ? false : { opacity: 0, y: 10 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, ease: EASE }}
@@ -72,6 +76,7 @@ export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
             <motion.h2
               className="font-display mt-4 text-[clamp(1.85rem,3.5vw,2.85rem)] font-bold tracking-[-0.04em] text-balance text-[color:var(--color-primary)]"
               initial={reduce ? false : { opacity: 0, y: 18 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: 0.05, ease: EASE }}
@@ -81,6 +86,7 @@ export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
             <motion.p
               className="mt-5 max-w-xl text-base leading-relaxed text-[color:var(--color-secondary)] sm:text-lg"
               initial={reduce ? false : { opacity: 0, y: 14 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
@@ -90,6 +96,7 @@ export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
             {cta?.label && cta?.href ? (
               <motion.div
                 initial={reduce ? false : { opacity: 0, y: 10 }}
+                data-reveal
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: 0.16, ease: EASE }}
@@ -112,6 +119,7 @@ export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
             <motion.div
               className="relative overflow-hidden rounded-[24px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] p-5 shadow-[var(--shadow-medium)] backdrop-blur-xl sm:col-span-2 sm:p-6"
               initial={reduce ? false : { opacity: 0, y: 22 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, ease: EASE }}
@@ -137,6 +145,7 @@ export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
                       key={m.step}
                       className="relative rounded-2xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] px-3 py-3 text-center shadow-[var(--shadow-light)]"
                       initial={reduce ? false : { opacity: 0, y: 12 }}
+                      data-reveal
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.08 + i * 0.05, duration: 0.4, ease: EASE }}
@@ -164,6 +173,7 @@ export function AboutPreview({ heading, body, cta }: AboutPreviewProps) {
                   'hover:-translate-y-1 hover:border-[color:var(--color-accent)] hover:shadow-[var(--shadow-hover)]',
                 )}
                 initial={reduce ? false : { opacity: 0, y: 20 }}
+                data-reveal
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.12 + i * 0.06, duration: 0.45, ease: EASE }}

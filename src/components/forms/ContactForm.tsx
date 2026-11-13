@@ -49,6 +49,8 @@ export function ContactForm() {
     setIntent(defaultIntent)
   }, [defaultIntent])
 
+  const isCareer = intent === 'career'
+
   return (
     <form
       ref={formRef}
@@ -103,7 +105,7 @@ export function ContactForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Business email</Label>
+          <Label htmlFor="email">{isCareer ? 'Email' : 'Business email'}</Label>
           <Input
             id="email"
             name="email"
@@ -117,7 +119,7 @@ export function ContactForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="company">Company</Label>
+          <Label htmlFor="company">{isCareer ? 'Current company' : 'Company'}</Label>
           <Input id="company" name="company" autoComplete="organization" />
         </div>
         <div className="space-y-2">
@@ -134,7 +136,11 @@ export function ContactForm() {
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="message">Tell us about your challenge</Label>
+        <Label htmlFor="message">
+          {isCareer
+            ? 'Tell us about your background and the kind of role you are looking for'
+            : 'Tell us about your challenge'}
+        </Label>
         <Textarea
           id="message"
           name="message"

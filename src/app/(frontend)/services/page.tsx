@@ -10,6 +10,7 @@ import { listPublished } from '@/lib/cms'
 import { FALLBACK_INDUSTRIES } from '@/lib/fallback-data'
 import { mergePublishedServices } from '@/lib/services-catalog'
 import { buildMetadata } from '@/lib/seo'
+import { isEngineeringStack } from '@/lib/tech-stack'
 
 export const revalidate = 60
 
@@ -172,11 +173,14 @@ export default async function ServicesPage() {
         heading="Engineering stack behind delivery"
         subheading="The cloud, data, AI and DevOps tools we use to design, build and run production systems."
         surface
-        items={technologies.slice(0, 6).map((t) => ({
-          href: `/technologies#${t.slug}`,
-          label: t.title || t.name || t.slug,
-          description: t.description || t.category || undefined,
-        }))}
+        items={technologies
+          .filter(isEngineeringStack)
+          .slice(0, 6)
+          .map((t) => ({
+            href: `/technologies#${t.slug}`,
+            label: t.title || t.name || t.slug,
+            description: t.description || t.category || undefined,
+          }))}
         viewAll={{ href: '/technologies', label: 'Full stack →' }}
       />
 
@@ -216,7 +220,7 @@ export default async function ServicesPage() {
 
       <CTABand
         heading="Map capabilities to your initiative"
-        subheading="Tell us the business problem—we will align services, solutions, and a governed delivery path."
+        subheading="Tell us the business problem and we will propose the right services and a realistic delivery plan."
         ctaLabel="Talk to XELARVIS"
         ctaHref="/contact?intent=business"
       />

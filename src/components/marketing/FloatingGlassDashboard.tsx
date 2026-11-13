@@ -47,6 +47,7 @@ export function FloatingGlassDashboard({ className }: FloatingGlassDashboardProp
               key={h}
               className="flex-1 rounded-t-md bg-gradient-to-t from-teal-600/80 to-cyan-400/90"
               initial={reduce ? false : { height: 8 }}
+              data-reveal
               whileInView={{ height: `${h}%` }}
               viewport={{ once: true }}
               transition={{ delay: 0.15 + i * 0.05, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}

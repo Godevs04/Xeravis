@@ -420,4 +420,30 @@
       animation: none !important;
     }
   }
+
+  /* Touch and narrow screens: content is visible on first paint — scroll reveals are desktop-only. */
+  @media (hover: none), (max-width: 1023px) {
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+
+    .aurora-mesh,
+    .dark .aurora-mesh {
+      animation: none;
+      will-change: auto;
+    }
+
+    .noise-overlay {
+      display: none;
+    }
+
+    .glass,
+    .glass-strong,
+    .glass-card {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
 }

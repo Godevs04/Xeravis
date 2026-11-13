@@ -10,7 +10,6 @@ import {
   useTransform,
 } from 'framer-motion'
 import {
-  ArrowRight,
   BadgeCheck,
   ClipboardCheck,
   FileText,
@@ -24,6 +23,7 @@ import {
 import { useMemo, useRef, useState } from 'react'
 
 import { Container } from '@/components/layout/Container'
+import { RICH_MOTION_QUERY, useMediaQuery } from '@/hooks/useMediaQuery'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -51,6 +51,9 @@ const STEP_ICONS: LucideIcon[] = [
 
 export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
   const reduce = useReducedMotion()
+  const richMotion = useMediaQuery(RICH_MOTION_QUERY)
+  /** Scroll-tracked highlighting and pulsing are desktop-only; touch gets a static timeline. */
+  const still = reduce || !richMotion
   const sectionRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState(0)
   const items = useMemo(() => [...steps], [steps])
@@ -63,6 +66,7 @@ export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
   const lineScale = useTransform(progress, [0, 1], [0, 1])
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    if (still) return
     const next = Math.min(items.length - 1, Math.max(0, Math.floor(v * items.length)))
     setActive((prev) => (prev === next ? prev : next))
   })
@@ -96,6 +100,7 @@ export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
             <motion.p
               className="text-[11px] font-bold tracking-[0.22em] text-[color:var(--color-accent)] uppercase"
               initial={reduce ? false : { opacity: 0, y: 12 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45, ease: EASE }}
@@ -105,6 +110,7 @@ export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
             <motion.h2
               className="font-display mt-4 max-w-md text-[clamp(2rem,4vw,3.25rem)] leading-[1.05] font-bold tracking-[-0.045em] text-[color:var(--color-primary)]"
               initial={reduce ? false : { opacity: 0, y: 20 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: 0.06, ease: EASE }}
@@ -114,6 +120,7 @@ export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
             <motion.p
               className="mt-5 max-w-md text-base leading-relaxed text-[color:var(--color-secondary)]"
               initial={reduce ? false : { opacity: 0, y: 16 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.12, ease: EASE }}
@@ -124,20 +131,11 @@ export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
             <motion.div
               className="mt-8 flex flex-wrap gap-3"
               initial={reduce ? false : { opacity: 0, y: 12 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45, delay: 0.18, ease: EASE }}
             >
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full bg-[color:var(--color-accent)] px-7 font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
-              >
-                <Link href="#open-roles">
-                  Browse open roles
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
               <Button
                 asChild
                 size="lg"
@@ -178,20 +176,21 @@ export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
               className="absolute top-3 left-[1.35rem] w-px origin-top bg-gradient-to-b from-teal-500 via-cyan-400 to-teal-500 sm:left-[1.6rem]"
               style={{
                 height: 'calc(100% - 1.5rem)',
-                scaleY: reduce ? 1 : lineScale,
+                scaleY: still ? 1 : lineScale,
               }}
             />
 
             {items.map((step, index) => {
               const Icon = STEP_ICONS[index % STEP_ICONS.length]
-              const isActive = index === active
-              const isDone = index < active
+              const isActive = !still && index === active
+              const isDone = !still && index < active
 
               return (
                 <motion.li
                   key={step.title}
                   className="relative grid grid-cols-[2.75rem_1fr] gap-3 sm:grid-cols-[3.25rem_1fr] sm:gap-4"
                   initial={reduce ? false : { opacity: 0, y: 22 }}
+                  data-reveal
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-8% 0px' }}
                   transition={{ duration: 0.5, delay: index * 0.04, ease: EASE }}
@@ -207,7 +206,7 @@ export function HiringProcessSection({ steps }: HiringProcessSectionProps) {
                             : 'border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)]',
                       )}
                       animate={
-                        reduce || !isActive
+                        still || !isActive
                           ? undefined
                           : { scale: [1, 1.06, 1], transition: { duration: 2.4, repeat: Infinity } }
                       }

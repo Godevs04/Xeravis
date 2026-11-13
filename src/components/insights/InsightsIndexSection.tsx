@@ -60,6 +60,7 @@ export function InsightsIndexSection({ items }: InsightsIndexSectionProps) {
               <motion.li
                 key={item.href}
                 initial={reduce ? false : { opacity: 0, y: 18 }}
+                data-reveal
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-4% 0px' }}
                 transition={{ duration: 0.45, delay: index * 0.05, ease: EASE }}

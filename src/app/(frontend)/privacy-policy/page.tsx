@@ -41,8 +41,8 @@ export default function PrivacyPolicyPage() {
           <h2 className="text-primary text-xl font-semibold">Contact</h2>
           <p>
             For privacy-related questions, email{' '}
-            <a href="mailto:hello@xelarvis.in" className="text-accent hover:underline">
-              hello@xelarvis.in
+            <a href="mailto:info@xelarvis.in" className="text-accent hover:underline">
+              info@xelarvis.in
             </a>
             .
           </p>

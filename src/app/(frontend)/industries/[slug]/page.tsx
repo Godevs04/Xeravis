@@ -174,12 +174,12 @@ export default async function IndustryDetailPage({ params }: Props) {
             question: `How does XELARVIS approach ${industry.title}?`,
             answer:
               industry.summary ||
-              'We adapt AI, data science, and IT consulting patterns to sector constraints—regulation, scale, and operating models—without inventing proof claims.',
+              'We adapt AI, data science and IT consulting to each sector’s regulation, scale and operating model.',
           },
           {
             question: 'How do Services and Solutions relate for this industry?',
             answer:
-              'Services are how we work (practice areas). Solutions are what we solve (outcome themes). Industries provide the operating context that shapes architecture and success criteria.',
+              'Services are our practice areas; solutions package them around a specific business problem. The industry shapes the architecture, controls and success criteria we agree with you.',
           },
           {
             question: 'Where should we start?',

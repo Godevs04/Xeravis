@@ -93,13 +93,6 @@ const STATIC_PAGES: SiteSearchResult[] = [
     excerpt: 'Talk to our team about a project or partnership.',
   },
   {
-    id: 'page-api-docs',
-    title: 'API documentation',
-    href: '/docs/api',
-    kind: 'pages',
-    excerpt: 'OpenAPI / Swagger docs for website and admin helper APIs.',
-  },
-  {
     id: 'page-insights',
     title: 'Insights',
     href: '/insights',
@@ -178,7 +171,7 @@ const COLLECTION_TARGETS: CollectionTarget[] = [
     kind: 'case-studies',
     pathPrefix: '/case-studies',
     titleField: 'title',
-    excerptField: 'summary',
+    excerptField: 'challenge',
   },
   {
     collection: 'pages',
