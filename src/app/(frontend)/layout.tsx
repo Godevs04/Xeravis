@@ -1,5 +1,5 @@
-import { Manrope, Plus_Jakarta_Sans } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
+import localFont from 'next/font/local'
 import type { ReactNode } from 'react'
 
 import { PageviewBeacon } from '@/components/analytics/PageviewBeacon'
@@ -27,21 +27,21 @@ import { AppProviders } from '@/providers'
 
 import './globals.css'
 
-/** Display — Manrope (enterprise tech) */
-const display = Manrope({
-  subsets: ['latin'],
+/** Display — Manrope (enterprise tech). Self-hosted so builds never depend on Google Fonts. */
+const display = localFont({
+  src: '../../fonts/manrope-latin.woff2',
   variable: '--font-display',
   display: 'swap',
-  weight: ['600', '700'],
+  weight: '600 700',
   preload: true,
 })
 
 /** Body — Plus Jakarta Sans */
-const body = Plus_Jakarta_Sans({
-  subsets: ['latin'],
+const body = localFont({
+  src: '../../fonts/plus-jakarta-sans-latin.woff2',
   variable: '--font-body',
   display: 'swap',
-  weight: ['400', '500', '600'],
+  weight: '400 600',
   preload: true,
 })
 

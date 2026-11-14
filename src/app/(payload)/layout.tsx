@@ -4,17 +4,17 @@ import config from '@payload-config'
 import '@payloadcms/next/css'
 import type { ServerFunctionClient } from 'payload'
 import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
-import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import React from 'react'
 
 import { importMap } from './admin/importMap.js'
 import './custom.scss'
 
-const inter = Inter({
-  subsets: ['latin'],
+const inter = localFont({
+  src: '../../fonts/inter-latin.woff2',
   display: 'swap',
   variable: '--font-inter',
-  weight: ['400', '500', '600', '700'],
+  weight: '400 700',
 })
 
 type Args = {

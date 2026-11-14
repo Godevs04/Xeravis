@@ -68,4 +68,5 @@ jobs:
           --exit
       - name: Server log
         if: failure()
-        run: tail -n 200 server.log
+        run: |
+          if [ -f server.log ]; then tail -n 200 server.log; else echo "Server was not started (see the build step)."; fi
