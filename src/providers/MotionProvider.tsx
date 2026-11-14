@@ -3,12 +3,12 @@
 import { LazyMotion } from 'framer-motion'
 import type { ReactNode } from 'react'
 
-const loadFeatures = () => import('@/lib/motion-features').then((mod) => mod.default)
+import features from '@/lib/motion-features'
 
 /**
- * Site components import `m as motion`, so animation features (including `layoutId`) load in a
- * separate chunk after hydration instead of with every page.
+ * Features load with the provider (not as a deferred chunk) so elements rendered at their
+ * `initial` state never wait on a late download before becoming visible.
  */
 export function MotionProvider({ children }: { children: ReactNode }) {
-  return <LazyMotion features={loadFeatures}>{children}</LazyMotion>
+  return <LazyMotion features={features}>{children}</LazyMotion>
 }

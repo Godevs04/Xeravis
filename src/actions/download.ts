@@ -7,6 +7,8 @@ import { z } from 'zod'
 import { attributionFromFormData } from '@/lib/attribution'
 import { createDownloadToken } from '@/lib/download-token'
 import { sendEmail } from '@/lib/email'
+import { emailLayout, escapeHtml } from '@/lib/email-templates'
+import { absoluteUrl } from '@/lib/utils'
 import { notifyLead } from '@/lib/notify'
 import { getPayload } from '@/lib/payload'
 import { clientIpFromHeaders, clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
@@ -108,6 +110,22 @@ export async function requestDownload(
             ['Company', company],
           ],
           adminPath: '/admin/collections/form-submissions',
+        }),
+        sendEmail({
+          to: email,
+          replyTo: process.env.CONTACT_NOTIFY_EMAIL || 'info@xelarvis.in',
+          subject: `Your download: ${doc.title}`,
+          text: [
+            name ? `Hi ${name},` : 'Hello,',
+            '',
+            `Thanks for downloading "${doc.title}". You can find it again at ${absoluteUrl('/insights/reports')}.`,
+            'If you would like to discuss how it applies to your organization, reply to this email.',
+          ].join('\n'),
+          html: emailLayout({
+            heading: 'Thanks for downloading',
+            bodyHtml: `<p style="margin:0 0 14px">${name ? `Hi ${escapeHtml(name)},` : 'Hello,'}</p><p style="margin:0 0 14px">Thanks for downloading <strong>${escapeHtml(doc.title)}</strong>.</p><p style="margin:0">If you would like to discuss how it applies to your organization, reply to this email.</p>`,
+            cta: { label: 'Browse resources', href: absoluteUrl('/insights/reports') },
+          }),
         }),
       ])
     })

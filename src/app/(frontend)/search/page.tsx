@@ -1,7 +1,6 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { Container } from '@/components/layout/Container'
-import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { siteSearch } from '@/lib/site-search'
 import { buildMetadata } from '@/lib/seo'
@@ -26,21 +25,26 @@ export default async function SearchPage({ searchParams }: Props) {
 
   return (
     <>
-      <PageHero eyebrow="Search" title="Find pages, services, and articles." size="compact" />
-      <Section>
+      <Section className="pt-28 pb-12 lg:pt-32">
         <Container className="max-w-3xl">
-          <form action="/search" method="get" className="flex gap-3">
+          <p className="text-accent text-xs font-bold tracking-[0.16em] uppercase">Search</p>
+          <h1 className="font-display text-primary mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+            Find pages, services and articles
+          </h1>
+          <form action="/search" method="get" role="search" className="mt-8 flex gap-3">
             <input
               type="search"
               name="q"
               defaultValue={query}
-              placeholder="Search careers, services, insights…"
-              className="h-11 flex-1 rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-5 text-sm text-[color:var(--color-primary)] shadow-[var(--shadow-light)] backdrop-blur-md placeholder:text-[color:var(--color-muted)] focus-visible:border-[color:var(--color-accent)]/40 focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)]/30 focus-visible:outline-none"
+              autoFocus={!query}
+              maxLength={100}
+              placeholder="Search services, solutions, insights, careers…"
+              className="h-12 flex-1 rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-5 text-sm text-[color:var(--color-primary)] shadow-[var(--shadow-light)] backdrop-blur-md placeholder:text-[color:var(--color-muted)] focus-visible:border-[color:var(--color-accent)]/40 focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)]/30 focus-visible:outline-none"
               aria-label="Search query"
             />
             <button
               type="submit"
-              className="h-11 rounded-full bg-[color:var(--color-accent)] px-6 text-sm font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
+              className="h-12 rounded-full bg-[color:var(--color-accent)] px-6 text-sm font-semibold text-[color:var(--color-on-accent)] shadow-[var(--shadow-hover)] hover:bg-[color:var(--color-accent-hover)]"
             >
               Search
             </button>

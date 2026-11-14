@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { MeshBackdrop } from '@/components/marketing/MeshBackdrop'
 import { OrbitDiagram, type OrbitNode } from '@/components/marketing/OrbitDiagram'

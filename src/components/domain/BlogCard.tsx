@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowUpRight } from 'lucide-react'
 
 import { SpotlightCard } from '@/components/ui/SpotlightCard'

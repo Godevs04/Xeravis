@@ -10,7 +10,6 @@ export type ServiceOverview = {
   howDeliver: string
   outcomes: string
   helpItems: string[]
-  businessOutcome: string
 }
 
 export const SERVICE_OVERVIEW: Record<string, ServiceOverview> = {
@@ -33,8 +32,6 @@ export const SERVICE_OVERVIEW: Record<string, ServiceOverview> = {
       'Establish model evaluation, governance, and monitoring',
       'Build MLOps foundations for production AI',
     ],
-    businessOutcome:
-      'AI solutions designed for reliability, scalability, responsible deployment, and measurable business impact.',
   },
   'data-science-advanced-analytics': {
     heroHeadline: 'Turn data into insight, prediction, and better decisions',
@@ -56,8 +53,6 @@ export const SERVICE_OVERVIEW: Record<string, ServiceOverview> = {
       'Create decision-support models',
       'Establish repeatable analytical capabilities',
     ],
-    businessOutcome:
-      'Trusted analytics that help organizations move from historical reporting to forward-looking decision-making.',
   },
   'it-consulting-digital-transformation': {
     heroHeadline: 'Modernize technology with a clear path from strategy to execution',
@@ -79,8 +74,6 @@ export const SERVICE_OVERVIEW: Record<string, ServiceOverview> = {
       'Automate business and IT processes',
       'Improve application and platform scalability',
     ],
-    businessOutcome:
-      'A modern, scalable technology foundation aligned with business priorities and built for long-term change.',
   },
   'data-engineering-cloud-solutions': {
     heroHeadline: 'Build the data foundation behind analytics and AI',
@@ -102,8 +95,6 @@ export const SERVICE_OVERVIEW: Record<string, ServiceOverview> = {
       'Build analytics-ready data foundations',
       'Establish MLOps and AI infrastructure',
     ],
-    businessOutcome:
-      'Reliable, scalable data foundations that enable analytics, AI, and enterprise decision-making.',
   },
   'clinical-data-science-healthcare-ai': {
     heroHeadline: 'Clinical data, analytics, and technology for life sciences',
@@ -125,8 +116,6 @@ export const SERVICE_OVERVIEW: Record<string, ServiceOverview> = {
       'Analyze real-world data where appropriate',
       'Apply AI to healthcare and clinical workflows responsibly',
     ],
-    businessOutcome:
-      'High-quality, traceable, scalable data and analytics solutions designed for complex healthcare and life-sciences environments.',
   },
 }
 

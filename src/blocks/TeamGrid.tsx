@@ -1,38 +1,18 @@
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
-import { safePayload } from '@/lib/cms'
 import { getMediaAlt, getMediaUrl } from '@/lib/media'
-
-type TeamMemberDoc = {
-  id: string
-  name: string
-  role: string
-  bio?: string | null
-  photo?: unknown
-  linkedIn?: string | null
-  expertise?: string | null
-  researchInterests?: string | null
-}
+import { PROFILE_TYPE_LABELS, getTeamMembers, initialsOf, isFeaturedProfile } from '@/lib/team'
 
 type TeamGridProps = {
   heading: string
 }
 
 export async function TeamGrid({ heading }: TeamGridProps) {
-  const result = await safePayload((payload) =>
-    payload.find({
-      collection: 'team-members',
-      sort: 'order',
-      limit: 8,
-      depth: 1,
-    }),
-  )
-
-  const members = (result?.docs as TeamMemberDoc[]) ?? []
+  const members = (await getTeamMembers()).slice(0, 8)
 
   // Doc §11: only show Leadership when genuine profiles exist — never fake or empty placeholders.
   if (members.length === 0) return null
@@ -40,8 +20,14 @@ export async function TeamGrid({ heading }: TeamGridProps) {
   return (
     <Section surface>
       <Container>
-        <AnimateIn className="max-w-2xl">
+        <AnimateIn className="flex max-w-none flex-wrap items-end justify-between gap-4">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h2>
+          <Link
+            href="/about/leadership"
+            className="text-accent text-sm font-semibold hover:underline"
+          >
+            View full profiles
+          </Link>
         </AnimateIn>
         <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {members.map((member, index) => {
@@ -49,8 +35,8 @@ export async function TeamGrid({ heading }: TeamGridProps) {
             return (
               <AnimateIn key={member.id} delay={index * 0.05}>
                 <article>
-                  {photoUrl ? (
-                    <div className="bg-surface relative mb-5 aspect-[4/5] overflow-hidden">
+                  <div className="bg-dark relative mb-5 aspect-[4/5] overflow-hidden rounded-2xl">
+                    {photoUrl ? (
                       <Image
                         src={photoUrl}
                         alt={getMediaAlt(
@@ -61,11 +47,23 @@ export async function TeamGrid({ heading }: TeamGridProps) {
                         className="object-cover"
                         sizes="(max-width: 768px) 50vw, 25vw"
                       />
-                    </div>
-                  ) : (
-                    <div className="bg-surface mb-5 aspect-[4/5]" />
-                  )}
-                  <h3 className="text-primary text-lg font-semibold">{member.name}</h3>
+                    ) : (
+                      <div
+                        aria-hidden
+                        className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,color-mix(in_oklab,var(--color-accent)_45%,transparent),transparent_60%)]"
+                      >
+                        <span className="font-display text-4xl font-semibold text-white/90">
+                          {initialsOf(member.name)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  {isFeaturedProfile(member) ? (
+                    <p className="text-accent text-[10px] font-bold tracking-[0.14em] uppercase">
+                      {PROFILE_TYPE_LABELS[member.profileType]}
+                    </p>
+                  ) : null}
+                  <h3 className="text-primary mt-1 text-lg font-semibold">{member.name}</h3>
                   <p className="text-muted text-sm">{member.role}</p>
                   {member.bio && (
                     <p className="text-secondary mt-3 text-sm leading-relaxed">{member.bio}</p>
@@ -75,20 +73,6 @@ export async function TeamGrid({ heading }: TeamGridProps) {
                       <span className="text-primary font-semibold">Expertise: </span>
                       {member.expertise}
                     </p>
-                  )}
-                  {member.researchInterests && (
-                    <p className="text-secondary mt-2 text-sm">
-                      <span className="text-primary font-semibold">Research: </span>
-                      {member.researchInterests}
-                    </p>
-                  )}
-                  {member.linkedIn && (
-                    <Link
-                      href={member.linkedIn}
-                      className="text-accent mt-3 inline-block text-sm font-medium hover:underline"
-                    >
-                      LinkedIn
-                    </Link>
                   )}
                 </article>
               </AnimateIn>

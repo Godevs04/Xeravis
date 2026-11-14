@@ -1,14 +1,13 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
-import { TeamGrid } from '@/blocks/TeamGrid'
+import { LeadershipProfiles } from '@/components/about/LeadershipProfiles'
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { Button } from '@/components/ui/button'
-import { LEADERSHIP } from '@/lib/about-content'
-import { safePayload } from '@/lib/cms'
 import { ABOUT_MEGA, ABOUT_PAGES } from '@/lib/site-ia'
 import { buildMetadata } from '@/lib/seo'
+import { getTeamMembers } from '@/lib/team'
 
 export const revalidate = 60
 
@@ -22,15 +21,7 @@ export const metadata = buildMetadata({
 
 export default async function LeadershipPage() {
   const related = ABOUT_MEGA.filter((item) => item.href !== page.path)
-  const result = await safePayload((payload) =>
-    payload.find({
-      collection: 'team-members',
-      sort: 'order',
-      limit: 8,
-      depth: 0,
-    }),
-  )
-  const hasLeaders = (result?.docs?.length ?? 0) > 0
+  const members = await getTeamMembers()
 
   return (
     <>
@@ -46,17 +37,19 @@ export default async function LeadershipPage() {
           { label: 'Explore capabilities', href: '/services', variant: 'outline' },
         ]}
       />
-      {hasLeaders ? (
-        <TeamGrid heading="Leadership" />
+      {members.length > 0 ? (
+        <LeadershipProfiles members={members} />
       ) : (
         <Section>
           <Container className="max-w-3xl">
-            <p className="text-secondary text-base leading-relaxed">{LEADERSHIP.intro}</p>
-            <p className="text-secondary mt-4 text-sm leading-relaxed">
-              Published leadership profiles will appear here when available in the CMS. We do not
-              invent team members or executive rosters.
+            <p className="text-secondary text-base leading-relaxed">
+              Leadership profiles are being prepared for publication. To speak with our founders and
+              directors about an engagement, get in touch with our team.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild className="rounded-full">
+                <Link href="/contact?intent=business">Contact leadership</Link>
+              </Button>
               <Button asChild variant="outline" className="rounded-full">
                 <Link href="/about">Back to About</Link>
               </Button>

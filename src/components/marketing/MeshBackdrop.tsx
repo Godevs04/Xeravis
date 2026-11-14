@@ -7,6 +7,7 @@ import {
   useReducedMotion,
   useSpring,
 } from 'framer-motion'
+import { RICH_MOTION_QUERY, useMediaQuery } from '@/hooks/useMediaQuery'
 import { useTheme } from 'next-themes'
 import { useEffect, useState, type ReactNode } from 'react'
 
@@ -26,7 +27,9 @@ export function MeshBackdrop({
   interactive = true,
   tone = 'auto',
 }: MeshBackdropProps) {
-  const reduce = useReducedMotion()
+  const prefersReduced = useReducedMotion()
+  const richMotion = useMediaQuery(RICH_MOTION_QUERY)
+  const reduce = prefersReduced || !richMotion
   const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const mx = useMotionValue(50)

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { m as motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 
@@ -63,6 +63,7 @@ export function AboutExploreStrip() {
               <motion.li
                 key={item.href}
                 initial={reduce ? false : { opacity: 0, y: 14 }}
+                data-reveal
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.04, duration: 0.4, ease: EASE }}

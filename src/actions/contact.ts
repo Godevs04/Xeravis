@@ -5,6 +5,8 @@ import { after } from 'next/server'
 import { z } from 'zod'
 
 import { sendEmail } from '@/lib/email'
+import { emailLayout, escapeHtml } from '@/lib/email-templates'
+import { FALLBACK_CONTACT } from '@/lib/fallback-data'
 import { notifyLead } from '@/lib/notify'
 import { attributionFromFormData } from '@/lib/attribution'
 import { clientIpFromHeaders, clientKeyFromHeaders, rateLimit } from '@/lib/rate-limit'
@@ -48,6 +50,7 @@ export type ContactFormState = {
 function mapIntent(raw?: string): Intent {
   const legacy: Record<string, Intent> = {
     project: 'business',
+    services: 'business',
     careers: 'career',
     ai: 'business',
   }
@@ -137,10 +140,14 @@ export async function submitContact(
     })
 
     const lead = parsed.data
+    const isCareer = intent === 'career'
+    const teamInbox = isCareer
+      ? process.env.CAREERS_NOTIFY_EMAIL || 'hr@xelarvis.in'
+      : process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO || FALLBACK_CONTACT.email
     after(async () => {
       await Promise.allSettled([
         sendEmail({
-          to: process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO,
+          to: teamInbox,
           replyTo: parsed.data.email,
           subject: `New contact enquiry from ${parsed.data.name}`,
           text: [
@@ -169,6 +176,21 @@ export async function submitContact(
           ],
           adminPath: '/admin/collections/contact-messages',
         }),
+        sendEmail({
+          to: lead.email,
+          replyTo: teamInbox,
+          subject: 'We received your message — XELARVIS',
+          text: [
+            `Hi ${lead.name},`,
+            '',
+            'Thanks for contacting XELARVIS. A member of our team will reply within one business day.',
+            `If it is urgent, call us on ${FALLBACK_CONTACT.phone} or reply to this email.`,
+          ].join('\n'),
+          html: emailLayout({
+            heading: 'We received your message',
+            bodyHtml: `<p style="margin:0 0 14px">Hi ${escapeHtml(lead.name)},</p><p style="margin:0 0 14px">Thanks for contacting XELARVIS. A member of our team will reply within one business day.</p><p style="margin:0">If it is urgent, call us on ${escapeHtml(FALLBACK_CONTACT.phone)} or reply to this email.</p>`,
+          }),
+        }),
       ])
     })
 
@@ -176,7 +198,7 @@ export async function submitContact(
   } catch {
     return {
       ok: false,
-      message: 'Unable to submit right now. Please email hello@xelarvis.in directly.',
+      message: 'Unable to submit right now. Please email info@xelarvis.in directly.',
     }
   }
 }

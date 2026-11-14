@@ -31,7 +31,12 @@ export function storeConsent() {
 /** Marks analytics as allowed for this page view (consent given, or no banner configured). */
 export function allowAnalytics() {
   allowed = true
+}
+
+/** Starts Sentry and PostHog. Call once the page is loaded and idle; both bundles are heavy. */
+export function startMonitoring() {
   void loadSentry()
+  void loadPosthog()
 }
 
 export function isAnalyticsAllowed() {
@@ -63,6 +68,11 @@ export function loadPosthog(): Promise<PostHog | null> {
         capture_exceptions: true,
         disable_session_recording: true,
         disable_surveys: true,
+        // Each of these fetches an extra script from the PostHog CDN at startup.
+        capture_dead_clicks: false,
+        capture_heatmaps: false,
+        capture_performance: false,
+        disable_external_dependency_loading: true,
         debug: process.env.NODE_ENV === 'development',
       })
       return posthog

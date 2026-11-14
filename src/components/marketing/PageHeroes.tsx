@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { m as motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
@@ -63,7 +63,7 @@ export function ServicesPageHero({ title, subtitle }: BaseHero) {
                 variant="outline"
                 className="rounded-full border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-7 font-semibold text-[color:var(--hero-text)] backdrop-blur hover:border-[color:var(--color-accent)]/50 hover:bg-[color:var(--color-hover)]"
               >
-                <Link href="/contact?intent=services">Talk to an expert</Link>
+                <Link href="/contact?intent=business">Talk to an expert</Link>
               </Button>
             </div>
           </div>

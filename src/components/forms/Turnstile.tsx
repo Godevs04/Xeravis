@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { TurnstileAction } from '@/lib/turnstile'
 
@@ -40,9 +40,28 @@ function loadScript(): Promise<TurnstileApi | null> {
  */
 export function Turnstile({ action, resetKey }: { action: TurnstileAction; resetKey?: unknown }) {
   const ref = useRef<HTMLDivElement>(null)
+  const [engaged, setEngaged] = useState(false)
+
+  // The widget pulls a ~200 KB challenge frame, so it only loads once the visitor starts using
+  // the form; filling in the fields gives it time to produce a token before submit.
+  useEffect(() => {
+    if (!SITE_KEY || engaged) return
+    const form = ref.current?.closest('form')
+    if (!form) {
+      setEngaged(true)
+      return
+    }
+    const engage = () => setEngaged(true)
+    form.addEventListener('focusin', engage, { once: true })
+    form.addEventListener('pointerdown', engage, { once: true })
+    return () => {
+      form.removeEventListener('focusin', engage)
+      form.removeEventListener('pointerdown', engage)
+    }
+  }, [engaged])
 
   useEffect(() => {
-    if (!SITE_KEY || !ref.current) return
+    if (!SITE_KEY || !engaged || !ref.current) return
     let widgetId: string | null = null
     let cancelled = false
     const el = ref.current
@@ -62,7 +81,7 @@ export function Turnstile({ action, resetKey }: { action: TurnstileAction; reset
       cancelled = true
       if (widgetId && window.turnstile) window.turnstile.remove(widgetId)
     }
-  }, [action, resetKey])
+  }, [action, resetKey, engaged])
 
   if (!SITE_KEY) return null
   return <div ref={ref} className="min-h-0" />

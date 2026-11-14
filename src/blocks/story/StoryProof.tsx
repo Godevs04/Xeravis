@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import {
   m as motion,
   useMotionTemplate,
@@ -333,6 +333,7 @@ function ProofEcosystem({
             <motion.div
               key={stage}
               className="min-w-0 flex-1 text-center"
+              data-reveal
               initial={{ opacity: 0, y: 6 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.35 + i * 0.07, duration: 0.45, ease: EASE }}
@@ -446,6 +447,7 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
           {/* LEFT */}
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 28 }}
+            data-reveal
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.75, ease: EASE }}
@@ -486,6 +488,7 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
           {/* CENTER */}
           <motion.div
             initial={reduce ? false : { opacity: 0, scale: 0.94 }}
+            data-reveal
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-8%' }}
             transition={{ duration: 0.8, ease: EASE }}
@@ -510,6 +513,7 @@ export function StoryProof({ eyebrow = 'Proof', heading, stats }: StoryProofProp
                   onFocus={() => setActiveId(metric.id)}
                   onBlur={() => setActiveId(null)}
                   initial={reduce ? false : { opacity: 0, x: 24 }}
+                  data-reveal
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-5%' }}
                   transition={{ delay: index * 0.06, duration: 0.55, ease: EASE }}

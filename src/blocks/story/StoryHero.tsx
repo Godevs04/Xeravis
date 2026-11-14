@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowRight } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -19,20 +19,6 @@ type StoryHeroProps = {
 
 const EMPHASIS =
   /\b(AI|Data|Science|Consulting|Healthcare|Enterprise|Innovation|Cloud|Digital|Intelligent|Excellence|Intelligence)\b/gi
-
-const TRUST_LOGOS = [
-  { name: 'Banking & Finance', mark: 'BF' },
-  { name: 'Manufacturing', mark: 'MF' },
-  { name: 'Healthcare Specialty', mark: 'HS' },
-  { name: 'Technology', mark: 'TE' },
-] as const
-
-const LIVE_PILLARS = [
-  { label: 'Artificial Intelligence', short: 'AI' },
-  { label: 'Data Science', short: 'Data' },
-  { label: 'IT Consulting', short: 'IT' },
-  { label: 'Healthcare Specialty', short: 'Health' },
-] as const
 
 function renderEmphasizedTitle(title: string) {
   const parts: ReactNode[] = []
@@ -156,41 +142,6 @@ export function StoryHero({
               {secondaryCtaLabel && secondaryCtaHref ? (
                 <CtaLink href={secondaryCtaHref} label={secondaryCtaLabel} outline />
               ) : null}
-            </div>
-
-            <div className="mt-7">
-              <p className="mb-2.5 text-[10px] font-bold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase">
-                Industries we serve
-              </p>
-              <div className="flex flex-wrap gap-2 sm:gap-2.5">
-                {TRUST_LOGOS.map((logo) => (
-                  <div
-                    key={logo.name}
-                    className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-2.5 py-1 text-[color:var(--hero-muted)] transition-[color,border-color,background] duration-300 hover:border-[color:var(--color-accent)]/40 hover:text-[color:var(--hero-text)]"
-                  >
-                    <span className="grid h-5 w-5 place-items-center rounded-md bg-[color:var(--color-hover)] text-[9px] font-bold tracking-wide text-[color:var(--hero-muted)] transition-colors group-hover:bg-teal-500/20 group-hover:text-[color:var(--color-accent)]">
-                      {logo.mark}
-                    </span>
-                    <span className="text-[11px] font-semibold tracking-wide">{logo.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 grid max-w-xl grid-cols-2 gap-2.5 border-t border-[color:var(--hero-panel-border)] pt-5 sm:grid-cols-4">
-              {LIVE_PILLARS.map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-3 shadow-[var(--shadow-light)] backdrop-blur-md"
-                >
-                  <p className="font-display text-sm font-bold tracking-tight text-[color:var(--hero-text)] sm:text-base">
-                    {item.short}
-                  </p>
-                  <p className="mt-1 text-[10px] leading-snug font-medium tracking-wide text-[color:var(--hero-muted)] uppercase">
-                    {item.label}
-                  </p>
-                </div>
-              ))}
             </div>
           </div>
 

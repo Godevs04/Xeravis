@@ -1,6 +1,10 @@
 import { Resend } from 'resend'
 import nodemailer from 'nodemailer'
 
+import { createLogger } from '@/lib/logger'
+
+const log = createLogger({ scope: 'email' })
+
 export type SendEmailInput = {
   to?: string | string[]
   subject: string
@@ -26,11 +30,7 @@ function resolveFrom() {
 
 function resolveTo(explicit?: string | string[]) {
   if (explicit) return explicit
-  const fallback =
-    process.env.CAREERS_NOTIFY_EMAIL ||
-    process.env.CONTACT_NOTIFY_EMAIL ||
-    process.env.EMAIL_TO ||
-    process.env.SMTP_USER
+  const fallback = process.env.CONTACT_NOTIFY_EMAIL || process.env.EMAIL_TO || process.env.SMTP_USER
   return fallback || undefined
 }
 
@@ -64,7 +64,7 @@ async function sendViaResend(input: SendEmailInput & { to: string | string[]; fr
   const key = process.env.RESEND_API_KEY
   if (!key) throw new Error('RESEND_API_KEY is not configured')
   const resend = new Resend(key)
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: input.from,
     to: input.to,
     replyTo: input.replyTo,
@@ -73,16 +73,30 @@ async function sendViaResend(input: SendEmailInput & { to: string | string[]; fr
     html: input.html,
     headers: input.headers,
   })
+  if (error) throw new Error(`Resend: ${error.message}`)
 }
 
-/**
- * Send transactional mail. Prefers SMTP when SMTP_* is set; otherwise Resend.
- * Returns false when mail could not be sent (missing config or provider error).
- */
-export async function sendEmail(input: SendEmailInput): Promise<boolean> {
+export type EmailFailureReason = 'no-recipient' | 'not-configured' | 'provider-error'
+export type SendEmailResult = { ok: true } | { ok: false; reason: EmailFailureReason }
+
+/** Logs and reports to Sentry without recipient or subject, which may contain personal data. */
+async function reportFailure(reason: EmailFailureReason, error?: unknown) {
+  log.warn(`email not sent: ${reason}${error instanceof Error ? ` (${error.message})` : ''}`)
+  if (!process.env.SENTRY_DSN && !process.env.NEXT_PUBLIC_SENTRY_DSN) return
+  const Sentry = await import('@sentry/nextjs')
+  Sentry.captureException(error ?? new Error(`Email not sent: ${reason}`), {
+    tags: { area: 'email', reason },
+  })
+}
+
+/** Send transactional mail. Prefers SMTP when SMTP_* is set; otherwise Resend. */
+export async function sendEmailResult(input: SendEmailInput): Promise<SendEmailResult> {
   const to = resolveTo(input.to)
   const from = resolveFrom()
-  if (!to) return false
+  if (!to) {
+    await reportFailure('no-recipient')
+    return { ok: false, reason: 'no-recipient' }
+  }
 
   const payload = { ...input, to, from }
   const preferSmtp =
@@ -92,18 +106,25 @@ export async function sendEmail(input: SendEmailInput): Promise<boolean> {
   try {
     if (preferSmtp && smtpConfigured()) {
       await sendViaSmtp(payload)
-      return true
+      return { ok: true }
     }
     if (process.env.RESEND_API_KEY) {
       await sendViaResend(payload)
-      return true
+      return { ok: true }
     }
     if (smtpConfigured()) {
       await sendViaSmtp(payload)
-      return true
+      return { ok: true }
     }
-    return false
-  } catch {
-    return false
+    await reportFailure('not-configured')
+    return { ok: false, reason: 'not-configured' }
+  } catch (error) {
+    await reportFailure('provider-error', error)
+    return { ok: false, reason: 'provider-error' }
   }
+}
+
+/** Returns false when mail could not be sent; failures are logged and reported to Sentry. */
+export async function sendEmail(input: SendEmailInput): Promise<boolean> {
+  return (await sendEmailResult(input)).ok
 }

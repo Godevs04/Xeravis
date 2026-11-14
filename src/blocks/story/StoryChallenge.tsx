@@ -14,7 +14,12 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { Container } from '@/components/layout/Container'
-import { useMediaQuery, useMounted } from '@/hooks/useMediaQuery'
+import {
+  PINNED_SCROLL_QUERY,
+  PINNED_STEP_VH,
+  useMediaQuery,
+  useMounted,
+} from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/utils'
 
 type ChallengeItem = { title: string; body?: string | null }
@@ -35,70 +40,33 @@ const FALLBACK: ChallengeItem[] = [
     body: 'Models that impress demos but stall in regulated reality.',
   },
   {
-    title: 'Transformation without craft',
-    body: 'Generic platforms. Generic outcomes. Forgotten brands.',
+    title: 'Legacy technology',
+    body: 'Older systems limit scalability, security and the pace of change.',
   },
 ]
 
 const CHAPTER_META = [
   {
     icon: 'silos' as const,
-    statValue: 73,
-    statSuffix: '%',
-    statLabel: 'of signals trapped in silos',
+    signal: 'Siloed systems',
+    signalLabel: 'Reporting waits on manual reconciliation',
     accent: '#0D9488',
   },
   {
     icon: 'neural' as const,
-    statValue: 9,
-    statSuffix: '×',
-    statLabel: 'demo → production gap',
+    signal: 'Stalled pilots',
+    signalLabel: 'Models that never reach production',
     accent: '#06B6D4',
   },
   {
     icon: 'generic' as const,
-    statValue: 0,
-    statSuffix: '',
-    statLabel: 'distinctive craft left',
+    signal: 'Legacy constraints',
+    signalLabel: 'Platforms that limit scale and security',
     accent: '#0D9488',
   },
 ]
 
 const EASE = [0.22, 1, 0.36, 1] as const
-
-function CountUp({ value, suffix, active }: { value: number; suffix: string; active: boolean }) {
-  const reduce = useReducedMotion()
-  const [n, setN] = useState(reduce ? value : 0)
-
-  useEffect(() => {
-    if (!active) {
-      setN(reduce ? value : 0)
-      return
-    }
-    if (reduce) {
-      setN(value)
-      return
-    }
-    let frame = 0
-    const start = performance.now()
-    const duration = 900
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration)
-      const eased = 1 - Math.pow(1 - t, 3)
-      setN(Math.round(value * eased))
-      if (t < 1) frame = requestAnimationFrame(tick)
-    }
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [active, value, reduce])
-
-  return (
-    <span className="tabular-nums">
-      {n}
-      {suffix}
-    </span>
-  )
-}
 
 function ChallengeVisual({
   mode,
@@ -398,7 +366,7 @@ function ChallengeVisual({
                 </motion.g>
               ))}
 
-              {/* Identity seal cracking / emptying — craft erased */}
+              {/* Legacy platform: seal cracking under load */}
               <motion.g
                 initial={reduce ? false : { scale: 0.85, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -469,7 +437,7 @@ function ChallengeVisual({
                 ))}
               </motion.g>
 
-              {/* Empty craft meter */}
+              {/* Legacy load meter */}
               <g>
                 <text
                   x={200}
@@ -480,7 +448,7 @@ function ChallengeVisual({
                   fontFamily="var(--font-sans), system-ui"
                   letterSpacing="0.14em"
                 >
-                  CRAFT INDEX
+                  LEGACY LOAD
                 </text>
                 <rect
                   x={120}
@@ -532,10 +500,10 @@ function ChallengeVisual({
           className="text-[9px] tracking-[0.16em] uppercase"
           style={{ color: accent, opacity: 0.85 }}
         >
-          {mode === 0 ? 'Signal' : mode === 1 ? 'Model' : 'Clone'}
+          {mode === 0 ? 'Signal' : mode === 1 ? 'Model' : 'Platform'}
         </p>
         <p className="font-display text-sm font-semibold text-[color:var(--hero-text)]">
-          {mode === 0 ? 'Live' : mode === 1 ? 'Demo only' : 'Zero craft'}
+          {mode === 0 ? 'Live' : mode === 1 ? 'Pilot only' : 'Legacy'}
         </p>
       </motion.div>
     </div>
@@ -545,7 +513,7 @@ function ChallengeVisual({
 export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: StoryChallengeProps) {
   const mounted = useMounted()
   const reduce = useReducedMotion()
-  const isDesktop = useMediaQuery('(min-width: 1024px)')
+  const isDesktop = useMediaQuery(PINNED_SCROLL_QUERY)
   // Wait for mount so SSR + first client paint stay in sync (no media/reduced-motion mismatch)
   const sticky = mounted && !reduce && isDesktop
   const list = items?.length ? items : FALLBACK
@@ -616,12 +584,8 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                     {ch.body}
                   </p>
                 ) : null}
-                <p className="font-display mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  {ch.statValue}
-                  {ch.statSuffix}
-                  <span className="mt-1 block text-sm font-medium tracking-normal text-slate-400">
-                    {ch.statLabel}
-                  </span>
+                <p className="mt-4 text-xs font-semibold tracking-[0.14em] text-teal-300/90 uppercase">
+                  {ch.signal}
                 </p>
               </li>
             ))}
@@ -635,7 +599,7 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
     <section
       ref={containerRef}
       className="relative"
-      style={{ height: `${count * 100}vh` }}
+      style={{ height: `${count * PINNED_STEP_VH}vh` }}
       aria-label={eyebrow || 'The challenge'}
     >
       <div className="surface-navy sticky top-0 h-[100svh] overflow-hidden bg-[color:var(--hero-bg)] text-[color:var(--hero-text)]">
@@ -755,13 +719,13 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
 
             {/* RIGHT — one chapter */}
             <div className="relative min-h-[16rem] lg:min-h-[22rem]">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout" initial={false}>
                 <motion.article
                   key={current?.title || active}
-                  initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
-                  transition={{ duration: 0.55, ease: EASE }}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: EASE }}
                   className="relative"
                 >
                   <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-4 py-2 shadow-[var(--shadow-light)] backdrop-blur-md dark:border-white/15 dark:bg-white/[0.06] dark:shadow-none">
@@ -795,20 +759,16 @@ export function StoryChallenge({ eyebrow = 'The challenge', heading, items }: St
                       }}
                     />
                     <p className="font-display relative text-[clamp(2.4rem,5vw,3.5rem)] font-bold tracking-[-0.05em] text-[color:var(--hero-text)]">
-                      <CountUp
-                        value={current?.statValue ?? 0}
-                        suffix={current?.statSuffix ?? ''}
-                        active
-                      />
+                      {current?.signal}
                     </p>
                     <p className="relative mt-2 text-sm tracking-wide text-[color:var(--hero-muted)]">
-                      {current?.statLabel}
+                      {current?.signalLabel}
                     </p>
                     {mode === 2 ? (
                       <div className="relative mt-5">
                         <div className="mb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-[0.14em] text-[color:var(--hero-muted)] uppercase">
-                          <span>Craft index</span>
-                          <span style={{ color: current?.accent }}>Empty</span>
+                          <span>Modernization</span>
+                          <span style={{ color: current?.accent }}>Overdue</span>
                         </div>
                         <div className="h-1.5 overflow-hidden rounded-full bg-[color:var(--hero-bg)] ring-1 ring-[color:var(--hero-panel-border)]">
                           <motion.div

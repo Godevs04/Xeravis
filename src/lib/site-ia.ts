@@ -16,7 +16,7 @@ export const ABOUT_MEGA: MegaMenuItem[] = [
   {
     label: 'Who We Are',
     href: '/about/company-overview',
-    description: 'Philosophy behind our capabilities — not a services catalog.',
+    description: 'Who we are and how we work with clients.',
   },
   {
     label: 'Vision & Mission',
@@ -26,7 +26,7 @@ export const ABOUT_MEGA: MegaMenuItem[] = [
   {
     label: 'What Makes Us Different',
     href: '/about/why-xelarvis',
-    description: 'Business-model differentiators that matter in delivery.',
+    description: 'What clients get from working with us.',
   },
   {
     label: 'How We Think',
@@ -46,12 +46,12 @@ export const ABOUT_MEGA: MegaMenuItem[] = [
   {
     label: 'Company Facts',
     href: '/about/global-presence',
-    description: 'Verified company information only.',
+    description: 'Registered details, offices and contact.',
   },
   {
     label: 'Leadership',
     href: '/about/leadership',
-    description: 'Published leadership profiles from the CMS.',
+    description: 'Founders, directors and the leadership team.',
   },
 ]
 
@@ -221,7 +221,7 @@ export const ABOUT_PAGES: ContentPageDef[] = [
     subtitle: HEALTHCARE_SPECIALTY.body,
     sections: [
       {
-        heading: 'Specialty, not the whole brand',
+        heading: 'Where it fits',
         body: HEALTHCARE_SPECIALTY.note,
       },
     ],
@@ -524,7 +524,7 @@ export const LAB_PAGES: ContentPageDef[] = [
       },
       {
         heading: 'From research to delivery',
-        body: 'Successful ideas transfer into consulting engagements as governed production systems—models, platforms, and evaluation practices client teams can own and extend.',
+        body: 'Successful ideas move into consulting engagements as production systems: models, platforms, and evaluation practices client teams can own and extend.',
       },
     ],
   },
@@ -585,7 +585,7 @@ export const LAB_PAGES: ContentPageDef[] = [
         bullets: [
           'Scoped experiments with evaluation criteria up front',
           'Reproducible notebooks, datasets, and harnesses where possible',
-          'Go / no-go decisions based on evidence, not demos alone',
+          'Go / no-go decisions based on evidence from the pilot',
           'Handoff packages for engineering and client delivery teams',
         ],
       },
@@ -601,7 +601,7 @@ export const LAB_PAGES: ContentPageDef[] = [
     sections: [
       {
         heading: 'Community contributions',
-        body: 'Where appropriate, we contribute tools and patterns that help others build governed AI systems—evaluation harnesses, reference pipelines, documentation, and reusable components.',
+        body: 'Where appropriate, we contribute tools and patterns that help others build reliable AI systems, such as evaluation harnesses, reference pipelines, documentation, and reusable components.',
         bullets: [
           'Evaluation and benchmarking utilities',
           'Reference MLOps and data pipeline patterns',
@@ -651,7 +651,7 @@ export const HIRING_STEPS = [
   },
   {
     title: 'Technical Interview',
-    description: 'Deep dive with practitioners on problem-solving and craft.',
+    description: 'A working session with practitioners on how you approach real problems.',
   },
   {
     title: 'Manager / Final Interview',
@@ -667,27 +667,58 @@ export const HIRING_STEPS = [
   },
 ] as const
 
+/** Why-join cards on /careers. `featured` cards span two columns on wider screens. */
 export const WHY_JOIN = [
-  'Work on AI, data science, and IT consulting programs',
-  'Research-driven environment with a path to production',
-  'Learning, certifications, and development support',
-  'Internship and graduate pathways',
-  'Flexible work opportunities',
-  'Global collaboration across industries',
-  'Career growth and mentorship',
-  'Inclusive workplace — healthcare specialty available where roles require it',
+  {
+    id: 'client-work',
+    title: 'Client work in AI, data science and IT consulting',
+    description:
+      'You work on live client programs: models, data platforms and modernization projects that run in production.',
+    featured: true,
+  },
+  {
+    id: 'research',
+    title: 'Research with a path to production',
+    description:
+      'Time to test ideas and benchmark approaches, then bring what works into delivery.',
+  },
+  {
+    id: 'learning',
+    title: 'Learning and certifications',
+    description: 'Support for certifications and courses, plus regular code and design reviews.',
+  },
+  {
+    id: 'flexible',
+    title: 'Flexible work',
+    description: 'Hybrid and remote arrangements where the role and the client engagement allow.',
+  },
+  {
+    id: 'teams',
+    title: 'Cross-functional teams',
+    description:
+      'Engineers, analysts, researchers and consultants working together on the same programs.',
+  },
+  {
+    id: 'mentorship',
+    title: 'Mentorship and growth',
+    description:
+      'Senior practitioners mentor you, with clear milestones from contributor to technical lead.',
+    featured: true,
+  },
+  {
+    id: 'healthcare',
+    title: 'Healthcare specialty track',
+    description:
+      'For people who want it, clinical data science and life sciences work alongside the core practice.',
+  },
+  {
+    id: 'inclusive',
+    title: 'Inclusive workplace',
+    description: 'A respectful team where questions are welcome and good work is recognised.',
+  },
 ] as const
 
-export const LIFE_AT_XELARVIS = {
-  title: 'Life at XELARVIS',
-  body: 'A collaborative culture where engineers, analysts, researchers, and consultants solve meaningful problems in AI, data science, and IT consulting—with mentorship, learning support, and room to grow. Healthcare & clinical work is available as a specialty track, not the only path.',
-  bullets: [
-    'Cross-functional teams spanning AI, analytics, data engineering, and consulting',
-    'Continuous learning through projects, reviews, and certifications',
-    'Inclusive workplace with flexible work opportunities',
-    'Clear ownership and recognition for business impact',
-  ],
-} as const
+export type WhyJoinItem = (typeof WHY_JOIN)[number]
 
 export const GRADUATE_PROGRAMS = {
   title: 'Graduate Programs',

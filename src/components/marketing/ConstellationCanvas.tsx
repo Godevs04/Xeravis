@@ -92,6 +92,7 @@ export function ConstellationCanvas({
           initial={
             animate && !reduce ? { pathLength: 0, opacity: 0 } : { pathLength: 1, opacity: 0.7 }
           }
+          data-reveal
           whileInView={{ pathLength: 1, opacity: 0.75 }}
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 1.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
@@ -107,6 +108,7 @@ export function ConstellationCanvas({
           fill="#06B6D4"
           filter={`url(#${id}-glow)`}
           initial={reduce ? false : { opacity: 0, scale: 0.4 }}
+          data-reveal
           whileInView={{ opacity: 0.95, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 + i * 0.04, duration: 0.5 }}

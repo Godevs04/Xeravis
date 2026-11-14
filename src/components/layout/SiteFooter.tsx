@@ -1,11 +1,11 @@
-import Link from 'next/link'
-import { Rss } from 'lucide-react'
+import Link from '@/components/ui/link'
+import { ArrowRight, Rss } from 'lucide-react'
 
 import { BrandLogo } from '@/components/brand/BrandLogo'
 import { Container } from '@/components/layout/Container'
 import { NewsletterForm } from '@/components/forms/NewsletterForm'
 import { getGlobal } from '@/lib/cms'
-import { BRAND, DEFAULT_FOOTER } from '@/lib/fallback-data'
+import { BRAND, DEFAULT_FOOTER, FALLBACK_CONTACT } from '@/lib/fallback-data'
 import { SOCIAL_PROFILES } from '@/lib/seo'
 
 type FooterGlobal = {
@@ -25,16 +25,24 @@ type SiteSettingsGlobal = {
   }
 }
 
+type ContactGlobal = {
+  email?: string | null
+  phone?: string | null
+}
+
 const FALLBACK_SOCIAL = {
   linkedin: SOCIAL_PROFILES.find((url) => url.includes('linkedin.com')) || '',
   twitter: SOCIAL_PROFILES.find((url) => url.includes('x.com')) || 'https://x.com/xelarvis_ai',
 } as const
 
 export async function SiteFooter() {
-  const [footer, settings] = await Promise.all([
+  const [footer, settings, contact] = await Promise.all([
     getGlobal<FooterGlobal>('footer'),
     getGlobal<SiteSettingsGlobal>('site-settings'),
+    getGlobal<ContactGlobal>('contact-details'),
   ])
+  const email = contact?.email || FALLBACK_CONTACT.email
+  const phone = contact?.phone || FALLBACK_CONTACT.phone
 
   const columns = footer?.columns?.length ? footer.columns : DEFAULT_FOOTER.columns
   const showNewsletter = footer?.showNewsletter ?? DEFAULT_FOOTER.showNewsletter
@@ -57,27 +65,34 @@ export async function SiteFooter() {
         aria-hidden
         className="via-accent/40 pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent"
       />
-      <Container className="relative py-20 lg:py-28">
-        <div className="mb-16 grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end">
+      <Container className="relative py-16 lg:py-20">
+        <div className="mb-14 grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end">
           <div>
-            <p className="font-display text-primary text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] font-bold tracking-[-0.05em]">
-              Build what
-              <br />
-              <span className="text-gradient">matters.</span>
+            <p className="font-display text-primary text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+              Talk to XELARVIS
             </p>
-            <p className="text-secondary mt-6 max-w-md text-base">{tagline}</p>
-            <Link
-              href="/contact"
-              className="bg-accent mt-8 inline-flex h-12 items-center rounded-full px-7 text-sm font-semibold text-[color:var(--color-on-accent)] shadow-[0_12px_32px_var(--color-accent-glow)] transition-transform hover:-translate-y-0.5"
-            >
-              Start a project
-            </Link>
+            <p className="text-secondary mt-3 max-w-md text-base">{tagline}</p>
+            <div className="text-secondary mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+              <a href={`mailto:${email}`} className="hover:text-accent">
+                {email}
+              </a>
+              <a href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="hover:text-accent">
+                {phone}
+              </a>
+              <Link
+                href="/contact"
+                className="text-accent inline-flex items-center gap-1.5 font-semibold underline-offset-4 hover:underline"
+              >
+                Contact us
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
           </div>
           {showNewsletter ? (
             <div className="glass-strong rounded-[28px] p-6 sm:p-8">
-              <p className="font-display mb-1 text-lg font-semibold">Stay ahead</p>
+              <p className="font-display mb-1 text-lg font-semibold">Insights by email</p>
               <p className="text-secondary mb-4 text-sm">
-                Product notes, architecture essays, and shipping updates.
+                Occasional notes on applied AI, data science and IT modernization.
               </p>
               <NewsletterForm />
               <a

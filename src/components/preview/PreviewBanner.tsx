@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { isDraftMode } from '@/lib/draft-mode'
 import { getSiteURL } from '@/lib/utils'

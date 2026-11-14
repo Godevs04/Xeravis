@@ -11,7 +11,12 @@ import {
 import { useMemo, useRef, useState } from 'react'
 
 import { Container } from '@/components/layout/Container'
-import { useMediaQuery, useMounted } from '@/hooks/useMediaQuery'
+import {
+  PINNED_SCROLL_QUERY,
+  PINNED_STEP_VH,
+  useMediaQuery,
+  useMounted,
+} from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/utils'
 
 type Step = { title: string; description: string }
@@ -636,7 +641,7 @@ export function StoryProcess({
 }: StoryProcessProps) {
   const mounted = useMounted()
   const reduce = useReducedMotion()
-  const isDesktop = useMediaQuery('(min-width: 1024px)')
+  const isDesktop = useMediaQuery(PINNED_SCROLL_QUERY)
   const sticky = mounted && !reduce && isDesktop
   const stages = useMemo(() => mergeWithCms(steps), [steps])
   const count = stages.length
@@ -696,7 +701,7 @@ export function StoryProcess({
     <section
       ref={containerRef}
       className="relative bg-[color:var(--color-background)]"
-      style={{ height: `${count * 100}vh` }}
+      style={{ height: `${count * PINNED_STEP_VH}vh` }}
       aria-label={eyebrow || 'Engineering journey'}
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden">
@@ -801,13 +806,13 @@ export function StoryProcess({
 
             {/* RIGHT — active stage detail */}
             <div className="relative min-h-[20rem]">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
                   key={current.title}
-                  initial={{ opacity: 0, y: 22, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -14, filter: 'blur(4px)' }}
-                  transition={{ duration: 0.5, ease: EASE }}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: EASE }}
                   className="overflow-hidden rounded-[28px] border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] p-6 shadow-[var(--shadow-medium)] backdrop-blur-xl sm:p-7"
                 >
                   <p className="font-display text-[clamp(2.4rem,5vw,3.6rem)] leading-none font-bold tracking-[-0.06em] text-[color:var(--color-primary)]/10">

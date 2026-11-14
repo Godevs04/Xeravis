@@ -1543,8 +1543,23 @@ export interface TeamMember {
   id: string;
   name: string;
   role: string;
+  /**
+   * Founders and directors are featured first with their full background.
+   */
+  profileType: 'founder' | 'director' | 'leadership' | 'advisor';
   department?: (string | null) | Department;
+  /**
+   * One or two sentences introducing this person.
+   */
   bio?: string | null;
+  /**
+   * Career history, prior roles and domain experience. Separate paragraphs with a blank line.
+   */
+  background?: string | null;
+  /**
+   * Degrees and institutions (e.g. M.Sc. Statistics — University name).
+   */
+  education?: string | null;
   photo?: (string | null) | Media;
   /**
    * Lower numbers appear first.
@@ -1552,7 +1567,7 @@ export interface TeamMember {
   order?: number | null;
   linkedIn?: string | null;
   /**
-   * Short expertise areas (e.g. AI strategy, clinical data).
+   * Comma-separated expertise areas (e.g. AI strategy, data platforms, clinical data).
    */
   expertise?: string | null;
   /**
@@ -3117,8 +3132,11 @@ export interface TestimonialsSelect<T extends boolean = true> {
 export interface TeamMembersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
+  profileType?: T;
   department?: T;
   bio?: T;
+  background?: T;
+  education?: T;
   photo?: T;
   order?: T;
   linkedIn?: T;

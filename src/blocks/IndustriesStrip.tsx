@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { IndustryCard } from '@/components/domain/IndustryCard'
 import { Container } from '@/components/layout/Container'

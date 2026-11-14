@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { CaseStudyCard } from '@/components/domain/CaseStudyCard'
 import { Container } from '@/components/layout/Container'

@@ -27,6 +27,7 @@ export function FloatingCard({
     <motion.div
       className={cn('glass-card relative isolate overflow-hidden will-change-transform', className)}
       initial={reduce ? false : { opacity: 0, y: 16 }}
+      data-reveal
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-8% 0px' }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}

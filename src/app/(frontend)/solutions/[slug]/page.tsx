@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { notFound } from 'next/navigation'
 
 import { CTABand } from '@/blocks/CTABand'
@@ -139,7 +139,7 @@ export default async function SolutionDetailPage({ params }: Props) {
           question: `Who is ${doc.title} for?`,
           answer:
             doc.whoIsThisFor ||
-            'Organizations that need a governed path from business problem to production outcomes across AI, data, and IT consulting.',
+            'Organizations that need a clear path from business problem to production across AI, data and IT consulting.',
         },
         {
           question: 'Which XELARVIS services deliver this solution?',

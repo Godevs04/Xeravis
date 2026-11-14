@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { useActionState, useId, useMemo, useState } from 'react'
 
 import { submitAssessment, type AssessmentFormState } from '@/actions/assessment'

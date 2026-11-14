@@ -3,7 +3,7 @@
 export const ABOUT_HERO = {
   title: 'Engineering Intelligence for a Data-Driven World',
   subtitle:
-    'XELARVIS is an AI, data and technology company focused on helping organizations transform complex data and technology challenges into scalable, measurable solutions.',
+    'XELARVIS is an AI, data and technology company focused on helping organizations turn complex data and technology challenges into scalable, dependable solutions.',
   primaryCta: { label: 'Explore Our Capabilities', href: '/services' },
   secondaryCta: { label: 'Work With Us', href: '/contact?intent=business' },
 } as const
@@ -122,7 +122,7 @@ export const LEADERSHIP = {
 
 export const TECHNOLOGY_BRIDGE = {
   title: 'Technology in context',
-  body: 'XELARVIS selects and engineers technologies based on production requirements, governance and measurable outcomes. Explore the full catalog to see the cloud, data and AI tools behind each service and solution.',
+  body: 'XELARVIS selects and engineers technologies based on production requirements, security and the results you need. Explore the full catalog to see the cloud, data and AI tools behind each service and solution.',
   cta: { label: 'Browse the technology catalog', href: '/technologies' },
 } as const
 
@@ -164,7 +164,7 @@ export const CAREERS_CTA = {
 
 export const FINAL_CTA = {
   title: 'Have a Complex Technology Challenge?',
-  body: "Let's explore how AI, data and technology can create measurable value for your organization.",
+  body: "Let's explore how AI, data and technology can create value for your organization.",
   cta: { label: 'Start a Conversation', href: '/contact?intent=business' },
 } as const
 

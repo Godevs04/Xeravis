@@ -48,7 +48,7 @@ export function serviceFaqsFor(title: string, summary: string): FaqItem[] {
     },
     {
       question: `Why choose Xelarvis for ${name}?`,
-      answer: `Xelarvis combines Artificial Intelligence, Data Science, and IT Consulting so ${name} can move from concept into governed, production systems.`,
+      answer: `Xelarvis combines Artificial Intelligence, Data Science, and IT Consulting so ${name} can move from concept into production systems.`,
     },
     ...DEFAULT_SERVICE_FAQS.slice(2),
   ]
@@ -56,7 +56,7 @@ export function serviceFaqsFor(title: string, summary: string): FaqItem[] {
 
 export function quickAnswerForService(title: string, summary: string) {
   return {
-    who: 'Xelarvis Technologies (XELARVIS PRIVATE LIMITED)',
+    who: 'XELARVIS Private Limited',
     what: title,
     summary,
     forWhom:

@@ -5,6 +5,7 @@ import { Section } from '@/components/layout/Section'
 import { AnimateIn } from '@/components/motion/AnimateIn'
 import { listPublished } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
+import { isEngineeringStack } from '@/lib/tech-stack'
 
 export const revalidate = 60
 
@@ -81,11 +82,6 @@ export const metadata = buildMetadata({
     'Engineering technologies XELARVIS uses across AI, data platforms, cloud, DevOps, and application delivery.',
   path: '/technologies',
 })
-
-function isEngineeringStack(item: TechDoc) {
-  const cat = (item.category || '').toLowerCase()
-  return cat !== 'clinical' && !['sas', 'cdisc', 'sdtm', 'adam'].includes(item.slug)
-}
 
 export default async function TechnologiesPage() {
   const tech = await listPublished<TechDoc>('technologies', { sort: 'order', limit: 48 })

@@ -27,7 +27,7 @@ export function buildOpenApiDocument(): OpenApiDocument {
       contact: {
         name: 'Xelarvis Technologies',
         url: siteUrl,
-        email: 'hello@xelarvis.in',
+        email: 'info@xelarvis.in',
       },
     },
     servers: [

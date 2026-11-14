@@ -15,7 +15,7 @@ export const TeamMembers: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'role', 'department', 'order', 'updatedAt'],
+    defaultColumns: ['name', 'role', 'profileType', 'order', 'updatedAt'],
   },
   access: {
     read: anyone,
@@ -40,6 +40,23 @@ export const TeamMembers: CollectionConfig = {
       required: true,
     },
     {
+      name: 'profileType',
+      type: 'select',
+      label: 'Profile type',
+      required: true,
+      defaultValue: 'leadership',
+      options: [
+        { label: 'Founder', value: 'founder' },
+        { label: 'Director', value: 'director' },
+        { label: 'Leadership', value: 'leadership' },
+        { label: 'Advisor', value: 'advisor' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Founders and directors are featured first with their full background.',
+      },
+    },
+    {
       name: 'department',
       type: 'relationship',
       relationTo: 'departments',
@@ -47,6 +64,23 @@ export const TeamMembers: CollectionConfig = {
     {
       name: 'bio',
       type: 'textarea',
+      label: 'Summary',
+      admin: { description: 'One or two sentences introducing this person.' },
+    },
+    {
+      name: 'background',
+      type: 'textarea',
+      label: 'Professional background',
+      admin: {
+        description:
+          'Career history, prior roles and domain experience. Separate paragraphs with a blank line.',
+      },
+    },
+    {
+      name: 'education',
+      type: 'text',
+      label: 'Education',
+      admin: { description: 'Degrees and institutions (e.g. M.Sc. Statistics — University name).' },
     },
     {
       name: 'photo',
@@ -63,7 +97,10 @@ export const TeamMembers: CollectionConfig = {
       name: 'expertise',
       type: 'text',
       label: 'Expertise',
-      admin: { description: 'Short expertise areas (e.g. AI strategy, clinical data).' },
+      admin: {
+        description:
+          'Comma-separated expertise areas (e.g. AI strategy, data platforms, clinical data).',
+      },
     },
     {
       name: 'researchInterests',

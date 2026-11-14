@@ -42,6 +42,7 @@ export function ProcessSteps({ heading, steps }: ProcessStepsProps) {
                 <motion.li
                   key={step.title}
                   initial={reduce ? false : { opacity: 0, y: 20 }}
+                  data-reveal
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-8%' }}
                   transition={{

@@ -6,12 +6,15 @@ import {
   useMotionTemplate,
   useMotionValue,
   useReducedMotion,
+  useInView,
   useSpring,
   useTransform,
   type MotionValue,
 } from 'framer-motion'
 import { Activity, Cpu, Lock, Radio, Sparkles, Stethoscope } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+
+import { RICH_MOTION_QUERY, useMediaQuery } from '@/hooks/useMediaQuery'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -36,9 +39,9 @@ const CARD =
 const WIDGETS = [
   {
     id: 'clinical',
-    label: 'Clinical AI',
-    value: '94.2%',
-    sub: 'Precision',
+    label: 'Model quality',
+    value: 'Tracked',
+    sub: 'Precision & drift',
     icon: Stethoscope,
     position: 'top-left',
     delay: 0.85,
@@ -48,7 +51,7 @@ const WIDGETS = [
     id: 'cloud',
     label: 'Cloud Status',
     value: 'Healthy',
-    sub: '12 regions',
+    sub: 'Multi-region',
     icon: Radio,
     position: 'top-right',
     delay: 1,
@@ -57,8 +60,8 @@ const WIDGETS = [
   {
     id: 'security',
     label: 'Security',
-    value: 'SOC 2',
-    sub: 'Zero critical',
+    value: 'Controls',
+    sub: 'Access & audit',
     icon: Lock,
     position: 'bottom-left',
     delay: 1.1,
@@ -67,8 +70,8 @@ const WIDGETS = [
   {
     id: 'gpu',
     label: 'Inference',
-    value: '12ms',
-    sub: 'p99 latency',
+    value: 'Monitored',
+    sub: 'Latency & cost',
     icon: Cpu,
     position: 'bottom-right',
     delay: 1.2,
@@ -81,52 +84,6 @@ const WIDGET_POSITION: Record<(typeof WIDGETS)[number]['position'], string> = {
   'top-right': '-top-8 right-0 translate-x-2',
   'bottom-left': '-bottom-8 left-0 -translate-x-2',
   'bottom-right': '-bottom-8 right-0 translate-x-2',
-}
-
-function CountUp({
-  value,
-  delay = 0,
-  suffix = '',
-  decimals = 0,
-}: {
-  value: number
-  delay?: number
-  suffix?: string
-  decimals?: number
-}) {
-  const reduce = useReducedMotion()
-  const [n, setN] = useState(reduce ? value : 0)
-
-  useEffect(() => {
-    if (reduce) {
-      setN(value)
-      return
-    }
-    let frame = 0
-    const timeout = window.setTimeout(() => {
-      const duration = 1100
-      const start = performance.now()
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / duration)
-        const eased = 1 - Math.pow(1 - t, 3)
-        const next = value * eased
-        setN(decimals > 0 ? Number(next.toFixed(decimals)) : Math.round(next))
-        if (t < 1) frame = requestAnimationFrame(tick)
-      }
-      frame = requestAnimationFrame(tick)
-    }, delay * 1000)
-    return () => {
-      clearTimeout(timeout)
-      cancelAnimationFrame(frame)
-    }
-  }, [value, delay, reduce, decimals])
-
-  return (
-    <>
-      {decimals > 0 ? n.toFixed(decimals) : n}
-      {suffix}
-    </>
-  )
 }
 
 function LiveDot() {
@@ -145,7 +102,12 @@ type HeroProductVisualProps = {
 /** Premium floating AI control surface for the hero */
 export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
   const reduce = useReducedMotion()
+  const richMotion = useMediaQuery(RICH_MOTION_QUERY)
+  /** Continuous loops, intervals and scroll tilt run only on desktop pointers. */
+  const still = reduce || !richMotion
   const ref = useRef<HTMLDivElement>(null)
+  const onScreen = useInView(ref, { margin: '120px' })
+  const live = !still && onScreen
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
   const fallbackScroll = useMotionValue(0)
@@ -153,8 +115,8 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
   const sx = useSpring(mx, { stiffness: 90, damping: 20, mass: 0.55 })
   const sy = useSpring(my, { stiffness: 90, damping: 20, mass: 0.55 })
 
-  const scrollTilt = useTransform(progress, [0, 1], [0, reduce ? 0 : -5])
-  const scrollY = useTransform(progress, [0, 1], [0, reduce ? 0 : 28])
+  const scrollTilt = useTransform(progress, [0, 1], [0, still ? 0 : -5])
+  const scrollY = useTransform(progress, [0, 1], [0, still ? 0 : 28])
   const rotateX = useTransform(sy, [-30, 30], reduce ? [0, 0] : [5, -5])
   const rotateY = useTransform(sx, [-30, 30], reduce ? [0, 0] : [-5, 5])
   const combinedRotateX = useTransform([rotateX, scrollTilt], ([rx, st]) => Number(rx) + Number(st))
@@ -170,7 +132,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
   const [activeNav, setActiveNav] = useState(1)
 
   useEffect(() => {
-    if (reduce) return
+    if (!live) return
     const bars = window.setInterval(() => {
       setLiveBars((prev) =>
         prev.map((v, i) =>
@@ -183,7 +145,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
       clearInterval(bars)
       clearInterval(nav)
     }
-  }, [reduce])
+  }, [live])
 
   return (
     <div
@@ -205,7 +167,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
       <motion.div
         aria-hidden
         className="pointer-events-none absolute inset-x-10 -bottom-8 h-20 rounded-[100%] bg-[rgba(13,148,136,0.28)] blur-3xl"
-        animate={reduce ? undefined : { opacity: [0.35, 0.7, 0.35], scaleX: [0.92, 1.04, 0.92] }}
+        animate={still ? undefined : { opacity: [0.35, 0.7, 0.35], scaleX: [0.92, 1.04, 0.92] }}
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
       />
 
@@ -214,14 +176,14 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
         className="pointer-events-none absolute inset-0 rounded-[48px] blur-3xl"
         style={{ background: glowBg }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: reduce ? 0.7 : [0.55, 0.9, 0.55] }}
+        animate={{ opacity: still ? 0.7 : [0.55, 0.9, 0.55] }}
         transition={
-          reduce ? { duration: 0.6 } : { duration: 8, repeat: Infinity, ease: 'easeInOut' }
+          still ? { duration: 0.6 } : { duration: 8, repeat: Infinity, ease: 'easeInOut' }
         }
       />
 
       {/* Orbit rings */}
-      {!reduce ? (
+      {!still ? (
         <>
           <motion.div
             aria-hidden
@@ -254,6 +216,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
         >
           {/* Aurora border: a rotating conic gradient peeking out 1px around the console */}
           <motion.div
+            data-reveal
             initial={reduce ? false : { opacity: 0, y: 18, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, ease: EASE }}
@@ -263,7 +226,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
               aria-hidden
               className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[160%] -translate-x-1/2 -translate-y-1/2"
               style={{ background: AURORA }}
-              animate={reduce ? undefined : { rotate: 360 }}
+              animate={still ? undefined : { rotate: 360 }}
               transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
             />
 
@@ -284,7 +247,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                 style={{ background: spotBg }}
               />
 
-              {!reduce ? (
+              {!still ? (
                 <>
                   {/* Moving light sheen */}
                   <motion.div
@@ -331,20 +294,17 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                   {NAV.map((item, i) => (
                     <motion.div
                       key={item}
+                      data-reveal
                       initial={reduce ? false : { opacity: 0, x: -8 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 + i * 0.05, duration: 0.4, ease: EASE }}
                       className="relative flex min-h-[2.25rem] items-center justify-center rounded-xl px-1.5 py-2 text-[9px] font-bold tracking-wide sm:min-h-[2.5rem] sm:text-[10px]"
                     >
-                      {i === activeNav ? (
-                        <motion.span
-                          layoutId="hero-console-nav"
-                          className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#0D9488] to-[#0891B2] shadow-[0_8px_24px_rgba(13,148,136,0.5),inset_0_1px_0_rgba(255,255,255,0.25)]"
-                          transition={{ type: 'spring', stiffness: 260, damping: 28 }}
-                        />
-                      ) : (
-                        <span className="absolute inset-0 rounded-xl bg-[color:var(--hc-nav-idle)]" />
-                      )}
+                      <span className="absolute inset-0 rounded-xl bg-[color:var(--hc-nav-idle)]" />
+                      <span
+                        aria-hidden
+                        className={`absolute inset-0 rounded-xl bg-gradient-to-br from-[#0D9488] to-[#0891B2] shadow-[0_8px_24px_rgba(13,148,136,0.5),inset_0_1px_0_rgba(255,255,255,0.25)] transition-opacity duration-500 ${i === activeNav ? 'opacity-100' : 'opacity-0'}`}
+                      />
                       <span
                         className={`relative transition-colors duration-300 ${i === activeNav ? 'text-[#F8FAFC]' : 'text-[color:var(--hc-muted)]'}`}
                       >
@@ -357,12 +317,13 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                 <div className="flex min-h-0 flex-col gap-2.5 overflow-hidden p-2.5 sm:gap-3 sm:p-3.5">
                   <div className="grid shrink-0 grid-cols-3 gap-2">
                     {[
-                      { label: 'Accuracy', value: 99.2, suffix: '%', decimals: 1 },
-                      { label: 'Uptime', value: 99.98, suffix: '%', decimals: 2 },
-                      { label: 'Deploys', value: 120, suffix: '+', decimals: 0 },
+                      { label: 'Data checks', status: 'Passing', progress: 92 },
+                      { label: 'Evaluation', status: 'In review', progress: 70 },
+                      { label: 'Release', status: 'Staged', progress: 55 },
                     ].map((metric, i) => (
                       <motion.div
                         key={metric.label}
+                        data-reveal
                         initial={reduce ? false : { opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.38 + i * 0.08, duration: 0.5, ease: EASE }}
@@ -372,26 +333,21 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                         <p className="text-[9px] font-semibold tracking-[0.14em] text-[color:var(--hc-muted)] uppercase sm:text-[10px]">
                           {metric.label}
                         </p>
-                        <p className="font-display mt-1 text-base font-bold tracking-tight text-[color:var(--hc-text)] tabular-nums sm:text-xl">
-                          <CountUp
-                            value={metric.value}
-                            delay={0.5 + i * 0.08}
-                            suffix={metric.suffix}
-                            decimals={metric.decimals}
-                          />
+                        <p className="font-display mt-1 truncate text-sm font-bold tracking-tight text-[color:var(--hc-text)] sm:text-base">
+                          {metric.status}
                         </p>
                         <div className="relative mt-2 h-1 overflow-hidden rounded-full bg-[color:var(--hc-track)]">
                           <motion.div
                             className="relative h-full overflow-hidden rounded-full bg-gradient-to-r from-[#0D9488] to-[#22D3EE] shadow-[0_0_10px_rgba(34,211,238,0.6)]"
                             initial={{ width: 0 }}
-                            animate={{ width: `${Math.min(100, metric.value)}%` }}
+                            animate={{ width: `${metric.progress}%` }}
                             transition={{
                               delay: reduce ? 0 : 0.7 + i * 0.1,
                               duration: 0.9,
                               ease: EASE,
                             }}
                           >
-                            {!reduce ? (
+                            {!still ? (
                               <motion.span
                                 aria-hidden
                                 className="absolute inset-y-0 w-1/3 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent)]"
@@ -412,6 +368,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
 
                   <div className="grid min-h-0 flex-1 grid-cols-[1.15fr_0.85fr] gap-2 sm:gap-2.5">
                     <motion.div
+                      data-reveal
                       initial={reduce ? false : { opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.55, duration: 0.5, ease: EASE }}
@@ -442,6 +399,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                     </motion.div>
 
                     <motion.div
+                      data-reveal
                       initial={reduce ? false : { opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.62, duration: 0.5, ease: EASE }}
@@ -460,6 +418,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                   </div>
 
                   <motion.div
+                    data-reveal
                     initial={reduce ? false : { opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7, duration: 0.45, ease: EASE }}
@@ -471,7 +430,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                       </p>
                       <motion.span
                         animate={
-                          reduce ? undefined : { rotate: [0, 18, -12, 0], scale: [1, 1.15, 1] }
+                          still ? undefined : { rotate: [0, 18, -12, 0], scale: [1, 1.15, 1] }
                         }
                         transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
                         className="inline-flex"
@@ -497,6 +456,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                       <motion.path
                         d={SPARK_AREA}
                         fill="url(#hero-spark-fill)"
+                        data-reveal
                         initial={reduce ? false : { opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.6, duration: 0.8 }}
@@ -511,7 +471,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                         animate={{ pathLength: 1 }}
                         transition={{ delay: 0.9, duration: 1.6, ease: EASE }}
                       />
-                      {!reduce ? (
+                      {!still ? (
                         <circle
                           r="2.6"
                           style={{
@@ -537,14 +497,15 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                 key={w.id}
                 className={`pointer-events-auto absolute z-30 hidden sm:block ${WIDGET_POSITION[w.position]}`}
                 style={{ x: widgetShiftX, y: widgetShiftY }}
+                data-reveal
                 initial={reduce ? false : { opacity: 0, scale: 0.9, filter: 'blur(6px)' }}
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 transition={{ delay: w.delay, duration: 0.6, ease: EASE }}
               >
                 <motion.div
-                  animate={reduce ? undefined : { y: [0, -w.float, 0] }}
+                  animate={still ? undefined : { y: [0, -w.float, 0] }}
                   transition={
-                    reduce
+                    still
                       ? undefined
                       : {
                           delay: w.delay + 0.4,
@@ -587,6 +548,7 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
 
         <motion.div
           className="pointer-events-none absolute top-[42%] right-[2%] z-30 sm:hidden"
+          data-reveal
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.45 }}

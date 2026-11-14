@@ -72,6 +72,7 @@ export async function submitNewsletter(
     })
     const current = existing.docs[0]
     let message = pendingMessage
+    let confirmationSent = true
 
     if (!current) {
       const token = createToken()
@@ -80,7 +81,7 @@ export async function submitNewsletter(
         overrideAccess: true,
         data: { email, status: 'pending', topics: [topic], token, source: topic },
       })
-      await sendConfirmationEmail(email, token)
+      confirmationSent = await sendConfirmationEmail(email, token)
     } else {
       const topics = Array.from(new Set<Topic>([...((current.topics as Topic[]) || []), topic]))
       const token = (current as { token?: string }).token || createToken()
@@ -91,7 +92,7 @@ export async function submitNewsletter(
         overrideAccess: true,
         data: { topics, token, ...(needsConfirm ? { status: 'pending' as const } : {}) },
       })
-      if (needsConfirm) await sendConfirmationEmail(email, token)
+      if (needsConfirm) confirmationSent = await sendConfirmationEmail(email, token)
       else message = 'You are already subscribed. Preferences updated.'
     }
 
@@ -105,6 +106,13 @@ export async function submitNewsletter(
       },
     })
 
+    if (!confirmationSent) {
+      return {
+        ok: false,
+        message:
+          'We saved your details but could not send the confirmation email. Please email info@xelarvis.in and we will add you manually.',
+      }
+    }
     return { ok: true, message }
   } catch {
     return { ok: false, message: 'Unable to subscribe right now. Please try again later.' }

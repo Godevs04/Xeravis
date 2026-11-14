@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { useActionState, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { track } from '@/lib/analytics-client'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import {
   m as motion,
   useInView,
@@ -199,6 +199,7 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
       tabIndex={0}
       style={reduce ? undefined : { rotateX: rx, rotateY: ry, transformPerspective: 1100 }}
       initial={reduce ? false : { opacity: 0, y: 40 }}
+      data-reveal
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.65, ease: EASE }}
@@ -242,6 +243,7 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
             <motion.span
               key={i}
               className="text-amber-400"
+              data-reveal
               initial={reduce ? false : { opacity: 0, scale: 0.5 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: 0.1 + i * 0.06 }}
@@ -256,6 +258,7 @@ function VoiceCard({ voice, index }: { voice: EnrichedVoice; index: number }) {
         <motion.span
           aria-hidden
           className="font-display absolute -top-4 -left-1 text-5xl text-[color:var(--color-accent)]/25"
+          data-reveal
           initial={reduce ? false : { opacity: 0, pathLength: 0 }}
           animate={inView ? { opacity: 1 } : {}}
         >
@@ -391,6 +394,7 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
             <motion.h2
               className="font-display mt-5 max-w-md text-[clamp(2rem,4vw,3.3rem)] leading-[1.05] font-bold tracking-[-0.045em] text-[color:var(--color-primary)]"
               initial={reduce ? false : { opacity: 0, y: 18 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: EASE }}
@@ -429,6 +433,7 @@ export function StoryPresence({ eyebrow = 'Client stories', heading, quotes }: S
                     key={ind}
                     className="rounded-full border border-[color:var(--glass-border)] bg-[color:var(--color-hover)] px-3 py-1.5 text-xs font-medium text-[color:var(--color-secondary)] transition-colors hover:border-[color:var(--color-accent)]/40 hover:bg-[color:var(--color-accent)]/10 hover:text-[color:var(--color-accent)]"
                     initial={reduce ? false : { opacity: 0, y: 6 }}
+                    data-reveal
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.05 }}

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { m as motion, useReducedMotion } from 'framer-motion'
 
 import { Container } from '@/components/layout/Container'
@@ -74,6 +74,7 @@ export function StoryCapabilities({
               <motion.li
                 key={item.id}
                 initial={reduce ? false : { opacity: 0, y: 24 }}
+                data-reveal
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}

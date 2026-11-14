@@ -7,6 +7,7 @@ import {
   useSpring,
   type MotionValue,
 } from 'framer-motion'
+import { RICH_MOTION_QUERY, useMediaQuery } from '@/hooks/useMediaQuery'
 import { useId } from 'react'
 
 type HeroCinematicBackgroundProps = {
@@ -24,7 +25,9 @@ const PARTICLES = Array.from({ length: 6 }, (_, i) => ({
 }))
 
 export function HeroCinematicBackground({ cursorX, cursorY }: HeroCinematicBackgroundProps) {
-  const reduce = useReducedMotion()
+  const prefersReduced = useReducedMotion()
+  const richMotion = useMediaQuery(RICH_MOTION_QUERY)
+  const reduce = prefersReduced || !richMotion
   const uid = useId()
   const sx = useSpring(cursorX, { stiffness: 36, damping: 24, mass: 0.7 })
   const sy = useSpring(cursorY, { stiffness: 36, damping: 24, mass: 0.7 })

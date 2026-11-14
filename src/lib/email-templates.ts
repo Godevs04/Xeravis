@@ -39,7 +39,7 @@ export function emailLayout({ heading, bodyHtml, cta, footerHtml }: LayoutInput)
           ${button}
         </td></tr>
         <tr><td style="padding:20px 32px;background:#f8fafc;font-size:12px;line-height:1.5;color:#64748b">
-          ${footerHtml || `XELARVIS Pvt Ltd · <a href="${absoluteUrl('/')}" style="color:#64748b">xelarvis.in</a>`}
+          ${footerHtml || `XELARVIS Private Limited · <a href="${absoluteUrl('/')}" style="color:#64748b">xelarvis.in</a>`}
         </td></tr>
       </table>
     </td></tr>

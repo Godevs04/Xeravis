@@ -1,19 +1,28 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
+import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { ChevronDown, Menu, Search } from 'lucide-react'
+import { ChevronDown, Menu } from 'lucide-react'
 
 import { BrandLogo } from '@/components/brand/BrandLogo'
 import { AnnouncementBar, type AnnouncementData } from '@/components/layout/AnnouncementBar'
-import { MegaMenu, type MegaMenuItem } from '@/components/layout/MegaMenu'
+import type { MegaMenuItem } from '@/components/layout/MegaMenu'
+import { SiteSearchTrigger } from '@/components/layout/SiteSearchTrigger'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { useScrollHeader } from '@/hooks/useScrollHeader'
 import { cn } from '@/lib/utils'
+
+// Menus only render after a hover or tap, so their code (icons, Radix dialog, motion
+// variants) stays out of the initial bundle.
+const loadMegaMenu = () => import('@/components/layout/MegaMenu')
+const MegaMenu = dynamic(() => loadMegaMenu().then((m) => m.MegaMenu), { ssr: false })
+const MobileNav = dynamic(() => import('@/components/layout/MobileNav').then((m) => m.MobileNav), {
+  ssr: false,
+})
 
 export type NavLinkItem = {
   label: string
@@ -44,6 +53,8 @@ export function SiteHeaderClient({
   const pathname = usePathname()
   const [openMega, setOpenMega] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerMounted, setDrawerMounted] = useState(false)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const brand = brandName.split(' ')[0]
   const ctaText =
@@ -74,6 +85,17 @@ export function SiteHeaderClient({
     [cancelMegaClose],
   )
 
+  const closeMegaMenu = useCallback(() => {
+    cancelMegaClose()
+    setOpenMega(null)
+  }, [cancelMegaClose])
+
+  const [menuPath, setMenuPath] = useState(pathname)
+  if (menuPath !== pathname) {
+    setMenuPath(pathname)
+    setOpenMega(null)
+  }
+
   useEffect(() => {
     return () => cancelMegaClose()
   }, [cancelMegaClose])
@@ -102,7 +124,10 @@ export function SiteHeaderClient({
     >
       <div
         className="container-x relative"
-        onMouseEnter={cancelMegaClose}
+        onMouseEnter={() => {
+          cancelMegaClose()
+          void loadMegaMenu()
+        }}
         onMouseLeave={scheduleMegaClose}
       >
         <div className="relative mx-auto max-w-[1280px]">
@@ -187,17 +212,7 @@ export function SiteHeaderClient({
 
             <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1 lg:ml-1">
               <ThemeToggle className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)]" />
-              <Button
-                asChild
-                variant="ghost"
-                size="icon"
-                className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-primary)]"
-                aria-label="Search"
-              >
-                <Link href="/search">
-                  <Search className="h-4 w-4" />
-                </Link>
-              </Button>
+              <SiteSearchTrigger triggerClassName="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)]" />
               <Button
                 asChild
                 size="sm"
@@ -209,77 +224,33 @@ export function SiteHeaderClient({
                 </Link>
               </Button>
 
-              <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] lg:hidden"
-                    aria-label="Open menu"
-                  >
-                    <Menu className="h-5 w-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent
-                  side="right"
-                  className="flex w-[min(100%,360px)] flex-col border-[color:var(--glass-border)] bg-[color:var(--glass-bg-strong)] pb-[max(1.25rem,env(safe-area-inset-bottom))]"
-                >
-                  <SheetHeader className="border-b border-[color:var(--glass-border-soft)] pb-4 text-left">
-                    <SheetTitle className="sr-only">{brand}</SheetTitle>
-                    <BrandLogo
-                      variant="header"
-                      wordmark="Xelarvis Technologies"
-                      size={44}
-                      href="/"
-                      onClick={() => setDrawerOpen(false)}
-                      wordmarkClassName="text-[1.05rem]"
-                    />
-                  </SheetHeader>
-                  <nav
-                    className="mt-6 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain"
-                    aria-label="Mobile"
-                  >
-                    {links.map((link) => (
-                      <div key={link.href}>
-                        <Link
-                          href={link.href}
-                          onClick={() => setDrawerOpen(false)}
-                          className="block min-h-11 rounded-xl px-3 py-3 text-base font-semibold text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)]"
-                        >
-                          {link.label}
-                        </Link>
-                        {link.mega && link.mega !== 'none' && megaMenus[link.mega]?.length
-                          ? megaMenus[link.mega].map((item) => (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                onClick={() => setDrawerOpen(false)}
-                                className="block min-h-10 rounded-lg px-5 py-2.5 text-sm text-[color:var(--color-muted)] hover:bg-[color:var(--color-hover)] hover:text-[color:var(--color-accent)]"
-                              >
-                                {item.label}
-                              </Link>
-                            ))
-                          : null}
-                      </div>
-                    ))}
-                    <Link
-                      href="/search"
-                      onClick={() => setDrawerOpen(false)}
-                      className="mt-2 block min-h-11 rounded-xl px-3 py-3 text-base font-semibold text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)]"
-                    >
-                      Search
-                    </Link>
-                    <Button
-                      asChild
-                      className="mt-4 min-h-11 rounded-full bg-[color:var(--color-accent)] font-semibold text-[color:var(--color-on-accent)] hover:bg-[color:var(--color-accent-hover)]"
-                    >
-                      <Link href={ctaHref} onClick={() => setDrawerOpen(false)}>
-                        {ctaText}
-                      </Link>
-                    </Button>
-                  </nav>
-                </SheetContent>
-              </Sheet>
+              <Button
+                ref={menuButtonRef}
+                variant="ghost"
+                size="icon"
+                className="text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] lg:hidden"
+                aria-label="Open menu"
+                aria-haspopup="dialog"
+                aria-expanded={drawerOpen}
+                onClick={() => {
+                  setDrawerMounted(true)
+                  setDrawerOpen(true)
+                }}
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+              {drawerMounted ? (
+                <MobileNav
+                  open={drawerOpen}
+                  onOpenChange={setDrawerOpen}
+                  links={links}
+                  megaMenus={megaMenus}
+                  brand={brand}
+                  ctaHref={ctaHref}
+                  ctaText={ctaText}
+                  returnFocusRef={menuButtonRef}
+                />
+              ) : null}
             </div>
           </div>
         </div>
@@ -288,7 +259,12 @@ export function SiteHeaderClient({
 
         <AnimatePresence>
           {openItems?.length && openMega ? (
-            <div className="pointer-events-auto absolute top-full right-0 left-0 z-50 hidden pt-3 lg:block">
+            <div
+              className="pointer-events-auto absolute top-full right-0 left-0 z-50 hidden pt-3 lg:block"
+              onClick={(event) => {
+                if ((event.target as HTMLElement).closest('a')) closeMegaMenu()
+              }}
+            >
               {/* Extends upward into the pill so the cursor never hits empty space */}
               <div aria-hidden className="absolute inset-x-0 -top-6 h-6" />
               <MegaMenu key={openMega} id="xe-mega-menu" items={openItems} category={openMega} />

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import {
   m as motion,
   useInView,
@@ -35,14 +35,6 @@ type StoryCasesProps = {
   items: CaseItem[]
 }
 
-const KPI_BADGES = [
-  'Representative',
-  'Anonymized',
-  'Delivery pattern',
-  'Governed AI',
-  'Enterprise scale',
-]
-
 const DEFAULT_TECH = ['Python', 'Azure', 'AI', 'Next.js', 'Cloud']
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -50,7 +42,7 @@ const EASE = [0.22, 1, 0.36, 1] as const
 function enrichCase(
   item: CaseItem,
   index: number,
-): Required<Pick<CaseItem, 'challenge' | 'solution' | 'industry' | 'timeline'>> &
+): Required<Pick<CaseItem, 'challenge' | 'solution' | 'industry'>> &
   CaseItem & { metrics: CaseMetric[]; technologies: string[] } {
   const presets = [
     {
@@ -58,48 +50,24 @@ function enrichCase(
       challenge: 'Hospitals lacked unified patient intelligence across clinical systems.',
       solution: 'AI-powered clinical analytics platform with governed data pipelines.',
       technologies: ['Python', 'Azure', 'AI', 'Power BI', 'CDISC'],
-      timeline: '14 weeks',
-      metrics: [
-        { value: 'Faster', label: 'Clinical reporting' },
-        { value: 'Less', label: 'Manual effort' },
-        { value: 'Governed', label: 'Analytics delivery' },
-      ],
     },
     {
       industry: 'Fintech',
       challenge: 'Legacy monolith limiting release velocity and compliance reporting.',
       solution: 'Cloud-native architecture with continuous delivery and audit-ready trails.',
       technologies: ['Next.js', 'Node.js', 'Kubernetes', 'AWS', 'Docker'],
-      timeline: '20 weeks',
-      metrics: [
-        { value: 'Faster', label: 'Deployment cycles' },
-        { value: 'Lower', label: 'Infra overhead' },
-        { value: 'Stable', label: 'Platform uptime' },
-      ],
     },
     {
       industry: 'Life sciences',
       challenge: 'Fragmented trial data slowing submission-ready analytics.',
       solution: 'Clinical data science stack aligned to SDTM/ADaM with automated QC.',
       technologies: ['SAS', 'Python', 'CDISC', 'Spark', 'Azure'],
-      timeline: '18 weeks',
-      metrics: [
-        { value: 'Clearer', label: 'Ops efficiency' },
-        { value: 'Faster', label: 'Analysis cycles' },
-        { value: 'Governed', label: 'Data standards' },
-      ],
     },
     {
       industry: 'Enterprise AI',
       challenge: 'Models impressed demos but stalled before regulated production.',
       solution: 'Grounded LLM workflows with evaluation, observability, and human oversight.',
       technologies: ['LangChain', 'OpenAI', 'Python', 'Docker', 'Cloud'],
-      timeline: '12 weeks',
-      metrics: [
-        { value: 'Faster', label: 'Time to value' },
-        { value: 'Evaluated', label: 'AI behaviour' },
-        { value: '24/7', label: 'Monitoring' },
-      ],
     },
   ]
 
@@ -109,8 +77,7 @@ function enrichCase(
     industry: item.industry || preset.industry,
     challenge: item.challenge || preset.challenge,
     solution: item.solution || item.outcome || preset.solution,
-    timeline: item.timeline || preset.timeline,
-    metrics: item.metrics?.length ? item.metrics : preset.metrics,
+    metrics: item.metrics ?? [],
     technologies: item.technologies?.length ? item.technologies : preset.technologies,
   }
 }
@@ -203,6 +170,7 @@ function CaseVisual({ variant, accent }: { variant: number; accent: string }) {
                 rx="6"
                 fill={`url(#case-grad-${variant})`}
                 initial={{ scaleY: 0 }}
+                data-reveal
                 whileInView={{ scaleY: 1 }}
                 style={{ originY: 1 }}
                 transition={{ delay: 0.1 + i * 0.05, duration: 0.7, ease: EASE }}
@@ -307,6 +275,7 @@ function CaseVisual({ variant, accent }: { variant: number; accent: string }) {
                 stroke={accent}
                 strokeOpacity={0.4}
                 initial={{ y: 160, opacity: 0 }}
+                data-reveal
                 whileInView={{ y: 140, opacity: 1 }}
                 transition={{ delay: i * 0.1, duration: 0.55, ease: EASE }}
               />
@@ -358,6 +327,7 @@ function ProjectPanel({ item, index }: { item: ReturnType<typeof enrichCase>; in
       onMouseLeave={onLeave}
       style={reduce ? undefined : { rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
       initial={reduce ? false : { opacity: 0, y: 48 }}
+      data-reveal
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.7, ease: EASE }}
@@ -413,24 +383,26 @@ function ProjectPanel({ item, index }: { item: ReturnType<typeof enrichCase>; in
         </div>
       </div>
 
-      <div className="relative mt-8">
-        <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase">
-          Business impact
-        </p>
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          {item.metrics.slice(0, 3).map((m) => (
-            <div
-              key={`${m.label}-${m.value}`}
-              className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--color-hover)] px-4 py-4 dark:border-white/10 dark:bg-white/[0.05]"
-            >
-              <p className="font-display text-2xl font-bold tracking-[-0.04em] text-[color:var(--hero-text)] sm:text-3xl">
-                <CountMetric value={m.value} active={inView} />
-              </p>
-              <p className="mt-1 text-xs text-[color:var(--hero-muted)]">{m.label}</p>
-            </div>
-          ))}
+      {item.metrics.length ? (
+        <div className="relative mt-8">
+          <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--hero-muted)] uppercase">
+            Business impact
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {item.metrics.slice(0, 3).map((m) => (
+              <div
+                key={`${m.label}-${m.value}`}
+                className="rounded-2xl border border-[color:var(--hero-panel-border)] bg-[color:var(--color-hover)] px-4 py-4 dark:border-white/10 dark:bg-white/[0.05]"
+              >
+                <p className="font-display text-2xl font-bold tracking-[-0.04em] text-[color:var(--hero-text)] sm:text-3xl">
+                  <CountMetric value={m.value} active={inView} />
+                </p>
+                <p className="mt-1 text-xs text-[color:var(--hero-muted)]">{m.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <div className="relative mt-8 flex flex-wrap items-center gap-2">
         <p className="mr-2 text-[10px] font-bold tracking-[0.16em] text-[color:var(--hero-muted)] uppercase">
@@ -514,31 +486,17 @@ export function StoryCases({
             <motion.h2
               className="font-display mt-5 max-w-md text-[clamp(2rem,4vw,3.4rem)] leading-[1.05] font-bold tracking-[-0.045em] text-balance text-[color:var(--hero-text)]"
               initial={reduce ? false : { opacity: 0, y: 20 }}
+              data-reveal
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: EASE }}
             >
-              {heading || 'Engineering solutions that deliver measurable outcomes.'}
+              {heading || 'Anonymized examples of the work we take on.'}
             </motion.h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-[color:var(--hero-muted)]">
-              Anonymized delivery patterns across healthcare, AI, and enterprise platforms — clearly
-              labelled as representative examples, not verified client claims.
+              Examples drawn from our delivery work, with client names removed. They show the
+              approach we take rather than the results of a specific engagement.
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-2">
-              {KPI_BADGES.map((badge, i) => (
-                <motion.span
-                  key={badge}
-                  className="rounded-full border border-[color:var(--hero-panel-border)] bg-[color:var(--hero-panel)] px-3 py-1.5 text-[11px] font-medium text-[color:var(--hero-text)] shadow-[var(--shadow-light)] dark:border-white/12 dark:bg-white/[0.05] dark:text-slate-200 dark:shadow-none"
-                  initial={reduce ? false : { opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.05 * i, duration: 0.45 }}
-                >
-                  {badge}
-                </motion.span>
-              ))}
-            </div>
 
             <Link
               href="/case-studies"
