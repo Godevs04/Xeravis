@@ -56,6 +56,10 @@ const contentSecurityPolicy = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    // Vercel build machines OOM at the default heap with Payload + Sentry source maps.
+    webpackMemoryOptimizations: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
