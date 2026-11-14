@@ -2,9 +2,9 @@
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { ArrowRight, CornerDownLeft, Loader2, Search, X } from 'lucide-react'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useId, useState, type KeyboardEvent } from 'react'
+import { useEffect, useId, useState, type KeyboardEvent, type RefObject } from 'react'
 
 import { CONNECTED_HUBS } from '@/lib/about-content'
 import type { SiteSearchResult } from '@/lib/site-search'
@@ -15,19 +15,21 @@ type Status = 'idle' | 'loading' | 'done' | 'error'
 const MIN_QUERY = 2
 const DEBOUNCE_MS = 200
 
-function isEditableTarget(target: EventTarget | null) {
-  if (!(target instanceof HTMLElement)) return false
-  return target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)
-}
-
 function searchPageHref(query: string) {
   return `/search?q=${encodeURIComponent(query)}`
 }
 
-export function SiteSearchDialog({ triggerClassName }: { triggerClassName?: string }) {
+export function SiteSearchDialog({
+  open,
+  onOpenChange: setOpen,
+  returnFocusRef,
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  returnFocusRef: RefObject<HTMLElement | null>
+}) {
   const router = useRouter()
   const listId = useId()
-  const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SiteSearchResult[]>([])
   const [status, setStatus] = useState<Status>('idle')
@@ -36,20 +38,6 @@ export function SiteSearchDialog({ triggerClassName }: { triggerClassName?: stri
 
   const trimmed = query.trim()
   const searching = trimmed.length >= MIN_QUERY
-
-  useEffect(() => {
-    const onKey = (event: globalThis.KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault()
-        setOpen((value) => !value)
-      } else if (event.key === '/' && !isEditableTarget(event.target)) {
-        event.preventDefault()
-        setOpen(true)
-      }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
 
   useEffect(() => {
     if (!open || trimmed.length < MIN_QUERY) return
@@ -111,19 +99,14 @@ export function SiteSearchDialog({ triggerClassName }: { triggerClassName?: stri
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Trigger
-        aria-label="Search the site"
-        className={cn(
-          'inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)]/40 focus-visible:outline-none',
-          triggerClassName,
-        )}
-      >
-        <Search className="h-4 w-4" aria-hidden />
-      </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="bg-dark/55 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-[60] backdrop-blur-sm" />
         <DialogPrimitive.Content
           aria-describedby={undefined}
+          onCloseAutoFocus={(event) => {
+            event.preventDefault()
+            returnFocusRef.current?.focus()
+          }}
           className="border-border bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[10vh] left-1/2 z-[60] flex max-h-[75vh] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 flex-col overflow-hidden rounded-3xl border shadow-[var(--shadow-floating)] duration-200"
         >
           <DialogPrimitive.Title className="sr-only">Search XELARVIS</DialogPrimitive.Title>

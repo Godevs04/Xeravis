@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { m as motion, useReducedMotion, type Variants } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Briefcase, Clock, MapPin, Sparkles, Users } from 'lucide-react'
 import type { ReactNode } from 'react'

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowRight, Rss } from 'lucide-react'
 
 import { BrandLogo } from '@/components/brand/BrandLogo'

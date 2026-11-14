@@ -1,19 +1,17 @@
 'use client'
 
 import { CalendarDays } from 'lucide-react'
-import Link from 'next/link'
-import { useState } from 'react'
+import dynamic from 'next/dynamic'
+import Link from '@/components/ui/link'
+import { useRef, useState } from 'react'
 
 import { Button, type ButtonProps } from '@/components/ui/button'
-import {
-  Modal,
-  ModalContent,
-  ModalDescription,
-  ModalHeader,
-  ModalTitle,
-  ModalTrigger,
-} from '@/components/ui/modal'
 import { track } from '@/lib/analytics-client'
+
+const BookCallModal = dynamic(
+  () => import('@/components/booking/BookCallModal').then((m) => m.BookCallModal),
+  { ssr: false },
+)
 
 /** Cal.com event path, e.g. `xelarvis/discovery-call`. */
 const CALCOM_LINK = process.env.NEXT_PUBLIC_CALCOM_LINK?.replace(
@@ -40,6 +38,8 @@ export function BookCallButton({
   fallback = 'contact',
 }: Props) {
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   if (!CALCOM_LINK) {
     if (fallback === 'none') return null
@@ -53,35 +53,26 @@ export function BookCallButton({
   const src = `https://cal.com/${CALCOM_LINK}?embed=true&layout=month_view`
 
   return (
-    <Modal
-      open={open}
-      onOpenChange={(next) => {
-        setOpen(next)
-        if (next) track('booking_opened')
-      }}
-    >
-      <ModalTrigger asChild>
-        <Button variant={variant} size={size} className={className}>
-          <CalendarDays className="h-4 w-4" aria-hidden />
-          {label}
-        </Button>
-      </ModalTrigger>
-      <ModalContent className="max-w-4xl p-0 sm:p-0">
-        <ModalHeader className="px-6 pt-6">
-          <ModalTitle>Book a call with Xelarvis</ModalTitle>
-          <ModalDescription>
-            Pick a time that suits you. You&apos;ll get a calendar invite by email.
-          </ModalDescription>
-        </ModalHeader>
-        {open ? (
-          <iframe
-            title="Book a call"
-            src={src}
-            className="h-[min(70svh,640px)] w-full rounded-b-[var(--radius-dialog)] border-0"
-            loading="lazy"
-          />
-        ) : null}
-      </ModalContent>
-    </Modal>
+    <>
+      <Button
+        ref={buttonRef}
+        variant={variant}
+        size={size}
+        className={className}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => {
+          setMounted(true)
+          setOpen(true)
+          track('booking_opened')
+        }}
+      >
+        <CalendarDays className="h-4 w-4" aria-hidden />
+        {label}
+      </Button>
+      {mounted ? (
+        <BookCallModal open={open} onOpenChange={setOpen} src={src} returnFocusRef={buttonRef} />
+      ) : null}
+    </>
   )
 }

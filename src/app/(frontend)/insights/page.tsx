@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { BlogCard } from '@/components/domain/BlogCard'
 import { InsightsIndexSection } from '@/components/insights/InsightsIndexSection'

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import {
   m as motion,
   useMotionValue,
@@ -322,7 +322,7 @@ export function PageHero({
         {eyebrow ? (
           <p
             className={cn(
-              'hero-fade-up mb-4 text-[11px] font-bold tracking-[0.16em] uppercase',
+              'mb-4 text-[11px] font-bold tracking-[0.16em] uppercase',
               image ? 'text-cyan-200' : 'text-[color:var(--color-accent)]',
             )}
           >
@@ -331,7 +331,7 @@ export function PageHero({
         ) : null}
         <h1
           className={cn(
-            'hero-fade-up font-display max-w-[18ch] text-[clamp(2.25rem,4.5vw,3.75rem)] font-bold tracking-[-0.045em] text-balance',
+            'font-display max-w-[18ch] text-[clamp(2.25rem,4.5vw,3.75rem)] font-bold tracking-[-0.045em] text-balance',
             image ? 'text-white' : 'text-[color:var(--color-primary)]',
           )}
         >
@@ -339,9 +339,8 @@ export function PageHero({
         </h1>
         {subtitle ? (
           <p
-            style={{ animationDelay: '0.08s' }}
             className={cn(
-              'hero-fade-up mt-5 max-w-[48ch] text-base leading-relaxed sm:text-lg',
+              'mt-5 max-w-[48ch] text-base leading-relaxed sm:text-lg',
               image ? 'text-slate-200' : 'text-[color:var(--color-secondary)]',
             )}
           >

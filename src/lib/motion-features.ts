@@ -1,3 +1,4 @@
-import { domMax } from 'framer-motion'
+import { domAnimation } from 'framer-motion'
 
-export default domMax
+/** Animations, variants, exit, gestures and in-view. Components needing layout animation load domMax themselves. */
+export default domAnimation

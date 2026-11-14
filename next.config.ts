@@ -119,11 +119,17 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-  webpack: (webpackConfig) => {
+  webpack: (webpackConfig, { isServer, dev }) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
+    }
+    const splitChunks = webpackConfig.optimization?.splitChunks
+    if (!isServer && !dev && splitChunks) {
+      // Fewer, larger initial chunks: each extra request on a cold mobile connection costs a round trip.
+      splitChunks.maxInitialRequests = 10
+      splitChunks.minSize = 40_000
     }
     return webpackConfig
   },

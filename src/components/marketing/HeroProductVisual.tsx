@@ -300,15 +300,11 @@ export function HeroProductVisual({ scrollProgress }: HeroProductVisualProps) {
                       transition={{ delay: 0.3 + i * 0.05, duration: 0.4, ease: EASE }}
                       className="relative flex min-h-[2.25rem] items-center justify-center rounded-xl px-1.5 py-2 text-[9px] font-bold tracking-wide sm:min-h-[2.5rem] sm:text-[10px]"
                     >
-                      {i === activeNav ? (
-                        <motion.span
-                          layoutId="hero-console-nav"
-                          className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#0D9488] to-[#0891B2] shadow-[0_8px_24px_rgba(13,148,136,0.5),inset_0_1px_0_rgba(255,255,255,0.25)]"
-                          transition={{ type: 'spring', stiffness: 260, damping: 28 }}
-                        />
-                      ) : (
-                        <span className="absolute inset-0 rounded-xl bg-[color:var(--hc-nav-idle)]" />
-                      )}
+                      <span className="absolute inset-0 rounded-xl bg-[color:var(--hc-nav-idle)]" />
+                      <span
+                        aria-hidden
+                        className={`absolute inset-0 rounded-xl bg-gradient-to-br from-[#0D9488] to-[#0891B2] shadow-[0_8px_24px_rgba(13,148,136,0.5),inset_0_1px_0_rgba(255,255,255,0.25)] transition-opacity duration-500 ${i === activeNav ? 'opacity-100' : 'opacity-0'}`}
+                      />
                       <span
                         className={`relative transition-colors duration-300 ${i === activeNav ? 'text-[#F8FAFC]' : 'text-[color:var(--hc-muted)]'}`}
                       >

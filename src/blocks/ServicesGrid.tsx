@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { ServiceCard } from '@/components/domain/ServiceCard'
 import { Container } from '@/components/layout/Container'

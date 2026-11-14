@@ -20,6 +20,24 @@ const eslintConfig = [
     },
   },
   {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/payload/**', 'src/app/(payload)/**', 'src/components/ui/link.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'next/link',
+              message:
+                "Import Link from '@/components/ui/link' so public pages don't load the Payload admin bundle.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     files: ['src/lib/logger.ts'],
     rules: {
       'no-console': 'off',

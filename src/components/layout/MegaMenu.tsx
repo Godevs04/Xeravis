@@ -1,7 +1,9 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import {
+  domMax,
+  LazyMotion,
   m as motion,
   useMotionTemplate,
   useMotionValue,
@@ -404,334 +406,340 @@ export function MegaMenu({ items, category, className, id }: MegaMenuProps) {
   if (!items.length) return null
 
   return (
-    <motion.div
-      ref={rootRef}
-      id={id}
-      role="menu"
-      aria-label={`${meta.title} menu`}
-      onPointerMove={onPointerMove}
-      initial={reduce ? false : { opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={reduce ? undefined : { opacity: 0 }}
-      transition={reduce ? { duration: 0.12 } : { duration: 0.18, ease: EASE }}
-      className={cn(
-        // In-flow under the header bridge — parent owns placement
-        'relative mx-auto w-full max-w-[1220px]',
-        className,
-      )}
-    >
-      {/* Gradient border shell — theme tokens for light + dark */}
-      <div
+    // layoutId (the sliding nav indicator) needs domMax; the site-wide provider ships domAnimation.
+    <LazyMotion features={domMax}>
+      <motion.div
+        ref={rootRef}
+        id={id}
+        role="menu"
+        aria-label={`${meta.title} menu`}
+        onPointerMove={onPointerMove}
+        initial={reduce ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={reduce ? undefined : { opacity: 0 }}
+        transition={reduce ? { duration: 0.12 } : { duration: 0.18, ease: EASE }}
         className={cn(
-          'rounded-[28px] p-[1px]',
-          'shadow-[var(--shadow-floating),0_0_80px_var(--color-accent-glow)]',
+          // In-flow under the header bridge — parent owns placement
+          'relative mx-auto w-full max-w-[1220px]',
+          className,
         )}
-        style={{
-          background:
-            'linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 70%, transparent), color-mix(in srgb, var(--color-primary) 12%, transparent) 42%, color-mix(in srgb, var(--color-secondary-accent) 55%, transparent))',
-        }}
       >
+        {/* Gradient border shell — theme tokens for light + dark */}
         <div
           className={cn(
-            'relative overflow-hidden rounded-[27px] backdrop-blur-2xl',
-            'bg-[color:var(--card-bg)] text-[color:var(--color-primary)]',
-            'shadow-[var(--shadow-inset-glass)]',
+            'rounded-[28px] p-[1px]',
+            'shadow-[var(--shadow-floating),0_0_80px_var(--color-accent-glow)]',
           )}
+          style={{
+            background:
+              'linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 70%, transparent), color-mix(in srgb, var(--color-primary) 12%, transparent) 42%, color-mix(in srgb, var(--color-secondary-accent) 55%, transparent))',
+          }}
         >
-          {/* Mesh + grid + noise */}
           <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(ellipse 60% 50% at 10% 0%, var(--mesh-glow), transparent 55%), radial-gradient(ellipse 50% 40% at 90% 100%, var(--mesh-glow-2), transparent 50%), linear-gradient(180deg, var(--color-surface), var(--glass-bg))',
-            }}
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.05]"
-            style={{
-              backgroundImage:
-                'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
-              backgroundSize: '48px 48px',
-              maskImage: 'radial-gradient(ellipse 80% 70% at 50% 40%, black, transparent)',
-            }}
-          />
-          <div aria-hidden className="noise-overlay opacity-[0.04]" />
-          {!reduce ? (
-            <motion.div
+            className={cn(
+              'relative overflow-hidden rounded-[27px] backdrop-blur-2xl',
+              'bg-[color:var(--card-bg)] text-[color:var(--color-primary)]',
+              'shadow-[var(--shadow-inset-glass)]',
+            )}
+          >
+            {/* Mesh + grid + noise */}
+            <div
               aria-hidden
               className="pointer-events-none absolute inset-0"
-              style={{ background: glowBg }}
+              style={{
+                background:
+                  'radial-gradient(ellipse 60% 50% at 10% 0%, var(--mesh-glow), transparent 55%), radial-gradient(ellipse 50% 40% at 90% 100%, var(--mesh-glow-2), transparent 50%), linear-gradient(180deg, var(--color-surface), var(--glass-bg))',
+              }}
             />
-          ) : null}
-          {!reduce ? (
-            <motion.div
+            <div
               aria-hidden
-              className="pointer-events-none absolute -top-24 left-1/3 h-48 w-48 rounded-full blur-3xl"
-              style={{ background: 'var(--aurora-spot)' }}
-              animate={{ opacity: [0.35, 0.65, 0.35], scale: [1, 1.08, 1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              className="pointer-events-none absolute inset-0 opacity-[0.05]"
+              style={{
+                backgroundImage:
+                  'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
+                backgroundSize: '48px 48px',
+                maskImage: 'radial-gradient(ellipse 80% 70% at 50% 40%, black, transparent)',
+              }}
             />
-          ) : null}
+            <div aria-hidden className="noise-overlay opacity-[0.04]" />
+            {!reduce ? (
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute inset-0"
+                style={{ background: glowBg }}
+              />
+            ) : null}
+            {!reduce ? (
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute -top-24 left-1/3 h-48 w-48 rounded-full blur-3xl"
+                style={{ background: 'var(--aurora-spot)' }}
+                animate={{ opacity: [0.35, 0.65, 0.35], scale: [1, 1.08, 1] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            ) : null}
 
-          <div className="relative grid lg:grid-cols-[252px_minmax(0,1fr)_292px]">
-            {/* LEFT — category navigator */}
-            <aside className="border-b border-[color:var(--glass-border)] bg-[color:var(--color-surface)]/80 p-3 lg:border-r lg:border-b-0">
-              <p className="px-3 pt-2 text-[10px] font-bold tracking-[0.18em] text-[color:var(--color-accent)] uppercase">
-                {meta.title}
-              </p>
-              <p className="mt-1 px-3 pb-3 text-xs leading-relaxed text-[color:var(--color-muted)]">
-                {meta.blurb}
-              </p>
-              <ul className="max-h-[min(52vh,22rem)] space-y-0.5 overflow-y-auto pr-1" role="none">
-                {items.map((item, index) => {
-                  const Icon = iconForItem(item.label, item.href)
-                  const selected = item.href === activeHref
-                  return (
-                    <li key={item.href} role="none">
+            <div className="relative grid lg:grid-cols-[252px_minmax(0,1fr)_292px]">
+              {/* LEFT — category navigator */}
+              <aside className="border-b border-[color:var(--glass-border)] bg-[color:var(--color-surface)]/80 p-3 lg:border-r lg:border-b-0">
+                <p className="px-3 pt-2 text-[10px] font-bold tracking-[0.18em] text-[color:var(--color-accent)] uppercase">
+                  {meta.title}
+                </p>
+                <p className="mt-1 px-3 pb-3 text-xs leading-relaxed text-[color:var(--color-muted)]">
+                  {meta.blurb}
+                </p>
+                <ul
+                  className="max-h-[min(52vh,22rem)] space-y-0.5 overflow-y-auto pr-1"
+                  role="none"
+                >
+                  {items.map((item, index) => {
+                    const Icon = iconForItem(item.label, item.href)
+                    const selected = item.href === activeHref
+                    return (
+                      <li key={item.href} role="none">
+                        <motion.div
+                          initial={reduce ? false : { opacity: 0, x: -8 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.03, duration: 0.3, ease: EASE }}
+                        >
+                          <Link
+                            href={item.href}
+                            role="menuitem"
+                            data-mega-index={index}
+                            aria-current={selected ? 'page' : undefined}
+                            onMouseEnter={() => setActiveHref(item.href)}
+                            onFocus={() => setActiveHref(item.href)}
+                            className={cn(
+                              'group relative flex items-start gap-3 rounded-2xl px-3 py-2.5 transition-all duration-300',
+                              'focus-visible:ring-2 focus-visible:ring-[color:var(--color-secondary-accent)] focus-visible:outline-none',
+                              selected
+                                ? 'bg-gradient-to-r from-[color:var(--color-accent)] to-[color:var(--color-secondary-accent)] text-white shadow-[var(--shadow-hover)]'
+                                : 'text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:shadow-[var(--shadow-light)]',
+                            )}
+                          >
+                            {selected ? (
+                              <motion.span
+                                layoutId="mega-nav-indicator"
+                                aria-hidden
+                                className="absolute top-1/2 left-0 h-8 w-1 -translate-y-1/2 rounded-r-full bg-white/95"
+                                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                              />
+                            ) : null}
+                            <span
+                              className={cn(
+                                'mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-xl border transition-all duration-300',
+                                selected
+                                  ? 'border-white/30 bg-white/15 text-white'
+                                  : 'border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] text-[color:var(--color-accent)] group-hover:border-[color:var(--color-accent)] group-hover:shadow-[0_0_16px_var(--color-accent-soft)]',
+                              )}
+                            >
+                              <Icon
+                                className={cn(
+                                  'h-4 w-4 transition-transform duration-300',
+                                  'group-hover:scale-110 group-hover:rotate-6',
+                                )}
+                              />
+                            </span>
+                            <span className="min-w-0">
+                              <span className="block text-sm font-semibold tracking-tight">
+                                {item.label}
+                              </span>
+                              {item.description ? (
+                                <span
+                                  className={cn(
+                                    'mt-0.5 line-clamp-2 block text-[11px] leading-snug',
+                                    selected ? 'text-white/80' : 'text-[color:var(--color-muted)]',
+                                  )}
+                                >
+                                  {item.description}
+                                </span>
+                              ) : null}
+                            </span>
+                          </Link>
+                        </motion.div>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </aside>
+
+              {/* CENTER — content cards */}
+              <div className="p-4 sm:p-5">
+                <div className="mb-4 flex items-end justify-between gap-3">
+                  <div>
+                    <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-muted)] uppercase">
+                      Browse
+                    </p>
+                    <p className="font-display mt-1 text-lg font-semibold text-[color:var(--color-primary)]">
+                      {meta.title} catalog
+                    </p>
+                  </div>
+                  {overview ? (
+                    <Link
+                      href={overview.href}
+                      role="menuitem"
+                      className="group inline-flex items-center gap-1 text-xs font-semibold text-[color:var(--color-accent)] hover:text-[color:var(--color-secondary-accent)]"
+                    >
+                      {overview.label}
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                  ) : null}
+                </div>
+
+                <div className="grid max-h-[min(52vh,22rem)] gap-3 overflow-y-auto pr-1 sm:grid-cols-2">
+                  {cards.map((item, index) => {
+                    const Icon = iconForItem(item.label, item.href)
+                    const selected = item.href === activeHref
+                    const tags = tagsForItem(item.label, item.href)
+                    return (
                       <motion.div
-                        initial={reduce ? false : { opacity: 0, x: -8 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.03, duration: 0.3, ease: EASE }}
+                        key={item.href}
+                        initial={reduce ? false : { opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.05 + index * 0.04, duration: 0.35, ease: EASE }}
                       >
                         <Link
                           href={item.href}
                           role="menuitem"
-                          data-mega-index={index}
-                          aria-current={selected ? 'page' : undefined}
+                          data-mega-card={item.href}
                           onMouseEnter={() => setActiveHref(item.href)}
                           onFocus={() => setActiveHref(item.href)}
                           className={cn(
-                            'group relative flex items-start gap-3 rounded-2xl px-3 py-2.5 transition-all duration-300',
+                            'group relative flex h-full flex-col overflow-hidden rounded-2xl border p-4 transition-all duration-300',
                             'focus-visible:ring-2 focus-visible:ring-[color:var(--color-secondary-accent)] focus-visible:outline-none',
+                            'border-[color:var(--glass-border)] bg-[color:var(--card-bg)]',
                             selected
-                              ? 'bg-gradient-to-r from-[color:var(--color-accent)] to-[color:var(--color-secondary-accent)] text-white shadow-[var(--shadow-hover)]'
-                              : 'text-[color:var(--color-primary)] hover:bg-[color:var(--color-hover)] hover:shadow-[var(--shadow-light)]',
+                              ? '-translate-y-0.5 border-[color:var(--color-accent)] shadow-[var(--shadow-hover)]'
+                              : 'hover:-translate-y-1 hover:border-[color:var(--color-accent)] hover:shadow-[var(--shadow-medium)]',
                           )}
                         >
-                          {selected ? (
-                            <motion.span
-                              layoutId="mega-nav-indicator"
-                              aria-hidden
-                              className="absolute top-1/2 left-0 h-8 w-1 -translate-y-1/2 rounded-r-full bg-white/95"
-                              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                            />
-                          ) : null}
-                          <span
-                            className={cn(
-                              'mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-xl border transition-all duration-300',
-                              selected
-                                ? 'border-white/30 bg-white/15 text-white'
-                                : 'border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] text-[color:var(--color-accent)] group-hover:border-[color:var(--color-accent)] group-hover:shadow-[0_0_16px_var(--color-accent-soft)]',
-                            )}
-                          >
-                            <Icon
-                              className={cn(
-                                'h-4 w-4 transition-transform duration-300',
-                                'group-hover:scale-110 group-hover:rotate-6',
-                              )}
-                            />
-                          </span>
-                          <span className="min-w-0">
-                            <span className="block text-sm font-semibold tracking-tight">
-                              {item.label}
+                          <div
+                            aria-hidden
+                            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                            style={{
+                              background:
+                                'radial-gradient(ellipse 80% 60% at 100% 0%, var(--color-accent-soft), transparent 55%)',
+                            }}
+                          />
+                          <div className="relative flex items-start justify-between gap-2">
+                            <span className="grid h-9 w-9 place-items-center rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] text-[color:var(--color-accent)] transition-all duration-300 group-hover:scale-105 group-hover:rotate-6 group-hover:border-[color:var(--color-accent)] group-hover:shadow-[0_0_20px_var(--color-accent-soft)]">
+                              <Icon className="h-4 w-4" />
                             </span>
-                            {item.description ? (
-                              <span
-                                className={cn(
-                                  'mt-0.5 line-clamp-2 block text-[11px] leading-snug',
-                                  selected ? 'text-white/80' : 'text-[color:var(--color-muted)]',
-                                )}
-                              >
-                                {item.description}
-                              </span>
-                            ) : null}
+                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold tracking-wide text-[color:var(--color-muted)] uppercase transition-all group-hover:translate-x-0.5 group-hover:text-[color:var(--color-accent)]">
+                              View
+                              <ArrowRight className="h-3.5 w-3.5" />
+                            </span>
+                          </div>
+                          <span className="relative mt-3 block text-sm font-semibold text-[color:var(--color-primary)]">
+                            {item.label}
                           </span>
+                          {item.description ? (
+                            <span className="relative mt-1 line-clamp-2 text-xs leading-relaxed text-[color:var(--color-muted)]">
+                              {item.description}
+                            </span>
+                          ) : null}
+                          <div className="relative mt-3 flex flex-wrap gap-1.5">
+                            {tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="rounded-md bg-[color:var(--color-hover)] px-1.5 py-0.5 text-[10px] font-medium text-[color:var(--color-secondary)]"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
                         </Link>
                       </motion.div>
-                    </li>
-                  )
-                })}
-              </ul>
-            </aside>
-
-            {/* CENTER — content cards */}
-            <div className="p-4 sm:p-5">
-              <div className="mb-4 flex items-end justify-between gap-3">
-                <div>
-                  <p className="text-[10px] font-bold tracking-[0.16em] text-[color:var(--color-muted)] uppercase">
-                    Browse
-                  </p>
-                  <p className="font-display mt-1 text-lg font-semibold text-[color:var(--color-primary)]">
-                    {meta.title} catalog
-                  </p>
+                    )
+                  })}
                 </div>
-                {overview ? (
+              </div>
+
+              {/* RIGHT — featured panel */}
+              <aside className="border-t border-[color:var(--glass-border)] bg-[color:var(--color-neutral)] p-5 text-[color:var(--color-primary)] lg:border-t-0 lg:border-l lg:border-[color:var(--glass-border)] dark:bg-gradient-to-b dark:from-[#0F172A] dark:to-[#0B1224] dark:text-white dark:lg:border-white/10">
+                <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--color-accent)] uppercase">
+                  {meta.featuredLabel}
+                </p>
+                <div className="mt-3 flex items-start gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--color-hover)] text-[color:var(--color-accent)] shadow-[0_0_24px_var(--color-accent-soft)] dark:border-white/15 dark:bg-white/10 dark:text-cyan-300">
+                    <ActiveIcon className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <p className="font-display text-lg leading-snug font-semibold tracking-tight text-[color:var(--color-primary)] dark:text-white">
+                      {activeItem?.label}
+                    </p>
+                    {activeItem?.description ? (
+                      <p className="mt-1 text-xs leading-relaxed text-[color:var(--color-secondary)] dark:text-slate-300">
+                        {activeItem.description}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+
+                <FeaturedPreview
+                  accent="#0D9488"
+                  variant={`${activeItem?.label || ''} ${activeItem?.href || ''}`}
+                />
+
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  {featuredMetrics.map((m) => (
+                    <div
+                      key={`${m.v}-${m.l}`}
+                      className="rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-2 py-2 text-center backdrop-blur-sm dark:border-white/10 dark:bg-white/5"
+                    >
+                      <p className="font-display text-sm font-bold text-[color:var(--color-primary)] dark:text-white">
+                        {m.v}
+                      </p>
+                      <p className="text-[9px] tracking-wide text-[color:var(--color-muted)] uppercase dark:text-slate-400">
+                        {m.l}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {activeItem ? (
                   <Link
-                    href={overview.href}
+                    href={activeItem.href}
                     role="menuitem"
-                    className="group inline-flex items-center gap-1 text-xs font-semibold text-[color:var(--color-accent)] hover:text-[color:var(--color-secondary-accent)]"
+                    className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_0_32px_rgba(13,148,136,0.45)] transition-all hover:from-teal-400 hover:to-cyan-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.5)]"
                   >
-                    {overview.label}
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    Learn more
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                   </Link>
                 ) : null}
-              </div>
-
-              <div className="grid max-h-[min(52vh,22rem)] gap-3 overflow-y-auto pr-1 sm:grid-cols-2">
-                {cards.map((item, index) => {
-                  const Icon = iconForItem(item.label, item.href)
-                  const selected = item.href === activeHref
-                  const tags = tagsForItem(item.label, item.href)
-                  return (
-                    <motion.div
-                      key={item.href}
-                      initial={reduce ? false : { opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.05 + index * 0.04, duration: 0.35, ease: EASE }}
-                    >
-                      <Link
-                        href={item.href}
-                        role="menuitem"
-                        data-mega-card={item.href}
-                        onMouseEnter={() => setActiveHref(item.href)}
-                        onFocus={() => setActiveHref(item.href)}
-                        className={cn(
-                          'group relative flex h-full flex-col overflow-hidden rounded-2xl border p-4 transition-all duration-300',
-                          'focus-visible:ring-2 focus-visible:ring-[color:var(--color-secondary-accent)] focus-visible:outline-none',
-                          'border-[color:var(--glass-border)] bg-[color:var(--card-bg)]',
-                          selected
-                            ? '-translate-y-0.5 border-[color:var(--color-accent)] shadow-[var(--shadow-hover)]'
-                            : 'hover:-translate-y-1 hover:border-[color:var(--color-accent)] hover:shadow-[var(--shadow-medium)]',
-                        )}
-                      >
-                        <div
-                          aria-hidden
-                          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                          style={{
-                            background:
-                              'radial-gradient(ellipse 80% 60% at 100% 0%, var(--color-accent-soft), transparent 55%)',
-                          }}
-                        />
-                        <div className="relative flex items-start justify-between gap-2">
-                          <span className="grid h-9 w-9 place-items-center rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] text-[color:var(--color-accent)] transition-all duration-300 group-hover:scale-105 group-hover:rotate-6 group-hover:border-[color:var(--color-accent)] group-hover:shadow-[0_0_20px_var(--color-accent-soft)]">
-                            <Icon className="h-4 w-4" />
-                          </span>
-                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold tracking-wide text-[color:var(--color-muted)] uppercase transition-all group-hover:translate-x-0.5 group-hover:text-[color:var(--color-accent)]">
-                            View
-                            <ArrowRight className="h-3.5 w-3.5" />
-                          </span>
-                        </div>
-                        <span className="relative mt-3 block text-sm font-semibold text-[color:var(--color-primary)]">
-                          {item.label}
-                        </span>
-                        {item.description ? (
-                          <span className="relative mt-1 line-clamp-2 text-xs leading-relaxed text-[color:var(--color-muted)]">
-                            {item.description}
-                          </span>
-                        ) : null}
-                        <div className="relative mt-3 flex flex-wrap gap-1.5">
-                          {tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="rounded-md bg-[color:var(--color-hover)] px-1.5 py-0.5 text-[10px] font-medium text-[color:var(--color-secondary)]"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </Link>
-                    </motion.div>
-                  )
-                })}
-              </div>
+              </aside>
             </div>
 
-            {/* RIGHT — featured panel */}
-            <aside className="border-t border-[color:var(--glass-border)] bg-[color:var(--color-neutral)] p-5 text-[color:var(--color-primary)] lg:border-t-0 lg:border-l lg:border-[color:var(--glass-border)] dark:bg-gradient-to-b dark:from-[#0F172A] dark:to-[#0B1224] dark:text-white dark:lg:border-white/10">
-              <p className="text-[10px] font-bold tracking-[0.18em] text-[color:var(--color-accent)] uppercase">
-                {meta.featuredLabel}
-              </p>
-              <div className="mt-3 flex items-start gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--color-hover)] text-[color:var(--color-accent)] shadow-[0_0_24px_var(--color-accent-soft)] dark:border-white/15 dark:bg-white/10 dark:text-cyan-300">
-                  <ActiveIcon className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="font-display text-lg leading-snug font-semibold tracking-tight text-[color:var(--color-primary)] dark:text-white">
-                    {activeItem?.label}
-                  </p>
-                  {activeItem?.description ? (
-                    <p className="mt-1 text-xs leading-relaxed text-[color:var(--color-secondary)] dark:text-slate-300">
-                      {activeItem.description}
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-
-              <FeaturedPreview
-                accent="#0D9488"
-                variant={`${activeItem?.label || ''} ${activeItem?.href || ''}`}
-              />
-
-              <div className="mt-4 grid grid-cols-3 gap-2">
-                {featuredMetrics.map((m) => (
-                  <div
-                    key={`${m.v}-${m.l}`}
-                    className="rounded-xl border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-2 py-2 text-center backdrop-blur-sm dark:border-white/10 dark:bg-white/5"
+            {/* Bottom quick actions */}
+            <div className="relative flex flex-wrap items-center gap-2 border-t border-[color:var(--glass-border)] bg-[color:var(--color-surface)] px-4 py-3">
+              <span className="mr-1 text-[10px] font-bold tracking-[0.14em] text-[color:var(--color-muted)] uppercase">
+                Quick
+              </span>
+              {QUICK_ACTIONS.map((action, i) => {
+                const Icon = action.icon
+                return (
+                  <motion.div
+                    key={action.label}
+                    initial={reduce ? false : { opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 + i * 0.04, duration: 0.3 }}
                   >
-                    <p className="font-display text-sm font-bold text-[color:var(--color-primary)] dark:text-white">
-                      {m.v}
-                    </p>
-                    <p className="text-[9px] tracking-wide text-[color:var(--color-muted)] uppercase dark:text-slate-400">
-                      {m.l}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {activeItem ? (
-                <Link
-                  href={activeItem.href}
-                  role="menuitem"
-                  className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_0_32px_rgba(13,148,136,0.45)] transition-all hover:from-teal-400 hover:to-cyan-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.5)]"
-                >
-                  Learn more
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              ) : null}
-            </aside>
-          </div>
-
-          {/* Bottom quick actions */}
-          <div className="relative flex flex-wrap items-center gap-2 border-t border-[color:var(--glass-border)] bg-[color:var(--color-surface)] px-4 py-3">
-            <span className="mr-1 text-[10px] font-bold tracking-[0.14em] text-[color:var(--color-muted)] uppercase">
-              Quick
-            </span>
-            {QUICK_ACTIONS.map((action, i) => {
-              const Icon = action.icon
-              return (
-                <motion.div
-                  key={action.label}
-                  initial={reduce ? false : { opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 + i * 0.04, duration: 0.3 }}
-                >
-                  <Link
-                    href={action.href}
-                    role="menuitem"
-                    {...(action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-3 py-1.5 text-xs font-semibold text-[color:var(--color-secondary)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] hover:shadow-[var(--shadow-hover)]"
-                  >
-                    <Icon className="h-3.5 w-3.5 text-[color:var(--color-accent)]" />
-                    {action.label}
-                  </Link>
-                </motion.div>
-              )
-            })}
+                    <Link
+                      href={action.href}
+                      role="menuitem"
+                      {...(action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] px-3 py-1.5 text-xs font-semibold text-[color:var(--color-secondary)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] hover:shadow-[var(--shadow-hover)]"
+                    >
+                      <Icon className="h-3.5 w-3.5 text-[color:var(--color-accent)]" />
+                      {action.label}
+                    </Link>
+                  </motion.div>
+                )
+              })}
+            </div>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </LazyMotion>
   )
 }

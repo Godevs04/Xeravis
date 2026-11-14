@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { LeadershipProfiles } from '@/components/about/LeadershipProfiles'
 import { Container } from '@/components/layout/Container'

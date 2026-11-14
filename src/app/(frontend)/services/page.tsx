@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { CTABand } from '@/blocks/CTABand'
 import { HubLinkStrip } from '@/components/content/HubLinkStrip'
