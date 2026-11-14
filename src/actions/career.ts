@@ -14,7 +14,10 @@ import { emailLayout, escapeHtml } from '@/lib/email-templates'
 import { createToken } from '@/lib/tokens'
 import { TURNSTILE_FIELD, verifyTurnstile } from '@/lib/turnstile'
 import { getPayload } from '@/lib/payload'
+import { createLogger } from '@/lib/logger'
 import { RESUME_FOLDER } from '@/payload/access'
+
+const log = createLogger({ scope: 'careers' })
 
 const optionalUrl = z
   .string()
@@ -328,7 +331,8 @@ export async function submitCareerApplication(
     })
 
     return { ok: true, applicationId, message: APPLICATION_RECEIVED }
-  } catch {
+  } catch (error) {
+    log.error('application submit failed', error instanceof Error ? error.message : error)
     return {
       ok: false,
       message: 'Unable to submit application right now. Please email hr@xelarvis.in.',
